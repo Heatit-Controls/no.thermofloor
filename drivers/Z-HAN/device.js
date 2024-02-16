@@ -10,7 +10,7 @@ class ZHanDevice extends ZwaveDevice
   async onNodeInit() 
   {
     // enable debugging
-    this.enableDebug();
+    // this.enableDebug();
 
     //this.printNode();
 

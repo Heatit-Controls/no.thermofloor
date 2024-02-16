@@ -197,25 +197,5 @@
       "min": 0,
       "max": 4294967295
     }
-  },
-  {
-    "id": "scaling_factor",
-    "type": "number",
-    "label": {
-      "en": "Scaling factor"
-    },
-    "hint": {
-      "en": "Allows for multiplication of the meter value in case of use with large electrical systems."
-    },
-    "zwave": {
-      "index": 11,
-      "size": 2,
-	  "signed": false
-    },
-    "value": 0,
-    "attr": {
-      "min": 0,
-      "max": 1000
-    }
   }
 ]

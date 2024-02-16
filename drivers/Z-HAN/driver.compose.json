@@ -1,6 +1,6 @@
 {
   "name": {
-    "en": "Z-HAN"
+    "en": "Z-HAN/B"
   },
   "class": "sensor",
   "capabilities": [
@@ -39,11 +39,11 @@
   },
   "zwave": {
     "manufacturerId": 411,
-    "productTypeId": [98],
-    "productId": [25089],
+    "productTypeId": [98, 4],
+    "productId": [25089, 26113],
     "security": ["none"],
-    "zwaveAllianceProductId": 4666,
-    "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4666",
+    "zwaveAllianceProductId": 4744,
+    "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4744",
     "learnmode": {
       "image": "{{driverAssetsPath}}/learnmode.svg",
       "instruction": {
