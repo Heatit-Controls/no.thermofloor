@@ -6,7 +6,7 @@
     "en": "Heatit Controls"
   },
   "brandColor": "#cc3333",
-  "version": "3.4.2",
+  "version": "3.6.3",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -3966,7 +3966,7 @@
     },
     {
       "name": {
-        "en": "Z-HAN"
+        "en": "Z-HAN/B"
       },
       "class": "sensor",
       "capabilities": [
@@ -4006,16 +4006,18 @@
       "zwave": {
         "manufacturerId": 411,
         "productTypeId": [
-          98
+          98,
+          4
         ],
         "productId": [
-          25089
+          25089,
+          26113
         ],
         "security": [
           "none"
         ],
-        "zwaveAllianceProductId": 4666,
-        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4666",
+        "zwaveAllianceProductId": 4744,
+        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4744",
         "learnmode": {
           "image": "/drivers/Z-HAN/assets/learnmode.svg",
           "instruction": {
@@ -4237,26 +4239,6 @@
           "attr": {
             "min": 0,
             "max": 4294967295
-          }
-        },
-        {
-          "id": "scaling_factor",
-          "type": "number",
-          "label": {
-            "en": "Scaling factor"
-          },
-          "hint": {
-            "en": "Allows for multiplication of the meter value in case of use with large electrical systems."
-          },
-          "zwave": {
-            "index": 11,
-            "size": 2,
-            "signed": false
-          },
-          "value": 0,
-          "attr": {
-            "min": 0,
-            "max": 1000
           }
         }
       ]
@@ -7022,7 +7004,10 @@
         "meter_power",
         "measure_power",
         "measure_temperature",
-        "button.reset_meter"
+        "button.reset_meter",
+        "measure_temperature.internal",
+        "measure_temperature.external",
+        "measure_temperature.floor"
       ],
       "capabilitiesOptions": {
         "measure_power": {
@@ -7036,6 +7021,18 @@
           "desc": {
             "en": "Reset the accumulated power usage (kWh), note that this can not be reversed."
           }
+        },
+        "measure_temperature": {
+          "title": "temperature"
+        },
+        "measure_temperature.internal": {
+          "title": "internal temperature"
+        },
+        "measure_temperature.external": {
+          "title": "external temperature"
+        },
+        "measure_temperature.floor": {
+          "title": "floor temperature"
         }
       },
       "platforms": [
@@ -7070,7 +7067,7 @@
           }
         },
         "associationGroupsMultiChannel": [
-          1.1
+          1
         ],
         "associationGroupsOptions": {
           "1": {
@@ -8504,7 +8501,9 @@
       ],
       "class": "socket",
       "capabilities": [
-        "onoff"
+        "onoff",
+        "measure_temperature.input1",
+        "measure_temperature.input2"
       ],
       "capabilitiesOptions": {
         "measure_temperature.input1": {
@@ -8743,7 +8742,7 @@
             "size": 2,
             "signed": false
           },
-          "value": 870,
+          "value": 827,
           "attr": {
             "min": 30,
             "max": 65535
