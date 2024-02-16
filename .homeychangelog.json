@@ -25,5 +25,11 @@
   },
   "3.4.2": {
     "en": "Added support for Heatit Z-Smoke Battery on Homey Bridge"
+  },
+  "3.6.3": {
+    "en": "Added support for floor and external temperature sensor for Z-TRM6. Added support for temperature sensors for Z-Water2. Removed wrong parameter for Z-Han/B."
+  },
+  "3.6.4": {
+    "en": "Added support for floor and external temperature sensor for Z-TRM6. Added support for temperature sensors for Z-Water2. Removed wrong parameter for Z-HAN/B."
   }
 }
