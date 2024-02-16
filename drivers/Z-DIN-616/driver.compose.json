@@ -1,0 +1,178 @@
+{
+	"id": "Z-DIN-616",
+	"name": {
+		"en": "Z-DIN-616"
+	},
+	"icon": "{{driverAssetsPath}}/icon-1.svg",
+	"images": {
+		"large": "{{driverAssetsPath}}/images/large.png",
+		"small": "{{driverAssetsPath}}/images/small.png"
+	},
+	"platforms": ["local", "cloud"],
+	"connectivity": ["zwave"],
+	"class": "socket",
+	"capabilities": ["onoff", "scene_notification_custom_capability"],
+	"capabilitiesOptions": {
+		"onoff": {
+			"title": {
+				"en": "Relay 1"
+			}
+		}
+	},
+	"zwave": {
+		"manufacturerId": 564,
+		"productTypeId": 3,
+		"productId": 274,
+		"security": ["none"],
+		"productDocumentation": "",
+		"pid": 3065,
+		"imageRemotePath": "",
+		"learnmode": {
+			"image": "{{driverAssetsPath}}/learnmode.svg",
+			"instruction": {
+				"en": "1. Click the small button through the little hole, marked with the text “INCLUSION”, in front of the Heatit Z-Water regulator. \n2. The Adding Mode is indicated by Heatit Z-Water status LED is blinking until a timeout occurs after 10 seconds or if the module has been added to the Z-Wave network."
+			}
+		},
+		"associationGroups": [1],
+		"associationGroupsMultiChannel": [2, 5, 8, 11, 14, 17],
+		"associationGroupsOptions": {
+			"1": {
+				"hint": {
+					"en": "Lifeline. Sends Device Reset notifications and Basic Report On / Off when relay output 1 is activated."
+				}
+			},
+			"2": {
+				"hint": {
+					"en": "Sends Basic Set On / Off when input 1 is activated. For example, used to control relay modules or for visualization in the central controller unit."
+				}
+			},
+			"3": {
+				"hint": {
+					"en": "Sends Binary Switch Set On / Off when input 1 is activated. For example, used to control relay modules."
+				}
+			},
+			"4": {
+				"hint": {
+					"en": "Sends Multilevel Switch Set / Multilevel Switch Start Level Change / Multilevel Switch Stop Level Change when input 1 is activated. Typically used to control dimmers, curtain controls, etc."
+				}
+			},
+			"5": {
+				"hint": {
+					"en": "Sends Basic Set On / Off when input 2 is activated. For example, used to control relay modules or for visualization in the central controller unit."
+				}
+			},
+			"6": {
+				"hint": {
+					"en": "Sends Binary Switch Set On / Off when input 2 is activated. For example, used to control relay modules."
+				}
+			},
+			"7": {
+				"hint": {
+					"en": "Sends Multilevel Switch Set / Multilevel Switch Start Level Change / Multilevel Switch Stop Level Change when input 2 is activated. Typically used to control dimmers, curtain controls, etc."
+				}
+			},
+			"8": {
+				"hint": {
+					"en": "Sends Basic Set On / Off when input 3 is activated. For example, used to control relay modules or for visualization in the central controller unit."
+				}
+			},
+			"9": {
+				"hint": {
+					"en": "Sends Binary Switch Set On / Off when input 3 is activated. For example, used to control relay modules."
+				}
+			},
+			"10": {
+				"hint": {
+					"en": "Sends Multilevel Switch Set / Multilevel Switch Start Level Change / Multilevel Switch Stop Level Change when input 3 is activated. Typically used to control dimmers, curtain controls, etc."
+				}
+			},
+			"11": {
+				"hint": {
+					"en": "Sends Basic Set On / Off when input 4 is activated. For example, used to control relay modules or for visualization in the central controller unit."
+				}
+			},
+			"12": {
+				"hint": {
+					"en": "Sends Binary Switch Set On / Off when input 4 is activated. For example, used to control relay modules."
+				}
+			},
+			"13": {
+				"hint": {
+					"en": "Sends Multilevel Switch Set / Multilevel Switch Start Level Change / Multilevel Switch Stop Level Change when input 4 is activated. Typically used to control dimmers, curtain controls, etc."
+				}
+			},
+			"14": {
+				"hint": {
+					"en": "Sends Basic Set On / Off when input 5 is activated. For example, used to control relay modules or for visualization in the central controller unit."
+				}
+			},
+			"15": {
+				"hint": {
+					"en": "Sends Binary Switch Set On / Off when input 5 is activated. For example, used to control relay modules."
+				}
+			},
+			"16": {
+				"hint": {
+					"en": "Sends Multilevel Switch Set / Multilevel Switch Start Level Change / Multilevel Switch Stop Level Change when input 5 is activated. Typically used to control dimmers, curtain controls, etc."
+				}
+			},
+			"17": {
+				"hint": {
+					"en": "Sends Basic Set On / Off when input 6 is activated. For example, used to control relay modules or for visualization in the central controller unit."
+				}
+			},
+			"18": {
+				"hint": {
+					"en": "Sends Binary Switch Set On / Off when input 6 is activated. For example, used to control relay modules."
+				}
+			},
+			"19": {
+				"hint": {
+					"en": "Sends Multilevel Switch Set / Multilevel Switch Start Level Change / Multilevel Switch Stop Level Change when input 6 is activated. Typically used to control dimmers, curtain controls, etc."
+				}
+			}
+		},
+		"multiChannelNodes": {
+			"2": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"icon": "{{driverAssetsPath}}/icon-2.svg",
+				"name": {
+					"en": "Relay 2"
+				}
+			},
+			"3": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"icon": "{{driverAssetsPath}}/icon-3.svg",
+				"name": {
+					"en": "Relay 3"
+				}
+			},
+			"4": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"icon": "{{driverAssetsPath}}/icon-4.svg",
+				"name": {
+					"en": "Relay 4"
+				}
+			},
+			"5": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"icon": "{{driverAssetsPath}}/icon-5.svg",
+				"name": {
+					"en": "Relay 5"
+				}
+			},
+			"6": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"icon": "{{driverAssetsPath}}/icon-6.svg",
+				"name": {
+					"en": "Relay 6"
+				}
+			}
+		}
+	}
+}

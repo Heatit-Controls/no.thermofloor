@@ -1,0 +1,12 @@
+{
+	"id": "alarm_power",
+	"title": {
+		"en": "The power supply alarm is !{{on|off}}",
+		"nl": "Het voeding alarm is !{{aan|uit}}"
+	},
+	"args": [{
+		"name": "device",
+		"type": "device",
+		"filter": "driver_id=Z-Smoke-AC"
+}]
+}

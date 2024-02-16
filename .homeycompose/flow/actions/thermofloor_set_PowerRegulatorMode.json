@@ -1,0 +1,30 @@
+{
+	"id": "thermofloor_set_PowerRegulatorMode",
+	"title": {
+		"en": "Set Power Regulator Mode (P) level",
+		"nl": "Stel Power Regulator Mode (P) niveau in"
+	},
+	"titleFormatted": {
+		"en": "Set Power Regulator Mode (P) level to [[set_power_regulator_mode]]",
+		"nl": "Stel Power Regulator Mode (P) niveau in [[set_power_regulator_mode]]"
+	},
+	"hint": {
+		"en": "*P* Setting power regulator mode level. Read the manual before changing. \nRange: 0-10 \nDefault: 2",
+		"nl": "*P* Stel de Power Regulator mode niveau in. Lees de handleiding voordat deze instellingen aangepast worden. \nBereik: 0-10 \nStandaard: 2."
+	},
+	"args": [
+		{
+			"name": "device",
+			"type": "device",
+			"filter": "driver_id=TF_Thermostat|TF_Thermostat_FW1.92"
+	   },
+		{
+			"name": "set_power_regulator_mode",
+			"type": "range",
+			"title": { "en": "Mode" },
+			"min": 0,
+			"max": 10,
+			"step": 1
+    }
+  ]
+}

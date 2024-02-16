@@ -1,0 +1,219 @@
+{
+	"id": "Z-Water",
+	"name": {
+		"en": "Z-Water regulator"
+	},
+	"icon": "{{driverAssetsPath}}/icon-1.svg",
+	"images": {
+		"large": "{{driverAssetsPath}}/images/large.png",
+		"small": "{{driverAssetsPath}}/images/small.png"
+	},
+	"platforms": ["local", "cloud"],
+	"connectivity": ["zwave"],
+	"class": "socket",
+	"capabilities": ["onoff", "measure_temperature.input1", "measure_temperature.input2", "measure_temperature.input3", "measure_temperature.input4"],
+	"capabilitiesOptions": {
+		"onoff": {
+			"title": {
+				"en": "Relay 1"
+			}
+		},
+		"measure_temperature.input1": {
+			"title": {
+				"en": "Sensor 1"
+			}
+		},
+		"measure_temperature.input2": {
+			"title": {
+				"en": "Sensor 2"
+			}
+		},
+		"measure_temperature.input3": {
+			"title": {
+				"en": "Sensor 3"
+			}
+		},
+		"measure_temperature.input4": {
+			"title": {
+				"en": "Sensor 4"
+			}
+		}
+	},
+	"energy": {
+		"approximation": {
+			"usageOn": 0,
+			"usageOff": 0
+		}
+	},
+	"zwave": {
+		"manufacturerId": 411,
+		"productTypeId": 3,
+		"productId": 522,
+		"security": ["none"],
+		"productDocumentation": "",
+		"pid": 3065,
+		"imageRemotePath": "",
+		"learnmode": {
+			"image": "{{driverAssetsPath}}/learnmode.svg",
+			"instruction": {
+				"en": "1. Click the small button through the little hole, marked with the text “INCLUSION”, in front of the Heatit Z-Water regulator. \n2. The Adding Mode is indicated by Heatit Z-Water status LED is blinking until a timeout occurs after 10 seconds or if the module has been added to the Z-Wave network."
+			}
+		},
+		"associationGroupsMultiChannel": [1.1],
+		"associationGroupsOptions": {
+			"1": {
+				"hint": {
+					"en": "Lifeline. Sends Device Reset notifications and Basic Report On / Off when relay output 1 is activated."
+				}
+			},
+			"2": {
+				"hint": {
+					"en": "Sends Multilevel Sensor Reports for input 1."
+				}
+			},
+			"3": {
+				"hint": {
+					"en": "Sends Multilevel Sensor Reports for input 2."
+				}
+			},
+			"4": {
+				"hint": {
+					"en": "Sends Multilevel Sensor Reports for input 3."
+				}
+			},
+			"5": {
+				"hint": {
+					"en": "Sends Multilevel Sensor Reports for input 4."
+				}
+			}
+		},
+		"multiChannelNodes": {
+			"2": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"energy": {
+					"approximation": {
+						"usageOn": 0,
+						"usageOff": 0
+					}
+				},
+				"icon": "{{driverAssetsPath}}/icon-2.svg",
+				"name": {
+					"en": "Relay 2"
+				}
+			},
+			"3": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"energy": {
+					"approximation": {
+						"usageOn": 0,
+						"usageOff": 0
+					}
+				},
+				"icon": "{{driverAssetsPath}}/icon-3.svg",
+				"name": {
+					"en": "Relay 3"
+				}
+			},
+			"4": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"energy": {
+					"approximation": {
+						"usageOn": 0,
+						"usageOff": 0
+					}
+				},
+				"icon": "{{driverAssetsPath}}/icon-4.svg",
+				"name": {
+					"en": "Relay 4"
+				}
+			},
+			"5": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"energy": {
+					"approximation": {
+						"usageOn": 0,
+						"usageOff": 0
+					}
+				},
+				"icon": "{{driverAssetsPath}}/icon-5.svg",
+				"name": {
+					"en": "Relay 5"
+				}
+			},
+			"6": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"energy": {
+					"approximation": {
+						"usageOn": 0,
+						"usageOff": 0
+					}
+				},
+				"icon": "{{driverAssetsPath}}/icon-6.svg",
+				"name": {
+					"en": "Relay 6"
+				}
+			},
+			"7": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"energy": {
+					"approximation": {
+						"usageOn": 0,
+						"usageOff": 0
+					}
+				},
+				"icon": "{{driverAssetsPath}}/icon-7.svg",
+				"name": {
+					"en": "Relay 7"
+				}
+			},
+			"8": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"energy": {
+					"approximation": {
+						"usageOn": 0,
+						"usageOff": 0
+					}
+				},
+				"icon": "{{driverAssetsPath}}/icon-8.svg",
+				"name": {
+					"en": "Relay 8"
+				}
+			},
+			"9": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"energy": {
+					"approximation": {
+						"usageOn": 0,
+						"usageOff": 0
+					}
+				},
+				"icon": "{{driverAssetsPath}}/icon-9.svg",
+				"name": {
+					"en": "Relay 9"
+				}
+			},
+			"10": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"energy": {
+					"approximation": {
+						"usageOn": 0,
+						"usageOff": 0
+					}
+				},
+				"icon": "{{driverAssetsPath}}/icon-10.svg",
+				"name": {
+					"en": "Relay 10"
+				}
+			}
+		}
+	}
+}

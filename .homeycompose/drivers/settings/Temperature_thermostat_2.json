@@ -1,0 +1,28 @@
+{
+	"type": "dropdown",
+	"label": {
+		"en": "Displayed temperature",
+		"nl": "Getoonde temperatuur"
+	},
+	"value": "floor",
+	"hint": {
+		"en": "Displayed temperature in Homey's thermostat \ndefault: Floor sensor",
+		"nl": "Getoonde termperatuur in Homey's thermostaat \nstandaard: Vloer sensor"
+	},
+	"values": [
+		{
+			"id": "floor",
+			"label": {
+				"en": "Floor sensor (default)",
+				"nl": "Vloer sensor (standaard)"
+			}
+		},
+		{
+			"id": "external",
+			"label": {
+				"en": "External sensor",
+				"nl": "Externe sensor"
+			}
+		}
+  ]
+}

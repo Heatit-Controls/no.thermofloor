@@ -1,0 +1,28 @@
+{
+	"type": "dropdown",
+	"label": {
+		"en": "Deactivate Central Scene notifications.",
+		"nl": "Central Scene notificaties uitschakelen"
+	},
+	"value": "0",
+	"hint": {
+		"en": "Deactivate Central Scene notifications. \nZ-wave parameter {{zwaveParameterIndex}} \ndefault: Notfications ingeschakeld.",
+		"nl": "Central Scene notificaties uitschakelen. \nZ-wave parameter {{zwaveParameterIndex}} \nstandaard: Nofificaties ingeschakeld."
+	},
+	"values": [
+		{
+			"id": "0",
+			"label": {
+				"en": "Central Scene notifications enabled (default)",
+				"nl": "Central Scene notificaties ingeschakeld (standaard)"
+			}
+		},
+		{
+			"id": "1",
+			"label": {
+				"en": "Central Scene notifications uitgeschakeld",
+				"nl": "Central Scene notificaties uitgeschakeld"
+			}
+		}
+  ]
+}

@@ -1,0 +1,45 @@
+{
+	"zwave": {
+		"index": 1,
+		"size": 1
+	},
+	"type": "dropdown",
+	"label": {
+		"en": "Status LED"
+	},
+	"value": "1",
+	"hint": {
+		"en": "Configuration of the status LED. \nZ-wave parameter {{zwaveParameterIndex}} \ndefault: LED turned on",
+		"nl": "Instelling van de status LED. \nZ-wave parameter {{zwaveParameterIndex}} \nstandaard: LED ingeschakeld"
+	},
+	"values": [
+		{
+			"id": "0",
+			"label": {
+				"en": "LED turned off.",
+				"nl": "LED uitgeschakeld"
+			}
+    },
+		{
+			"id": "1",
+			"label": {
+				"en": "LED turned on (default)",
+				"nl": "LED ingeschakeld (standaard)"
+			}
+    },
+		{
+			"id": "2",
+			"label": {
+				"en": "LED flashing at 1 second intervals (1 Hz).",
+				"nl": "LED knippert in 1 seconde interval (1 Hz)."
+			}
+    },
+		{
+			"id": "3",
+			"label": {
+				"en": "LED flashing at 1/2 second intervals (1⁄2 Hz).",
+				"nl": "LED knippert in 1/2 seconde interval (1⁄2 Hz)."
+			}
+    }
+  ]
+}

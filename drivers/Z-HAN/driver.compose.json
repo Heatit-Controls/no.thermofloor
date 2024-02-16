@@ -1,0 +1,67 @@
+{
+  "name": {
+    "en": "Z-HAN"
+  },
+  "class": "sensor",
+  "capabilities": [
+    "meter_power",
+    "measure_power",
+	"measure_voltage",
+	"measure_current",
+	"measure_temperature",
+    "button.reset_meter"
+  ],
+  "capabilitiesOptions": {
+    "measure_power": {
+      "approximated": true
+    },
+    "button.reset_meter": {
+      "maintenanceAction": true,
+      "title": {
+        "en": "Reset power meter"
+      },
+      "desc": {
+        "en": "Reset the accumulated power usage (kWh), note that this can not be reversed."
+      }
+    }
+  },
+  "platforms": [
+    "local",
+    "cloud"
+  ],
+  "connectivity": [
+    "zwave"
+  ],
+  "images": {
+    "small": "{{driverAssetsPath}}/images/small.png",
+    "large": "{{driverAssetsPath}}/images/large.png",
+    "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
+  },
+  "zwave": {
+    "manufacturerId": 411,
+    "productTypeId": [98],
+    "productId": [25089],
+    "security": ["none"],
+    "zwaveAllianceProductId": 4666,
+    "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4666",
+    "learnmode": {
+      "image": "{{driverAssetsPath}}/learnmode.svg",
+      "instruction": {
+        "en": "Press the reset button on the device 3 times in a rapid sequence."
+      }
+    },
+    "associationGroups": [1],
+    "associationGroupsOptions": {
+      "1": {
+        "hint": {
+          "en": "Lifeline association group (do not change)"
+        }
+      },
+      "2": {
+        "hint": {
+          "en": "Meter report: Meter report kWh and W to be sent to other devices"
+        }
+      }
+    }
+  }
+}

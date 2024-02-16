@@ -1,0 +1,25 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Siren turned on",
+    "nl": "Sirene aangezet"
+  },
+  "desc": {
+    "en": "Power supply alarm",
+    "nl": "Voeding alarm"
+  },
+  "insights": true,
+  "insightsTitleTrue": {
+    "en": "Siren turned on",
+    "nl": "Sirene aangezet"
+  },
+  "insightsTitleFalse": {
+    "en": "Siren turned off",
+    "nl": "Sirene uitgezet"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "toggle",
+  "uiQuickAction": false,
+  "icon": "/assets/alarm_siren.svg"
+}

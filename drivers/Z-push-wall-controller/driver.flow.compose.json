@@ -1,0 +1,97 @@
+{
+  "triggers": [
+    {
+      "id": "z-push-wc-scene",
+      "title": {
+        "en": "Button is pressed"
+      },
+      "titleFormatted": {
+        "en": "[[button]] button is [[scene]]"
+      },
+      "args": [
+        {
+          "name": "button",
+          "type": "dropdown",
+          "title": { "en": "Button" },
+          "values": [
+            {
+              "id": "1",
+              "label": {
+                "en": "Up left"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "Down left"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "Up middle"
+              }
+            },
+            {
+              "id": "4",
+              "label": {
+                "en": "Down middle"
+              }
+            },
+            {
+              "id": "5",
+              "label": {
+                "en": "Up right"
+              }
+            },
+            {
+              "id": "6",
+              "label": {
+                "en": "Down right"
+              }
+            }
+          ]
+        },
+        {
+          "name": "scene",
+          "type": "dropdown",
+          "title": { "en": "Scene" },
+          "values": [
+            {
+              "id": "Key Pressed 1 time",
+              "label": {
+                "en": "pressed 1x"
+              }
+            },
+            {
+              "id": "Key Pressed 2 times",
+              "label": {
+                "en": "pressed 2x"
+              }
+            },
+            {
+              "id": "Key Pressed 3 times",
+              "label": {
+                "en": "pressed 3x"
+              }
+            },
+            {
+              "id": "Key Held Down",
+              "label": {
+                "en": "long pressed"
+              }
+            },
+            {
+              "id": "Key Released",
+              "label": {
+                "en": "long press released"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "conditions": [],
+  "actions": []
+}

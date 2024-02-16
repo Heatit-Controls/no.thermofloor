@@ -1,0 +1,38 @@
+{
+  "id": "Z-Repeater",
+  "name": {
+    "en": "Z-Repeater"
+  },
+  "platforms": ["local", "cloud"],
+  "connectivity": ["zwave"],
+  "class": "sensor",
+  "capabilities": ["measure_battery", "alarm_power"],
+  "icon": "{{driverAssetsPath}}/icon.svg",
+  "images": {
+    "small": "{{driverAssetsPath}}/images/small.png",
+    "large": "{{driverAssetsPath}}/images/large.png"
+  },
+  "energy": {
+    "batteries": ["INTERNAL"]
+  },
+  "zwave": {
+    "manufacturerId": 411,
+    "productTypeId": [3, 4],
+    "productId": [13824, 15],
+    "security": ["none"],
+    "learnmode": {
+      "image": "{{driverAssetsPath}}/learnmode.svg",
+      "instruction": {
+        "en": "Press the configuration button 3 times."
+      }
+    },
+    "associationGroups": [1],
+    "associationGroupsOptions": {
+      "1": {
+        "hint": {
+          "en": "Z-Wave Lifeline group. The Homey controller should be here"
+        }
+      }
+    }
+  }
+}

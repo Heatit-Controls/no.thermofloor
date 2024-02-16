@@ -1,0 +1,17 @@
+{
+	"type": "number",
+	"attr": {
+		"min": 0,
+		"max": 127
+	},
+	"value": 10,
+	"label": {
+		"en": "Meter report threshold",
+		"nl": "Meter rapportage drempelwaarde"
+	},
+	"hint": {
+		"en": "The meter report will be sent if there is a difference in meter value from the previous value reported (threshold). \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 0 - 127 (0 - 12.7 kWh)\nDefault: 10 (1.0 kWh)",
+		"nl": "De meter rapportage wordt verstuurd wanneer het verschil in meter waarde met de vorige gerapporteerde waarde de drempelwaarde overschrijd. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 0 - 127 (0 - 12.7 kWh)\nStandaard: 10 (1.0 kWh)"
+
+	}
+}

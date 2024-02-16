@@ -1,0 +1,17 @@
+{
+	"type": "number",
+	"attr": {
+		"min": 0,
+		"max": 50
+	},
+	"value": 10,
+	"label": {
+		"en": "Humidity report threshold (%)",
+		"nl": "Luchtvochtigheids rapportage drempelwaarde (%)"
+	},
+	"hint": {
+		"en": "The humidity report will be sent if there is a difference in Humidity value from the previous value reported (threshold). \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 0 - 50 (0 - 5.0 %)\nDefault: 10 (1.0 °C)",
+		"nl": "De luchtvochtigheids rapportage wordt verstuurd wanneer het verschil in luchtvochtigheids waarde met de vorige gerapporteerde waarde de drempelwaarde overschrijd. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 0 - 50 (0 - 50.0 °C)\nStandaard: 10 (1.0 °C)"
+
+	}
+}

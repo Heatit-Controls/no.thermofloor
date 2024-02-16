@@ -1,0 +1,16 @@
+{
+	"type": "number",
+	"attr": {
+		"min": 0,
+		"max": 270
+	},
+	"value": 10,
+	"label": {
+		"en": "Proximity sensor retrigger interval (s)",
+		"nl": "Nabijheidssensor reactivatie interval (s)"
+	},
+	"hint": {
+		"en": "Time interval between consecutive reports. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 0, 1 - 270 (d)\nDefault: 10 (s)",
+		"nl": "Tijdsinterval tussen opeenvolgende rapportages. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 0, 1 - 270 (s)\nStandaard: 10 (s)"
+	}
+}

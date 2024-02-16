@@ -1,0 +1,16 @@
+{
+	"id": "thermostat_state_false",
+	"title": {
+		"en": "Heating turned off",
+		"nl": "Verwarming uitgezet"
+	},
+	"titleFormatted": {
+		"en": "Heating turned off",
+		"nl": "Verwarming uitgezet"
+	},
+	"args": [{
+		"name": "device",
+		"type": "device",
+		"filter": "driver_id=Z-TRM3|Z-TEMP2"
+  }]
+}

@@ -1,0 +1,31 @@
+{
+	"name": "no.ThermoFloor",
+	"version": "1.0.0",
+	"description": "This app adds support for devices made by [ThermoFloor](http://www.thermo-floor.no).",
+	"main": "app.js",
+	"dependencies": {
+		"homey-zigbeedriver": "^2.0.1",
+		"homey-zwavedriver": "^2.1.10"
+	},
+	"devDependencies": {
+		"eslint": "^7.17.0",
+		"eslint-config-athom": "^2.1.0"
+	},
+	"scripts": {
+		"run": "homey app run",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Heatit-Controls/no.ThermoFloor.git"
+	},
+	"engines": {
+		"node": ">=12.16.1"
+	},
+	"author": "Ted Tolboom",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/Heatit-Controls/no.ThermoFloor/issues"
+	},
+	"homepage": "https://github.com/Heatit-Controls/no.ThermoFloor.git#readme"
+}

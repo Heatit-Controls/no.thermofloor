@@ -1,0 +1,37 @@
+{
+	"type": "boolean",
+	"uiComponent": "sensor",
+	"icon": "/assets/thermofloor_onoff.svg",
+	"noblink": false,
+	"greyout": true,
+	"label": {
+		"true": {
+			"en": "Active"
+		},
+		"false": {
+			"en": "Idle"
+		}
+	},
+	"title": {
+		"en": "Heating",
+		"nl": "Verwarming"
+	},
+	"desc": {
+		"en": "State of the thermostat",
+		"nl": "Status van de thermostaat"
+	},
+	"uiComponent": "sensor",
+	"icon": "/assets/thermofloor_onoff.svg",
+	"getable": true,
+	"setable": false,
+	"greyout": true,
+	"insights": true,
+	"insightsTitleTrue": {
+		"en": "Heating active",
+		"nl": "Verwarming ingeschakeld"
+	},
+	"insightsTitleFalse": {
+		"en": "Heating idle",
+		"nl": "Verwarming uitgeschakeld"
+	}
+}

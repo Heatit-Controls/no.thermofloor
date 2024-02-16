@@ -1,0 +1,15 @@
+{
+	"type": "number",
+	"attr": {
+		"min": 0,
+		"max": 9
+	},
+	"value": 2,
+	"label": {
+		"en": "Power Regulator level (P)- level"
+	},
+	"hint": {
+		"en": "*P* Setting power regulator mode level \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 0-10 \nDefault: 2.",
+		"nl": "*P* Stel de Power Regulator mode niveau in. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 0-10 \nStandaard: 2."
+	}
+}

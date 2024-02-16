@@ -1,0 +1,11 @@
+
+node_modules/
+.DS_Store
+*/.DS_Store
+drivers/.DS_Store
+drivers/.DS_Store
+.DS_Store
+build/
+
+# Added by Homey CLI
+/.homeybuild/

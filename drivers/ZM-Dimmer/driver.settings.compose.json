@@ -1,0 +1,396 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "Dimmer functionality"
+    },
+    "collapsed": false,
+    "children": [
+      {
+        "id": "power_restore_level",
+        "value": 100,
+        "label": {
+          "en": "Power restore level"
+        },
+        "hint": {
+          "en": "This parameter ({{zwaveParameterIndex}}) defines the level the dimmer will return to after a power failure. 0: OFF, 1 - 99: Level in %, 100: Last level (Default)."
+        },
+        "zwave": {
+          "index": 1,
+          "size": 1,
+		  "signed": false
+        },
+        "attr": {
+          "min": 0,
+          "max": 100
+        },
+        "type": "number"
+      },
+      {
+        "id": "on_off_functionality",
+        "value": 0,
+        "label": {
+          "en": "ON/OFF functionality"
+        },
+        "hint": {
+          "en": "This parameter ({{zwaveParameterIndex}}) decide if the connected oad should only turn ON/OFF and not dim."
+        },
+        "zwave": {
+          "index": 15,
+          "size": 1,
+		  "signed": false
+        },
+        "attr": {
+          "min": 0,
+          "max": 1
+        },
+        "type": "number"
+      },
+      {
+        "id": "switch_on_level",
+        "value": 0,
+        "label": {
+          "en": "Switch ON level"
+        },
+        "hint": {
+          "en": "This parameter ({{zwaveParameterIndex}}) defines the dimming level when switched ON. 0: Restore last level (Default), 1 - 99: Level in %."
+        },
+        "zwave": {
+          "index": 2,
+          "size": 1,
+		  "signed": false
+        },
+        "attr": {
+          "min": 0,
+          "max": 99
+        },
+        "type": "number"
+      },
+      {
+        "id": "auto_switch_off",
+        "value": 0,
+        "label": {
+          "en": "Automatic switch OFF"
+        },
+        "hint": {
+          "en": "This parameter ({{zwaveParameterIndex}}) defines the time for the dimmer to automatically switch OFF. 0: Function disabled (Default), 1 - 86400: Time in seconds."
+        },
+        "zwave": {
+          "index": 3,
+          "size": 4,
+		  "signed": false
+        },
+        "attr": {
+          "min": 0,
+          "max": 86400
+        },
+        "type": "number"
+      },
+      {
+        "id": "auto_switch_on",
+        "value": 0,
+        "label": {
+          "en": "Automatic switch ON"
+        },
+        "hint": {
+          "en": "This parameter ({{zwaveParameterIndex}}) defines the time for the dimmer to automatically switch ON. 0: Function disabled (Default), 1 - 86400: Time in seconds."
+        },
+        "zwave": {
+          "index": 4,
+          "size": 4,
+		  "signed": false
+        },
+        "attr": {
+          "min": 0,
+          "max": 86400
+        },
+        "type": "number"
+      },
+      {
+        "id": "switch_off_delay",
+        "value": 0,
+        "label": {
+          "en": "Switch OFF delay"
+        },
+        "hint": {
+          "en": "This parameter ({{zwaveParameterIndex}}) defines a dimmer switch OFF delay. 0: Function disabled (Default), 1 - 60: Time in seconds."
+        },
+        "zwave": {
+          "index": 5,
+          "size": 1,
+		  "signed": false
+        },
+        "attr": {
+          "min": 0,
+          "max": 60
+        },
+        "type": "number"
+      },
+      {
+        "id": "dimming_curve",
+        "value": "0",
+        "label": {
+          "en": "Dimming curve"
+        },
+        "hint": {
+          "en": "This parameter ({{zwaveParameterIndex}}) selects the dimming curve."
+        },
+        "zwave": {
+          "index": 9,
+          "size": 1,
+		  "signed": false
+        },
+        "values": [
+          {
+            "id": "0",
+            "label": {
+              "en": "Linear dimming (Default)"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "en": "Logarithmic dimming"
+            }
+          }
+        ],
+        "type": "dropdown"
+      },
+      {
+        "id": "dimming_mode",
+        "value": "0",
+        "label": {
+          "en": "Dimming mode"
+        },
+        "hint": {
+          "en": "This parameter ({{zwaveParameterIndex}}) selects the dimming mode."
+        },
+        "zwave": {
+          "index": 10,
+          "size": 1,
+		  "signed": false
+        },
+        "values": [
+          {
+            "id": "0",
+            "label": {
+              "en": "Trailing edge (Default)"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "en": "Leading edge"
+            }
+          }
+        ],
+        "type": "dropdown"
+      },
+      {
+        "id": "minimum_dim_level",
+        "value": 15,
+        "label": {
+          "en": "Minimum dim level"
+        },
+        "hint": {
+          "en": "This parameter ({{zwaveParameterIndex}}) defines the lowest dim level of the dimmer. 1 - 99: Level in % (Default is 15%)."
+        },
+        "zwave": {
+          "index": 12,
+          "size": 1,
+		  "signed": false
+        },
+        "attr": {
+          "min": 1,
+          "max": 98
+        },
+        "type": "number"
+      },
+      {
+        "id": "maximum_dim_level",
+        "value": 90,
+        "label": {
+          "en": "Maximum dimming level"
+        },
+        "hint": {
+          "en": "This parameter ({{zwaveParameterIndex}}) defines the maximum dimming level. 2 - 99: Level in % (Default is 90%)."
+        },
+        "zwave": {
+          "index": 11,
+          "size": 1,
+		  "signed": false
+        },
+        "attr": {
+          "min": 2,
+          "max": 99
+        },
+        "type": "number"
+      }
+    ]
+  },
+
+  {
+    "type": "group",
+    "label": {
+      "en": "External switch functionality"
+    },
+    "collapsed": false,
+    "children": [
+      {
+        "id": "S1 switch_functionality",
+        "value": "1",
+        "label": {
+          "en": "S1 switch functionality"
+        },
+        "hint": {
+          "en": "This parameter ({{zwaveParameterIndex}}) defines functionality for the S1 external switch."
+        },
+        "zwave": {
+          "index": 6,
+          "size": 1,
+		  "signed": false
+        },
+        "values": [
+          {
+            "id": "0",
+            "label": {
+              "en": "Double press to 100%"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "en": "Scene controller function (Default)"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "en": "Scene controller and dimming function"
+            }
+          },
+          {
+              "id": "3",
+              "label": {
+                "en": "Disabled"
+              }
+            }
+          ],
+        "type": "dropdown"
+      },
+      {
+        "id": "S2 switch_functionality",
+        "value": "1",
+        "label": {
+          "en": "S2 switch functionality"
+        },
+        "hint": {
+          "en": "This parameter ({{zwaveParameterIndex}}) defines functionality for the S2 external switch."
+        },
+        "zwave": {
+          "index": 7,
+          "size": 1,
+		  "signed": false
+        },
+        "values": [
+          {
+            "id": "0",
+            "label": {
+              "en": "Double press to 100%"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "en": "Scene controller function (Default)"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "en": "Scene controller and dimming function"
+            }
+          },
+          {
+              "id": "3",
+              "label": {
+                "en": "Disabled"
+              }
+            }
+          ],
+        "type": "dropdown"
+      },
+      {
+        "id": "dimming_duration",
+        "value": 5,
+        "label": {
+          "en": "Dimming duration"
+        },
+        "hint": {
+          "en": "This parameter ({{zwaveParameterIndex}}) defines the dimming duration when switched ON by external switch. 0: Instantly, 1 - 100: Time in range 0.1 - 10 seconds (Default is 5 seconds)."
+        },
+        "zwave": {
+          "index": 8,
+          "size": 1,
+		  "signed": false
+        },
+        "attr": {
+          "min": 0,
+          "max": 100
+        },
+        "type": "number"
+      }
+    ]
+  },
+
+  {
+    "type": "group",
+    "label": {
+      "en": "Metering reports"
+    },
+    "collapsed": false,
+    "children": [
+      {
+        "id": "meter_report_threshold",
+        "value": 10,
+        "label": {
+          "en": "Meter report threshold"
+        },
+        "hint": {
+          "en": "This parameter ({{zwaveParameterIndex}}) defines the threshold (in Watt) for when sending meter reports. 0: Disabled, 1 - 250: Threshold in Watt (Default is 10W)."
+        },
+        "zwave": {
+          "index": 13,
+          "size": 1,
+		  "signed": false
+        },
+        "attr": {
+          "min": 0,
+          "max": 250
+        },
+        "type": "number"
+      },
+      {
+        "id": "meter_report_interval",
+        "value": 780,
+        "label": {
+          "en": "Meter report intervals"
+        },
+        "hint": {
+          "en": "This parameter ({{zwaveParameterIndex}}) defines the time interval between consecutive meter reports. 30 - 65535: Interval in seconds (Default is 780 seconds)."
+        },
+        "zwave": {
+          "index": 14,
+          "size": 2,
+		  "signed": false
+        },
+        "attr": {
+          "min": 30,
+          "max": 65535
+        },
+        "type": "number"
+      }
+    ]
+  }
+]
+  

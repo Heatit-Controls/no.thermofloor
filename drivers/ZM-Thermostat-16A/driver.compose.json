@@ -1,0 +1,41 @@
+{
+  "id": "ZM-Thermostat16A",
+  "name": {
+    "en": "ZM Thermostat 16A"
+  },
+  
+	"class": "thermostat",
+  "capabilities": ["measure_temperature", "thermostat_mode_13570", "target_temperature", "thermostat_state_13570", "measure_power", "meter_power"],
+	"platforms": ["local", "cloud"],
+  "connectivity": ["zwave"],
+  "icon": "{{driverAssetsPath}}/icon.svg",
+  "images": {
+  	"small": "{{driverAssetsPath}}/images/small.png",
+  	"large": "{{driverAssetsPath}}/images/large.png"
+  },
+	"zwave": {
+	  "manufacturerId": 411,
+	  "productTypeId": 4,
+	  "productId": 13570,
+	  "security": ["none"],
+	  "learnmode": {
+		  "image": "{{driverAssetsPath}}/learnmode.svg",
+		  "instruction": {
+			  "en": "Press the configuration button 3 times."
+		  }
+	  },
+		"associationGroups": [1],
+	  "associationGroupsOptions": {
+		  "1": {
+			  "hint": {
+				  "en": "Z-Wave Lifeline group. The Homey controller should be here"
+			  }
+			},
+			"2": {
+				"hint": {
+					"en": "External Relay Control"
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,31 @@
+{
+	"mode": {
+		"Off": "Off",
+		"Heat": "Heating",
+		"Energy Save Heat": "Economic",
+		"Cool": "Cooling"
+	},
+	"Key Pressed 1 time": "Pressed 1x",
+	"Key Pressed 2 times": "Pressed 2x",
+	"Key Pressed 3 times": "Pressed 3x",
+	"Key Pressed 4 times": "Pressed 4x",
+	"Key Pressed 5 times": "Pressed 5x",
+	"Key Held Down": "Held Down",
+	"Key Released": "Released",
+	"Group2-I": "Group 2 - on (I)",
+	"Group2-O": "Group 2 - off (O)",
+	"Group3-I": "Group 3 - on (I)",
+	"Group3-O": "Group 3 - off (O)",
+	"Group4-I": "Group 4 - on (I)",
+	"Group4-O": "Group 4 - off (O)",
+	"Group5-I": "Group 5 - on (I)",
+	"Group5-O": "Group 5 - off (O)",
+	"Dimmer": "Dimmer button",
+	"Rotary button" : "Rotary button",
+	"External switch" : "External switch",
+	"External switch 1" : "External switch 1",
+	"External switch 2" : "External switch 2",
+	"pairing": {
+		"configuring": "Configuring..."
+	}
+}

@@ -1,0 +1,39 @@
+{
+	"id": "thermofloor_mode_changed",
+	"title": {
+		"en": "Thermostat mode has changed",
+		"nl": "Thermostaat modus is veranderd"
+	},
+	"titleFormatted": {
+		"en": "Thermostat mode has changed",
+		"nl": "Thermostaat modus is veranderd"
+	},
+	"args": [{
+		"name": "device",
+		"type": "device",
+		"filter": "driver_id=TF_Thermostat|TF_Thermostat_FW1.92|Z-TRM2fx|Z-TRM3|Z-TEMP2"
+}],
+	"tokens": [
+		{
+			"name": "mode",
+			"title": {
+				"en": "ID",
+				"nl": "ID"
+			},
+			"example": {
+				"en": "Heat"
+			}
+			},
+		{
+			"name": "mode_name",
+			"title": {
+				"en": "Name",
+				"nl": "Naam"
+			},
+			"example": {
+				"en": "Comfort",
+				"nl": "Comfort"
+			}
+			}
+		]
+}

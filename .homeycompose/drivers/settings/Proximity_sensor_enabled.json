@@ -1,0 +1,16 @@
+{
+  "value": true,
+  "label": {
+    "en": "Proximity sensor enabled",
+    "nl": "Nabijheidssensor ingeschakeld"
+  },
+  "hint": {
+    "en": "This parameter ({{zwaveParameterIndex}}) determines whether the proximity sensor is enabled. Default: enabled",
+    "nl": "Deze parameter ({{zwaveParameterIndex}}) bepaalt of de nabijheidssensor ingeschakeld is. Standaard: ingeschakeld"
+  },
+  "zwave": {
+    "index": 7,
+    "size": 2
+  },
+  "type": "checkbox"
+}

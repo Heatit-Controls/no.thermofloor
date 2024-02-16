@@ -1,0 +1,23 @@
+{
+	"id": "thermostat_mode_changed_to",
+	"title": {
+		"en": "Thermostat mode has changed to",
+		"nl": "Thermostaat modus is veranderd naar"
+	},
+	"titleFormatted": {
+		"en": "Thermostat mode has changed to [[mode]]",
+		"nl": "Thermostaat modus is veranderd naar [[mode]]"
+	},
+	"args": [
+		{
+			"name": "device",
+			"type": "device",
+			"filter": "driver_id=Z-TRM3|Z-TEMP2"
+		},
+		{
+			"name": "mode",
+			"title": { "en": "Mode" },
+			"type": "autocomplete"
+		}
+	]
+}

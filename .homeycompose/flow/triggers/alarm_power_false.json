@@ -1,0 +1,16 @@
+{
+	"id": "alarm_power_false",
+	"title": {
+		"en": "The power supply alarm turned off",
+		"nl": "Het voeding alarm ging uit"
+	},
+	"titleFormatted": {
+		"en": "The power supply alarm turned off",
+		"nl": "Het voeding alarm ging uit"
+	},
+	"args": [{
+		"name": "device",
+		"type": "device",
+		"filter": "driver_id=Z-Smoke-AC"
+  }]
+}

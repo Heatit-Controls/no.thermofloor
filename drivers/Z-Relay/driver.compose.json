@@ -1,0 +1,93 @@
+{
+	"id": "Z-Relay",
+	"name": {
+		"en": "Z-Relay"
+	},
+	"icon": "{{driverAssetsPath}}/icon-1.svg",
+	"images": {
+		"large": "{{driverAssetsPath}}/images/large.png",
+		"small": "{{driverAssetsPath}}/images/small.png"
+	},
+	"platforms": ["local", "cloud"],
+	"connectivity": ["zwave"],
+	"class": "socket",
+	"capabilities": ["onoff", "measure_temperature.input1", "measure_temperature.input2", "alarm_water", "measure_power", "meter_power", "measure_voltage", "measure_current", "button.reset_meter"],
+	"capabilitiesOptions": {
+		"onoff": {
+			"title": {
+				"en": "Relay"
+			}
+		},
+		"measure_temperature.input1": {
+			"title": {
+				"en": "Sensor 1"
+			}
+		},
+		"measure_temperature.input2": {
+			"title": {
+				"en": "Sensor 2"
+			}
+		},
+		"measure_power": {
+			"approximated": true
+		},
+		"button.reset_meter": {
+			"maintenanceAction": true,
+			"title": {
+				"en": "Reset power meter",
+				"nl": "Stel stroomverbuik opnieuw in"
+			},
+			"desc": {
+				"en": "Reset the accumulated power usage (kWh), note that this can not be reversed.",
+				"nl": "Stel geaccumuleerde stroomverbruik (kWh) opnieuw in, dit kan niet worden teruggedraaid."
+			}
+		}
+	},
+	"zwave": {
+		"manufacturerId": 411,
+		"productTypeId": 3,
+		"productId": 520,
+		"security": ["none"],
+		"productDocumentation": "",
+		"pid": 3065,
+		"imageRemotePath": "",
+		"learnmode": {
+			"instruction": {
+				"en": "Activate the add mode on the device by clicking the inclusion button in the module. \nThe Adding Mode is indicated by status LED is blinking until a timeout occurs after 10 seconds or if the module has been added to the Z-Wave network."
+			}
+		},
+		"associationGroupsMultiChannel": [1.1],
+		"associationGroupsOptions": {
+			"1": {
+				"hint": {
+					"en": "Lifeline. Lifeline group for the entire module. Sends Basic Report On / Off when the relay is turned on or off. Sends Meter Report with energy data for the load connected to the relay output."
+				}
+			},
+			"2": {
+				"hint": {
+					"en": "Sends Sensor Multilevel Report for input 1.\nNodes in this group will receive information of the current temperature measured by the NTC connected to input 1."
+				}
+			},
+			"3": {
+				"hint": {
+					"en": "Sends Sensor Multilevel Report for input 2.\nNodes in this group will receive information of the current temperature measured by the NTC connected to input 2."
+				}
+			},
+			"4": {
+				"hint": {
+					"en": "Nodes in this group receives Basic Report On / Off when the flood sensor detects a flood. Normally used for visualization in the Controller."
+				}
+			},
+			"5": {
+				"hint": {
+					"en": "Nodes in this group receives Basic Set On / Off when the flood sensor detects a flood."
+				}
+			},
+			"6": {
+				"hint": {
+					"en": "Nodes in this group receives Notification Report when the flood sensor detects a flood. The notification events reported are: ”Water leak detected ”0x02 and ”ldle” 0x00."
+				}
+			}
+		}
+	}
+}

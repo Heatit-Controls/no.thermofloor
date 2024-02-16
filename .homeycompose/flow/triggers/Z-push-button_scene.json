@@ -1,0 +1,29 @@
+		{
+			"id": "Z-push-button_scene",
+			"title": {
+				"en": "Button is pressed"
+			},
+			"titleFormatted": {
+				"en": "[[button]] button is [[scene]]"
+			},
+			"hint": {
+				"en": "This card will only get triggered if the scene matches the state of the dropdown fields."
+			},
+			"args": [
+				{
+					"name": "device",
+					"type": "device",
+					"filter": "driver_id=Z-push-button-2|Z-push-button-4|Z-push-button-8|Z-Dim2|ZM-Dimmer"
+  				},
+				{
+					"name": "button",
+					"title": { "en": "Button" },
+					"type": "autocomplete"
+  				},
+				{
+					"name": "scene",
+					"title": { "en": "Scene" },
+					"type": "autocomplete"
+  				}
+  			]
+		}

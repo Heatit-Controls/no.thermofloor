@@ -1,0 +1,14 @@
+[
+	{
+		"id": "Wake-up_notification",
+		"value": "Wake up Z-push before save",
+		"type": "label",
+		"label": {
+			"en": "Note:"
+		},
+		"hint": {
+			"en": "Short press a button to wake-up the Z-push for 3 seconds, then press and hold I and O together over one second to wake-up the wall switch for 7 seconds.\nThen press save.",
+			"nl": "Druk kort op een knop om de Z-push te activeren, houdt daarna I en O tegelijkertijd ingedrukt om de Z-push voor 7 seconden wakker te houden.\nDruk daarna op save."
+		}
+}
+]

@@ -1,0 +1,16 @@
+{
+	"type": "number",
+	"attr": {
+		"min": 0,
+		"max": 240
+	},
+	"value": 0,
+	"label": {
+		"en": "External relay and operating state report interval (min)",
+		"nl": "Externe relais en toestand rapportage interval (min)"
+	},
+	"hint": {
+		"en": "Time interval between consecutive reports. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 0, 1 - 240 (min)\nDefault: 0 (min)",
+		"nl": "Tijdsinterval tussen opeenvolgende rapportages. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 0, 1 - 240 (min)\nStandaard: 0 (min)"
+	}
+}

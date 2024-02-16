@@ -1,0 +1,17 @@
+{
+	"type": "number",
+	"attr": {
+		"min": -60,
+		"max": 60
+	},
+	"value": 0,
+	"label": {
+		"en": "Temperature sensor calibration (°C)",
+		"nl": "Temperatuur sensor calibratie (°C)"
+	},
+	"hint": {
+		"en": "The temperature sensor calibration value. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: -60 - 60 (-6.0 - 6.0 °C)\nDefault: 0 (0.0 °C)",
+		"nl": "De temperatuur sensor calibratie waarde. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: -60 - 60 (-6.0 - 6.0 °C)\nStandaard: 0 (0.0 °C)"
+
+	}
+}

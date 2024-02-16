@@ -1,0 +1,20 @@
+{
+	"zwave": {
+		"index": 2,
+		"size": 1
+	},
+	"type": "number",
+	"attr": {
+		"min": 0,
+		"max": 100
+	},
+	"value": 50,
+	"label": {
+		"en": "LED brightness (%)",
+		"nl": "Helderheid LED (%)"
+	},
+	"hint": {
+		"en": "LED brightness. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 0 - 100 (%)\nDefault: 50 (%)",
+		"nl": "Helderheid LED. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 0 - 100 (%)\nStandaard: 50 (%)"
+	}
+}

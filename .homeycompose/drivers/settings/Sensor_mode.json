@@ -1,0 +1,25 @@
+{
+	"zwave": {
+		"index": 2,
+		"size": 1
+	},
+	"type": "dropdown",
+	"label": {
+		"en": "Sensor mode",
+		"nl": "Sensor modus"
+	},
+	"value": "0",
+	"hint": {
+		"en": "Sensor mode. \nZ-wave parameter {{zwaveParameterIndex}} \ndefault: Floor sensor",
+		"nl": "Sensor modus. \nZ-wave parameter {{zwaveParameterIndex}} \n standaard: vloer sensor"
+	},
+	"values": [
+		{
+			"id": "0",
+			"label": {
+				"en": "F-mode, floor sensor mode (default)",
+				"nl": "F-mode, vloer sensor modus (standaard)"
+			}
+		}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+	"type": "number",
+	"attr": {
+		"min": -40,
+		"max": 40
+	},
+	"value": 0,
+	"label": {
+		"en": "Floor sensor calibration (°C)",
+		"nl": "Vloer sensor calibratie (°C)"
+	},
+	"hint": {
+		"en": "Floor sensor temperature calibration. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: -40 - 40 (-4.0 - 4.0°C)\nDefault: 0",
+		"nl": "Vloer sensor temperatuur calibratie. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: -40 - 40 (-4.0 - 4.0°C)\nStandaard: 0"
+	}
+}

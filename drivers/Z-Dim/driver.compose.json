@@ -1,0 +1,74 @@
+{
+  "id": "Z-Dim",
+  "name": {
+    "en": "Z-Dim"
+  },
+  "platforms": ["local", "cloud"],
+  "connectivity": ["zwave"],
+  "class": "light",
+  "capabilities": ["dim", "onoff", "meter_power", "measure_power", "button.reset_meter"],
+  "capabilitiesOptions": {
+    "onoff": {
+      "setOnDim": false
+    },
+    "dim": {
+      "opts": {
+        "duration": true
+      }
+    },
+    "measure_power": {
+      "approximated": true
+    },
+    "button.reset_meter": {
+      "maintenanceAction": true,
+      "title": {
+        "en": "Reset power meter",
+        "nl": "Stel stroomverbuik opnieuw in"
+      },
+      "desc": {
+        "en": "Reset the accumulated power usage (kWh), note that this can not be reversed.",
+        "nl": "Stel geaccumuleerde stroomverbruik (kWh) opnieuw in, dit kan niet worden teruggedraaid."
+      }
+    }
+  },
+  "icon": "{{driverAssetsPath}}/icon.svg",
+  "images": {
+    "large": "{{driverAssetsPath}}/images/large.png",
+    "small": "{{driverAssetsPath}}/images/small.png"
+  },
+  "zwave": {
+    "manufacturerId": 411,
+    "productTypeId": [3],
+    "productId": [8704],
+    "security": ["none"],
+    "zwaveAllianceProductId": 3331,
+    "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/ProductManual/File?folder=&filename=Manuals/3331/SR-ZV9040A-A%20Micro%20Smart%20Dimmer.pdf",
+    "learnmode": {
+      "image": "{{driverAssetsPath}}/learnmode.svg",
+      "instruction": {
+        "en": "Press the main button on the dimmer 6 times in a rapid sequence."
+      }
+    },
+    "associationGroups": [1],
+    "associationGroupsOptions": {
+      "1": {
+        "hint": {
+          "en": "Lifeline association group (do not change)",
+          "nl": "Lifeline association group (niet aanpassen)"
+        }
+      },
+      "2": {
+        "hint": {
+          "en": "Dimming level: Basic Set is usually used to controll other dimmer devices",
+          "nl": "Helderheidsniveau: Basic Set wordt gebruikt om andere dimmers aan te sturen"
+        }
+      },
+      "3": {
+        "hint": {
+          "en": "ON/OFF: Binary Switch Set is usually used to controll other ON/OFF devices",
+          "nl": "AAN/UIT: Binary Switch Set wordt gebruikt om andere schakelaars aan te sturen"
+        }
+      }
+    }
+  }
+}

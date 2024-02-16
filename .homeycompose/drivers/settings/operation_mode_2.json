@@ -1,0 +1,32 @@
+{
+	"zwave": {
+		"index": 1,
+		"size": 2
+	},
+	"type": "dropdown",
+	"label": {
+		"en": "Thermostat mode",
+		"nl": "Thermostaat modus"
+	},
+	"value": "1",
+	"hint": {
+		"en": "Thermostat mode. \nZ-wave parameter {{zwaveParameterIndex}} \ndefault: Heating",
+		"nl": "Thermostaat modus. \nZ-wave parameter {{zwaveParameterIndex}} \nstandaard: Verwarmen"
+	},
+	"values": [
+		{
+			"id": "1",
+			"label": {
+				"en": "Heating",
+				"nl": "Verwarmen"
+			}
+    },
+		{
+			"id": "0",
+			"label": {
+				"en": "Off",
+				"nl": "Uitgeschakeld"
+			}
+    }
+  ]
+}

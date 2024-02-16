@@ -1,0 +1,17 @@
+{
+	"type": "number",
+	"attr": {
+		"min": -100,
+		"max": 100
+	},
+	"value": 0,
+	"label": {
+		"en": "Humidity sensor calibration (%)",
+		"nl": "Luchtvochtigheids sensor calibratie (%)"
+	},
+	"hint": {
+		"en": "The humidity sensor calibration value. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: -100 - 100 (-10.0 - 10.0 %)\nDefault: 0 (0.0 %)",
+		"nl": "De luchtvochtigheids sensor calibratie waarde. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: -100 - 100 (-10.0 - 10.0 %)\nStandaard: 0 (0.0 %)"
+
+	}
+}

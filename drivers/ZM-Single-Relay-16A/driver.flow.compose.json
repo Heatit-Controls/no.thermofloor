@@ -1,0 +1,67 @@
+{
+  "triggers": [
+    {
+      "id": "zm-relay16-scene",
+      "title": {
+        "en": "Button is pressed"
+      },
+      "titleFormatted": {
+        "en": "Button [[button]] is [[scene]]"
+      },
+      "args": [
+        {
+          "name": "button",
+          "type": "dropdown",
+          "title": { "en": "Button" },
+          "values": [
+            {
+              "id": "1",
+              "label": {
+                "en": "S1"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "S2"
+              }
+            }
+          ]
+        },
+        {
+          "name": "scene",
+          "type": "dropdown",
+          "title": { "en": "Scene" },
+          "values": [
+            {
+              "id": "Key Pressed 1 time",
+              "label": {
+                "en": "pressed 1x"
+              }
+            },
+            {
+              "id": "Key Pressed 2 times",
+              "label": {
+                "en": "pressed 2x"
+              }
+            },
+            {
+              "id": "Key Held Down",
+              "label": {
+                "en": "long pressed"
+              }
+            },
+            {
+              "id": "Key Released",
+              "label": {
+                "en": "long press released"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "conditions": [],
+  "actions": []
+}

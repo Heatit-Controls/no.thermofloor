@@ -1,0 +1,54 @@
+{
+	"id": "Z-push-button-4",
+	"name": {
+		"en": "Z-Push Button 4"
+	},
+	"icon": "{{driverAssetsPath}}/icon.svg",
+	"images": {
+		"large": "{{driverAssetsPath}}/images/large.png",
+		"small": "{{driverAssetsPath}}/images/small.png"
+	},
+	"platforms": ["local", "cloud"],
+	"connectivity": ["zwave"],
+	"class": "sensor",
+	"capabilities": ["measure_battery"],
+	"energy": {
+		"batteries": ["CR2450"]
+	},
+	"zwave": {
+		"manufacturerId": [411, 816],
+		"productTypeId": 768,
+		"productId": 41734,
+		"security": ["none"],
+		"productDocumentation": "",
+		"pid": 9999,
+		"imageRemotePath": "",
+		"learnmode": {
+			"image": "{{driverAssetsPath}}/learnmode.svg",
+			"instruction": {
+				"en": "Press and hold down both buttons I and O of Group 2 (upper rockers) over 3 seconds. \nThe LED indicator will turn on and the remote will be set to adding mode. \nThe LED indicator blinking 6 times will indicate successful inclusion."
+			}
+		},
+		"associationGroups": [1],
+		"associationGroupsOptions": {
+			"1": {
+				"hint": {
+					"en": "Lifeline. Scene Notification and battery reporting is addressed to this group. Only one node can be assigned to this association group. \nDefault: 1 (Homey's ID)",
+					"nl": "Lifeline: Association Groep 1 wordt gebruikt om alle rapportages door te geven. Slechts een node kan toegevoegd worden aan deze associatie groep. \nStandaard: 1 (Homey's ID)"
+				}
+			},
+			"2": {
+				"hint": {
+					"en": "Group 2 (upper rockers): Adding other Z-wave devices to this group will enable direct control from Z-push-button to that device:\nShort press: on/off (BASIC_SET) command \nLong press: increase / decrease dim-level command (SWITCH_MULTILEVEL).",
+					"nl": "Groep 2 (bovenste knoppen): Het toevoegen van andere Z-wave devices aan deze groep zal directe controle van de Z-push-button over deze devices toevoegen:\nKort ingedrukt: on/off (BASIC_SET) commando\nLang ingedrukt: verhoog / verlaag dim-level commando (SWITCH_MULTILEVEL)."
+				}
+			},
+			"3": {
+				"hint": {
+					"en": "Group 3 (bottom rockers): Adding other Z-wave devices to this group will enable direct control from Z-push-button to that device:\nShort press: on/off (BASIC_SET) command \nLong press: increase / decrease dim-level command (SWITCH_MULTILEVEL).",
+					"nl": "Groep 3 (onderste knoppen): Het toevoegen van andere Z-wave devices aan deze groep zal directe controle van de Z-push-button over deze devices toevoegen:\nKort ingedrukt: on/off (BASIC_SET) commando\nLang ingedrukt: verhoog / verlaag dim-level commando (SWITCH_MULTILEVEL)."
+				}
+			}
+		}
+	}
+}

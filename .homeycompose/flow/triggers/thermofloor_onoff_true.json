@@ -1,0 +1,16 @@
+{
+	"id": "thermofloor_onoff_true",
+	"title": {
+		"en": "Heating turned on",
+		"nl": "Verwarming aangezet"
+	},
+	"titleFormatted": {
+		"en": "Heating turned on",
+		"nl": "Verwarming aangezet"
+	},
+	"args": [{
+		"name": "device",
+		"type": "device",
+		"filter": "driver_id=TF_Thermostat|TF_Thermostat_FW1.92|Z-TRM2fx"
+}]
+}

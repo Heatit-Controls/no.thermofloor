@@ -1,0 +1,20 @@
+{
+	"type": "number",
+	"zwave": {
+		"index": 4,
+		"size": 1
+	},
+	"attr": {
+		"min": 3,
+		"max": 30
+	},
+	"value": 5,
+	"label": {
+		"en": "Temperature control hysteresis (DIFF I)",
+		"nl": "Temperatuur regel grenswaarde (DIFF I)"
+	},
+	"hint": {
+		"en": "Temperature control hysteresis (DIFF I).\nZ-wave parameter {{zwaveParameterIndex}} \nRange: 3 - 30 (0.3 - 3.0 °C) \nDefault: 5 (0.5) °C",
+		"nl": "Temperatuur regel grenswaarde (DIFF I). \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 3 - 30 (0.3 - 3.0 °C)\nStandaard: 5 (0.5) °C"
+	}
+}

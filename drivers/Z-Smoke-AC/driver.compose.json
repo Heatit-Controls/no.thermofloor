@@ -1,0 +1,50 @@
+{
+	"id": "Z-Smoke-AC",
+	"name": {
+		"en": "Z-Smoke Detector 230V"
+	},
+	"icon": "{{driverAssetsPath}}/icon.svg",
+	"images": {
+		"large": "{{driverAssetsPath}}/images/large.png",
+		"small": "{{driverAssetsPath}}/images/small.png"
+	},
+	"platforms": ["local", "cloud"],
+	"connectivity": ["zwave"],
+	"class": "sensor",
+	"capabilities": ["alarm_smoke", "alarm_heat", "alarm_motion", "alarm_tamper", "alarm_power", "measure_temperature", "measure_battery", "alarm_siren"],
+	"energy": {
+		"batteries": ["INTERNAL"]
+	},
+	"zwave": {
+		"manufacturerId": 411,
+		"productTypeId": 3,
+		"productId": [13, 23],
+		"security": ["none"],
+		"productDocumentation": "https://products.z-wavealliance.org/ProductManual/File?folder=&filename=product_documents/3933/HeatitZ-SmokeDetector230V.pdf",
+		"pid": 3933,
+		"imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=3933&which=21",
+		"learnmode": {
+			"image": "{{driverAssetsPath}}/learnmode.svg",
+			"instruction": {
+				"en": "Within 1.5 seconds, press the Function button 3 times. \nThe Smoke Detector will emit a 2-tone beep and the LED will turn on for ~2 seconds."
+			}
+		},
+		"associationGroups": [1],
+		"associationGroupsMultiChannel": [],
+		"associationGroupsOptions": {
+			"1": {
+				"hint": {
+					"en": "Lifeline. All run-time reporting is addressed to this group. Only one node can be assigned to this association group. \nDefault: 1 (Homey's ID)",
+					"nl": "Lifeline: Association Groep 1 wordt gebruikt om alle rapportages door te geven. Slechts een node kan toegevoegd worden aan deze associatie groep. \nStandaard: 1 (Homey's ID)"
+				}
+			},
+			"2": {
+				"hint": {
+					"en": "Send BASIC SET command. When the Smoke Detector is active, it will send Basic Set (0xFF = ON). \nWhen the Smoke Detector is restored, it will send Basic Set (0x00 = OFF). \nCan be used to trigger other Smoke Detectors or switch on lights.",
+					"nl": "Stuurt BASIC SET command. Wanneer de Rookmelder actief is, wordt een Basic Set (0xFF = AAN) commando verstuurd. \n Wanneer de Rookmedler hersteld, wordt een Basic Set (0x00 = UIT) commando verstuurd. \nDeze groep kan gebruikt worden om andere Rookmelders te activeren of verlichting in te schakelen."
+				}
+			}
+		},
+		"defaultConfiguration": []
+	}
+}

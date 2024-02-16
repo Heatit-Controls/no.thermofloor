@@ -1,0 +1,210 @@
+[
+	{
+		"$extends": "operation_mode_4",
+		"id": "operation_mode"
+	},
+	{
+		"$extends": "CO_setpoint",
+		"id": "CO_setpoint",
+		"zwave": {
+			"index": 10,
+			"size": 2
+		}
+  },
+	{
+		"$extends": "ECO_setpoint",
+		"id": "ECO_setpoint",
+		"zwave": {
+			"index": 11,
+			"size": 2
+		}
+  },
+	{
+		"$extends": "COOL_setpoint",
+		"id": "COOL_setpoint",
+		"zwave": {
+			"index": 13,
+			"size": 2
+		}
+  },
+	{
+		"type": "group",
+		"label": {
+			"en": "Sensor settings",
+			"nl": "Sensor instellingen"
+		},
+		"collapsed": true,
+		"children": [
+			{
+				"$extends": "Temperature_thermostat_3",
+				"id": "Temperature_thermostat"
+			},
+			{
+				"$extends": "Sensor_mode",
+				"id": "Sensor_mode",
+				"zwave": {
+					"index": 2,
+					"size": 1
+				},
+				"values": [
+					{
+						"id": "0",
+						"label": {
+							"en": "F-mode, floor sensor mode (default)",
+							"nl": "F-modus, vloer sensor modus (standaard)"
+						}
+					},
+					{
+						"id": "1",
+						"label": {
+							"en": "A-mode, internal sensor mode",
+							"nl": "A-modus, interne sensor modus"
+						}
+					},
+					{
+						"id": "2",
+						"label": {
+							"en": "A2-mode, external sensor mode",
+							"nl": "A2-modus, externe sensor modus"
+						}
+					},
+					{
+						"id": "3",
+						"label": {
+							"en": "A2-mode, external room sensor mode",
+							"nl": "A2-modus, externe ruimte sensor modus"
+						}
+					},
+					{
+						"id": "4",
+						"label": {
+							"en": "A2F-mode, external sensor with floor limitation",
+							"nl": "A2F-modus, externe sensor met vloer begrenzing"
+						}
+					},
+					{
+						"id": "5",
+						"label": {
+							"en": "Power Regulator mode, constant heating power",
+							"nl": "Power Regulator modus, constant verwarmingsvermogen"
+						}
+					},
+					{
+						"id": "6",
+						"label": {
+							"en": "FP-mode, floor mode with minimum power limitation",
+							"nl": "FP-modus, vloer modus with minimaal vermogen limitation"
+						}
+					}
+				]
+			},
+			{
+				"$extends": "Floor_sensor_type",
+				"id": "Floor_sensor_type"
+			},
+			{
+				"$extends": "Temperature_control_hysteresis_DIFF_I",
+				"id": "Temperature_control_hysteresis_DIFF_I"
+			},
+			{
+				"$extends": "Temperature_limit",
+				"id": "Floor_minimum_temperature_limit_FLo",
+				"zwave": {
+					"index": 5,
+					"size": 2
+				},
+				"label": {
+					"en": "Floor minimum temperature limit (FLo)",
+					"nl": "Ondergrens vloer temperatuur (FLo)"
+				},
+				"value": 50
+			},
+			{
+				"$extends": "Temperature_limit",
+				"id": "Floor_maximum_temperature_limit_FHi",
+				"zwave": {
+					"index": 6,
+					"size": 2
+				},
+				"label": {
+					"en": "Floor maximum temperature limit (FHi)",
+					"nl": "Bovengrens vloer temperatuur (FHi)"
+				},
+				"value": 400
+			},
+			{
+				"$extends": "Temperature_limit",
+				"id": "Air_minimum_temperature_limit_ALo",
+				"zwave": {
+					"index": 7,
+					"size": 2
+				},
+				"label": {
+					"en": "Air (A2) minimum temperature limit (ALo)",
+					"nl": "Ondergrens lucht (A2) temperatuur (ALo)"
+				},
+				"value": 50
+			},
+			{
+				"$extends": "Temperature_limit",
+				"id": "Air_maximum_temperature_limit_AHi",
+				"zwave": {
+					"index": 8,
+					"size": 2
+				},
+				"label": {
+					"en": "Air (A2) maximum temperature limit (AHi)",
+					"nl": "Bovengrens lucht (A2) temperatuur (AHi)"
+				},
+				"value": 400
+			}
+
+		]
+	},
+	{
+		"id": "poll_interval_TEMPERATURE",
+		"type": "number",
+		"attr": {
+			"min": 60,
+			"max": 3600
+		},
+		"value": 300,
+		"label": {
+			"en": "Poll interval temperature",
+			"nl": "Poll interval temperatuur"
+		},
+		"hint": {
+			"en": "The amount of seconds between asking the device for a status (meausured temperature) update \nDefault: 300 [s].",
+			"nl": "Aantal seconden tussen het opvragen van een status (gemeten temperatuur) update aan het apparaat \nStandaard: 300 [s]."
+		}
+  },
+	{
+		"type": "group",
+		"label": {
+			"en": "Power Regulator settings",
+			"nl": "Power Regulator instellingen"
+		},
+		"collapsed": true,
+		"children": [
+			{
+				"$extends": "PRM_notification",
+				"id": "PRM_notification"
+		},
+			{
+				"$extends": "PLo_setting",
+				"id": "PLo_setting",
+				"zwave": {
+					"index": 9,
+					"size": 1
+				}
+  	},
+			{
+				"$extends": "P_setting",
+				"id": "P_setting",
+				"zwave": {
+					"index": 12,
+					"size": 1
+				}
+  }]
+	}
+]

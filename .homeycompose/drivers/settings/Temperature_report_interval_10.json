@@ -1,0 +1,16 @@
+{
+	"type": "number",
+	"attr": {
+		"min": 0,
+		"max": 86400
+	},
+	"value": 60,
+	"label": {
+		"en": "Temperature report interval (s)",
+		"nl": "Temperatuur rapportage interval (s)"
+	},
+	"hint": {
+		"en": "Time interval between consecutive temperature reports. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 0, 10 - 86400 (s)\nDefault: 60 (s)",
+		"nl": "Tijdsinterval tussen opeenvolgende temperatuur rapportages. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 0, 10 - 86400 (s)\nStandaard: 60 (s)"
+	}
+}

@@ -1,0 +1,48 @@
+{
+	"id": "thermofloor_adjust_mode_setpoint",
+	"title": {
+		"en": "Adjust the current temperature Up or Down"
+	},
+	"titleFormatted": {
+		"en": "Adjust the current temperature by [[setpointValue]] degrees [[setpointDirection]]"
+	},
+	"hint": {
+		"en": "Adjust the current setpoint Up or Down by the specified value"
+	},
+	"args": [
+		{
+			"name": "device",
+			"type": "device",
+			"filter": "driver_id=Z-TRM3"
+		},
+		{
+			"name": "setpointDirection",
+			"type": "dropdown",
+			"title": { "en": "Direction" },
+			"values": [
+				{
+					"id": "Up",
+					"label": {
+						"en": "Up"
+					}
+				},
+				{
+					"id": "Down",
+					"label": {
+						"en": "Down"
+					}
+				}
+				]
+			},
+		{
+			"name": "setpointValue",
+			"type": "range",
+			"title": { "en": "Setpoint" },
+			"min": 1,
+			"max": 10,
+			"step": 1,
+			"label": "°C",
+			"labelDecimals": 1
+			}
+		]
+}

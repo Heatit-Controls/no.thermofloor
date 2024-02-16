@@ -1,0 +1,87 @@
+[
+  {
+    "id": "btn_reports",
+    "type": "dropdown",
+    "label": {
+      "en": "Select Button reports"
+    },
+    "hint": {
+      "en": "This parameter ({{zwaveParameterIndex}}) configures reports sent when pressing buttons"
+    },
+    "zwave": {
+      "index": 1,
+      "size": 1
+    },
+    "value": "2",
+    "values": [
+      {
+        "id": "0",
+        "label": {
+          "en": "Send Central Scene Command only"
+        }
+      },
+      {
+        "id": "1",
+        "label": {
+          "en": "Send Group Association Command only"
+        }
+      },
+      {
+        "id": "2",
+        "label": {
+          "en": "Send Central Scene and Group Association Commands"
+        }
+      }
+    ]
+  },
+  {
+    "id": "led_signaling",
+    "type": "checkbox",
+    "label": {
+      "en": "LED signalling"
+    },
+    "hint": {
+      "en": "This parameter ({{zwaveParameterIndex}}) configures if LED signalling should be enabled for button press confirmations"
+    },
+    "zwave": {
+      "index": 2,
+      "size": 1
+    },
+    "value": true
+  },
+  {
+    "id": "active_btn_rockers",
+    "type": "dropdown",
+    "label": {
+      "en": "Active Button rockers"
+    },
+    "hint": {
+      "en": "This parameter ({{zwaveParameterIndex}}) configures different rocker setups"
+    },
+    "zwave": {
+      "index": 3,
+      "size": 1
+    },
+    "value": "3",
+    "values": [
+      {
+        "id": "1",
+        "label": {
+          "en": "Single rocker"
+        }
+      },
+      {
+        "id": "2",
+        "label": {
+          "en": "Dual rocker"
+        }
+      },
+      {
+        "id": "3",
+        "label": {
+          "en": "Triple rocker"
+        }
+      }
+    ]
+  }
+]

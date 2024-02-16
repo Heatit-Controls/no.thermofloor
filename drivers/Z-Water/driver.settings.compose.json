@@ -1,0 +1,157 @@
+[
+	{
+		"$extends": "LED_status",
+		"id": "LED_status"
+	},
+	{
+		"$extends": "LED_brightness",
+		"id": "LED_brightness"
+	},
+
+	{
+		"type": "group",
+		"label": {
+			"en": "Input sensor options",
+			"nl": "Sensor instellingen"
+		},
+		"collapsed": true,
+		"children": [
+			{
+				"type": "group",
+				"label": {
+					"en": "Input 1",
+					"nl": "Ingang 1"
+				},
+				"collapsed": true,
+				"children": [
+					{
+						"$extends": "Sensor_type",
+						"id": "Sensor_type_input1",
+						"zwave": {
+							"index": 3,
+							"size": 1
+						}
+					},
+					{
+						"$extends": "Sensor_calibration",
+						"id": "Sensor_calibration_input1",
+						"zwave": {
+							"index": 7,
+							"size": 1
+						}
+					},
+					{
+						"$extends": "Temperature_report_interval_10",
+						"id": "Temperature_report_interval_input1",
+						"zwave": {
+							"index": 11,
+							"size": 2
+						}
+					}
+				]
+			},
+			{
+				"type": "group",
+				"label": {
+					"en": "Input 2",
+					"nl": "Ingang 2"
+				},
+				"collapsed": true,
+				"children": [
+					{
+						"$extends": "Sensor_type",
+						"id": "Sensor_type_input2",
+						"zwave": {
+							"index": 4,
+							"size": 1
+						}
+					},
+					{
+						"$extends": "Sensor_calibration",
+						"id": "Sensor_calibration_input2",
+						"zwave": {
+							"index": 8,
+							"size": 1
+						}
+					},
+					{
+						"$extends": "Temperature_report_interval_10",
+						"id": "Temperature_report_interval_input2",
+						"zwave": {
+							"index": 12,
+							"size": 2
+						}
+					}
+				]
+			},
+			{
+				"type": "group",
+				"label": {
+					"en": "Input 3",
+					"nl": "Ingang 3"
+				},
+				"collapsed": true,
+				"children": [
+					{
+						"$extends": "Sensor_type",
+						"id": "Sensor_type_input3",
+						"zwave": {
+							"index": 5,
+							"size": 1
+						}
+					},
+					{
+						"$extends": "Sensor_calibration",
+						"id": "Sensor_calibration_input3",
+						"zwave": {
+							"index": 9,
+							"size": 1
+						}
+					},
+					{
+						"$extends": "Temperature_report_interval_10",
+						"id": "Temperature_report_interval_input3",
+						"zwave": {
+							"index": 13,
+							"size": 2
+						}
+					}
+				]
+			},
+			{
+				"type": "group",
+				"label": {
+					"en": "Input 4",
+					"nl": "Ingang 4"
+				},
+				"collapsed": true,
+				"children": [
+					{
+						"$extends": "Sensor_type",
+						"id": "Sensor_type_input4",
+						"zwave": {
+							"index": 6,
+							"size": 1
+						}
+					},
+					{
+						"$extends": "Sensor_calibration",
+						"id": "Sensor_calibration_input4",
+						"zwave": {
+							"index": 10,
+							"size": 1
+						}
+					},
+					{
+						"$extends": "Temperature_report_interval_10",
+						"id": "Temperature_report_interval_input4",
+						"zwave": {
+							"index": 14,
+							"size": 2
+						}
+					}
+				]
+			}
+		]
+	}
+]

@@ -1,0 +1,279 @@
+[
+  {
+    "id": "load_limit",
+    "type": "number",
+    "label": {
+      "en": "Load limit"
+    },
+    "hint": {
+      "en": "This parameter ({{zwaveParameterIndex}}) ensures that the device does not draw more current than rated. Immunity for power consumption peaks. 1-16 Ampere."
+    },
+    "zwave": {
+      "index": 1,
+      "size": 1
+    },
+    "value": 16,
+    "attr": {
+      "min": 1,
+      "max": 16
+    }
+  },
+  {
+    "id": "pwr_shutdown_action",
+    "type": "number",
+    "label": {
+      "en": "Power shutdown actions"
+    },
+    "hint": {
+      "en": "This parameter ({{zwaveParameterIndex}}) decides how the device should react when the overload/overheating features has turned relay OFF. 0 do nothing. 1-32767 minutes before try to turn ON again."
+    },
+    "zwave": {
+      "index": 2,
+      "size": 2
+    },
+    "value": 0,
+    "attr": {
+      "min": 0,
+      "max": 32767
+    }
+  },
+  {
+    "id": "switch_type",
+    "type": "dropdown",
+    "label": {
+      "en": "Switch Type"
+    },
+    "hint": {
+      "en": "This parameter ({{zwaveParameterIndex}}) decides what type of switch is connected"
+    },
+    "zwave": {
+      "index": 3,
+      "size": 1
+    },
+    "value": "0",
+    "values": [
+      {
+        "id": "0",
+        "label": {
+          "en": "Momentary switch"
+        }
+      },
+      {
+        "id": "1",
+        "label": {
+          "en": "Toggle switch"
+        }
+      }
+    ]
+  },
+  {
+    "id": "s1_actions",
+    "type": "dropdown",
+    "label": {
+      "en": "S1/Button actions"
+    },
+    "hint": {
+      "en": "This parameter ({{zwaveParameterIndex}}) decides S1/Button actions"
+    },
+    "zwave": {
+      "index": 4,
+      "size": 1
+    },
+    "value": "0",
+    "values": [
+      {
+        "id": "0",
+        "label": {
+          "en": "Button turns load on/off and sends Meter report + Relay status."
+        }
+      },
+      {
+        "id": "1",
+        "label": {
+          "en": "Button sends Meter report + Relay status, load can be only controlled wirelessly."
+        }
+      }
+    ]
+  },
+  {
+    "id": "scn_notifications",
+    "type": "dropdown",
+    "label": {
+      "en": "Scene notifications"
+    },
+    "hint": {
+      "en": "This parameter ({{zwaveParameterIndex}}) decides if/what scene controller notifications the device sends to gateway."
+    },
+    "zwave": {
+      "index": 5,
+      "size": 1
+    },
+    "value": "0",
+    "values": [
+      {
+        "id": "0",
+        "label": {
+          "en": "S2 Scenes enabled"
+        }
+      },
+      {
+        "id": "1",
+        "label": {
+          "en": "S1 Scenes enabled"
+        }
+      },
+      {
+        "id": "2",
+        "label": {
+          "en": "S2 and S1 Scenes enabled"
+        }
+      },
+      {
+        "id": "3",
+        "label": {
+          "en": "S2 and S1 Scenes disabled"
+        }
+      }
+    ]
+  },
+  {
+    "id": "rstr_pwr_level",
+    "type": "dropdown",
+    "label": {
+      "en": "Restore Power Level"
+    },
+    "hint": {
+      "en": "This parameter ({{zwaveParameterIndex}}) decides Relay power level after power is restored from power outage. When device is from factory/factory reset the first state of the device should be OFF"
+    },
+    "zwave": {
+      "index": 6,
+      "size": 1
+    },
+    "value": "2",
+    "values": [
+      {
+        "id": "0",
+        "label": {
+          "en": "Always OFF on restored power"
+        }
+      },
+      {
+        "id": "1",
+        "label": {
+          "en": "Always ON on restored power"
+        }
+      },
+      {
+        "id": "2",
+        "label": {
+          "en": "Restore last state on restored power"
+        }
+      }
+    ]
+  },
+  {
+    "id": "auto_off",
+    "type": "number",
+    "label": {
+      "en": "Automatic turn OFF"
+    },
+    "hint": {
+      "en": "This parameter ({{zwaveParameterIndex}}) decides time to turn relay OFF after having been turned ON. 0 disabled. 1-86400 seconds timeout."
+    },
+    "zwave": {
+      "index": 7,
+      "size": 4
+    },
+    "value": 0,
+    "attr": {
+      "min": 0,
+      "max": 86400
+    }
+  },
+  {
+    "id": "auto_on",
+    "type": "number",
+    "label": {
+      "en": "Automatic turn ON"
+    },
+    "hint": {
+      "en": "This parameter ({{zwaveParameterIndex}}) decides time to turn relay ON after having been turned OFF. 0 disabled. 1-86400 seconds timeout."
+    },
+    "zwave": {
+      "index": 8,
+      "size": 4
+    },
+    "value": 0,
+    "attr": {
+      "min": 0,
+      "max": 86400
+    }
+  },
+  {
+    "id": "iverted_output",
+    "type": "dropdown",
+    "label": {
+      "en": "Inverted Output"
+    },
+    "hint": {
+      "en": "This parameter ({{zwaveParameterIndex}}) decides if the relay output should be inverted"
+    },
+    "zwave": {
+      "index": 9,
+      "size": 1
+    },
+    "value": "0",
+    "values": [
+      {
+        "id": "0",
+        "label": {
+          "en": "Standard operation."
+        }
+      },
+      {
+        "id": "1",
+        "label": {
+          "en": "Inverted Output."
+        }
+      }
+    ]
+  },
+  {
+    "id": "mtr_interval",
+    "type": "number",
+    "label": {
+      "en": "Meter report interval"
+    },
+    "hint": {
+      "en": "This parameter ({{zwaveParameterIndex}}) decides time interval between consecutive meter reports. Meter reports can also be sent as a result of polling. 30-32767 seconds."
+    },
+    "zwave": {
+      "index": 10,
+      "size": 2
+    },
+    "value": 900,
+    "attr": {
+      "min": 30,
+      "max": 32767
+    }
+  },
+  {
+    "id": "mtr_delta",
+    "type": "number",
+    "label": {
+      "en": "Meter report delta value"
+    },
+    "hint": {
+      "en": "This parameter ({{zwaveParameterIndex}}) decides the delta for meter in Watt for the device issue meter report. 5-3600W."
+    },
+    "zwave": {
+      "index": 11,
+      "size": 2
+    },
+    "value": 75,
+    "attr": {
+      "min": 5,
+      "max": 3600
+    }
+  }
+]

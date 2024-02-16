@@ -1,0 +1,15 @@
+{
+	"type": "number",
+	"attr": {
+		"min": 0,
+		"max": 9
+	},
+	"value": 0,
+	"label": {
+		"en": "Power Regulator mode - Low (PLo)"
+	},
+	"hint": {
+		"en": "*PLo* Setting lowest allowed power regulator mode.\nZ-wave parameter {{zwaveParameterIndex}}\nRange: 0-9 \nDefault: 0.",
+		"nl": "*PLo* Stel de laagst toegestane Power Regulator Mode in.\nZ-wave parameter {{zwaveParameterIndex}}\nBereik: 0-9 \nStandaard: 0."
+	}
+}

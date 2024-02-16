@@ -1,0 +1,58 @@
+{
+  "id": "heatit-leakage-stopper",
+  "name": {
+    "en": "Heatit Leakage Stopper"
+  },
+  
+  "class": "socket",
+  "capabilities": ["measure_temperature", "onoff", "alarm_water"],
+  "platforms": ["local", "cloud"],
+  "connectivity": ["zwave"],
+  "icon": "{{driverAssetsPath}}/icon.svg",
+  "images": {
+  	"small": "{{driverAssetsPath}}/images/small.png",
+  	"large": "{{driverAssetsPath}}/images/large.png"
+  },
+	"zwave": {
+	  "manufacturerId": 411,
+	  "productTypeId": 257,
+	  "productId": 10,
+	  "security": ["none"],
+	  "learnmode": {
+		  "image": "{{driverAssetsPath}}/learnmode.svg",
+		  "instruction": {
+			  "en": "Press the configuration button 3 times."
+		  }
+	  },
+	  "associationGroups": [1],
+	  "associationGroupsOptions": {
+		  "1": {
+			  "hint": {
+				  "en": "Z-Wave Lifeline group. The Homey controller should be here"
+			  }
+			},
+		  "2": {
+				"hint": {
+					"en": "Water Valve"
+				}
+			},
+		  "3": {
+				"hint": {
+					"en": "Leak Sensor"
+				}
+			}
+,
+		  "4": {
+				"hint": {
+					"en": "Overheat Alarm"
+				}
+			}
+,
+		  "5": {
+				"hint": {
+					"en": "Freez Alarm"
+				}
+			}
+		}
+	}
+}

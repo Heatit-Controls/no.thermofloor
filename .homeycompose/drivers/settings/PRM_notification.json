@@ -1,0 +1,11 @@
+{
+	"value": "Read the manual before changing these settings",
+	"type": "label",
+	"label": {
+		"en": "Note:"
+	},
+	"hint": {
+		"en": "Please read and understand the manual / operation of the Power Regulator Mode before changing below Power Regulator Mode settings.",
+		"nl": "Lees en begrijp de handleiding / principe van de Power Regulatro Mode voordat onderstaande settings aangepast worden."
+	}
+}

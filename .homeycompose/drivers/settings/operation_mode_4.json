@@ -1,0 +1,46 @@
+{
+	"zwave": {
+		"index": 1,
+		"size": 2
+	},
+	"type": "dropdown",
+	"label": {
+		"en": "Thermostat mode",
+		"nl": "Thermostaat modus"
+	},
+	"value": "1",
+	"hint": {
+		"en": "Thermostat mode. \nZ-wave parameter {{zwaveParameterIndex}} \ndefault: Energy saving",
+		"nl": "Thermostaat modus. \nZ-wave parameter {{zwaveParameterIndex}} \nstandaard: Energiebesparing"
+	},
+	"values": [
+		{
+			"id": "1",
+			"label": {
+				"en": "Comfort",
+				"nl": "Comfort"
+			}
+    },
+		{
+			"id": "11",
+			"label": {
+				"en": "Energy Saving",
+				"nl": "Energiebesparing"
+			}
+    },
+		{
+			"id": "0",
+			"label": {
+				"en": "Off",
+				"nl": "Uitgeschakeld"
+			}
+    },
+		{
+			"id": "2",
+			"label": {
+				"en": "Cool",
+				"nl": "Koelen"
+			}
+    }
+  ]
+}

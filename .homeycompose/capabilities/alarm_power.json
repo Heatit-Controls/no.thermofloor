@@ -1,0 +1,24 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Power supply alarm",
+    "nl": "Voeding alarm"
+  },
+  "desc": {
+    "en": "Power supply alarm",
+    "nl": "Voeding alarm"
+  },
+  "insights": true,
+  "insightsTitleTrue": {
+    "en": "Power supply alarm turned on",
+    "nl": "Voeding alarm ging af"
+  },
+  "insightsTitleFalse": {
+    "en": "Power supply alarm turned off",
+    "nl": "Voeding alarm ging uit"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "icon": "/assets/alarm_power.svg"
+}

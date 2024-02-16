@@ -1,0 +1,28 @@
+{
+	"type": "dropdown",
+	"label": {
+		"en": "Sensor type",
+		"nl": "Sensor type"
+	},
+	"value": "0",
+	"hint": {
+		"en": "Sensor type. \nZ-wave parameter {{zwaveParameterIndex}} \ndefault: No sensor connected",
+		"nl": "Sensor type. \nZ-wave parameter {{zwaveParameterIndex}} \nstandaard: Geen sensor aangesloten"
+	},
+	"values": [
+		{
+			"id": "0",
+			"label": {
+				"en": "No sensor connected (default)",
+				"nl": "Geen sensor aangesloten (standaard)"
+			}
+		},
+		{
+			"id": "1",
+			"label": {
+				"en": "10K NTC connected",
+				"nl": "10K NTC aangesloten"
+			}
+		}
+  ]
+}

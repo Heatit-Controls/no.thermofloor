@@ -1,0 +1,242 @@
+[
+  {
+    "type": "group",
+    "label": {
+      "en": "Button behaviour",
+      "nl": "Gedrag knoppen"
+    },
+    "collapsed": false,
+    "children": [
+      {
+        "id": "double_click",
+        "value": "1",
+        "label": {
+          "en": "Double click",
+          "nl": "Dubbel klik"
+        },
+        "hint": {
+          "en": "This parameter ({{zwaveParameterIndex}}) defines the double click functionality.",
+          "nl": "Deze parameter ({{zwaveParameterIndex}}) bepaalt de dubbel klik functionaliteit."
+        },
+        "zwave": {
+          "index": 5,
+          "size": 1
+        },
+        "values": [
+          {
+            "id": "0",
+            "label": {
+              "en": "Central Scene notification (Default)",
+              "nl": "Central Scene notificatie (standaard)"
+            }
+          },
+          {
+            "id": "1",
+            "label": {
+              "en": "Dim to maximum brightness level",
+              "nl": "Dim naar maximaal helderheidsniveau"
+            }
+          }
+        ],
+        "type": "dropdown"
+      },
+      {
+        "id": "scene_activation",
+        "type": "checkbox",
+        "label": {
+           "en": "Scene activation",
+           "nl": "Scene activation"
+        },
+        "value": true,
+        "hint": {
+          "en": "This parameter ({{zwaveParameterIndex}}) enables scene activation. Scene activation is required for using scene triggers. Enabling scene activation functionality may cause slight delay in response to external switches and sending associations.",
+          "nl": "Deze parameter ({{zwaveParameterIndex}}) stelt de scene activation in. Scene activation moet aan staan om scene triggers te gebruiken. Scene activation aanzetten kan vertragingen veroorzaken met externe schakkelaars en bij het sturen van geassocieerde apparaten."
+        },
+        "zwave": {
+          "index": 6,
+          "size": 1
+        }
+      },
+      {
+        "id": "switch_on_level",
+        "type": "number",
+        "label": {
+          "en": "Switch ON level",
+          "nl": "Inschakel helderheidsniveau"
+        },
+        "value": 0,
+        "attr": {
+          "min": 0,
+          "max": 99
+        },
+        "hint": {
+          "en": "This parameter ({{zwaveParameterIndex}}) determines the dimming level when restored from OFF state by push button. \nRange: 0: Restores last dim level (Default), 1 - 99 %",
+          "nl": "Deze parameter ({{zwaveParameterIndex}}) bepaalt het helderheidsniveau dat hersteld wordt na een UIT toestand door op de drukkop te drukken. \nBereik: 0: Herstel laatste helderheidsniveau (Standaard), 1 - 99 %"
+        },
+        "zwave": {
+          "index": 7,
+          "size": 1
+        }
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Dimming",
+      "nl": "Dimmen"
+    },
+    "collapsed": true,
+    "children": [
+      {
+        "id": "minimum_dim_level",
+        "value": 10,
+        "label": {
+          "en": "Minimum brightness level",
+          "nl": "Minimale helderheidsniveau"
+        },
+        "hint": {
+          "en": "This parameter ({{zwaveParameterIndex}}) determines the minimum brightness level. \nRange: 1 - 98 % \nDefault: 20 %",
+          "nl": "Deze parameter ({{zwaveParameterIndex}}) bepaalt het laagste helderheidsniveau. \nBereik: 1 - 98 % \nStandaard: 20 %"
+        },
+        "zwave": {
+          "index": 2,
+          "size": 1
+        },
+        "attr": {
+          "min": 1,
+          "max": 98
+        },
+        "type": "number"
+      },
+      {
+        "id": "maximum_dim_level",
+        "value": 85,
+        "label": {
+          "en": "Maximum brightness level",
+          "nl": "Maximaal helderheidsniveau"
+        },
+        "hint": {
+          "en": "This parameter ({{zwaveParameterIndex}}) determines the highest brightness level. \nRange: 2 - 99 % \nDefault: 85 %",
+          "nl": "Deze parameter ({{zwaveParameterIndex}}) bepaalt het hoogste helderheidsniveau. \nBereik: 2 - 99 % \nStandaard: 85 %"
+        },
+        "zwave": {
+          "index": 3,
+          "size": 1
+        },
+        "attr": {
+          "min": 2,
+          "max": 99
+        },
+        "type": "number"
+      },
+      {
+        "id": "dimming_step_rotate",
+        "type": "number",
+        "label": {
+          "en": "Dim step size",
+          "nl": "Stapgrootte dimmen"
+        },
+        "value": 15,
+        "attr": {
+          "min": 5,
+          "max": 255
+        },
+        "hint": {
+          "en": "This parameter ({{zwaveParameterIndex}}) determines how many steps it should take to dim from minimum to maximum brightness level (One round = 20 steps). \nRange: 5 - 255 steps \nDefault: 15 (3/4 round)",
+          "nl": "Deze parameter ({{zwaveParameterIndex}}) bepaalt hoeveel stappen nodig zijn om van minimum tot maximum helderheidsniveau te dimmen (een ronde = 20 stappen). \nBereik: 5 - 255 stappen \nStandaard: 15 (3/4 ronde)"
+        },
+        "zwave": {
+          "index": 4,
+          "size": 1,
+          "signed": false
+        }
+      },
+      {
+        "id": "dimming_duration",
+        "label": {
+          "en": "Dimming duration",
+          "nl": "Dim transitietijd"
+        },
+        "hint": {
+          "en": "This parameter ({{zwaveParameterIndex}}) determines the default dim duration. \nRange: 1 - 127 seconds, 128 - 255: 1 - 127 minutes, 0: Instantly. \nDefault: 1 (second)",
+          "nl": "Deze parameter ({{zwaveParameterIndex}}) bepaalt de standaard dim transitietijd \nBereik: 1 - 127 seconden, 128 - 255: 1 - 127 minuten, 0: Instantaan. \nStandaard: 1 (seconde)"
+        },
+        "zwave": {
+          "index": 8,
+          "size": 1,
+          "signed": false
+        },
+        "type": "number",
+        "value": 1,
+        "attr": {
+          "min": 0,
+          "max": 255
+        }
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "label": {
+      "en": "Power",
+      "nl": "Stroom"
+    },
+    "collapsed": true,
+    "children": [
+      {
+        "id": "connected_Load",
+        "type": "number",
+        "zwave": {
+          "index": 1,
+          "size": 1,
+          "signed": false
+        },
+        "attr": {
+          "min": 0,
+          "max": 200
+        },
+        "value": 0,
+        "label": {
+          "en": "Connected Load",
+          "nl": "Aangesloten vermogen"
+        },
+        "hint": {
+          "en": "The Heatit Z-Dim has functionality to calculate power consumption. To enable this function, this parameter should have a value greater then 0. This is an estimated value, therefor power consumption accuracy depends on load estimation. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 0 - 200 W \nDefault: 0 (diabled) W",
+          "nl": "De Heatit Z-Dim heeft een ingebouwde functionaliteit om het stroomverbruik te bepalen. Om deze functie in te schakelen, stel een waarde in groter dan 0. De nauwkeurigheid van het gerapporteerde stroomverbruik hangt af van deze instelling. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 0 - 200 W \nStandaard: 0 (uitgeschakeld) W"
+        }
+      },
+
+      {
+        "$extends": "Meter_report_interval",
+        "id": "meter_report_interval",
+        "zwave": {
+          "index": 9,
+          "size": 2
+        },
+        "value": 60
+      },
+      {
+        "id": "save_state",
+        "type": "number",
+        "value": 50,
+        "attr": {
+          "min": 1,
+          "max": 99
+        },
+      "label": {
+        "en": "Restore state after power failure",
+        "nl": "Herstel status na stroomonderbreking"
+      },
+      "hint": {
+        "en": "This parameter ({{zwaveParameterIndex}}) determines whether after a power failure the device should be restored to the state it had before the power failure.",
+        "nl": "Deze parameter ({{zwaveParameterIndex}}) bepaalt of het apparaat na een stroomonderbreking moet worden ingesteld zoals deze voor de stroomonderbreking stond ingesteld."
+      },
+      "zwave": {
+        "index": 10,
+        "size": 1
+      }
+    }
+    ]
+  }
+]

@@ -1,0 +1,79 @@
+{
+  "name": {
+    "en": "Z-Dim2"
+  },
+  "class": "light",
+  "capabilities": [
+    "dim",
+    "onoff",
+    "meter_power",
+    "measure_power",
+    "button.reset_meter"    
+  ],
+  "capabilitiesOptions": {
+    "onoff": {
+      "setOnDim": false
+    },
+    "dim": {
+      "opts": {
+        "duration": true
+      }
+    },
+    "measure_power": {
+      "approximated": true
+    },
+    "button.reset_meter": {
+      "maintenanceAction": true,
+      "title": {
+        "en": "Reset power meter"
+      },
+      "desc": {
+        "en": "Reset the accumulated power usage (kWh), note that this can not be reversed."
+      }
+    }
+  },
+  "platforms": [
+    "local",
+    "cloud"
+  ],
+  "connectivity": [
+    "zwave"
+  ],
+  "images": {
+    "small": "{{driverAssetsPath}}/images/small.png",
+    "large": "{{driverAssetsPath}}/images/large.png",
+    "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
+  },
+  "zwave": {
+    "manufacturerId": 411,
+    "productTypeId": [4, 2],
+    "productId": [8705],
+    "security": ["none"],
+    "zwaveAllianceProductId": 4666,
+    "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4666",
+    "learnmode": {
+      "image": "{{driverAssetsPath}}/learnmode.svg",
+      "instruction": {
+        "en": "Press the reset button on the dimmer 3 times in a rapid sequence."
+      }
+    },
+    "associationGroups": [1],
+    "associationGroupsOptions": {
+      "1": {
+        "hint": {
+          "en": "Lifeline association group (do not change)"
+        }
+      },
+      "2": {
+        "hint": {
+          "en": "Dimming level: Basic Set is usually used to controll other dimmer devices"
+        }
+      },
+      "3": {
+        "hint": {
+          "en": "Dimming commands: Can be used to control other dimming devices"
+        }
+      }
+    }
+  }
+}

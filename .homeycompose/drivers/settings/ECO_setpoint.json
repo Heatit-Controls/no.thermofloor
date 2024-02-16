@@ -1,0 +1,16 @@
+{
+	"type": "number",
+	"attr": {
+		"min": 50,
+		"max": 400
+	},
+	"value": 180,
+	"label": {
+		"en": "Energy saving mode temperature",
+		"nl": "Energiebesparings modus temperatuur"
+	},
+	"hint": {
+		"en": "Temperature setpoint used when in Energy saving (ECO) mode. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 50 - 400 (5.0C - 40.0 °C) \nDefault: 180 (18.0) °C",
+		"nl": "Temperatuur setpoint gebruikt in Energiebesparings (ECO) mode. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 50 - 400 (5.0C - 40.0 °C)\nStandaard: 180 (18.0) °C"
+	}
+}

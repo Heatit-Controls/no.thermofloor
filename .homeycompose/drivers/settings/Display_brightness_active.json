@@ -1,0 +1,16 @@
+{
+	"type": "number",
+	"attr": {
+		"min": 0,
+		"max": 100
+	},
+	"value": 100,
+	"label": {
+		"en": "Display brightness – active state (%)",
+		"nl": "Helderheid scherm - geactiveerde toestand (%)"
+	},
+	"hint": {
+		"en": "Display brightness – active state. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 0 - 100 (%)\nDefault: 100 (%)",
+		"nl": "Helderheid scherm - geactiveerde toestand. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 0 - 100 (%)\nStandaard: 100 (%)"
+	}
+}

@@ -1,0 +1,242 @@
+[
+	{
+		"$extends": "LED_status",
+		"id": "LED_status"
+	},
+	{
+		"$extends": "LED_brightness",
+		"id": "LED_brightness"
+	},
+	{
+		"type": "group",
+		"label": {
+			"en": "Input settings",
+			"nl": "Ingangsinstellingen"
+		},
+		"collapsed": true,
+		"children": [
+			{
+				"$extends": "Input_function",
+				"id": "Input_function_input1",
+				"zwave": {
+					"index": 3,
+					"size": 1
+				},
+				"label": {
+					"en": "Function input 1",
+					"nl": "Functie ingang 1"
+				}
+			},
+			{
+				"$extends": "Input_function",
+				"id": "Input_function_input2",
+				"zwave": {
+					"index": 4,
+					"size": 1
+				},
+				"label": {
+					"en": "Function input 2",
+					"nl": "Functie ingang 2"
+				}
+			},
+			{
+				"$extends": "Input_function",
+				"id": "Input_function_input3",
+				"zwave": {
+					"index": 5,
+					"size": 1
+				},
+				"label": {
+					"en": "Function input 3",
+					"nl": "Functie ingang 3"
+				}
+			},
+			{
+				"$extends": "Input_function",
+				"id": "Input_function_input4",
+				"zwave": {
+					"index": 6,
+					"size": 1
+				},
+				"label": {
+					"en": "Function input 4",
+					"nl": "Functie ingang 4"
+				}
+			},
+			{
+				"$extends": "Input_function",
+				"id": "Input_function_input5",
+				"zwave": {
+					"index": 7,
+					"size": 1
+				},
+				"label": {
+					"en": "Function input 5",
+					"nl": "Functie ingang 5"
+				}
+			},
+			{
+				"$extends": "Input_function",
+				"id": "Input_function_input6",
+				"zwave": {
+					"index": 8,
+					"size": 1
+				},
+				"label": {
+					"en": "Function input 6",
+					"nl": "Functie ingang 6"
+				}
+			},
+			{
+				"id": "Input_Snubber_filter_time_constant",
+				"zwave": {
+					"index": 9,
+					"size": 1,
+					"signed": false
+				},
+				"type": "number",
+				"attr": {
+					"min": 0,
+					"max": 2.55
+				},
+				"value": 0.05,
+				"label": {
+					"en": "Input Snubber-filter time constant."
+				},
+				"hint": {
+					"en": "Input Snubber-filter time constant (s). \nSpecifies the time used to define the time constant of the input snubber-filter. (Increments in 0.01 second resolution.) \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 0 - 2.55"
+				}
+			},
+			{
+				"id": "Threshold_input_activation.",
+				"zwave": {
+					"index": 10,
+					"size": 1,
+					"signed": false
+				},
+				"type": "number",
+				"attr": {
+					"min": 0,
+					"max": 2.55
+				},
+				"value": 0.20,
+				"label": {
+					"en": "Threshold value for activation of inputs."
+				},
+				"hint": {
+					"en": "Threshold value for activation of inputs (s). \nSpecifies the time that an entry must be stable before it is accepted as active / idle in 0.01 second resolution. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 0 - 2.55"
+				}
+			},
+			{
+				"id": "Threshold_input_latched_mode",
+				"zwave": {
+					"index": 11,
+					"size": 1,
+					"signed": false
+				},
+				"type": "number",
+				"attr": {
+					"min": 0,
+					"max": 2.55
+				},
+				"value": 0.50,
+				"label": {
+					"en": "Threshold for input in latched mode."
+				},
+				"hint": {
+					"en": "Threshold for input in latched mode. \nIndicates the time that an input must be activated before it accepts the button latched mode. (Increments in 0.01 second resolution.) \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 0 - 2.55"
+				}
+			},
+			{
+				"$extends": "Central_scene_mode",
+				"id": "Central_scene_mode",
+				"zwave": {
+					"index": 12,
+					"size": 1
+				}
+			}
+		]
+	},
+	{
+		"type": "group",
+		"label": {
+			"en": "Relay functions",
+			"nl": "Uitgangsinstellingen"
+		},
+		"collapsed": true,
+		"children": [
+			{
+				"$extends": "Output_function",
+				"id": "Output_function_relay1",
+				"zwave": {
+					"index": 13,
+					"size": 1
+				},
+				"label": {
+					"en": "Function relay 1",
+					"nl": "Functie uitgang 1"
+				}
+			},
+			{
+				"$extends": "Output_function",
+				"id": "Output_function_relay2",
+				"zwave": {
+					"index": 14,
+					"size": 1
+				},
+				"label": {
+					"en": "Function relay 2",
+					"nl": "Functie uitgang 2"
+				}
+			},
+			{
+				"$extends": "Output_function",
+				"id": "Output_function_relay3",
+				"zwave": {
+					"index": 15,
+					"size": 1
+				},
+				"label": {
+					"en": "Function relay 3",
+					"nl": "Functie uitgang 3"
+				}
+			},
+			{
+				"$extends": "Output_function",
+				"id": "Output_function_relay4",
+				"zwave": {
+					"index": 16,
+					"size": 1
+				},
+				"label": {
+					"en": "Function relay 4",
+					"nl": "Functie uitgang 4"
+				}
+			},
+			{
+				"$extends": "Output_function",
+				"id": "Output_function_relay5",
+				"zwave": {
+					"index": 17,
+					"size": 1
+				},
+				"label": {
+					"en": "Function relay 5",
+					"nl": "Functie uitgang 5"
+				}
+			},
+			{
+				"$extends": "Output_function",
+				"id": "Output_function_relay6",
+				"zwave": {
+					"index": 18,
+					"size": 1
+				},
+				"label": {
+					"en": "Function relay 6",
+					"nl": "Functie uitgang 6"
+				}
+			}
+		]
+	}
+]

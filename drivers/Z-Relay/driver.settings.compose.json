@@ -1,0 +1,309 @@
+[
+	{
+		"$extends": "LED_status",
+		"id": "LED_status"
+	},
+	{
+		"$extends": "LED_brightness",
+		"id": "LED_brightness"
+	},
+	{
+		"type": "group",
+		"label": {
+			"en": "Input sensor options",
+			"nl": "Sensor instellingen"
+		},
+		"collapsed": true,
+		"children": [
+			{
+				"type": "group",
+				"label": {
+					"en": "Input 1 (Temperature sensor 1)",
+					"nl": "Ingang 1 (Temperatuursensor 1)"
+				},
+				"collapsed": true,
+				"children": [
+					{
+						"$extends": "Sensor_type",
+						"id": "Sensor_type_input1",
+						"zwave": {
+							"index": 3,
+							"size": 1
+						}
+					},
+					{
+						"$extends": "Sensor_calibration",
+						"id": "Sensor_calibration_input1",
+						"zwave": {
+							"index": 5,
+							"size": 1
+						}
+					},
+					{
+						"$extends": "Temperature_report_interval_10",
+						"id": "Temperature_report_interval_input1",
+						"zwave": {
+							"index": 7,
+							"size": 2
+						}
+					}
+				]
+			},
+			{
+				"type": "group",
+				"label": {
+					"en": "Input 2 (Temperature sensor 2)",
+					"nl": "Ingang 2 (Temperatuursensor 2)"
+				},
+				"collapsed": true,
+				"children": [
+					{
+						"$extends": "Sensor_type",
+						"id": "Sensor_type_input2",
+						"zwave": {
+							"index": 4,
+							"size": 1
+						}
+					},
+					{
+						"$extends": "Sensor_calibration",
+						"id": "Sensor_calibration_input2",
+						"zwave": {
+							"index": 6,
+							"size": 1
+						}
+					},
+					{
+						"$extends": "Temperature_report_interval_10",
+						"id": "Temperature_report_interval_input2",
+						"zwave": {
+							"index": 8,
+							"size": 2
+						}
+					}
+				]
+			},
+			{
+				"type": "group",
+				"label": {
+					"en": "Input 3 (Flood sensor)",
+					"nl": "Ingang 3 (Lekkage sensor)"
+				},
+				"collapsed": true,
+				"children": [
+					{
+						"id": "Report_interval_input3",
+						"zwave": {
+							"index": 9,
+							"size": 2
+						},
+						"type": "number",
+						"attr": {
+							"min": 0,
+							"max": 864
+						},
+						"value": 2,
+						"label": {
+							"en": "Notification report interval (s)",
+							"nl": "Notificatie rapportage interval (s)"
+						},
+						"hint": {
+							"en": "Time interval between consecutive alarm notification reports. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 0, 10 - 8640 (s)\nDefault: 20 (s)",
+							"nl": "Tijdsinterval tussen opeenvolgende alarm notificatie rapportages. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 0, 10 - 8640 (s)\nStandaard: 20 (s)"
+						}
+					},
+					{
+						"id": "Flood_steady_timer",
+						"zwave": {
+							"index": 11,
+							"size": 1
+						},
+						"type": "number",
+						"attr": {
+							"min": 0,
+							"max": 60
+						},
+						"value": 6,
+						"label": {
+							"en": "Flood sensor trigger threshold (s)",
+							"nl": "Lekkage sensor trigger drempelwaarde (s)"
+						},
+						"hint": {
+							"en": "Configures the time that the flood input (input 3) has to be steady before the state is accepted as a valid state. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 0- 60 (s)\nDefault: 6 (s)",
+							"nl": "Bepaald de tijdsduur waarin de lekkage sensor (ingang 3) getriggerd moet zijn voordat de toestand geaccepteerd wordt als valide toestand. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 0 - 60 (s)\nStandaard: 6 (s)"
+						}
+					},
+					{
+						"id": "Flood_detection_threshold",
+						"zwave": {
+							"index": 14,
+							"size": 2
+						},
+						"type": "number",
+						"attr": {
+							"min": 0,
+							"max": 4095
+						},
+						"value": 2048,
+						"label": {
+							"en": "Flood sensor detection threshold",
+							"nl": "Lekkage sensor detection drempelwaarde"
+						},
+						"hint": {
+							"en": "Configures the threshold for input 3 that will cause a flood to be detected. \nLow value means a low detection threshold, high value will cause the input to be more sensitive. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 0- 4095\nDefault: 2048",
+							"nl": "Bepaald de drempelwaarde waarbij de lekkage sensor (ingang 3) getriggerd wordt. \nLage waarde betekend een lage detectie drempel, hoge waarde zorgt voor een verhoogde gevoeligheid van de ingang. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 0 - 4095\nStandaard: 2048"
+						}
+					}
+				]
+			}
+		]
+	},
+	{
+		"type": "group",
+		"label": {
+			"en": "Relay",
+			"nl": "Uitgang"
+		},
+		"collapsed": true,
+		"children": [
+			{
+				"id": "Meter_report_interval_relay",
+				"zwave": {
+					"index": 10,
+					"size": 2
+				},
+				"type": "number",
+				"attr": {
+					"min": 0,
+					"max": 8640
+				},
+				"value": 900,
+				"label": {
+					"en": "Meter (kWh) report interval (s)",
+					"nl": "Meter (kWh) rapportage interval (s)"
+				},
+				"hint": {
+					"en": "Configures the time interval between when meter reports for reporting the energy (kWh) consumed by the load connected to the relay output. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 0, 10 - 864 (s)\nDefault: 60 (s)",
+					"nl": "Bepaald de tijdsinterval tussen opeenvolgende meter rapportages voor de energie (kWh) verbruikt door de aangesloten apparaat. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 0, 10 - 864 (s)\nStandaard: 60 (s)"
+				}
+			},
+			{
+				"id": "Auto_relay_on",
+				"zwave": {
+					"index": 12,
+					"size": 1
+				},
+				"type": "dropdown",
+				"label": {
+					"en": "Auto relay on",
+					"nl": "Relay inschakelfunctie"
+				},
+				"value": "1",
+				"hint": {
+					"en": "Configures internal states that will cause the relay to be turned on. \nZ-wave parameter {{zwaveParameterIndex}} \ndefault: The relay is turned on when a flood is detected.",
+					"nl": "Bepaald de interne toestand waarbij de relay ingeschakeld wordt. \nZ-wave parameter {{zwaveParameterIndex}} \nstandaard: De uitgang wordt ingeschakeld wanneer een lekkage gedetecteerd wordt"
+				},
+				"values": [
+					{
+						"id": "0",
+						"label": {
+							"en": "Relay is not turned on automatically."
+						}
+					},
+					{
+						"id": "1",
+						"label": {
+							"en": "The relay is turned on when a flood is detected. (Default)"
+						}
+					},
+					{
+						"id": "2",
+						"label": {
+							"en": "The relay is turned on when no flood is detected."
+						}
+					}
+			  ]
+			},
+			{
+				"id": "Auto_relay_off",
+				"zwave": {
+					"index": 13,
+					"size": 1
+				},
+				"type": "dropdown",
+				"label": {
+					"en": "Auto relay off",
+					"nl": "Relay uitschakelfunctie"
+				},
+				"value": "1",
+				"hint": {
+					"en": "Configures internal states that will cause the relay to be turned off. \nZ-wave parameter {{zwaveParameterIndex}} \ndefault: The relay is turned off when a flood is detected.",
+					"nl": "Bepaald de interne toestand waarbij de relay uitgeschakeld wordt. \nZ-wave parameter {{zwaveParameterIndex}} \nstandaard: De uitgang wordt uitgeschakeld wanneer een lekkage gedetecteerd wordt"
+				},
+				"values": [
+					{
+						"id": "0",
+						"label": {
+							"en": "Relay is not turned off automatically."
+						}
+					},
+					{
+						"id": "1",
+						"label": {
+							"en": "The relay is turned off when a flood is detected. (Default)"
+						}
+					},
+					{
+						"id": "2",
+						"label": {
+							"en": "The relay is turned off when no flood is detected."
+						}
+					}
+			  ]
+			},
+			{
+				"id": "set_voltage",
+				"zwave": {
+					"index": 15,
+					"size": 1,
+					"signed": false
+				},
+				"type": "number",
+				"attr": {
+					"min": 0,
+					"max": 250
+				},
+				"value": 220,
+				"label": {
+					"en": "Set Voltage (V)",
+					"nl": "Stel Voltage (V) in"
+				},
+				"hint": {
+					"en": "Configures the value used for power calculation, as only the current for the load on the relay output is measured. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 0 - 250 (V)\nDefault: 220 (V)",
+					"nl": "Bepaald de waarde gebruikt voor de berekening van het stroom verbruik, aangezien alleen de stroom van de load op de relay gemeten wordt. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 0 - 250 (V)\nStandaard: 220 (V)"
+				}
+			},
+			{
+				"id": "set_load_of_relay",
+				"zwave": {
+					"index": 18,
+					"size": 2
+				},
+				"type": "number",
+				"attr": {
+					"min": 0,
+					"max": 6000
+				},
+				"value": 0,
+				"label": {
+					"en": "Set load (W) of relay",
+					"nl": "Stel belasting (W) van relay in"
+				},
+				"hint": {
+					"en": "Configures a constant value that will be used in power metering when this value is different from 0. This value specifies the actual load in Watt used for power metering. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 0 - 6000 (W)\nDefault: 0 (W)",
+					"nl": "Bepaald de constante waarde gebruikt voor de berekening van het stroom verbruik wanneer dit anders is dan 0. Deze waarde is de actuele belasting in Watt die gebruikt wordt voor stroom metingen. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 0 - 250 (V)\nStandaard: 220 (V)"
+				}
+			}
+		]
+	}
+]

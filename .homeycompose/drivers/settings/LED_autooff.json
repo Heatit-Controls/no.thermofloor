@@ -1,0 +1,20 @@
+{
+	"zwave": {
+		"index": 9,
+		"size": 2
+	},
+	"type": "number",
+	"attr": {
+		"min": 3,
+		"max": 300
+	},
+	"value": 3,
+	"label": {
+		"en": "LED turn off timeout (s)",
+		"nl": "LED uitschakel tijd (s)"
+	},
+	"hint": {
+		"en": "LED turn off timeout. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 3 - 300 (s)\nDefault: 3 (s)",
+		"nl": "LED uitschakel tijd. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 3 - 300 (%)\nStandaard: 3 (s)"
+	}
+}

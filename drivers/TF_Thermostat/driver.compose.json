@@ -1,0 +1,67 @@
+{
+	"id": "TF_Thermostat",
+	"name": {
+		"en": "Z-wave thermostat"
+	},
+	"icon": "{{driverAssetsPath}}/icon.svg",
+	"images": {
+		"large": "{{driverAssetsPath}}/images/large.jpg",
+		"small": "{{driverAssetsPath}}/images/small.jpg"
+	},
+	"platforms": ["local", "cloud"],
+	"connectivity": ["zwave"],
+	"class": "thermostat",
+	"capabilities": ["measure_temperature", "thermofloor_onoff", "thermofloor_mode", "target_temperature"],
+	"capabilitiesOptions": {
+		"target_temperature": {
+			"min": 5,
+			"max": 40,
+			"step": 0.5
+		},
+		"thermofloor_onoff": {
+			"greyout": true,
+			"titleTrue": {
+				"en": "Active"
+			},
+			"titleFalse": {
+				"en": "Idle"
+			}
+		}
+	},
+	"energy": {
+		"approximation": {
+			"usageOn": 0,
+			"usageOff": 0
+		}
+	},
+	"zwave": {
+		"manufacturerId": 411,
+		"productTypeId": 1,
+		"productId": 1,
+		"security": ["none"],
+		"productDocumentation": "http://products.z-wavealliance.org/ProductManual/File?folder=&filename=Manuals/1182/Manual_Multireg Z-Wave_Ver2015-A.pdf",
+		"pid": 1182,
+		"imageRemotePath": "http://products.z-wavealliance.org/ProductImages/Index?productName=ZC10-15010002",
+		"learnmode": {
+			"image": "{{driverAssetsPath}}/learnmode.svg",
+			"instruction": {
+				"en": "1. press the Center (confirm) button for 10 seconds. The display will show OFF. \n2. Press Right(down) button 5 times till you see Con in the display.\n3. Now start add a device to Homey.\n4. Start inclusion mode by pressing Center(confirm) button for approximately 2 seconds. The inclusion / exclusion icon will appear in the display.\n5. Confirmation will show Inc in the display. If inclusion fails, Err(error) will appear."
+			}
+		},
+		"associationGroups": [1, 2],
+		"associationGroupsOptions": {
+			"1": {
+				"hint": {
+					"en": "Lifeline. All run-time reporting is addressed to this group. Only one node can be assigned to this association group. \nDefault: 1 (Homey's ID)",
+					"nl": "Lifeline: Association Groep 1 wordt gebruikt om alle rapportages door te geven. Slechts een node kan toegevoegd worden aan deze associatie groep. \nStandaard: 1 (Homey's ID)"
+				}
+			},
+			"2": {
+				"hint": {
+					"en": "On/off  control: This controls external heaters replicating the state of the internal relay. \nUses BASIC_SET command, values 0x00 (on) and 0xFF (on).\nDefault: 1 (Homey's ID), required to track the thermostat state (Active / Idle)",
+					"nl": "On/off  control: Deze groep schakelt externe verwarmings of koelings elementen. \nMaakt gebruik van het BASIC_SET command, values 0x00 (on) and 0xFF (on).\nStandaard: 1 (Homey's ID), nodig om de toestand van de thermostat (Actief / Inactief) bij te houden"
+				}
+			}
+		}
+	}
+}

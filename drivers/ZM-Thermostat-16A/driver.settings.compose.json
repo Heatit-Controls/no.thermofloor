@@ -1,0 +1,223 @@
+[
+	{
+		"id": "operating_mode",
+		"type": "dropdown",
+		"label": {
+		  "en": "Operating mode"
+		},
+		"hint": {
+			"en": "This parameter ({{zwaveParameterIndex}}) sets the thermostat mode"
+		},
+		"zwave": {
+			"index": 1,
+			"size": 1
+		},
+		"value": "1",
+		"values": [
+			{
+			  "id": "0",
+			  "label": {
+				  "en": "OFF"
+			  }
+			},
+			{
+			  "id": "1",
+			  "label": {
+				"en": "Heating"
+			  }
+			},
+			{
+			  "id": "2",
+			  "label": {
+				"en": "Cooling"
+			  }
+			}
+		  ]
+	},
+	{
+		"id": "temp_control_hysteresis",
+		"type": "number",
+		"label": {
+		  "en": "Temperature control hysteresis"
+		},
+		"hint": {
+		  "en": "This parameter ({{zwaveParameterIndex}}) chooses the hysteresis for the thermostat."
+		},
+		"zwave": {
+		  "index": 2,
+		  "size": 1
+		},
+		"value": 5,
+		"attr": {
+		  "min": 3,
+		  "max": 30
+		}
+	  },
+	{
+		"id": "minimum_temperature",
+		"type": "number",
+		"label": {
+		  "en": "Minimum temperature"
+		},
+		"hint": {
+		  "en": "This parameter ({{zwaveParameterIndex}}) decides the lowest setpoint temperature allowed by the thermostat."
+		},
+		"zwave": {
+		  "index": 3,
+		  "size": 2
+		},
+		"value": 50,
+		"attr": {
+		  "min": 50,
+		  "max": 400
+		}
+	  },
+	{
+		"id": "maximum_temperature",
+		"type": "number",
+		"label": {
+		  "en": "Maximum temperature"
+		},
+		"hint": {
+		  "en": "This parameter ({{zwaveParameterIndex}}) decides the highest setpoint temperature allowed by the thermostat."
+		},
+		"zwave": {
+		  "index": 4,
+		  "size": 2
+		},
+		"value": 400,
+		"attr": {
+		  "min": 50,
+		  "max": 400
+		}
+	  },
+	{
+		"id": "thermostat_setpoint",
+		"type": "number",
+		"label": {
+		  "en": "Thermostat setpoint"
+		},
+		"hint": {
+		  "en": "This parameter ({{zwaveParameterIndex}}) decides the thermostat setpoint."
+		},
+		"zwave": {
+		  "index": 5,
+		  "size": 2
+		},
+		"value": 210,
+		"attr": {
+		  "min": 50,
+		  "max": 400
+		}
+	},
+	{
+		"id": "sensor_calibration",
+		"type": "number",
+		"label": {
+		  "en": "Sensor calibration"
+		},
+		"hint": {
+		  "en": "This parameter ({{zwaveParameterIndex}}) manually calibrates the sensor by ±6°C."
+		},
+		"zwave": {
+		  "index": 6,
+		  "size": 1
+		},
+		"value": 0,
+		"attr": {
+		  "min": -60,
+		  "max": 60
+		}
+	},
+	{
+		"id": "temp_report_interval",
+		"type": "number",
+		"label": {
+		  "en": "Temperature report interval"
+		},
+		"hint": {
+		  "en": "This parameter ({{zwaveParameterIndex}}) sets time interval between consecutive temperature reports."
+		},
+		"zwave": {
+		  "index": 7,
+		  "size": 4
+		},
+		"value": 1020,
+		"attr": {
+		  "min": 30,
+		  "max": 65535
+		}
+	},
+	{
+		"id": "temp_report_hysteresis",
+		"type": "number",
+		"label": {
+		  "en": "Temperature report hysteresis"
+		},
+		"hint": {
+		  "en": "This parameter ({{zwaveParameterIndex}}) sets temperature reports based on change in temperature from last report."
+		},
+		"zwave": {
+		  "index": 8,
+		  "size": 1
+		},
+		"value": 10,
+		"attr": {
+		  "min": 0,
+		  "max": 100
+		}
+	},
+	{
+		"id": "meter_report_interval",
+		"type": "number",
+		"label": {
+		  "en": "Meter report interval"
+		},
+		"hint": {
+		  "en": "This parameter ({{zwaveParameterIndex}}) sets time interval between consecu tive meter reports."
+		},
+		"zwave": {
+		  "index": 9,
+		  "size": 4
+		},
+		"value": 1020,
+		"attr": {
+		  "min": 30,
+		  "max": 65535
+		}
+	},
+	{
+		"id": "inverted_output",
+		"type": "checkbox",
+		"label": {
+		  "en": "Inverted output"
+		},
+		"hint": {
+		  "en": "This parameter ({{zwaveParameterIndex}}) decides if the relay output should be inverted."
+		},
+		"zwave": {
+		  "index": 10,
+		  "size": 1
+		},
+		"value": true
+	},
+	{
+		"id": "relay_state_update_interval",
+		"type": "number",
+		"label": {
+		  "en": "Relay state update interval"
+		},
+		"hint": {
+		  "en": "This parameter ({{zwaveParameterIndex}}) sets the time interval of how often the device reports Binary Switch Set and thermostat mode."
+		},
+		"zwave": {
+		  "index": 11,
+		  "size": 4
+		},
+		"value": 43200,
+		"attr": {
+		  "min": 30,
+		  "max": 65535
+		}
+	}
+]

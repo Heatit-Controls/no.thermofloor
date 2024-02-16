@@ -1,0 +1,53 @@
+{
+	"id": "thermofloor_mode_changed_to",
+	"title": {
+		"en": "Thermostat mode has changed to",
+		"nl": "Thermostaat modus is veranderd naar"
+	},
+	"titleFormatted": {
+		"en": "Thermostat mode has changed to [[mode]]",
+		"nl": "Thermostaat modus is veranderd naar [[mode]]"
+	},
+	"args": [
+		{
+			"name": "device",
+			"type": "device",
+			"filter": "driver_id=TF_Thermostat|TF_Thermostat_FW1.92|Z-TRM2fx"
+	},
+		{
+			"name": "mode",
+			"type": "dropdown",
+			"title": { "en": "Mode" },
+			"values": [
+				{
+					"id": "Off",
+					"label": {
+						"en": "Off",
+						"nl": "Uit"
+					}
+					},
+				{
+					"id": "Heat",
+					"label": {
+						"en": "Comfort",
+						"nl": "Comfort"
+					}
+					},
+				{
+					"id": "Energy Save Heat",
+					"label": {
+						"en": "Energy Saving",
+						"nl": "Energiebesparing"
+					}
+					},
+				{
+					"id": "Cool",
+					"label": {
+						"en": "Cooling",
+						"nl": "Koelen"
+					}
+					}
+				]
+			}
+		]
+}

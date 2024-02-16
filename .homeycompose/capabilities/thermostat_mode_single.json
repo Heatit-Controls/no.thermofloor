@@ -1,0 +1,31 @@
+{
+	"type": "enum",
+	"uiComponent": "picker",
+	"title": {
+		"en": "Thermostat mode",
+		"nl": "Thermostaat modus"
+	},
+	"desc": {
+		"en": "Mode of the thermostat",
+		"nl": "Modus van de thermostaat"
+	},
+	"uiComponent": "picker",
+	"values": [
+		{
+			"id": "Heat",
+			"title": {
+				"en": "Heating",
+				"nl": "Verwarmen"
+			}
+		},
+		{
+			"id": "Off",
+			"title": {
+				"en": "Off",
+				"nl": "Uit"
+			}
+		}
+	],
+	"getable": true,
+	"setable": true
+}

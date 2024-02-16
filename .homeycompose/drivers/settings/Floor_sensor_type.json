@@ -1,0 +1,55 @@
+{
+	"zwave": {
+		"index": 3,
+		"size": 1
+	},
+	"type": "dropdown",
+	"label": {
+		"en": "Floor sensor type",
+		"nl": "Vloer sensor type"
+	},
+	"value": "0",
+	"hint": {
+		"en": "Floor sensor type. \nZ-wave parameter {{zwaveParameterIndex}} \ndefault: 10K NTC",
+		"nl": "Vloer sensor type. \nZ-wave parameter {{zwaveParameterIndex}} \nstandaard: 10K NTC"
+	},
+	"values": [
+		{
+			"id": "0",
+			"label": {
+				"en": "10K NTC (default)",
+				"nl": "10K NTC (standaard)"
+			}
+		},
+		{
+			"id": "1",
+			"label": {
+				"en": "12K NTC"
+			}
+		},
+		{
+			"id": "2",
+			"label": {
+				"en": "15K NTC"
+			}
+		},
+		{
+			"id": "3",
+			"label": {
+				"en": "22K NTC"
+			}
+		},
+		{
+			"id": "4",
+			"label": {
+				"en": "33K NTC"
+			}
+		},
+		{
+			"id": "5",
+			"label": {
+				"en": "47K NTC"
+			}
+		}
+  ]
+}

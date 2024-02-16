@@ -1,0 +1,195 @@
+[
+  {
+    "id": "input1_calibration",
+    "type": "number",
+    "label": {
+      "en": "Input 1 Calibration"
+    },
+    "hint": {
+      "en": "Manually calibrate input 1 ±6°C."
+    },
+    "zwave": {
+      "index": 1,
+      "size": 1
+    },
+    "value": 0,
+    "attr": {
+      "min": -60,
+      "max": 60
+    }
+  },
+  {
+    "id": "input2_calibration",
+    "type": "number",
+    "label": {
+      "en": "Input 2 Calibration"
+    },
+    "hint": {
+      "en": "Manually calibrate input 2 ±6°C."
+    },
+    "zwave": {
+      "index": 2,
+      "size": 1
+    },
+    "value": 0,
+    "attr": {
+      "min": -60,
+      "max": 60
+    }
+  },
+  {
+    "id": "temp_report_interval",
+    "type": "number",
+    "label": {
+      "en": "Temperature report interval"
+    },
+    "hint": {
+      "en": "Set the time interval between consecutive temperature reports."
+    },
+    "zwave": {
+      "index": 3,
+      "size": 2,
+      "signed": false
+    },
+    "value": 827,
+    "attr": {
+      "min": 30,
+      "max": 65535
+    }
+  },
+  {
+    "id": "temp_report_hysteresis",
+    "type": "number",
+    "label": {
+      "en": "Temperature report hysteresis"
+    },
+    "hint": {
+      "en": "Set the change in temperature required to send a temperature report based on change."
+    },
+    "zwave": {
+      "index": 4,
+      "size": 1,
+      "signed": false
+    },
+    "value": 10,
+    "attr": {
+      "min": 1,
+      "max": 100
+    }
+  },
+  {
+    "id": "power_restore_level",
+    "type": "dropdown",
+	"value": "2",
+    "label": {
+      "en": "Power restore level"
+    },
+    "hint": {
+      "en": "The state the relays should return to once power is restored after a power failure."
+    },
+    "zwave": {
+      "index": 5,
+      "size": 1,
+      "signed": false
+    },
+    "values": [
+      {
+        "id": "0",
+        "label": {
+          "en": "Off"
+        }
+      },
+      {
+        "id": "1",
+        "label": {
+          "en": "On"
+        }
+      },
+      {
+        "id": "2",
+        "label": {
+          "en": "Last state (Default)"
+        }
+      }
+    ]
+  },
+  {
+    "id": "inverted_output",
+    "type": "dropdown",
+	"value": "0",
+    "label": {
+      "en": "Inverted output"
+    },
+    "hint": {
+      "en": "Configures if the function of the relay output shall be inverted."
+    },
+    "zwave": {
+      "index": 6,
+      "size": 1,
+      "signed": false
+    },
+    "values": [
+      {
+        "id": "0",
+        "label": {
+          "en": "Off (Default)"
+        }
+      },
+      {
+        "id": "1",
+        "label": {
+          "en": "On"
+        }
+      }
+    ]
+  },
+  {
+    "id": "valve_inactivity_exercise",
+    "type": "number",
+    "label": {
+      "en": "Valve inactivity exercise"
+    },
+    "hint": {
+      "en": "Relays will turn on to open valves for the selected amount of time after 30 days of inactivity."
+    },
+    "zwave": {
+      "index": 7,
+      "size": 1
+    },
+    "value": 0,
+    "attr": {
+      "min": 0,
+      "max": 30
+    }
+  },
+    {
+    "id": "antenna type",
+    "type": "dropdown",
+	"value": "0",
+    "label": {
+      "en": "Select antenna type"
+    },
+    "hint": {
+      "en": "Choose if the device uses the internal antenna or an external wired antenna."
+    },
+    "zwave": {
+      "index": 8,
+      "size": 1,
+      "signed": false
+    },
+    "values": [
+      {
+        "id": "0",
+        "label": {
+          "en": "Internal antenna (Default)"
+        }
+      },
+      {
+        "id": "1",
+        "label": {
+          "en": "External wired antenna"
+        }
+      }
+    ]
+  }
+]

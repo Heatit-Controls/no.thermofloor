@@ -1,0 +1,255 @@
+[
+	{
+		"$extends": "operation_mode_4",
+		"id": "operation_mode"
+	},
+	{
+		"$extends": "CO_setpoint",
+		"id": "CO_setpoint",
+		"zwave": {
+			"index": 9,
+			"size": 2
+		}
+  },
+	{
+		"$extends": "ECO_setpoint",
+		"id": "ECO_setpoint",
+		"zwave": {
+			"index": 10,
+			"size": 2
+		}
+  },
+	{
+		"$extends": "COOL_setpoint",
+		"id": "COOL_setpoint",
+		"zwave": {
+			"index": 11,
+			"size": 2
+		}
+  },
+	{
+		"type": "group",
+		"label": {
+			"en": "Display options",
+			"nl": "Scherm instellingen"
+		},
+		"collapsed": true,
+		"children": [
+			{
+				"$extends": "Temperature_display",
+				"id": "Temperature_display",
+				"zwave": {
+					"index": 14,
+					"size": 1
+				}
+			},
+			{
+				"$extends": "Button_brightness_dimmed",
+				"id": "Button_brightness_dimmed",
+				"zwave": {
+					"index": 15,
+					"size": 1
+				}
+			},
+			{
+				"$extends": "Button_brightness_active",
+				"id": "Button_brightness_active",
+				"zwave": {
+					"index": 16,
+					"size": 1
+				}
+	},
+
+			{
+				"$extends": "Display_brightness_dimmed",
+				"id": "Display_brightness_dimmed",
+				"zwave": {
+					"index": 17,
+					"size": 1
+				}
+	},
+			{
+				"$extends": "Display_brightness_active",
+				"id": "Display_brightness_active",
+				"zwave": {
+					"index": 18,
+					"size": 1
+				}
+	}]
+	},
+	{
+		"type": "group",
+		"label": {
+			"en": "Reporting",
+			"nl": "Rapportage"
+		},
+		"collapsed": false,
+		"children": [
+			{
+				"$extends": "Temperature_report_interval",
+				"id": "Temperature_report_interval",
+				"zwave": {
+					"index": 19,
+					"size": 2
+				},
+				"value": 300
+	},
+			{
+				"$extends": "Temperature_report_threshold",
+				"id": "Temperature_report_threshold",
+				"zwave": {
+					"index": 20,
+					"size": 1
+				}
+	},
+			{
+				"$extends": "Meter_report_interval",
+				"id": "Meter_report_interval",
+				"zwave": {
+					"index": 21,
+					"size": 2
+				},
+				"value": 900
+			},
+			{
+				"$extends": "Meter_report_threshold",
+				"id": "Meter_report_threshold",
+				"zwave": {
+					"index": 22,
+					"size": 1
+				}
+			}]
+	},
+	{
+		"type": "group",
+		"label": {
+			"en": "Sensor settings",
+			"nl": "Sensor instellingen"
+		},
+		"collapsed": true,
+		"children": [
+			{
+				"$extends": "Temperature_thermostat_2",
+				"id": "Temperature_thermostat"
+			},
+			{
+				"$extends": "Sensor_mode",
+				"id": "Sensor_mode",
+				"zwave": {
+					"index": 2,
+					"size": 1
+				},
+				"values": [
+					{
+						"id": "0",
+						"label": {
+							"en": "F-mode, floor sensor mode (default)",
+							"nl": "F-modus, vloer sensor modus (standaard)"
+						}
+			    },
+					{
+						"id": "3",
+						"label": {
+							"en": "A2-mode, external room sensor mode",
+							"nl": "A2-modus, externe ruimte sensor modus"
+						}
+			    },
+					{
+						"id": "4",
+						"label": {
+							"en": "A2F-mode, external sensor with floor limitation",
+							"nl": "A2F-modus, externe sensor met vloer begrenzing"
+						}
+			    }
+			  ]
+			},
+			{
+				"$extends": "Floor_sensor_type",
+				"id": "Floor_sensor_type"
+			},
+			{
+				"$extends": "Temperature_control_hysteresis_DIFF_I",
+				"id": "Temperature_control_hysteresis_DIFF_I"
+			},
+			{
+				"$extends": "Temperature_limit",
+				"id": "Floor_minimum_temperature_limit_FLo",
+				"zwave": {
+					"index": 5,
+					"size": 2
+				},
+				"label": {
+					"en": "Floor minimum temperature limit (FLo)",
+					"nl": "Ondergrens vloer temperatuur (FLo)"
+				},
+				"value": 50
+			},
+			{
+				"$extends": "Temperature_limit",
+				"id": "Floor_maximum_temperature_limit_FHi",
+				"zwave": {
+					"index": 6,
+					"size": 2
+				},
+				"label": {
+					"en": "Floor maximum temperature limit (FHi)",
+					"nl": "Bovengrens vloer temperatuur (FHi)"
+				},
+				"value": 400
+			},
+			{
+				"$extends": "Temperature_limit",
+				"id": "Air_minimum_temperature_limit_ALo",
+				"zwave": {
+					"index": 7,
+					"size": 2
+				},
+				"label": {
+					"en": "Air (A2) minimum temperature limit (ALo)",
+					"nl": "Ondergrens lucht (A2) temperatuur (ALo)"
+				},
+				"value": 50
+			},
+			{
+				"$extends": "Temperature_limit",
+				"id": "Air_maximum_temperature_limit_AHi",
+				"zwave": {
+					"index": 8,
+					"size": 2
+				},
+				"label": {
+					"en": "Air (A2) maximum temperature limit (AHi)",
+					"nl": "Bovengrens lucht (A2) temperatuur (AHi)"
+				},
+				"value": 400
+			}
+
+		]
+	},
+	{
+		"type": "group",
+		"label": {
+			"en": "Sensor calibration",
+			"nl": "Sensor calibratie"
+		},
+		"collapsed": true,
+		"children": [
+			{
+				"$extends": "Floor_sensor_calibration",
+				"id": "Floor_sensor_calibration",
+				"zwave": {
+					"index": 12,
+					"size": 1
+				}
+	},
+
+			{
+				"$extends": "External_sensor_calibration",
+				"id": "External_sensor_calibration",
+				"zwave": {
+					"index": 13,
+					"size": 1
+				}
+	}]
+	}
+]

@@ -1,0 +1,29 @@
+{
+  "2.4.2": {
+    "en": "Add support for the Heatit Z-Push Button 4 devices"
+  },
+  "2.5.0": {
+    "en": "Add support for the Z-TRM3 thermostat and meter reset action for applicable devices"
+  },
+  "2.5.1": {
+    "en": "Fix Z-Dim device driver crashing on init"
+  },
+  "2.6.0": {
+    "en": "Add support for the Heatit Z-TEMP2 thermostat"
+  },
+  "2.6.1": {
+    "en": "Add support for the Heatit Z-TEMP2 thermostat device"
+  },
+  "2.7.0": {
+    "en": "Add support for the Z-Smoke AC Smoke Detector"
+  },
+  "2.7.1": {
+    "en": "Fix Z-TRM3 communication / association issues"
+  },
+  "3.0.0": {
+    "en": "Update to Homey SDKv3"
+  },
+  "3.4.2": {
+    "en": "Added support for Heatit Z-Smoke Battery on Homey Bridge"
+  }
+}

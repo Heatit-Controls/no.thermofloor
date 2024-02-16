@@ -1,0 +1,26 @@
+{
+	"type": "dropdown",
+	"label": {
+		"en": "Relay function",
+		"nl": "Uitgangsfunctie"
+	},
+	"value": "1",
+	"hint": {
+		"en": "Relay function. \nZ-wave parameter {{zwaveParameterIndex}} \ndefault: Output is controlled by input 2.",
+		"nl": "Uitgangsfunctie. \nZ-wave parameter {{zwaveParameterIndex}} \nstandaard: Output is controlled by input 2."
+	},
+	"values": [
+		{
+			"id": "0",
+			"label": {
+				"en": "Output is controlled via Z-Wave messages."
+			}
+		},
+		{
+			"id": "1",
+			"label": {
+				"en": "Output is controlled by input 2. (Default)"
+			}
+		}
+  ]
+}

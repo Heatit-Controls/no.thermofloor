@@ -1,0 +1,47 @@
+{
+	"id": "Z-Smoke-battery",
+	"name": {
+		"en": "Z-Smoke Detector Battery"
+	},
+	"icon": "{{driverAssetsPath}}/icon.svg",
+	"images": {
+		"large": "{{driverAssetsPath}}/images/large.png",
+		"small": "{{driverAssetsPath}}/images/small.png"
+	},
+	"platforms": ["local","cloud"],
+	"connectivity": ["zwave"],
+	"class": "sensor",
+	"capabilities": ["alarm_smoke", "alarm_heat", "alarm_motion", "alarm_tamper", "measure_temperature", "measure_battery", "alarm_siren"],
+	"energy": {
+		"batteries": ["INTERNAL"]
+	},
+	"zwave": {
+		"manufacturerId": 411,
+		"productTypeId": 3,
+		"productId": [24],
+		"security": ["none"],
+		"productDocumentation": "https://media.heatit.com/1757",
+		"imageRemotePath": "https://kodeo-heatit.imgix.net/1547-heatit-z-smoke-battery-packshot-4248418247.jpg",
+		"learnmode": {
+			"image": "{{driverAssetsPath}}/learnmode.svg",
+			"instruction": {
+				"en": "Within 1.5 seconds, press the Function button 3 times. \nThe Smoke Detector will emit a 2-tone beep and the LED will turn on for ~2 seconds."
+			}
+		},
+		"associationGroups": [1],
+		"associationGroupsMultiChannel": [],
+		"associationGroupsOptions": {
+			"1": {
+				"hint": {
+					"en": "Lifeline. All run-time reporting is addressed to this group. Only one node can be assigned to this association group. \nDefault: 1 (Homey's ID)"
+				}
+			},
+			"2": {
+				"hint": {
+					"en": "Send BASIC SET command. When the Smoke Detector is active, it will send Basic Set (0xFF = ON). \nWhen the Smoke Detector is restored, it will send Basic Set (0x00 = OFF). \nCan be used to trigger other Smoke Detectors or switch on lights."
+				}
+			}
+		},
+		"defaultConfiguration": []
+	}
+}

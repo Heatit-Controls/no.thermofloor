@@ -1,0 +1,16 @@
+{
+	"type": "number",
+	"attr": {
+		"min": 0,
+		"max": 100
+	},
+	"value": 50,
+	"label": {
+		"en": "Button brightness – dimmed state (%)",
+		"nl": "Helderheid knoppen - gedimde toestand (%)"
+	},
+	"hint": {
+		"en": "Button brightness – dimmed state. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 0 - 100 (%)\nDefault: 50 (%)",
+		"nl": "Helderheid knoppen - gedimde toestand. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 0 - 100 (%)\nStandaard: 50 (%)"
+	}
+}

@@ -1,0 +1,55 @@
+{
+  "id": "ZM-Single-Relay-16A",
+  "name": {
+    "en": "ZM Single Relay 16A"
+  },
+  "platforms": ["local", "cloud"],
+  "connectivity": ["zwave"],
+  "class": "socket",
+  "capabilities": ["measure_power", "meter_power", "onoff"],
+  "icon": "{{driverAssetsPath}}/icon.svg",
+  "images": {
+    "small": "{{driverAssetsPath}}/images/small.png",
+    "large": "{{driverAssetsPath}}/images/large.png"
+  },
+  "zwave": {
+    "manufacturerId": 411,
+    "productTypeId": 4,
+    "productId": 13568,
+    "security": ["none"],
+    "learnmode": {
+      "image": "{{driverAssetsPath}}/learnmode.svg",
+      "instruction": {
+        "en": "Press the configuration button 3 times."
+      }
+    },
+    "associationGroups": [1],
+    "associationGroupsOptions": {
+      "1": {
+        "hint": {
+          "en": "Z-Wave Lifeline group. The Homey controller should be here"
+        }
+      },
+      "2": {
+        "hint": {
+          "en": "External Relay Control S1. Send Basic Set when S1 pressed"
+        }
+      },
+      "3": {
+        "hint": {
+          "en": "Control External Start/Stop S1. Send Multilevel Switch Set when S1 pressed/held"
+        }
+      },
+      "4": {
+        "hint": {
+          "en": "External Relay Control S2. Send Basic Set when S2 pressed"
+        }
+      },
+      "5": {
+        "hint": {
+          "en": "Control External Start/Stop S2. Send Multilevel Switch Set when S2 pressed/held"
+        }
+      }
+    }
+  }
+}

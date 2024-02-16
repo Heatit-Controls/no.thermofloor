@@ -1,0 +1,39 @@
+{
+	"type": "dropdown",
+	"label": {
+		"en": "Input function",
+		"nl": "Ingangsfunctie"
+	},
+	"value": "3",
+	"hint": {
+		"en": "Input function. \nZ-wave parameter {{zwaveParameterIndex}} \ndefault: Mode 3, rising-edge controlled input.",
+		"nl": "Ingangsfunctie. \nZ-wave parameter {{zwaveParameterIndex}} \nstandaard: Mode 3, rising-edge controlled input."
+	},
+	"values": [
+		{
+			"id": "0",
+			"label": {
+				"en": "Inactive",
+				"nl": "Inactief"
+			}
+		},
+		{
+			"id": "1",
+			"label": {
+				"en": "Mode 1, level-controlled input."
+			}
+		},
+		{
+			"id": "2",
+			"label": {
+				"en": "Mode 2, falling-edge controlled input."
+			}
+		},
+		{
+			"id": "3",
+			"label": {
+				"en": "Mode 3, rising-edge controlled input. (Default)"
+			}
+		}
+  ]
+}

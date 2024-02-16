@@ -1,0 +1,182 @@
+{
+	"id": "Z-Water2",
+	"name": {
+		"en": "Z-Water2"
+	},
+	"icon": "{{driverAssetsPath}}/icon.svg",
+	"images": {
+		"small": "{{driverAssetsPath}}/images/small.png",
+        "large": "{{driverAssetsPath}}/images/large.png"
+	},
+	"platforms": ["local", "cloud"],
+	"connectivity": ["zwave"],
+	"class": "socket",
+	"capabilities": [
+		"onoff",
+	
+		"measure_temperature.input1",
+		"measure_temperature.input2"
+	],
+	"capabilitiesOptions": {
+		"measure_temperature.input1": {
+			"title": {
+				"en": "Sensor 1"
+			}
+		},
+		"measure_temperature.input2": {
+			"title": {
+				"en": "Sensor 2"
+			}
+		}
+	},
+	"energy": {
+		"approximation": {
+			"usageOn": 0,
+			"usageOff": 0
+		}
+	},
+	"zwave": {
+		"manufacturerId": 411,
+		"productTypeId": 4,
+		"productId": 523,
+		"security": ["none"],
+		"productDocumentation": "",
+        "zwaveAllianceProductId": 4898,
+        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4898",
+        "imageRemotePath": "",
+		"learnmode": {
+			"image": "{{driverAssetsPath}}/learnmode.svg",
+			"instruction": {
+				"en": "To start the configuration process, press the reset button 3 times in rapid succession. The LED will light solid green for 3 seconds if add/remove is successful. The device is now ready for use with default settings."
+			}
+		},
+		"associationGroups": [],
+		"associationGroupsMultiChannel": [1],
+		"associationGroupsOptions": {
+			"1": {
+				"hint": {
+					"en": "Lifeline. Sends Device Reset notifications and Basic Report On / Off when relay output 1 is activated."
+				}
+			}
+		},
+		"multiChannelNodes": {
+			"1": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"energy": {
+					"approximation": {
+						"usageOn": 0,
+						"usageOff": 0
+					}
+				},
+				"name": {
+					"en": "Relay 1"
+				}
+			},
+			"2": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"energy": {
+					"approximation": {
+						"usageOn": 0,
+						"usageOff": 0
+					}
+				},
+				"name": {
+					"en": "Relay 2"
+				}
+			},
+			"3": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"energy": {
+					"approximation": {
+						"usageOn": 0,
+						"usageOff": 0
+					}
+				},
+				"name": {
+					"en": "Relay 3"
+				}
+			},
+			"4": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"energy": {
+					"approximation": {
+						"usageOn": 0,
+						"usageOff": 0
+					}
+				},
+				"name": {
+					"en": "Relay 4"
+				}
+			},
+			"5": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"energy": {
+					"approximation": {
+						"usageOn": 0,
+						"usageOff": 0
+					}
+				},
+				"name": {
+					"en": "Relay 5"
+				}
+			},
+			"6": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"energy": {
+					"approximation": {
+						"usageOn": 0,
+						"usageOff": 0
+					}
+				},
+				"name": {
+					"en": "Relay 6"
+				}
+			},
+			"7": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"energy": {
+					"approximation": {
+						"usageOn": 0,
+						"usageOff": 0
+					}
+				},
+				"name": {
+					"en": "Relay 7"
+				}
+			},
+			"8": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"energy": {
+					"approximation": {
+						"usageOn": 0,
+						"usageOff": 0
+					}
+				},
+				"name": {
+					"en": "Relay 8"
+				}
+			},
+			"9": {
+				"class": "socket",
+				"capabilities": ["onoff"],
+				"energy": {
+					"approximation": {
+						"usageOn": 0,
+						"usageOff": 0
+					}
+				},
+				"name": {
+					"en": "Relay 9"
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,28 @@
+{
+  "id": "measure_temperature.input1_changed",
+  "title": {
+    "en": "The temperature of the input 1 sensor changed",
+    "nl": "De temperatuur van de ingang 1 sensor is veranderd",
+		"de": "Temperatur des Eingang 1 Sensors hat sich geändert"
+  },
+  "titleFormatted": {
+    "en": "The temperature of the input 1 sensor changed",
+    "nl": "De temperatuur van de ingang 1 sensor is veranderd",
+    "de": "Temperatur des Eingang 1 Sensors hat sich geändert"
+  },
+  "args": [
+		{
+			"name": "device",
+			"type": "device",
+			"filter": "driver_id=Z-Water|Z-Relay"
+	   }
+  ],
+  "tokens": [
+    {
+      "name": "measure_temperature.input1",
+      "title": "temperature",
+      "type": "number",
+      "example": 23.5
+    }
+  ]
+}

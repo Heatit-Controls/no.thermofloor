@@ -1,0 +1,76 @@
+{
+  "id": "no.thermofloor",
+  "sdk": 3,
+  "name": {
+    "en": "Heatit Controls"
+  },
+  "brandColor": "#cc3333",
+  "version": "3.4.2",
+  "compatibility": ">=5.0.0",
+  "platforms": [
+    "local",
+    "cloud"
+  ],
+  "homeyCommunityTopicId": 49914,
+  "homepage": "https://www.heatit.com/z-wave/",
+  "support": "mailto:post@heatit.com",
+  "source": "https://github.com/Heatit-Controls/no.ThermoFloor",
+  "bugs": {
+    "url": "https://heatit.com/contact"
+  },
+  "author": {
+    "name": "Heatit Controls AB",
+    "email": "post@heatit.com"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Heatit Controls AB",
+        "email": "post@heatit.com"
+      }
+    ]
+  },
+  "category": [
+    "climate"
+  ],
+  "tags": {
+    "en": [
+      "central heating",
+      "floor heating",
+      "electrical floor heating",
+      "heat",
+      "cooling",
+      "thermostat",
+      "temperature control",
+      "Multireg",
+      "Heatit",
+      "Heat it",
+      "Magnum",
+      "Thermo-Floor",
+      "underfloor heating"
+    ],
+    "nl": [
+      "centrale verwarming",
+      "vloerverwarming",
+      "vloer verwarming",
+      "electrische vloerverwarming",
+      "warmte",
+      "koelen",
+      "thermostaat",
+      "temperatuur regeling",
+      "Multireg",
+      "Heatit",
+      "Heat it",
+      "Magnum",
+      "Thermo-Floor"
+    ]
+  },
+  "description": {
+    "en": "Smart solutions for smart homes"
+  },
+  "images": {
+    "xlarge": "/assets/images/xlarge.png",
+    "large": "/assets/images/large.png",
+    "small": "/assets/images/small.png"
+  }
+}

@@ -1,0 +1,28 @@
+{
+	"type": "radio",
+	"label": {
+		"en": "Temperature display",
+		"nl": "Temperature weergave"
+	},
+	"value": "0",
+	"values": [
+		{
+			"id": "0",
+			"label": {
+				"en": "Display setpoint temperature (Default)",
+				"nl": "Toon de ingestelde temperatuur (Standaard)"
+			}
+},
+		{
+			"id": "1",
+			"label": {
+				"en": "Display measured temperature",
+				"nl": "Toon de gemeten temperatuur"
+			}
+}
+],
+	"hint": {
+		"en": "Temperature display. \nZ-wave parameter {{zwaveParameterIndex}} \nDefault: Setpoint",
+		"nl": "Temperature weergave. \nZ-wave parameter {{zwaveParameterIndex}} \nStandaard: Ingestelde waarde"
+	}
+}

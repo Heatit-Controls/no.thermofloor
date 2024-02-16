@@ -1,0 +1,16 @@
+{
+  "$id": "turnOnSiren",
+  "title": {
+    "en": "Turn siren on",
+    "nl": "Zet sirene aan"
+  },
+  "titleFormatted": {
+    "en": "Turn siren on",
+    "nl": "Zet sirene aan"
+  },
+  "args": [{
+		"name": "device",
+		"type": "device",
+		"filter": "driver_id=Z-Smoke-AC|Z-Smoke-battery"
+}]
+}

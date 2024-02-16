@@ -1,0 +1,161 @@
+[
+	{
+		"type": "group",
+		"label": {
+			"en": "Display options",
+			"nl": "Scherm instellingen"
+		},
+		"collapsed": true,
+		"children": [
+			{
+				"$extends": "LED_brightness",
+				"zwave": {
+					"index": 8,
+					"size": 2
+				}
+			},
+			{
+				"$extends": "LED_autooff"
+			}
+		]
+	},
+	{
+		"type": "group",
+		"label": {
+			"en": "Reporting",
+			"nl": "Rapportage"
+		},
+		"collapsed": false,
+		"children": [
+			{
+				"$extends": "Temperature_report_interval",
+				"label": {
+					"en": "Temperature / humidity report interval (s)",
+					"nl": "Temperatuur / luchtvochtigheids rapportage interval (s)"
+				},
+				"zwave": {
+					"index": 1,
+					"size": 2
+				},
+				"value": 900
+			},
+			{
+				"$extends": "Temperature_report_threshold",
+				"zwave": {
+					"index": 2,
+					"size": 2
+				},
+				"attr": {
+					"min": 0,
+					"max": 50
+				}
+			},
+			{
+				"$extends": "Humidity_report_threshold",
+				"zwave": {
+					"index": 3,
+					"size": 2
+				}
+			},
+			{
+				"$extends": "Relay_report_interval",
+				"zwave": {
+					"index": 13,
+					"size": 2
+				}
+			}
+		]
+	},
+	{
+		"type": "group",
+		"label": {
+			"en": "Sensor settings",
+			"nl": "Sensor instellingen"
+		},
+		"collapsed": true,
+		"children": [
+			{
+				"$extends": "Temperature_control_hysteresis_DIFF_I",
+				"id": "Temperature_control_hysteresis",
+				"zwave": {
+					"index": 10,
+					"size": 2
+				}
+			},
+			{
+				"$extends": "Temperature_limit",
+				"id": "minimum_temperature_limit",
+				"zwave": {
+					"index": 11,
+					"size": 2
+				},
+				"label": {
+					"en": "Minimum temperature limit",
+					"nl": "Ondergrens temperatuur"
+				},
+				"value": 50
+			},
+			{
+				"$extends": "Temperature_limit",
+				"id": "maximum_temperature_limit",
+				"zwave": {
+					"index": 12,
+					"size": 2
+				},
+				"label": {
+					"en": "Maximum temperature limit",
+					"nl": "Bovengrens temperatuur"
+				},
+				"value": 400
+			}
+		]
+	},
+	{
+		"type": "group",
+		"label": {
+			"en": "Sensor calibration",
+			"nl": "Sensor calibratie"
+		},
+		"collapsed": true,
+		"children": [
+			{
+				"$extends": "Temperature_sensor_calibration",
+				"zwave": {
+					"index": 4,
+					"size": 2
+				},
+				"attr": {
+					"min": -100,
+					"max": 100
+				}
+			},
+			{
+				"$extends": "Humidity_sensor_calibration",
+				"zwave": {
+					"index": 5,
+					"size": 2
+				}
+			}
+		]
+	},
+	{
+		"type": "group",
+		"label": {
+			"en": "Proximity sensor options",
+			"nl": "Nabijheids sensor instellingen"
+		},
+		"collapsed": true,
+		"children": [
+			{
+				"$extends": "Proximity_sensor_enabled"
+			},
+			{
+				"$extends": "Proximity_sensor_retrigger_interval",
+				"zwave": {
+					"index": 6,
+					"size": 2
+				}
+			}
+		]
+	}
+]

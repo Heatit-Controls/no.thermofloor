@@ -1,0 +1,41 @@
+{
+	"id": "thermostat_state_changed_to",
+	"title": {
+		"en": "Thermostat state changed to"
+	},
+	"titleFormatted": {
+		"en": "Thermostat state changed to [[state]]"
+	},
+	"args": [
+		{
+			"name": "device",
+			"type": "device",
+			"filter": "driver_id=ZM-Thermostat-16A"
+		},
+		{
+			"name": "state",
+			"type": "dropdown",
+			"title": { "en": "State" },
+			"values": [
+				{
+					"id": "Idle",
+					"label": {
+						"en": "Idle"
+					}
+				},
+				{
+					"id": "Heating",
+					"label": {
+						"en": "Heating"
+					}
+				},
+				{
+					"id": "Cooling",
+					"label": {
+						"en": "Cooling"
+					}
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,265 @@
+[
+	{
+		"$extends": "operation_mode_2",
+		"id": "operation_mode"
+	},
+	{
+		"$extends": "HEAT_setpoint"
+  },
+	{
+		"type": "group",
+		"label": {
+			"en": "Display options",
+			"nl": "Scherm instellingen"
+		},
+		"collapsed": true,
+		"children": [
+			{
+				"$extends": "Temperature_display",
+				"zwave": {
+					"index": 13,
+					"size": 1
+				}
+			},
+			{
+				"$extends": "Button_brightness_dimmed",
+				"zwave": {
+					"index": 14,
+					"size": 1
+				}
+			},
+			{
+				"$extends": "Button_brightness_active",
+				"zwave": {
+					"index": 15,
+					"size": 1
+				}
+			},
+			{
+				"$extends": "Display_brightness_dimmed",
+				"zwave": {
+					"index": 16,
+					"size": 1
+				}
+			},
+			{
+				"$extends": "Display_brightness_active",
+				"zwave": {
+					"index": 17,
+					"size": 1
+				}
+	}]
+	},
+	{
+		"type": "group",
+		"label": {
+			"en": "Reporting",
+			"nl": "Rapportage"
+		},
+		"collapsed": false,
+		"children": [
+			{
+				"$extends": "Temperature_report_interval",
+				"zwave": {
+					"index": 18,
+					"size": 2
+				},
+				"value": 300
+	},
+			{
+				"$extends": "Temperature_report_threshold",
+				"zwave": {
+					"index": 19,
+					"size": 1
+				}
+	},
+			{
+				"$extends": "Meter_report_interval",
+				"zwave": {
+					"index": 20,
+					"size": 2
+				},
+				"attr": {
+					"min": 30,
+					"max": 32767
+				},
+				"value": 90,
+				"hint": {
+					"en": "Time interval between consecutive meter reports. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 30 - 32767 (s)\nDefault: 90 (s)",
+					"nl": "Tijdsinterval tussen opeenvolgende temperatuur rapportages. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 30 - 32767 (s)\nStandaard: 90 (s)"
+				}
+			},
+			{
+				"$extends": "Meter_report_threshold",
+				"zwave": {
+					"index": 21,
+					"size": 1
+				}
+			}]
+	},
+	{
+		"type": "group",
+		"label": {
+			"en": "Sensor settings",
+			"nl": "Sensor instellingen"
+		},
+		"collapsed": true,
+		"children": [
+			{
+				"$extends": "Temperature_thermostat_3",
+				"id": "Temperature_thermostat"
+			},
+			{
+				"$extends": "Sensor_mode",
+				"zwave": {
+					"index": 2,
+					"size": 1
+				},
+				"value": "1",
+				"values": [
+					{
+						"id": "0",
+						"label": {
+							"en": "F-mode, floor sensor mode",
+							"nl": "F-modus, vloer sensor modus"
+						}
+			    },
+					{
+						"id": "1",
+						"label": {
+							"en": "A-mode, internal room sensor mode (Default)",
+							"nl": "A-modus, interne sensor modus (standaard)"
+						}
+			    },
+					{
+						"id": "2",
+						"label": {
+							"en": "AF-mode, internal room sensor with floor limitation",
+							"nl": "AF-modus, interne sensor met vloer begrenzing"
+						}
+			    },
+					{
+						"id": "3",
+						"label": {
+							"en": "A2-mode, external room sensor mode",
+							"nl": "A2-modus, externe ruimte sensor modus"
+						}
+			    },
+					{
+						"id": "4",
+						"label": {
+							"en": "A2F-mode, external sensor with floor limitation",
+							"nl": "A2F-modus, externe sensor met vloer begrenzing"
+						}
+			    }
+			  ]
+			},
+			{
+				"$extends": "Floor_sensor_type"
+			},
+			{
+				"$extends": "Temperature_control_hysteresis_DIFF_I",
+				"id": "Temperature_control_hysteresis_DIFF_I"
+			},
+			{
+				"$extends": "Temperature_limit",
+				"id": "Floor_minimum_temperature_limit_FLo",
+				"zwave": {
+					"index": 5,
+					"size": 2
+				},
+				"label": {
+					"en": "Floor minimum temperature limit (FLo)",
+					"nl": "Ondergrens vloer temperatuur (FLo)"
+				},
+				"value": 50
+			},
+			{
+				"$extends": "Temperature_limit",
+				"id": "Floor_maximum_temperature_limit_FHi",
+				"zwave": {
+					"index": 6,
+					"size": 2
+				},
+				"label": {
+					"en": "Floor maximum temperature limit (FHi)",
+					"nl": "Bovengrens vloer temperatuur (FHi)"
+				},
+				"value": 400
+			},
+			{
+				"$extends": "Temperature_limit",
+				"id": "Air_minimum_temperature_limit_ALo",
+				"zwave": {
+					"index": 7,
+					"size": 2
+				},
+				"label": {
+					"en": "Air (A2) minimum temperature limit (ALo)",
+					"nl": "Ondergrens lucht (A2) temperatuur (ALo)"
+				},
+				"value": 50
+			},
+			{
+				"$extends": "Temperature_limit",
+				"id": "Air_maximum_temperature_limit_AHi",
+				"zwave": {
+					"index": 8,
+					"size": 2
+				},
+				"label": {
+					"en": "Air (A2) maximum temperature limit (AHi)",
+					"nl": "Bovengrens lucht (A2) temperatuur (AHi)"
+				},
+				"value": 400
+			}
+
+		]
+	},
+	{
+		"type": "group",
+		"label": {
+			"en": "Sensor calibration",
+			"nl": "Sensor calibratie"
+		},
+		"collapsed": true,
+		"children": [
+			{
+				"$extends": "Temperature_sensor_calibration",
+				"id": "Internal_sensor_calibration",
+				"zwave": {
+					"index": 10,
+					"size": 1
+				},
+				"label": {
+					"en": "Internal sensor calibration (°C)",
+					"nl": "Interne sensor calibratie (°C)"
+				}
+			},
+			{
+				"$extends": "Temperature_sensor_calibration",
+				"id": "Floor_sensor_calibration",
+				"zwave": {
+					"index": 11,
+					"size": 1
+				},
+				"label": {
+					"en": "Floor sensor calibration (°C)",
+					"nl": "Vloersensor calibratie (°C)"
+				}
+			},
+			{
+				"$extends": "Temperature_sensor_calibration",
+				"id": "External_sensor_calibration",
+				"zwave": {
+					"index": 12,
+					"size": 1
+				},
+				"label": {
+					"en": "External sensor calibration (°C)",
+					"nl": "Externe sensor calibratie (°C)"
+				}
+			}
+		]
+	}
+]
