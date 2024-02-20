@@ -16,6 +16,7 @@
 	"tokens": [
 		{
 			"name": "mode",
+			"type": "string",
 			"title": {
 				"en": "ID",
 				"nl": "ID"
@@ -26,6 +27,7 @@
 			},
 		{
 			"name": "mode_name",
+			"type": "string",
 			"title": {
 				"en": "Name",
 				"nl": "Naam"
