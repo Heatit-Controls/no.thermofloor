@@ -4,7 +4,7 @@
     "en": "Heatit Leakage Stopper"
   },
   
-  "class": "socket",
+  "class": "other",
   "capabilities": ["measure_temperature", "onoff", "alarm_water"],
   "platforms": ["local", "cloud"],
   "connectivity": ["zwave"],

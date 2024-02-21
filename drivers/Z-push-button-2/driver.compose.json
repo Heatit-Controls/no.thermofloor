@@ -10,7 +10,7 @@
 	},
 	"platforms": ["local", "cloud"],
 	"connectivity": ["zwave"],
-	"class": "sensor",
+	"class": "button",
 	"capabilities": ["measure_battery"],
 	"energy": {
 		"batteries": ["CR2450"]

@@ -328,6 +328,7 @@
         "tokens": [
           {
             "name": "mode",
+            "type": "string",
             "title": {
               "en": "ID",
               "nl": "ID"
@@ -338,6 +339,7 @@
           },
           {
             "name": "mode_name",
+            "type": "string",
             "title": {
               "en": "Name",
               "nl": "Naam"
@@ -477,7 +479,7 @@
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=ZM-Thermostat-16A"
+            "filter": "driver_id=ZM-Thermostat-16A|Z-TRM6"
           },
           {
             "name": "state",
@@ -1192,7 +1194,7 @@
       "name": {
         "en": "Heatit Leakage Stopper"
       },
-      "class": "socket",
+      "class": "other",
       "capabilities": [
         "measure_temperature",
         "onoff",
@@ -2370,7 +2372,7 @@
       "connectivity": [
         "zwave"
       ],
-      "class": "socket",
+      "class": "other",
       "capabilities": [
         "onoff",
         "scene_notification_custom_capability"
@@ -4244,6 +4246,299 @@
       ]
     },
     {
+      "id": "Z-HAN2",
+      "name": {
+        "en": "Z-HAN2"
+      },
+      "class": "sensor",
+      "capabilities": [
+        "meter_power",
+        "measure_power",
+        "measure_voltage",
+        "measure_current",
+        "measure_temperature",
+        "button.reset_meter"
+      ],
+      "capabilitiesOptions": {
+        "measure_power": {
+          "approximated": true
+        },
+        "button.reset_meter": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Reset power meter"
+          },
+          "desc": {
+            "en": "Reset the accumulated power usage (kWh), note that this can not be reversed."
+          }
+        }
+      },
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [
+        "zwave"
+      ],
+      "icon": "/drivers/Z-HAN2/assets/icon.svg",
+      "images": {
+        "small": "/drivers/Z-HAN2/assets/images/small.png",
+        "large": "/drivers/Z-HAN2/assets/images/large.png"
+      },
+      "zwave": {
+        "manufacturerId": 411,
+        "productTypeId": 98,
+        "productId": 25089,
+        "security": [
+          "none"
+        ],
+        "zwaveAllianceProductId": 4899,
+        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4899",
+        "learnmode": {
+          "image": "/drivers/Z-HAN2/assets/learnmode.svg",
+          "instruction": {
+            "en": "Press the reset button on the device 3 times in a rapid sequence."
+          }
+        },
+        "associationGroups": [
+          1
+        ],
+        "associationGroupsOptions": {
+          "1": {
+            "hint": {
+              "en": "Lifeline association group (do not change)"
+            }
+          },
+          "2": {
+            "hint": {
+              "en": "Meter report: Meter report kWh and W to be sent to other devices"
+            }
+          }
+        }
+      },
+      "settings": [
+        {
+          "id": "meter_report_hyst_W",
+          "type": "number",
+          "label": {
+            "en": "Meter report hysteresis for W"
+          },
+          "hint": {
+            "en": "Set the Meter Report hysteresis for Watts."
+          },
+          "zwave": {
+            "index": 1,
+            "size": 4,
+            "signed": false
+          },
+          "value": 200,
+          "attr": {
+            "min": 0,
+            "max": 100000
+          }
+        },
+        {
+          "id": "meter_report_hyst_V",
+          "type": "number",
+          "label": {
+            "en": "Meter report hysteresis for V"
+          },
+          "hint": {
+            "en": "Set the Meter Report hysteresis for Volts."
+          },
+          "zwave": {
+            "index": 2,
+            "size": 2,
+            "signed": false
+          },
+          "value": 5,
+          "attr": {
+            "min": 0,
+            "max": 420
+          }
+        },
+        {
+          "id": "meter_report_hyst_A",
+          "type": "number",
+          "label": {
+            "en": "Meter report hysteresis for A"
+          },
+          "hint": {
+            "en": "Set the Meter Report hysteresis for Amps."
+          },
+          "zwave": {
+            "index": 3,
+            "size": 2,
+            "signed": false
+          },
+          "value": 20,
+          "attr": {
+            "min": 0,
+            "max": 65535
+          }
+        },
+        {
+          "id": "meter_report_interval_W",
+          "type": "number",
+          "label": {
+            "en": "Meter report interval for W"
+          },
+          "hint": {
+            "en": "Time Interval between consecutive W reports."
+          },
+          "zwave": {
+            "index": 4,
+            "size": 2,
+            "signed": false
+          },
+          "value": 10,
+          "attr": {
+            "min": 10,
+            "max": 65535
+          }
+        },
+        {
+          "id": "meter_report_interval_V_A",
+          "type": "number",
+          "label": {
+            "en": "Meter report interval for V and A"
+          },
+          "hint": {
+            "en": "Time interval between consecutive meter reports. This parameter will issue: V and A."
+          },
+          "zwave": {
+            "index": 5,
+            "size": 2,
+            "signed": false
+          },
+          "value": 300,
+          "attr": {
+            "min": 10,
+            "max": 65535
+          }
+        },
+        {
+          "id": "temp_report_interval",
+          "type": "number",
+          "label": {
+            "en": "Temperature report interval"
+          },
+          "hint": {
+            "en": "Time interval between consecutive temperature reports"
+          },
+          "zwave": {
+            "index": 6,
+            "size": 2,
+            "signed": false
+          },
+          "value": 300,
+          "attr": {
+            "min": 30,
+            "max": 65535
+          }
+        },
+        {
+          "id": "temp_report_hyst",
+          "type": "number",
+          "label": {
+            "en": "Temperature report hysteresis"
+          },
+          "hint": {
+            "en": "Time interval between consecutive temperature reports"
+          },
+          "zwave": {
+            "index": 7,
+            "size": 1,
+            "signed": false
+          },
+          "value": 10,
+          "attr": {
+            "min": 0,
+            "max": 100
+          }
+        },
+        {
+          "id": "sensor_calibration",
+          "type": "number",
+          "label": {
+            "en": "Sensor calibration"
+          },
+          "hint": {
+            "en": "Manually calibrates the sensor ±6°C."
+          },
+          "zwave": {
+            "index": 8,
+            "size": 1
+          },
+          "value": 0,
+          "attr": {
+            "min": -60,
+            "max": 60
+          }
+        },
+        {
+          "id": "serial",
+          "type": "number",
+          "label": {
+            "en": "Serial"
+          },
+          "hint": {
+            "en": "First half of the meter point serial number. Read only."
+          },
+          "zwave": {
+            "index": 9,
+            "size": 4,
+            "signed": false
+          },
+          "value": 1718972025,
+          "attr": {
+            "min": 0,
+            "max": 4294967295
+          }
+        },
+        {
+          "id": "number",
+          "type": "number",
+          "label": {
+            "en": "Number"
+          },
+          "hint": {
+            "en": "Last half of the meter point serial number. Read only."
+          },
+          "zwave": {
+            "index": 10,
+            "size": 4,
+            "signed": false
+          },
+          "value": 1835363685,
+          "attr": {
+            "min": 0,
+            "max": 4294967295
+          }
+        },
+        {
+          "id": "scaling_factor",
+          "type": "number",
+          "label": {
+            "en": "Scaling factor"
+          },
+          "hint": {
+            "en": "Allows for multiplication of the meter value in case of use with large electrical systems."
+          },
+          "zwave": {
+            "index": 11,
+            "size": 2,
+            "signed": false
+          },
+          "value": 0,
+          "attr": {
+            "min": 0,
+            "max": 1000
+          }
+        }
+      ]
+    },
+    {
       "id": "Z-Relay",
       "name": {
         "en": "Z-Relay"
@@ -4260,7 +4555,7 @@
       "connectivity": [
         "zwave"
       ],
-      "class": "socket",
+      "class": "other",
       "capabilities": [
         "onoff",
         "measure_temperature.input1",
@@ -7828,7 +8123,7 @@
       "connectivity": [
         "zwave"
       ],
-      "class": "socket",
+      "class": "other",
       "capabilities": [
         "onoff",
         "measure_temperature.input1",
@@ -8499,7 +8794,7 @@
       "connectivity": [
         "zwave"
       ],
-      "class": "socket",
+      "class": "other",
       "capabilities": [
         "onoff",
         "measure_temperature.input1",
@@ -8902,7 +9197,7 @@
       "connectivity": [
         "zwave"
       ],
-      "class": "sensor",
+      "class": "button",
       "capabilities": [
         "measure_battery"
       ],
@@ -8980,7 +9275,7 @@
       "connectivity": [
         "zwave"
       ],
-      "class": "sensor",
+      "class": "button",
       "capabilities": [
         "measure_battery"
       ],
@@ -9064,7 +9359,7 @@
       "connectivity": [
         "zwave"
       ],
-      "class": "sensor",
+      "class": "button",
       "capabilities": [
         "measure_battery"
       ],
@@ -9790,7 +10085,7 @@
       "connectivity": [
         "zwave"
       ],
-      "class": "socket",
+      "class": "other",
       "capabilities": [
         "measure_power",
         "meter_power",
@@ -10451,6 +10746,25 @@
     }
   ],
   "capabilities": {
+    "accumulated_production": {
+      "type": "number",
+      "title": {
+        "en": "Accumulated production"
+      },
+      "uiComponent": "sensor",
+      "getable": true,
+      "setable": false,
+      "units": {
+        "en": "kVAh"
+      },
+      "zwave": {
+        "index": 1,
+        "size": 4,
+        "signed": false
+      },
+      "min": 0,
+      "step": 0.5
+    },
     "alarm_power": {
       "type": "boolean",
       "title": {

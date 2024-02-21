@@ -10,7 +10,7 @@
 	},
 	"platforms": ["local", "cloud"],
 	"connectivity": ["zwave"],
-	"class": "socket",
+	"class": "other",
 	"capabilities": ["onoff", "measure_temperature.input1", "measure_temperature.input2", "measure_temperature.input3", "measure_temperature.input4"],
 	"capabilitiesOptions": {
 		"onoff": {
