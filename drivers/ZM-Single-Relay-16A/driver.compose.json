@@ -5,7 +5,7 @@
   },
   "platforms": ["local", "cloud"],
   "connectivity": ["zwave"],
-  "class": "socket",
+  "class": "other",
   "capabilities": ["measure_power", "meter_power", "onoff"],
   "icon": "{{driverAssetsPath}}/icon.svg",
   "images": {

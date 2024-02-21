@@ -35,7 +35,6 @@ class ZTRM6Device extends ZwaveDevice {
         this.registerCapability('target_temperature', 'THERMOSTAT_SETPOINT');
 
         let targetTempValue = await this.getCapabilityValue('target_temperature');
-
         this.setCapabilityValue('target_temperature', targetTempValue).catch(error => {
             console.error('Error setting target_temperature:', error);
         });
