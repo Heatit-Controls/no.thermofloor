@@ -1,0 +1,221 @@
+[
+  {
+    "id": "meter_report_hyst_W",
+    "type": "number",
+    "label": {
+      "en": "Meter report hysteresis for W"
+    },
+    "hint": {
+      "en": "Set the Meter Report hysteresis for Watts."
+    },
+    "zwave": {
+      "index": 1,
+      "size": 4,
+	  "signed": false
+    },
+    "value": 200,
+    "attr": {
+      "min": 0,
+      "max": 100000
+    }
+  },
+  {
+    "id": "meter_report_hyst_V",
+    "type": "number",
+    "label": {
+      "en": "Meter report hysteresis for V"
+    },
+    "hint": {
+      "en": "Set the Meter Report hysteresis for Volts."
+    },
+    "zwave": {
+      "index": 2,
+      "size": 2,
+	  "signed": false
+    },
+    "value": 5,
+    "attr": {
+      "min": 0,
+      "max": 420
+    }
+  },
+  {
+    "id": "meter_report_hyst_A",
+    "type": "number",
+    "label": {
+      "en": "Meter report hysteresis for A"
+    },
+    "hint": {
+      "en": "Set the Meter Report hysteresis for Amps."
+    },
+    "zwave": {
+      "index": 3,
+      "size": 2,
+	  "signed": false
+    },
+    "value": 20,
+    "attr": {
+      "min": 0,
+      "max": 65535
+    }
+  },
+  {
+    "id": "meter_report_interval_W",
+    "type": "number",
+    "label": {
+      "en": "Meter report interval for W"
+    },
+    "hint": {
+      "en": "Time Interval between consecutive W reports."
+    },
+    "zwave": {
+      "index": 4,
+      "size": 2,
+	  "signed": false
+    },
+    "value": 10,
+    "attr": {
+      "min": 10,
+      "max": 65535
+    }
+  },
+  {
+    "id": "meter_report_interval_V_A",
+    "type": "number",
+    "label": {
+      "en": "Meter report interval for V and A"
+    },
+    "hint": {
+      "en": "Time interval between consecutive meter reports. This parameter will issue: V and A."
+    },
+    "zwave": {
+      "index": 5,
+      "size": 2,
+	  "signed": false
+    },
+    "value": 300,
+    "attr": {
+      "min": 10,
+      "max": 65535
+    }
+  },
+  {
+    "id": "temp_report_interval",
+    "type": "number",
+    "label": {
+      "en": "Temperature report interval"
+    },
+    "hint": {
+      "en": "Time interval between consecutive temperature reports"
+    },
+    "zwave": {
+      "index": 6,
+      "size": 2,
+	  "signed": false
+    },
+    "value": 300,
+    "attr": {
+      "min": 30,
+      "max": 65535
+    }
+  },
+  {
+    "id": "temp_report_hyst",
+    "type": "number",
+    "label": {
+      "en": "Temperature report hysteresis"
+    },
+    "hint": {
+      "en": "Time interval between consecutive temperature reports"
+    },
+    "zwave": {
+      "index": 7,
+      "size": 1,
+	  "signed": false
+    },
+    "value": 10,
+    "attr": {
+      "min": 0,
+      "max": 100
+    }
+  },
+  {
+    "id": "sensor_calibration",
+    "type": "number",
+    "label": {
+      "en": "Sensor calibration"
+    },
+    "hint": {
+      "en": "Manually calibrates the sensor ±6°C."
+    },
+    "zwave": {
+      "index": 8,
+      "size": 1
+    },
+    "value": 0,
+    "attr": {
+      "min": -60,
+      "max": 60
+    }
+  },
+  {
+    "id": "serial",
+    "type": "number",
+    "label": {
+      "en": "Serial"
+    },
+    "hint": {
+      "en": "First half of the meter point serial number. Read only."
+    },
+    "zwave": {
+      "index": 9,
+      "size": 4,
+	  "signed": false
+    },
+    "value": 1718972025,
+    "attr": {
+      "min": 0,
+      "max": 4294967295
+    }
+  },
+  {
+    "id": "number",
+    "type": "number",
+    "label": {
+      "en": "Number"
+    },
+    "hint": {
+      "en": "Last half of the meter point serial number. Read only."
+    },
+    "zwave": {
+      "index": 10,
+      "size": 4,
+	  "signed": false
+    },
+    "value": 1835363685,
+    "attr": {
+      "min": 0,
+      "max": 4294967295
+    }
+  },
+  {
+    "id": "scaling_factor",
+    "type": "number",
+    "label": {
+      "en": "Scaling factor"
+    },
+    "hint": {
+      "en": "Allows for multiplication of the meter value in case of use with large electrical systems."
+    },
+    "zwave": {
+      "index": 11,
+      "size": 2,
+	  "signed": false
+    },
+    "value": 0,
+    "attr": {
+      "min": 0,
+      "max": 1000
+    }
+  }
+]

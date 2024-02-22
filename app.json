@@ -10746,25 +10746,6 @@
     }
   ],
   "capabilities": {
-    "accumulated_production": {
-      "type": "number",
-      "title": {
-        "en": "Accumulated production"
-      },
-      "uiComponent": "sensor",
-      "getable": true,
-      "setable": false,
-      "units": {
-        "en": "kVAh"
-      },
-      "zwave": {
-        "index": 1,
-        "size": 4,
-        "signed": false
-      },
-      "min": 0,
-      "step": 0.5
-    },
     "alarm_power": {
       "type": "boolean",
       "title": {

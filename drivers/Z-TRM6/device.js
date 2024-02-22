@@ -34,12 +34,6 @@ class ZTRM6Device extends ZwaveDevice {
         this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL');
         this.registerCapability('target_temperature', 'THERMOSTAT_SETPOINT');
 
-        let targetTempValue = await this.getCapabilityValue('target_temperature');
-        this.setCapabilityValue('target_temperature', targetTempValue).catch(error => {
-            console.error('Error setting target_temperature:', error);
-        });
-
-        
 
         await this.registerThermostatModeCapability();
         await this.registerTemperature();
@@ -47,6 +41,11 @@ class ZTRM6Device extends ZwaveDevice {
         timer = this.homey.setInterval(() => {
             this.registerTemperature();
         }, 1000 * 60)
+
+
+        this.log('Z-TRM6 has been initialized');
+
+        this.setAvailable().catch(this.error);
     }
 
     onDeleted() {
@@ -80,7 +79,7 @@ class ZTRM6Device extends ZwaveDevice {
                                 && report.Level.hasOwnProperty('Scale')) {
                                 // Some devices send this when no temperature sensor is connected
                                 if (report['Sensor Value (Parsed)'] === -999.9) return null;
-                                this.log('+++++++ registerTemperature: ', capabilityId, '+++++++', report)
+                                this.log('+++++++ registerTemperature:', capabilityId, '+++++++', report)
                                 if (report.Level.Scale === 0) {
                                     if (capabilityId === 'measure_temperature.internal') {
                                         this.setCapabilityValue('measure_temperature', report['Sensor Value (Parsed)']).catch(this.error);
@@ -172,7 +171,6 @@ class ZTRM6Device extends ZwaveDevice {
                 return null;
             }
         });
-        this.setAvailable().catch(this.error);
     }
 }
 
