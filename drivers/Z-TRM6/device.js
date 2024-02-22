@@ -71,7 +71,7 @@ class ZTRM6Device extends ZwaveDevice {
                         getOpts: {getOnStart: true},
                         report: 'SENSOR_MULTILEVEL_REPORT',
                         reportParser: report => {
-                            if (report
+                            /* if (report
                                 && report.hasOwnProperty('Sensor Type')
                                 && report['Sensor Type'] === 'Temperature (version 1)'
                                 && report.hasOwnProperty('Sensor Value (Parsed)')
@@ -85,6 +85,18 @@ class ZTRM6Device extends ZwaveDevice {
                                         this.setCapabilityValue('measure_temperature', report['Sensor Value (Parsed)']).catch(this.error);
                                     }
                                     return report['Sensor Value (Parsed)'];
+                                }
+                            }
+                            return null; */
+
+                            if(report && report.hasOwnProperty('Sensor Value (Parsed)')){
+                                if(report['Sensor Value (Parsed)'] === -999.9) return null;
+                
+                                if(report.Level.Scale === 0){
+                                  const temperatureValue = report['Sensor Value (Parsed)'];
+                                  this.log('Received Z-TRM6 temperature', subName, 'value:', temperatureValue);
+                                  this.setCapabilityValue(capabilityId, temperatureValue).catch(this.error);
+                                  return temperatureValue;
                                 }
                             }
                             return null;

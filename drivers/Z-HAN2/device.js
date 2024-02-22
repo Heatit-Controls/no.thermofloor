@@ -123,7 +123,7 @@ class ZHAN2Device extends ZwaveDevice {
 
                 if(report.Level.Scale === 0){
                   const temperatureValue = report['Sensor Value (Parsed)'];
-                  this.log('Received temperature value:', temperatureValue);
+                  this.log('Received Z-HAN2 temperature value:', temperatureValue);
                   this.setCapabilityValue(capabilityId, temperatureValue).catch(this.error);
                   return temperatureValue;
                 }
