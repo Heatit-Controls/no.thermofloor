@@ -20,6 +20,8 @@
     "productTypeId": [3, 4],
     "productId": [13824, 15],
     "security": ["none"],
+    "zwaveAllianceProductId": 3818,
+    "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/3818",
     "learnmode": {
       "image": "{{driverAssetsPath}}/learnmode.svg",
       "instruction": {

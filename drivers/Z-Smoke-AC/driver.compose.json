@@ -20,8 +20,8 @@
 		"productTypeId": 3,
 		"productId": [13, 23],
 		"security": ["none"],
-		"productDocumentation": "https://products.z-wavealliance.org/ProductManual/File?folder=&filename=product_documents/3933/HeatitZ-SmokeDetector230V.pdf",
-		"pid": 3933,
+		"zwaveAllianceProductId": 3933,
+		"zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/3933",
 		"imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=3933&which=21",
 		"learnmode": {
 			"image": "{{driverAssetsPath}}/learnmode.svg",

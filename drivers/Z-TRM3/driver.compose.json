@@ -79,8 +79,8 @@
 		"productTypeId": 3,
 		"productId": 515,
 		"security": ["none"],
-		"productDocumentation": "https://products.z-wavealliance.org/ProductManual/File?folder=&filename=product_documents/3802/Manual_Heatit_Z-TRM3_FW%204.0%20Ver2020-A_ENG.pdf",
-		"pid": 3802,
+		"zwaveAllianceProductId": 3802,
+		"zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/3802",
 		"imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=3802&which=21",
 		"learnmode": {
 			"image": "{{driverAssetsPath}}/learnmode.svg",

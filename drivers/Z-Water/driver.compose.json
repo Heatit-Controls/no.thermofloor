@@ -50,9 +50,9 @@
 		"productTypeId": 3,
 		"productId": 522,
 		"security": ["none"],
-		"productDocumentation": "",
-		"pid": 3065,
-		"imageRemotePath": "",
+		"zwaveAllianceProductId": 3102,
+		"zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/3102",
+		"imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=3102&which=21",
 		"learnmode": {
 			"image": "{{driverAssetsPath}}/learnmode.svg",
 			"instruction": {

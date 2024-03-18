@@ -20,6 +20,8 @@
 		"productTypeId": 768,
 		"productId": 41733,
 		"security": ["none"],
+		"zwaveAllianceProductId": 3595,
+		"zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/3595",
 		"productDocumentation": "",
 		"pid": 9999,
 		"imageRemotePath": "",

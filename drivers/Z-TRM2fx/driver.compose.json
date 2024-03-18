@@ -61,9 +61,9 @@
 		"productTypeId": 3,
 		"productId": 514,
 		"security": ["none"],
-		"productDocumentation": "https://products.z-wavealliance.org/ProductManual/File?folder=&filename=Manuals/3065/Manual_Heatit_Z-TRM2fx_ENG_3.1.pdf",
-		"pid": 3065,
-		"imageRemotePath": "https://products.z-wavealliance.org/ProductImages/Index?productName=ZC10-18116305",
+		"zwaveAllianceProductId": 3065,
+		"zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/3065",
+		"imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=3065&which=21",
 		"learnmode": {
 			"image": "{{driverAssetsPath}}/learnmode.svg",
 			"instruction": {
