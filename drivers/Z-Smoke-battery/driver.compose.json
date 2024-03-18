@@ -20,8 +20,9 @@
 		"productTypeId": 3,
 		"productId": [24],
 		"security": ["none"],
-		"productDocumentation": "https://media.heatit.com/1757",
-		"imageRemotePath": "https://kodeo-heatit.imgix.net/1547-heatit-z-smoke-battery-packshot-4248418247.jpg",
+		"zwaveAllianceProductId": 4064,
+		"zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4064",
+		"imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=4064&which=21",
 		"learnmode": {
 			"image": "{{driverAssetsPath}}/learnmode.svg",
 			"instruction": {

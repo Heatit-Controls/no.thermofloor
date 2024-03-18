@@ -20,9 +20,9 @@
 		"productTypeId": 768,
 		"productId": 41734,
 		"security": ["none"],
-		"productDocumentation": "",
-		"pid": 9999,
-		"imageRemotePath": "",
+		"zwaveAllianceProductId": 3828,
+		"zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/3828",
+		"imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=3828&which=21",
 		"learnmode": {
 			"image": "{{driverAssetsPath}}/learnmode.svg",
 			"instruction": {

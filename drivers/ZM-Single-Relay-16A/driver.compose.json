@@ -17,6 +17,9 @@
     "productTypeId": 4,
     "productId": 13568,
     "security": ["none"],
+		"zwaveAllianceProductId": 4062,
+		"zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4062",
+		"imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=4062&which=21",
     "learnmode": {
       "image": "{{driverAssetsPath}}/learnmode.svg",
       "instruction": {

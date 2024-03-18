@@ -59,8 +59,8 @@
 		"productTypeId": 4,
 		"productId": 516,
 		"security": ["none"],
-		"productDocumentation": "https://products.z-wavealliance.org/ProductManual/File?folder=&filename=product_documents/3860/Manual_Heatit_Z-Temp2_FW%201.1_Ver2020-A_ENG.pdf",
-		"pid": 3860,
+		"zwaveAllianceProductId": 3860,
+		"zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/3860",
 		"imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=3860&which=21",
 		"learnmode": {
 			"image": "{{driverAssetsPath}}/learnmode.svg",
