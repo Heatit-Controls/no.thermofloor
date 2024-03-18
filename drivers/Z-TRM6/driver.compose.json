@@ -65,8 +65,8 @@
     "security": [
       "none"
     ],
-    "zwaveAllianceProductId": 4666,
-    "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4666",
+    "zwaveAllianceProductId": 4908,
+    "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4908",
     "learnmode": {
       "image": "{{driverAssetsPath}}/learnmode.svg",
       "instruction": {
