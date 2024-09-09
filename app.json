@@ -6,7 +6,7 @@
     "en": "Heatit Controls"
   },
   "brandColor": "#cc3333",
-  "version": "3.6.6",
+  "version": "3.7.1",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -3254,8 +3254,8 @@
         "security": [
           "none"
         ],
-        "zwaveAllianceProductId": 3331,
-        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/ProductManual/File?folder=&filename=Manuals/3331/SR-ZV9040A-A%20Micro%20Smart%20Dimmer.pdf",
+        "zwaveAllianceProductId": 3261,
+        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/3261",
         "learnmode": {
           "image": "/drivers/Z-Dim/assets/learnmode.svg",
           "instruction": {
@@ -5160,6 +5160,8 @@
         "security": [
           "none"
         ],
+        "zwaveAllianceProductId": 3818,
+        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/3818",
         "learnmode": {
           "image": "/drivers/Z-Repeater/assets/learnmode.svg",
           "instruction": {
@@ -5221,8 +5223,8 @@
         "security": [
           "none"
         ],
-        "productDocumentation": "https://products.z-wavealliance.org/ProductManual/File?folder=&filename=product_documents/3933/HeatitZ-SmokeDetector230V.pdf",
-        "pid": 3933,
+        "zwaveAllianceProductId": 3933,
+        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/3933",
         "imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=3933&which=21",
         "learnmode": {
           "image": "/drivers/Z-Smoke-AC/assets/learnmode.svg",
@@ -5293,8 +5295,9 @@
         "security": [
           "none"
         ],
-        "productDocumentation": "https://media.heatit.com/1757",
-        "imageRemotePath": "https://kodeo-heatit.imgix.net/1547-heatit-z-smoke-battery-packshot-4248418247.jpg",
+        "zwaveAllianceProductId": 4064,
+        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4064",
+        "imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=4064&which=21",
         "learnmode": {
           "image": "/drivers/Z-Smoke-battery/assets/learnmode.svg",
           "instruction": {
@@ -5402,8 +5405,8 @@
         "security": [
           "none"
         ],
-        "productDocumentation": "https://products.z-wavealliance.org/ProductManual/File?folder=&filename=product_documents/3860/Manual_Heatit_Z-Temp2_FW%201.1_Ver2020-A_ENG.pdf",
-        "pid": 3860,
+        "zwaveAllianceProductId": 3860,
+        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/3860",
         "imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=3860&which=21",
         "learnmode": {
           "image": "/drivers/Z-TEMP2/assets/learnmode.svg",
@@ -5760,6 +5763,487 @@
       ]
     },
     {
+      "name": {
+        "en": "Z-TEMP3"
+      },
+      "class": "thermostat",
+      "capabilities": [
+        "thermostat_mode",
+        "target_temperature",
+        "thermostat_state_13570",
+        "measure_temperature",
+        "measure_battery",
+        "measure_humidity"
+      ],
+      "capabilitiesOptions": {
+        "measure_temperature": {
+          "title": "temperature"
+        },
+        "measure_humidity": {
+          "title": "humidity"
+        },
+        "target_temperature": {
+          "min": 5,
+          "max": 40,
+          "step": 0.5
+        }
+      },
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [
+        "zwave"
+      ],
+      "images": {
+        "small": "/drivers/Z-TEMP3/assets/images/small.png",
+        "large": "/drivers/Z-TEMP3/assets/images/large.png",
+        "xlarge": "/drivers/Z-TEMP3/assets/images/xlarge.png"
+      },
+      "zwave": {
+        "manufacturerId": 411,
+        "productTypeId": [
+          49
+        ],
+        "productId": [
+          12545
+        ],
+        "security": [
+          "none"
+        ],
+        "zwaveAllianceProductId": 4666,
+        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4666",
+        "learnmode": {
+          "image": "/drivers/Z-TEMP3/assets/learnmode.svg",
+          "instruction": {
+            "en": "1. Hold the Center button for 5 seconds. The display will show “OFF”.\n2. Press the ”+” button once to see “CON” in the display.\n3 Start the configuration mode on the thermostat by holding the Center button for approximately 2 seconds.\n4. Configuration mode is indicated on the device by rotating LED segments on the display."
+          }
+        },
+        "associationGroupsMultiChannel": [
+          1
+        ],
+        "associationGroupsOptions": {
+          "1": {
+            "hint": {
+              "en": "Lifeline. All run-time reporting is addressed to this group. Only one node can be assigned to this association group. \nDefault: 1.1 (Homey's ID)",
+              "nl": "Lifeline: Association Groep 1 wordt gebruikt om alle rapportages door te geven. Slechts een node kan toegevoegd worden aan deze associatie groep. \nStandaard: 1.1 (Homey's ID)"
+            }
+          },
+          "2": {
+            "hint": {
+              "en": "On/off  control: This controls external heaters replicating the state of the internal relay. \nUses BASIC_SET command, values 0x00 (on) and 0xFF (on).",
+              "nl": "On/off  control: Deze groep schakelt externe verwarmings of koelings elementen. \nMaakt gebruik van het BASIC_SET command, values 0x00 (on) and 0xFF (on)."
+            }
+          },
+          "3": {
+            "hint": {
+              "en": "Sends Thermostat Setpoint Set commands based on own setpoint to allow for use as master thermostat.",
+              "nl": "Sends Thermostat Setpoint Set commands based on own setpoint to allow for use as master thermostat."
+            }
+          },
+          "4": {
+            "hint": {
+              "en": "Sends Thermostat Mode Set commands based on own setpoint to allow for use as master thermostat.",
+              "nl": "Sends Thermostat Mode Set commands based on own setpoint to allow for use as master thermostat."
+            }
+          }
+        }
+      },
+      "id": "Z-TEMP3",
+      "settings": [
+        {
+          "id": "disable_buttons",
+          "type": "checkbox",
+          "label": {
+            "en": "Disable buttons"
+          },
+          "hint": {
+            "en": "Disable buttons, must be enabled through the parameter, or turned back on locally by holding the center and right button for 30 seconds until the display shows “UNLK”."
+          },
+          "zwave": {
+            "index": 1,
+            "size": 1,
+            "signed": false
+          },
+          "value": false
+        },
+        {
+          "id": "minimum_temperature_limit",
+          "type": "number",
+          "label": {
+            "en": "Minimum temperature limit"
+          },
+          "hint": {
+            "en": "Decides the lowest temperature allowed by the thermostat"
+          },
+          "zwave": {
+            "index": 2,
+            "size": 2,
+            "signed": false
+          },
+          "value": 50,
+          "attr": {
+            "min": 50,
+            "max": 400
+          }
+        },
+        {
+          "id": "maximum_temperature_limit",
+          "type": "number",
+          "label": {
+            "en": "Maximum temperature limit"
+          },
+          "hint": {
+            "en": "Decides the highest temperature allowed by the thermostat"
+          },
+          "zwave": {
+            "index": 3,
+            "size": 2,
+            "signed": false
+          },
+          "value": 400,
+          "attr": {
+            "min": 50,
+            "max": 400
+          }
+        },
+        {
+          "id": "calibration",
+          "type": "number",
+          "label": {
+            "en": "Calibration (CAR)"
+          },
+          "hint": {
+            "en": "Manually calibrate sensor ±6°C."
+          },
+          "zwave": {
+            "index": 4,
+            "size": 1
+          },
+          "value": 0,
+          "attr": {
+            "min": -60,
+            "max": 60
+          }
+        },
+        {
+          "id": "regulation_mode",
+          "type": "dropdown",
+          "label": {
+            "en": "Regulation mode (REG)"
+          },
+          "hint": {
+            "en": "Choose between regulation modes PWM and Hysteresis."
+          },
+          "zwave": {
+            "index": 5,
+            "size": 1
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Hysteresis"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "PWM"
+              }
+            }
+          ]
+        },
+        {
+          "id": "thermostat_state_update_interval",
+          "type": "number",
+          "label": {
+            "en": "Thermostat state update interval"
+          },
+          "hint": {
+            "en": "Set the time interval of how often the device updates Thermostat Setpoint set, Thermostat Mode set and Binary set to associated devices."
+          },
+          "zwave": {
+            "index": 6,
+            "size": 2,
+            "signed": false
+          },
+          "value": 3600,
+          "attr": {
+            "min": 0,
+            "max": 65535
+          }
+        },
+        {
+          "id": "temperature_control_hysteresis",
+          "type": "number",
+          "label": {
+            "en": "Temperature control hysteresis (HYST)"
+          },
+          "hint": {
+            "en": "Choose the hysteresis used when regulation mode is set to HYST."
+          },
+          "zwave": {
+            "index": 7,
+            "size": 1,
+            "signed": false
+          },
+          "value": 5,
+          "attr": {
+            "min": 3,
+            "max": 30
+          }
+        },
+        {
+          "id": "temperature_display",
+          "type": "dropdown",
+          "label": {
+            "en": "Temperature display"
+          },
+          "hint": {
+            "en": "Select what is shown on the display during Standby state."
+          },
+          "zwave": {
+            "index": 8,
+            "size": 1
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Display setpoint temperature."
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "Display measured temperature"
+              }
+            }
+          ]
+        },
+        {
+          "id": "active_display_brightness",
+          "type": "number",
+          "label": {
+            "en": "Active display brightness (BR1)"
+          },
+          "hint": {
+            "en": "Configure the brightness of the display during active state."
+          },
+          "zwave": {
+            "index": 9,
+            "size": 1,
+            "signed": false
+          },
+          "value": 10,
+          "attr": {
+            "min": 1,
+            "max": 10
+          }
+        },
+        {
+          "id": "standby_display_brightness",
+          "type": "number",
+          "label": {
+            "en": "Standby display brightness (BR2)"
+          },
+          "hint": {
+            "en": "Configure the brightness of the display during standby state."
+          },
+          "zwave": {
+            "index": 10,
+            "size": 1,
+            "signed": false
+          },
+          "value": 10,
+          "attr": {
+            "min": 1,
+            "max": 10
+          }
+        },
+        {
+          "id": "temperature_report_interval",
+          "type": "number",
+          "label": {
+            "en": "Temperature report interval"
+          },
+          "hint": {
+            "en": "Set the time interval between consecutive temperature reports."
+          },
+          "zwave": {
+            "index": 11,
+            "size": 2,
+            "signed": false
+          },
+          "value": 990,
+          "attr": {
+            "min": 30,
+            "max": 65535
+          }
+        },
+        {
+          "id": "temperature_report_hysteresis",
+          "type": "number",
+          "label": {
+            "en": "Temperature report hysteresis"
+          },
+          "hint": {
+            "en": "Set the change in temperature required to send a temperature report based on change."
+          },
+          "zwave": {
+            "index": 12,
+            "size": 1,
+            "signed": false
+          },
+          "value": 10,
+          "attr": {
+            "min": 1,
+            "max": 100
+          }
+        },
+        {
+          "id": "humidity_report_hysteresis",
+          "type": "number",
+          "label": {
+            "en": "Humidity report hysteresis"
+          },
+          "hint": {
+            "en": "Change in humidity required to send a report"
+          },
+          "zwave": {
+            "index": 13,
+            "size": 1,
+            "signed": false
+          },
+          "value": 25,
+          "attr": {
+            "min": 10,
+            "max": 100
+          }
+        },
+        {
+          "id": "heating_setpoint",
+          "type": "number",
+          "label": {
+            "en": "Heating setpoint"
+          },
+          "hint": {
+            "en": "Set setpoint for Heating mode"
+          },
+          "zwave": {
+            "index": 14,
+            "size": 2,
+            "signed": false
+          },
+          "value": 210,
+          "attr": {
+            "min": 50,
+            "max": 400
+          }
+        },
+        {
+          "id": "cooling_setpoint",
+          "type": "number",
+          "label": {
+            "en": "Cooling setpoint"
+          },
+          "hint": {
+            "en": "Set setpoint for Cooling mode."
+          },
+          "zwave": {
+            "index": 15,
+            "size": 2,
+            "signed": false
+          },
+          "value": 180,
+          "attr": {
+            "min": 50,
+            "max": 400
+          }
+        },
+        {
+          "id": "eco_setpoint",
+          "type": "number",
+          "label": {
+            "en": "ECO setpoint"
+          },
+          "hint": {
+            "en": "Set setpoint for ECO mode."
+          },
+          "zwave": {
+            "index": 16,
+            "size": 2,
+            "signed": false
+          },
+          "value": 180,
+          "attr": {
+            "min": 50,
+            "max": 400
+          }
+        },
+        {
+          "id": "operating_mode",
+          "type": "dropdown",
+          "label": {
+            "en": "Operation mode (MODE)"
+          },
+          "hint": {
+            "en": "Set the thermostat mode."
+          },
+          "zwave": {
+            "index": 17,
+            "size": 1
+          },
+          "value": "1",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "OFF"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "Heating mode (Default)"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "Cooling mode"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "ECO mode"
+              }
+            }
+          ]
+        },
+        {
+          "id": "open_window_detection",
+          "type": "checkbox",
+          "label": {
+            "en": "Open window detection"
+          },
+          "hint": {
+            "en": "Choose to enable or disable the Open windows detection."
+          },
+          "zwave": {
+            "index": 28,
+            "size": 1,
+            "signed": false
+          },
+          "value": false
+        }
+      ]
+    },
+    {
       "id": "Z-TRM2fx",
       "name": {
         "en": "Z-TRM2fx thermostat"
@@ -5840,9 +6324,9 @@
         "security": [
           "none"
         ],
-        "productDocumentation": "https://products.z-wavealliance.org/ProductManual/File?folder=&filename=Manuals/3065/Manual_Heatit_Z-TRM2fx_ENG_3.1.pdf",
-        "pid": 3065,
-        "imageRemotePath": "https://products.z-wavealliance.org/ProductImages/Index?productName=ZC10-18116305",
+        "zwaveAllianceProductId": 3065,
+        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/3065",
+        "imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=3065&which=21",
         "learnmode": {
           "image": "/drivers/Z-TRM2fx/assets/learnmode.svg",
           "instruction": {
@@ -6623,8 +7107,8 @@
         "security": [
           "none"
         ],
-        "productDocumentation": "https://products.z-wavealliance.org/ProductManual/File?folder=&filename=product_documents/3802/Manual_Heatit_Z-TRM3_FW%204.0%20Ver2020-A_ENG.pdf",
-        "pid": 3802,
+        "zwaveAllianceProductId": 3802,
+        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/3802",
         "imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=3802&which=21",
         "learnmode": {
           "image": "/drivers/Z-TRM3/assets/learnmode.svg",
@@ -7328,6 +7812,11 @@
         },
         "measure_temperature.floor": {
           "title": "floor temperature"
+        },
+        "target_temperature": {
+          "min": 5,
+          "max": 40,
+          "step": 0.5
         }
       },
       "platforms": [
@@ -8171,9 +8660,9 @@
         "security": [
           "none"
         ],
-        "productDocumentation": "",
-        "pid": 3065,
-        "imageRemotePath": "",
+        "zwaveAllianceProductId": 3102,
+        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/3102",
+        "imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=3102&which=21",
         "learnmode": {
           "image": "/drivers/Z-Water/assets/learnmode.svg",
           "instruction": {
@@ -8825,10 +9314,9 @@
         "security": [
           "none"
         ],
-        "productDocumentation": "",
         "zwaveAllianceProductId": 4898,
         "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4898",
-        "imageRemotePath": "",
+        "imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=4898&which=10",
         "learnmode": {
           "image": "/drivers/Z-Water2/assets/learnmode.svg",
           "instruction": {
@@ -9294,9 +9782,9 @@
         "security": [
           "none"
         ],
-        "productDocumentation": "",
-        "pid": 9999,
-        "imageRemotePath": "",
+        "zwaveAllianceProductId": 3828,
+        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/3828",
+        "imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=3828&which=21",
         "learnmode": {
           "image": "/drivers/Z-push-button-4/assets/learnmode.svg",
           "instruction": {
@@ -9378,6 +9866,8 @@
         "security": [
           "none"
         ],
+        "zwaveAllianceProductId": 3595,
+        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/3595",
         "productDocumentation": "",
         "pid": 9999,
         "imageRemotePath": "",
@@ -9471,6 +9961,8 @@
         "security": [
           "none"
         ],
+        "zwaveAllianceProductId": 4028,
+        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4028",
         "learnmode": {
           "image": "/drivers/Z-push-wall-controller/assets/learnmode.svg",
           "instruction": {
@@ -9651,6 +10143,7 @@
         ],
         "zwaveAllianceProductId": 4802,
         "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4802",
+        "imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=4802&which=10",
         "learnmode": {
           "image": "/drivers/ZM-Dimmer/assets/learnmode.svg",
           "instruction": {
@@ -10103,6 +10596,9 @@
         "security": [
           "none"
         ],
+        "zwaveAllianceProductId": 4062,
+        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4062",
+        "imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=4062&which=21",
         "learnmode": {
           "image": "/drivers/ZM-Single-Relay-16A/assets/learnmode.svg",
           "instruction": {
@@ -10453,6 +10949,9 @@
         "security": [
           "none"
         ],
+        "zwaveAllianceProductId": 4305,
+        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4305",
+        "imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=4305&which=21",
         "learnmode": {
           "image": "/drivers/ZM-Thermostat-16A/assets/learnmode.svg",
           "instruction": {
@@ -10883,13 +11382,13 @@
     },
     "thermostat_mode": {
       "type": "enum",
-      "uiComponent": "picker",
       "title": {
         "en": "Thermostat mode"
       },
       "desc": {
         "en": "Mode of the thermostat"
       },
+      "uiComponent": "picker",
       "values": [
         {
           "id": "heat",
@@ -10901,6 +11400,12 @@
           "id": "cool",
           "title": {
             "en": "Cooling"
+          }
+        },
+        {
+          "id": "energy save heat",
+          "title": {
+            "en": "Eco"
           }
         },
         {
