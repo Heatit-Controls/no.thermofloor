@@ -1,45 +1,22 @@
 {
   "name": {
-    "en": "Z-TRM6"
+    "en": "Z-TEMP3"
   },
   "class": "thermostat",
   "capabilities": [
     "thermostat_mode",
     "target_temperature",
     "thermostat_state_13570",
-    "meter_power",
-    "measure_power",
     "measure_temperature",
-    "button.reset_meter",
-
-    "measure_temperature.internal",
-    "measure_temperature.external",
-    "measure_temperature.floor"
+    "measure_battery",
+    "measure_humidity"
   ],
   "capabilitiesOptions": {
-    "measure_power": {
-      "approximated": true
-    },
-    "button.reset_meter": {
-      "maintenanceAction": true,
-      "title": {
-        "en": "Reset power meter"
-      },
-      "desc": {
-        "en": "Reset the accumulated power usage (kWh), note that this can not be reversed."
-      }
-    },
     "measure_temperature": {
       "title": "temperature"
     },
-    "measure_temperature.internal": {
-      "title": "internal temperature"
-    },
-    "measure_temperature.external": {
-      "title": "external temperature"
-    },
-    "measure_temperature.floor": {
-      "title": "floor temperature"
+    "measure_humidity": {
+      "title": "humidity"
     },
     "target_temperature": {
       "min": 5,
@@ -62,10 +39,10 @@
   "zwave": {
     "manufacturerId": 411,
     "productTypeId": [
-      48
+      49
     ],
     "productId": [
-      12289
+      12545
     ],
     "security": [
       "none"
@@ -103,32 +80,7 @@
           "en": "Sends Thermostat Mode Set commands based on own setpoint to allow for use as master thermostat.",
           "nl": "Sends Thermostat Mode Set commands based on own setpoint to allow for use as master thermostat."
         }
-      },
-      "5": {
-        "hint": {
-          "en": "Send Multilevel Sensor Reports for the internal room temperature sensor.",
-          "nl": "Stuurt Multilevel Sensor Reports voor de externe ruimte temperatuur sensor."
-        }
-      },
-      "6": {
-        "hint": {
-          "en": "Send Multilevel Sensor Reports for the external room temperature sensor.",
-          "nl": "Stuurt Multilevel Sensor Reports voor de externe ruimte temperatuur sensor."
-        }
-      },
-      "7": {
-        "hint": {
-          "en": "Send Multilevel Sensor Reports for the floor temperature sensor.",
-          "nl": "Stuurt Multilevel Sensor Reports voor de vloer temperatuursensor."
-        }
       }
-    },
-    "defaultConfiguration": [
-      {
-        "id": 18,
-        "size": 2,
-        "value": 300
-      }
-    ]
+    }
   }
 }

@@ -1,0 +1,391 @@
+[
+	{
+	  "id": "disable_buttons",
+	  "type": "checkbox",
+	  "label": {
+		"en": "Disable buttons"
+	  },
+	  "hint": {
+		"en": "Disable buttons, must be enabled through the parameter, or turned back on locally by holding the center and right button for 30 seconds until the display shows “UNLK”."
+	  },
+	  "zwave": {
+		"index": 1,
+		"size": 1,
+		"signed": false
+	  },
+	  "value": false
+	},
+	{
+	  "id": "minimum_temperature_limit",
+	  "type": "number",
+	  "label": {
+		"en": "Minimum temperature limit"
+	  },
+	  "hint": {
+		"en": "Decides the lowest temperature allowed by the thermostat"
+	  },
+	  "zwave": {
+		"index": 2,
+		"size": 2,
+	  "signed": false
+	  },
+	  "value": 50,
+	  "attr": {
+		"min": 50,
+		"max": 400
+	  }
+	},
+	{
+	  "id": "maximum_temperature_limit",
+	  "type": "number",
+	  "label": {
+		"en": "Maximum temperature limit"
+	  },
+	  "hint": {
+		"en": "Decides the highest temperature allowed by the thermostat"
+	  },
+	  "zwave": {
+		"index": 3,
+		"size": 2,
+	  "signed": false
+	  },
+	  "value": 400,
+	  "attr": {
+		"min": 50,
+		"max": 400
+	  }
+	},
+	{
+	  "id": "calibration",
+	  "type": "number",
+	  "label": {
+		"en": "Calibration (CAR)"
+	  },
+	  "hint": {
+		"en": "Manually calibrate sensor ±6°C."
+	  },
+	  "zwave": {
+		"index": 4,
+		"size": 1
+	  },
+	  "value": 0,
+	  "attr": {
+		"min": -60,
+		"max": 60
+	  }
+	},
+	{
+	  "id": "regulation_mode",
+	  "type": "dropdown",
+	  "label": {
+		"en": "Regulation mode (REG)"
+	  },
+	  "hint": {
+		"en": "Choose between regulation modes PWM and Hysteresis."
+	  },
+	  "zwave": {
+		"index": 5,
+		"size": 1
+	  },
+	  "value": "0",
+	  "values": [
+		{
+		  "id": "0",
+		  "label": {
+			"en": "Hysteresis"
+		  }
+		},
+		{
+		  "id": "1",
+		  "label": {
+			"en": "PWM"
+		  }
+		}
+	  ]
+	},
+	{
+	  "id": "thermostat_state_update_interval",
+	  "type": "number",
+	  "label": {
+		"en": "Thermostat state update interval"
+	  },
+	  "hint": {
+		"en": "Set the time interval of how often the device updates Thermostat Setpoint set, Thermostat Mode set and Binary set to associated devices."
+	  },
+	  "zwave": {
+		"index": 6,
+		"size": 2,
+		"signed": false
+	  },
+	  "value": 3600,
+	  "attr": {
+		"min": 0,
+		"max": 65535
+	  }
+	},
+	{
+	  "id": "temperature_control_hysteresis",
+	  "type": "number",
+	  "label": {
+		"en": "Temperature control hysteresis (HYST)"
+	  },
+	  "hint": {
+		"en": "Choose the hysteresis used when regulation mode is set to HYST."
+	  },
+	  "zwave": {
+		"index": 7,
+		"size": 1,
+		"signed": false
+	  },
+	  "value": 5,
+	  "attr": {
+		"min": 3,
+		"max": 30
+	  }
+	},
+	{
+	  "id": "temperature_display",
+	  "type": "dropdown",
+	  "label": {
+		"en": "Temperature display"
+	  },
+	  "hint": {
+		"en": "Select what is shown on the display during Standby state."
+	  },
+	  "zwave": {
+		"index": 8,
+		"size": 1
+	  },
+	  "value": "0",
+	  "values": [
+		{
+		  "id": "0",
+		  "label": {
+			"en": "Display setpoint temperature."
+		  }
+		},
+		{
+		  "id": "1",
+		  "label": {
+			"en": "Display measured temperature"
+		  }
+		}
+	  ]
+	},
+	{
+	  "id": "active_display_brightness",
+	  "type": "number",
+	  "label": {
+		"en": "Active display brightness (BR1)"
+	  },
+	  "hint": {
+		"en": "Configure the brightness of the display during active state."
+	  },
+	  "zwave": {
+		"index": 9,
+		"size": 1,
+		"signed": false
+	  },
+	  "value": 10,
+	  "attr": {
+		"min": 1,
+		"max": 10
+	  }
+	},
+	{
+	  "id": "standby_display_brightness",
+	  "type": "number",
+	  "label": {
+		"en": "Standby display brightness (BR2)"
+	  },
+	  "hint": {
+		"en": "Configure the brightness of the display during standby state."
+	  },
+	  "zwave": {
+		"index": 10,
+		"size": 1,
+		"signed": false
+	  },
+	  "value": 10,
+	  "attr": {
+		"min": 1,
+		"max": 10
+	  }
+	},
+	{
+	  "id": "temperature_report_interval",
+	  "type": "number",
+	  "label": {
+		"en": "Temperature report interval"
+	  },
+	  "hint": {
+		"en": "Set the time interval between consecutive temperature reports."
+	  },
+	  "zwave": {
+		"index": 11,
+		"size": 2,
+		"signed": false
+	  },
+	  "value": 990,
+	  "attr": {
+		"min": 30,
+		"max": 65535
+	  }
+	},
+	{
+	  "id": "temperature_report_hysteresis",
+	  "type": "number",
+	  "label": {
+		"en": "Temperature report hysteresis"
+	  },
+	  "hint": {
+		"en": "Set the change in temperature required to send a temperature report based on change."
+	  },
+	  "zwave": {
+		"index": 12,
+		"size": 1,
+		"signed": false
+	  },
+	  "value": 10,
+	  "attr": {
+		"min": 1,
+		"max": 100
+	  }
+	},
+	{
+	  "id": "humidity_report_hysteresis",
+	  "type": "number",
+	  "label": {
+		"en": "Humidity report hysteresis"
+	  },
+	  "hint": {
+		"en": "Change in humidity required to send a report"
+	  },
+	  "zwave": {
+		"index": 13,
+		"size": 1,
+		"signed": false
+	  },
+	  "value": 25,
+	  "attr": {
+		"min": 10,
+		"max": 100
+	  }
+	},
+	{
+	  "id": "heating_setpoint",
+	  "type": "number",
+	  "label": {
+		"en": "Heating setpoint"
+	  },
+	  "hint": {
+		"en": "Set setpoint for Heating mode"
+	  },
+	  "zwave": {
+		"index": 14,
+		"size": 2,
+		"signed": false
+	  },
+	  "value": 210,
+	  "attr": {
+		"min": 50,
+		"max": 400
+	  }
+	},
+	{
+	  "id": "cooling_setpoint",
+	  "type": "number",
+	  "label": {
+		"en": "Cooling setpoint"
+	  },
+	  "hint": {
+		"en": "Set setpoint for Cooling mode."
+	  },
+	  "zwave": {
+		"index": 15,
+		"size": 2,
+		"signed": false
+	  },
+	  "value": 180,
+	  "attr": {
+		"min": 50,
+		"max": 400
+	  }
+	},
+	{
+	  "id": "eco_setpoint",
+	  "type": "number",
+	  "label": {
+		"en": "ECO setpoint"
+	  },
+	  "hint": {
+		"en": "Set setpoint for ECO mode."
+	  },
+	  "zwave": {
+		"index": 16,
+		"size": 2,
+		"signed": false
+	  },
+	  "value": 180,
+	  "attr": {
+		"min": 50,
+		"max": 400
+	  }
+	},
+	{
+	  "id": "operating_mode",
+	  "type": "dropdown",
+	  "label": {
+		"en": "Operation mode (MODE)"
+	  },
+	  "hint": {
+		"en": "Set the thermostat mode."
+	  },
+	  "zwave": {
+		"index": 17,
+		"size": 1
+	  },
+	  "value": "1",
+	  "values": [
+		{
+		  "id": "0",
+		  "label": {
+			"en": "OFF"
+		  }
+		},
+		{
+		  "id": "1",
+		  "label": {
+			"en": "Heating mode (Default)"
+		  }
+		},
+		{
+		  "id": "2",
+		  "label": {
+			"en": "Cooling mode"
+		  }
+		},
+		{
+		  "id": "3",
+		  "label": {
+			"en": "ECO mode"
+		  }
+		}    ]
+	},
+	{
+	  "id": "open_window_detection",
+	  "type": "checkbox",
+	  "label": {
+		"en": "Open window detection"
+	  },
+	  "hint": {
+		"en": "Choose to enable or disable the Open windows detection."
+	  },
+	  "zwave": {
+		"index": 28,
+		"size": 1,
+		"signed": false
+	  },
+	  "value": false
+	}
+  ]

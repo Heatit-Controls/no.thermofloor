@@ -1,5 +1,5 @@
 'use strict';
-const {ZwaveDevice} = require('homey-zwavedriver');
+const { ZwaveDevice } = require('homey-zwavedriver');
 const Homey = require('homey');
 
 const ThermostatFourModeDevice = require('../../lib/ThermostatFourModeDevice');
@@ -20,42 +20,40 @@ const ThermostatModeToCapability = {
     'Energy Save Heat': 'energy save heat',
 };
 
-let timer = null;
-
-ZwaveDevice.setMaxListeners(20);
-
-
-class ZTRM6Device extends ThermostatFourModeDevice {
+class ZTEMP3Device extends ThermostatFourModeDevice {
     async onNodeInit() {
-
         this.capabilityMultiChannelNodeIdObj = {
-            'measure_temperature.internal': 2,
-            'measure_temperature.external': 3,
-            'measure_temperature.floor': 4,
+            'measure_temperature.internal': 1,
         };
 
+        // Register target_temperature if it hasn't been registered already
+        if (this.hasCapability('target_temperature')) {
+            this.registerCapability('target_temperature', 'THERMOSTAT_SETPOINT');
+        }
 
-        this.registerCapability('measure_power', 'METER');
-        this.registerCapability('meter_power', 'METER');
-        this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL');
-        this.registerCapability('target_temp', 'THERMOSTAT_SETPOINT');
-
-        let targetTempValue = await this.getCapabilityValue('target_temperature');
-        this.setCapabilityValue('target_temperature', targetTempValue).catch(error => {
-            console.error('Error setting target_temperature:', error);
+        this.registerCapability('measure_battery', 'BATTERY', {
+            getOpts: { getOnStart: true },
+            multiChannelNodeId: this.capabilityMultiChannelNodeIdObj['measure_battery'],
+        });
+        
+        this.registerCapability('measure_humidity', 'SENSOR_MULTILEVEL', {
+            getOpts: { getOnStart: true },
+            multiChannelNodeId: this.capabilityMultiChannelNodeIdObj['measure_humidity'],
         });
 
-        
+        this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL');
 
-        await this.registerThermostatModeCapability();
+        let targetTempValue = await this.getCapabilityValue('target_temperature');
+        if (targetTempValue !== null && targetTempValue !== undefined) {
+            this.setCapabilityValue('target_temperature', targetTempValue).catch(error => {
+                console.error('Error setting target_temperature:', error);
+            });
+        } else {
+            this.log('Target temperature not available during initialization');
+        }
+
+        this.registerThermostatModeCapability();
         await this.registerTemperature();
-
-
-    }
-
-    onDeleted() {
-        this.homey.clearInterval(timer)
-        super.onDeleted();
     }
 
     async registerTemperature() {
@@ -63,17 +61,14 @@ class ZTRM6Device extends ThermostatFourModeDevice {
             if (capabilityId.includes('measure_temperature')) {
                 const subName = capabilityId.split('.')[1];
 
-                // register main measure_temperature capability
                 if (this.hasCapability(capabilityId) && subName === undefined) {
-                    // registerCapability for the internal temperature sensor
                     this.registerCapability(capabilityId, 'SENSOR_MULTILEVEL', {
-                        getOpts: {getOnStart: true},
+                        getOpts: { getOnStart: true },
                         multiChannelNodeId: this.capabilityMultiChannelNodeIdObj[capabilityId],
                     });
                 } else if (this.hasCapability(capabilityId) && subName !== undefined) {
-                    // registerCapability for the internal temperature sensor
                     this.registerCapability(capabilityId, 'SENSOR_MULTILEVEL', {
-                        getOpts: {getOnStart: true},
+                        getOpts: { getOnStart: true },
                         report: 'SENSOR_MULTILEVEL_REPORT',
                         reportParser: report => {
                             if (report
@@ -82,9 +77,8 @@ class ZTRM6Device extends ThermostatFourModeDevice {
                                 && report.hasOwnProperty('Sensor Value (Parsed)')
                                 && report.hasOwnProperty('Level')
                                 && report.Level.hasOwnProperty('Scale')) {
-                                // Some devices send this when no temperature sensor is connected
                                 if (report['Sensor Value (Parsed)'] === -999.9) return null;
-                                this.log('+++++++ registerTemperature: ', capabilityId, '+++++++', report)
+                                this.log('+++++++ registerTemperature: ', capabilityId, '+++++++', report);
                                 if (report.Level.Scale === 0) {
                                     if (capabilityId === 'measure_temperature.internal') {
                                         this.setCapabilityValue('measure_temperature', report['Sensor Value (Parsed)']).catch(this.error);
@@ -109,22 +103,17 @@ class ZTRM6Device extends ThermostatFourModeDevice {
             },
             set: 'THERMOSTAT_MODE_SET',
             setParser: value => {
-
                 if (!CapabilityToThermostatMode.hasOwnProperty(value)) {
-                    return null
+                    return null;
                 }
-                const mode = CapabilityToThermostatMode[value]
-                if (typeof mode !== 'string') {
-                    return null
-                }
-
+                const mode = CapabilityToThermostatMode[value];
                 return {
-                    'Level': {
+                    Level: {
                         'No of Manufacturer Data fields': 0,
-                        'Mode': mode,
+                        Mode: mode,
                     },
                     'Manufacturer Data': Buffer.from([]),
-                }
+                };
             },
 
             report: 'THERMOSTAT_MODE_REPORT',
@@ -140,6 +129,8 @@ class ZTRM6Device extends ThermostatFourModeDevice {
                 return null;
             },
         });
+
+        // Use thermostat_state_13570
         this.registerCapability('thermostat_state_13570', 'THERMOSTAT_OPERATING_STATE', {
             getOpts: {
                 getOnStart: true,
@@ -229,4 +220,4 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 }
 }
 
-module.exports = ZTRM6Device;
+module.exports = ZTEMP3Device;

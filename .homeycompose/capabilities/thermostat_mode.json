@@ -1,6 +1,5 @@
 {
 	"type": "enum",
-	"uiComponent": "picker",
 	"title": {
 		"en": "Thermostat mode"
 	},
@@ -19,6 +18,12 @@
 			"id": "cool",
 			"title": {
 				"en": "Cooling"
+			}
+				},
+		{
+			"id": "energy save heat",
+			"title": {
+			  "en": "Eco"
 			}
 				},
 		{
