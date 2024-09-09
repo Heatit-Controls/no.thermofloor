@@ -1,94 +1,89 @@
 {
-	"id": "Z-TEMP2",
-	"name": {
-		"en": "Z-TEMP2 thermostat"
-	},
-	"images": {
-		"large": "{{driverAssetsPath}}/images/large.png",
-		"small": "{{driverAssetsPath}}/images/small.png"
-	},
-	"platforms": ["local", "cloud"],
-	"connectivity": ["zwave"],
-	"class": "thermostat",
-	"capabilities": ["measure_temperature", "measure_humidity", "measure_battery", "thermostat_mode_single", "thermostat_state", "onoff", "locked", "target_temperature"],
-	"capabilitiesOptions": {
-		"onoff": {
-			"titleTrue": {
-				"en": "mode `Heating`",
-				"nl": "modus `Verwarmen`"
-			},
-			"titleFalse": {
-				"en": "mode `Off`",
-				"nl": "modus `Off`"
-			},
-			"insightsTitleTrue": {
-				"en": "Thermostat mode `Heating` activated",
-				"nl": "Thermostat modus `Verwarmen` ingeschakeld"
-			},
-			"insightsTitleFalse": {
-				"en": "Thermostat mode `Off` activated",
-				"nl": "Thermostat modus `Uit` ingeschakeld"
-			}
-		},
-		"thermostat_state": {
-			"greyout": true,
-			"titleTrue": {
-				"en": "Active",
-				"nl": "Actief"
-			},
-			"titleFalse": {
-				"en": "Idle",
-				"nl": "Uit"
-			}
-		},
-		"target_temperature": {
-			"min": 5,
-			"max": 40,
-			"step": 1.0
-		},
-		"measure_temperature": {
-			"title": "temperature"
-		}
-	},
-	"energy": {
-		"batteries": ["AA", "AA", "AA"]
-	},
-	"zwave": {
-		"manufacturerId": 411,
-		"productTypeId": 4,
-		"productId": 516,
-		"security": ["none"],
-		"productDocumentation": "https://products.z-wavealliance.org/ProductManual/File?folder=&filename=product_documents/3860/Manual_Heatit_Z-Temp2_FW%201.1_Ver2020-A_ENG.pdf",
-		"pid": 3860,
-		"imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=3860&which=21",
-		"learnmode": {
-			"image": "{{driverAssetsPath}}/learnmode.svg",
-			"instruction": {
-				"en": "1. press the link button on the thermostat 3 times in a rapid sequence.\n2. Confirmation will show Inc in the display."
-			}
-		},
-		"associationGroups": [1],
-		"associationGroupsMultiChannel": [],
-		"associationGroupsOptions": {
-			"1": {
-				"hint": {
-					"en": "Lifeline. All run-time reporting is addressed to this group. Only one node can be assigned to this association group. \nDefault: 1 (Homey's ID)",
-					"nl": "Lifeline: Association Groep 1 wordt gebruikt om alle rapportages door te geven. Slechts een node kan toegevoegd worden aan deze associatie groep. \nStandaard: 1 (Homey's ID)"
-				}
-			},
-			"2": {
-				"hint": {
-					"en": "Send Multilevel Sensor Reports for the internal room temperature and humidity sensor.",
-					"nl": "Stuurt Multilevel Sensor Reports voor de externe ruimte temperatuur and humidity sensor."
-				}
-			},
-			"3": {
-				"hint": {
-					"en": "On/off  control: This controls external heaters replicating the state of the internal relay. \nUses BINARY_SWITCH_SET command, values 0x00 (on) and 0xFF (on).\nDefault: 1 (Homey's ID), required to track the thermostat state (Active / Idle)",
-					"nl": "On/off  control: Deze groep schakelt externe verwarmings of koelings elementen. \nMaakt gebruik van het BINARY_SWITCH_SET command, values 0x00 (on) and 0xFF (on).\nStandaard: 1 (Homey's ID), nodig om de toestand van de thermostat (Actief / Inactief) bij te houden"
-				}
-			}
-		},
-		"defaultConfiguration": []
-	}
+  "name": {
+    "en": "Z-TEMP3"
+  },
+  "class": "thermostat",
+  "capabilities": [
+    "thermostat_mode",
+    "target_temperature",
+    "thermostat_state_13570",
+    "measure_temperature",
+    "measure_battery",
+    "measure_humidity"
+  ],
+  "capabilitiesOptions": {
+    "measure_temperature": {
+      "title": "temperature"
+    },
+    "measure_humidity": {
+      "title": "humidity"
+    },
+    "target_temperature": {
+      "min": 5,
+      "max": 40,
+      "step": 0.5
+    }
+  },
+  "energy": {
+		"batteries": ["AAA", "AAA"]
+  },
+  "platforms": [
+    "local",
+    "cloud"
+  ],
+  "connectivity": [
+    "zwave"
+  ],
+  "images": {
+    "small": "{{driverAssetsPath}}/images/small.png",
+    "large": "{{driverAssetsPath}}/images/large.png",
+    "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
+  },
+  "zwave": {
+    "manufacturerId": 411,
+    "productTypeId": [
+      49
+    ],
+    "productId": [
+      12545
+    ],
+    "security": [
+      "none"
+    ],
+    "zwaveAllianceProductId": 4666,
+    "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4666",
+    "learnmode": {
+      "image": "{{driverAssetsPath}}/learnmode.svg",
+      "instruction": {
+        "en": "1. Hold the Center button for 5 seconds. The display will show “OFF”.\n2. Press the ”+” button once to see “CON” in the display.\n3 Start the configuration mode on the thermostat by holding the Center button for approximately 2 seconds.\n4. Configuration mode is indicated on the device by rotating LED segments on the display."
+      }
+    },
+    "associationGroupsMultiChannel": [1],
+    "associationGroupsOptions": {
+      "1": {
+        "hint": {
+          "en": "Lifeline. All run-time reporting is addressed to this group. Only one node can be assigned to this association group. \nDefault: 1.1 (Homey's ID)",
+          "nl": "Lifeline: Association Groep 1 wordt gebruikt om alle rapportages door te geven. Slechts een node kan toegevoegd worden aan deze associatie groep. \nStandaard: 1.1 (Homey's ID)"
+        }
+      },
+      "2": {
+        "hint": {
+          "en": "On/off  control: This controls external heaters replicating the state of the internal relay. \nUses BASIC_SET command, values 0x00 (on) and 0xFF (on).",
+          "nl": "On/off  control: Deze groep schakelt externe verwarmings of koelings elementen. \nMaakt gebruik van het BASIC_SET command, values 0x00 (on) and 0xFF (on)."
+        }
+      },
+      "3": {
+        "hint": {
+          "en": "Sends Thermostat Setpoint Set commands based on own setpoint to allow for use as master thermostat.",
+          "nl": "Sends Thermostat Setpoint Set commands based on own setpoint to allow for use as master thermostat."
+        }
+      },
+      "4": {
+        "hint": {
+          "en": "Sends Thermostat Mode Set commands based on own setpoint to allow for use as master thermostat.",
+          "nl": "Sends Thermostat Mode Set commands based on own setpoint to allow for use as master thermostat."
+        }
+      }
+    }
+  }
 }
