@@ -70,14 +70,15 @@
     "security": [
       "none"
     ],
-    "zwaveAllianceProductId": 4666,
-    "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4666",
+    "zwaveAllianceProductId": 4908,
+    "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4908",
     "learnmode": {
       "image": "{{driverAssetsPath}}/learnmode.svg",
       "instruction": {
         "en": "1. Hold the Center button for 5 seconds. The display will show “OFF”.\n2. Press the ”+” button once to see “CON” in the display.\n3 Start the configuration mode on the thermostat by holding the Center button for approximately 2 seconds.\n4. Configuration mode is indicated on the device by rotating LED segments on the display."
       }
     },
+    "associationGroups": [],
     "associationGroupsMultiChannel": [1],
     "associationGroupsOptions": {
       "1": {
@@ -102,24 +103,6 @@
         "hint": {
           "en": "Sends Thermostat Mode Set commands based on own setpoint to allow for use as master thermostat.",
           "nl": "Sends Thermostat Mode Set commands based on own setpoint to allow for use as master thermostat."
-        }
-      },
-      "5": {
-        "hint": {
-          "en": "Send Multilevel Sensor Reports for the internal room temperature sensor.",
-          "nl": "Stuurt Multilevel Sensor Reports voor de externe ruimte temperatuur sensor."
-        }
-      },
-      "6": {
-        "hint": {
-          "en": "Send Multilevel Sensor Reports for the external room temperature sensor.",
-          "nl": "Stuurt Multilevel Sensor Reports voor de externe ruimte temperatuur sensor."
-        }
-      },
-      "7": {
-        "hint": {
-          "en": "Send Multilevel Sensor Reports for the floor temperature sensor.",
-          "nl": "Stuurt Multilevel Sensor Reports voor de vloer temperatuursensor."
         }
       }
     },

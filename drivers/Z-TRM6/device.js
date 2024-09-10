@@ -51,6 +51,11 @@ class ZTRM6Device extends ThermostatFourModeDevice {
         await this.registerTemperature();
 
 
+        this.log('Z-TRM6 has been initialized');
+
+        this.setAvailable().catch(this.error);
+
+
     }
 
     onDeleted() {
