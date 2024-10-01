@@ -4,7 +4,7 @@
 		"en": "Button is pressed"
 	},
 	"titleFormatted": {
-		"en": "[[button]] button is [[scene]]"
+		"en": "When any button is pressed"
 	},
 	"hint": {
 		"en": "This card will trigger on any button pressed and provides the scene tokens."
