@@ -14,6 +14,8 @@ class ZHAN2Device extends ZwaveDevice {
 
     this.defaultCapabilityList = [
       'meter_power',
+      "meter_power.imported",
+      "meter_power.exported",
       'measure_power',
       'measure_voltage',
       'measure_current',

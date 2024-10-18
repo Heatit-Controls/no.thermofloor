@@ -66,7 +66,6 @@ class ZTRM6Device extends ThermostatFourModeDevice {
         //     multiChannelNodeId: 1,
         // });
 
-
         this.registerMultiChannelReportListener(1, "METER", "METER_REPORT", report => {
             const bool = report && report.hasOwnProperty('Properties2')
             this.log("METER_REPORT" , report)
@@ -82,7 +81,6 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 
 
         this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL');
-
 
         this.registerCapability('target_temperature', 'THERMOSTAT_SETPOINT', {
             getOpts: {
@@ -206,6 +204,8 @@ class ZTRM6Device extends ThermostatFourModeDevice {
         super.onDeleted();
     }
 
+    
+
     async registerTemperature() {
         Object.keys(this.capabilityMultiChannelNodeIdObj).forEach(capabilityId => {
             if (capabilityId.includes('measure_temperature')) {
@@ -224,24 +224,45 @@ class ZTRM6Device extends ThermostatFourModeDevice {
                         getOpts: {getOnStart: true},
                         report: 'SENSOR_MULTILEVEL_REPORT',
                         reportParser: report => {
+                            const temperatureMap = {
+                                'measure_temperature.external': 3,
+                                'measure_temperature.floor': 0,
+                                'measure_temperature.internal': 1
+                            };
+                        
                             if (report
                                 && report.hasOwnProperty('Sensor Type')
                                 && report['Sensor Type'] === 'Temperature (version 1)'
                                 && report.hasOwnProperty('Sensor Value (Parsed)')
                                 && report.hasOwnProperty('Level')
                                 && report.Level.hasOwnProperty('Scale')) {
+                        
                                 // Some devices send this when no temperature sensor is connected
                                 if (report['Sensor Value (Parsed)'] === -999.9) return null;
-                                // this.log('+++++++ registerTemperature: ', capabilityId, '+++++++', report)
+                        
                                 if (report.Level.Scale === 0) {
-                                    if (capabilityId === 'measure_temperature.internal') {
-                                        this.setCapabilityValue('measure_temperature', report['Sensor Value (Parsed)']).catch(this.error);
-                                    }
+                                    this.configurationGet({ index: 2 })
+                                        .then(Sensor => {
+                                            if (Sensor && Sensor['Configuration Value'] && Buffer.isBuffer(Sensor['Configuration Value'])) {
+                                                const configValue = Sensor['Configuration Value'].readUIntBE(0, Sensor['Level'].Size); // Read buffer value based on size
+                                                //this.log(`Parameter 2 actual value: ${configValue}`);
+                                                
+                                                // Check if configValue matches any value in temperatureMap
+                                                const matchedCapability = Object.keys(temperatureMap).find(key => temperatureMap[key] === configValue);
+                                                
+                                                if (matchedCapability && capabilityId === matchedCapability) {
+                                                    this.setCapabilityValue('measure_temperature', report['Sensor Value (Parsed)']).catch(this.error);
+                                                }
+                                            }
+                                        })
+                                        .catch(this.error);
+                        
                                     return report['Sensor Value (Parsed)'];
                                 }
                             }
                             return null;
-                        },
+                        }
+                        ,
                         multiChannelNodeId: this.capabilityMultiChannelNodeIdObj[capabilityId],
                     });
                 }
