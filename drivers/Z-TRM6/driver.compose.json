@@ -4,7 +4,7 @@
   },
   "class": "thermostat",
   "capabilities": [
-    "thermostat_mode",
+    "thermostat_mode_tf",
     "target_temperature",
     "thermostat_state_13570",
     "meter_power",

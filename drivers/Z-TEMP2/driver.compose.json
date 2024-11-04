@@ -10,7 +10,7 @@
 	},
 	"platforms": ["local", "cloud"],
 	"connectivity": ["zwave"],
-	"class": "thermostat",
+	"class": "other",
 	"capabilities": ["measure_temperature", "measure_humidity", "measure_battery", "thermostat_mode_single", "thermostat_state", "onoff", "locked", "target_temperature"],
 	"capabilitiesOptions": {
 		"onoff": {
