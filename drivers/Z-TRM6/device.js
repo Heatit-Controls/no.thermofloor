@@ -88,7 +88,7 @@ class ZTRM6Device extends ThermostatFourModeDevice {
             },
             getParser: () => {
                 // 1. Retrieve the setpointType based on the thermostat mode
-                const setpointType = Mode2Setpoint[this.getCapabilityValue('thermostat_mode') || 'Heat'];
+                const setpointType = Mode2Setpoint[this.getCapabilityValue('thermostat_mode_tf') || 'Heat'];
 
                 // 2. Return getParser object with correct setpointType
                 return {
@@ -100,8 +100,8 @@ class ZTRM6Device extends ThermostatFourModeDevice {
             set: 'THERMOSTAT_SETPOINT_SET',
             setParserV3: setpointValue => {
                 // 1. Retrieve the setpointType based on the thermostat mode
-                this.log('Mode2Setpoint', setpointValue, this.getCapabilityValue('thermostat_mode'), Mode2Setpoint[this.getCapabilityValue('thermostat_mode') || 'Heat']);
-                const setpointType = Mode2Setpoint[this.getCapabilityValue('thermostat_mode') || 'Heat'];
+                this.log('Mode2Setpoint', setpointValue, this.getCapabilityValue('thermostat_mode_tf'), Mode2Setpoint[this.getCapabilityValue('thermostat_mode_tf') || 'Heat']);
+                const setpointType = Mode2Setpoint[this.getCapabilityValue('thermostat_mode_tf') || 'Heat'];
 
                 this.log('Setting thermostat setpoint to:', setpointValue, 'for setpointType', setpointType);
 
@@ -168,7 +168,7 @@ class ZTRM6Device extends ThermostatFourModeDevice {
                         }).catch(this.error);
 
                         // 5. Update UI if reported setpointType equals active sepointType based on the thermostat mode
-                        if (setpointType === Mode2Setpoint[this.getCapabilityValue('thermostat_mode') || 'Heat']) {
+                        if (setpointType === Mode2Setpoint[this.getCapabilityValue('thermostat_mode_tf') || 'Heat']) {
                             this.log('Updated thermostat setpoint on UI to', setpointValue);
                             return setpointValue;
                         }
@@ -196,6 +196,10 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 
         this.setAvailable().catch(this.error);
 
+        this.homey.setInterval(() => {
+            this.registerTemperature();
+        }, 1000 * 60 * 15)
+
 
     }
 
@@ -203,6 +207,8 @@ class ZTRM6Device extends ThermostatFourModeDevice {
         this.homey.clearInterval(timer)
         super.onDeleted();
     }
+
+
 
     
 
@@ -271,7 +277,7 @@ class ZTRM6Device extends ThermostatFourModeDevice {
     }
 
     registerThermostatModeCapability() {
-        this.registerCapability('thermostat_mode', 'THERMOSTAT_MODE', {
+        this.registerCapability('thermostat_mode_tf', 'THERMOSTAT_MODE', {
             get: 'THERMOSTAT_MODE_GET',
             getOpts: {
                 getOnStart: true,
@@ -346,7 +352,7 @@ class ZTRM6Device extends ThermostatFourModeDevice {
             getOnStart: true,
         },
         getParser: () => {
-            const thermostatMode = this.getCapabilityValue('thermostat_mode') || 'Heat';
+            const thermostatMode = this.getCapabilityValue('thermostat_mode_tf') || 'Heat';
             const setpointType = Mode2Setpoint[thermostatMode];
 
             // Fallback if setpointType is undefined
@@ -365,7 +371,7 @@ class ZTRM6Device extends ThermostatFourModeDevice {
         },
         set: 'THERMOSTAT_SETPOINT_SET',
         setParserV3: setpointValue => {
-            const thermostatMode = (this.getCapabilityValue('thermostat_mode') || 'heat').toLowerCase();
+            const thermostatMode = (this.getCapabilityValue('thermostat_mode_tf') || 'heat').toLowerCase();
             const setpointType = Mode2Setpoint[thermostatMode];
 
             this.log('Current mode is:', thermostatMode, 'Mapped to Setpoint type:', setpointType);

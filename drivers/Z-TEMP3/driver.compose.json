@@ -2,9 +2,9 @@
   "name": {
     "en": "Z-TEMP3"
   },
-  "class": "thermostat",
+  "class": "other",
   "capabilities": [
-    "thermostat_mode",
+    "thermostat_mode_tf",
     "target_temperature",
     "thermostat_state_13570",
     "measure_temperature",
@@ -19,6 +19,7 @@
       "title": "humidity"
     },
     "target_temperature": {
+      "class": "thermostat",
       "min": 5,
       "max": 40,
       "step": 0.5

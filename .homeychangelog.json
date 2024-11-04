@@ -31,5 +31,8 @@
   },
   "3.6.4": {
     "en": "Added support for floor and external temperature sensor for Z-TRM6. Added support for temperature sensors for Z-Water2. Removed wrong parameter for Z-HAN/B."
+  },
+  "3.8.7": {
+    "en": "Added Z-TRM6 polling for test, Added status indicator option for ZTEMP2 and ZTEMP3 for test."
   }
 }

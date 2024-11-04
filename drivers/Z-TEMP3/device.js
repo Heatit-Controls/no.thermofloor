@@ -96,7 +96,7 @@ class ZTEMP3Device extends ThermostatFourModeDevice {
     }
 
     registerThermostatModeCapability() {
-        this.registerCapability('thermostat_mode', 'THERMOSTAT_MODE', {
+        this.registerCapability('thermostat_mode_tf', 'THERMOSTAT_MODE', {
             get: 'THERMOSTAT_MODE_GET',
             getOpts: {
                 getOnStart: true,
@@ -164,7 +164,7 @@ class ZTEMP3Device extends ThermostatFourModeDevice {
             getOnStart: true,
         },
         getParser: () => {
-            const thermostatMode = this.getCapabilityValue('thermostat_mode') || 'Heat';
+            const thermostatMode = this.getCapabilityValue('thermostat_mode_tf') || 'Heat';
             const setpointType = Mode2Setpoint[thermostatMode];
 
             // Fallback if setpointType is undefined
@@ -183,7 +183,7 @@ class ZTEMP3Device extends ThermostatFourModeDevice {
         },
         set: 'THERMOSTAT_SETPOINT_SET',
         setParserV3: setpointValue => {
-            const thermostatMode = (this.getCapabilityValue('thermostat_mode') || 'heat').toLowerCase();
+            const thermostatMode = (this.getCapabilityValue('thermostat_mode_tf') || 'heat').toLowerCase();
             const setpointType = Mode2Setpoint[thermostatMode];
 
             this.log('Current mode is:', thermostatMode, 'Mapped to Setpoint type:', setpointType);
