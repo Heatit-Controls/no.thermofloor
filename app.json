@@ -5785,7 +5785,7 @@
       },
       "class": "other",
       "capabilities": [
-        "thermostat_mode_tf",
+        "thermostat_mode",
         "target_temperature",
         "thermostat_state_13570",
         "measure_temperature",
@@ -5800,10 +5800,37 @@
           "title": "humidity"
         },
         "target_temperature": {
-          "class": "thermostat",
           "min": 5,
           "max": 40,
           "step": 0.5
+        },
+        "thermostat_mode": {
+          "values": [
+            {
+              "id": "off",
+              "title": {
+                "en": "Off"
+              }
+            },
+            {
+              "id": "heat",
+              "title": {
+                "en": "Heat"
+              }
+            },
+            {
+              "id": "cool",
+              "title": {
+                "en": "Cool"
+              }
+            },
+            {
+              "id": "energy save heat",
+              "title": {
+                "en": "ECO"
+              }
+            }
+          ]
         }
       },
       "energy": {
@@ -7801,7 +7828,7 @@
       },
       "class": "thermostat",
       "capabilities": [
-        "thermostat_mode_tf",
+        "thermostat_mode",
         "target_temperature",
         "thermostat_state_13570",
         "meter_power",
@@ -12261,44 +12288,6 @@
         "en": "Heating idle",
         "nl": "Verwarming uitgeschakeld"
       }
-    },
-    "thermostat_mode": {
-      "type": "enum",
-      "title": {
-        "en": "Thermostat mode"
-      },
-      "desc": {
-        "en": "Mode of the thermostat"
-      },
-      "uiComponent": "picker",
-      "values": [
-        {
-          "id": "heat",
-          "title": {
-            "en": "Heating"
-          }
-        },
-        {
-          "id": "cool",
-          "title": {
-            "en": "Cooling"
-          }
-        },
-        {
-          "id": "energy save heat",
-          "title": {
-            "en": "Eco"
-          }
-        },
-        {
-          "id": "off",
-          "title": {
-            "en": "Off"
-          }
-        }
-      ],
-      "getable": true,
-      "setable": true
     },
     "thermostat_mode_13570": {
       "type": "enum",
