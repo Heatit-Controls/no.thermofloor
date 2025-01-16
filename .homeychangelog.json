@@ -34,5 +34,11 @@
   },
   "3.8.7": {
     "en": "Added Z-TRM6 polling for test, Added status indicator option for ZTEMP2 and ZTEMP3 for test."
+  },
+  "3.9.0": {
+    "en": "Reduces reports from Z-TRM6"
+  },
+  "3.9.1": {
+    "en": "Minor bug fixes"
   }
 }

@@ -2,7 +2,7 @@
   "name": {
     "en": "Z-TEMP3"
   },
-  "class": "other",
+  "class": "thermostat",
   "capabilities": [
     "thermostat_mode",
     "target_temperature",

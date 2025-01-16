@@ -6,7 +6,7 @@
     "en": "Heatit Controls"
   },
   "brandColor": "#cc3333",
-  "version": "3.8.7",
+  "version": "3.9.1",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -5783,7 +5783,7 @@
       "name": {
         "en": "Z-TEMP3"
       },
-      "class": "other",
+      "class": "thermostat",
       "capabilities": [
         "thermostat_mode",
         "target_temperature",
@@ -7849,7 +7849,8 @@
               "id": "off",
               "title": {
                 "en": "Off"
-              }
+              },
+              "insights": true
             },
             {
               "id": "heat",
@@ -7870,6 +7871,17 @@
               }
             }
           ]
+        },
+        "thermostat_state_13570": {
+          "greyout": true,
+          "titleTrue": {
+            "en": "Active",
+            "nl": "Actief"
+          },
+          "titleFalse": {
+            "en": "Idle",
+            "nl": "Uit"
+          }
         },
         "measure_power": {
           "approximated": true
@@ -7961,19 +7973,7 @@
               "nl": "Sends Thermostat Mode Set commands based on own setpoint to allow for use as master thermostat."
             }
           }
-        },
-        "defaultConfiguration": [
-          {
-            "id": 18,
-            "size": 2,
-            "value": 300
-          },
-          {
-            "id": 2,
-            "size": 1,
-            "value": 1
-          }
-        ]
+        }
       },
       "id": "Z-TRM6",
       "settings": [
