@@ -867,7 +867,7 @@
           "ko": "온도조절기 모드 변경됨"
         },
         "titleFormatted": {
-          "en": "Thermostat has yeeted to [[thermostat_mode]]"
+          "en": "Thermostat has changed to [[thermostat_mode]]"
         },
         "args": [
           {
@@ -982,7 +982,7 @@
           "ko": "온도조절기 모드가 다음으로 설정!{{됨|되지 않음}}"
         },
         "titleFormatted": {
-          "en": "Thermostat is yeet [[thermostat_mode]]"
+          "en": "Thermostat mode is [[thermostat_mode_changed]]"
         },
         "args": [
           {
@@ -991,7 +991,7 @@
             "filter": "driver_id=ZM-Thermostat-16A"
           },
           {
-            "name": "thermostat_mode",
+            "name": "thermostat_mode_changed",
             "type": "dropdown",
             "values": [
               {
@@ -8149,8 +8149,7 @@
               "id": "off",
               "title": {
                 "en": "Off"
-              },
-              "insights": true
+              }
             },
             {
               "id": "heat",
@@ -8171,17 +8170,6 @@
               }
             }
           ]
-        },
-        "thermostat_state_13570": {
-          "greyout": true,
-          "titleTrue": {
-            "en": "Active",
-            "nl": "Actief"
-          },
-          "titleFalse": {
-            "en": "Idle",
-            "nl": "Uit"
-          }
         },
         "measure_power": {
           "approximated": true
@@ -8273,7 +8261,14 @@
               "nl": "Sends Thermostat Mode Set commands based on own setpoint to allow for use as master thermostat."
             }
           }
-        }
+        },
+        "defaultConfiguration": [
+          {
+            "id": 18,
+            "size": 2,
+            "value": 300
+          }
+        ]
       },
       "id": "Z-TRM6",
       "settings": [
