@@ -6,9 +6,9 @@
   "capabilities": [
     "meter_power",
     "measure_power",
-	"measure_voltage",
-	"measure_current",
-	"measure_temperature",
+    "measure_voltage",
+    "measure_current",
+    "measure_temperature",
     "button.reset_meter"
   ],
   "capabilitiesOptions": {
@@ -25,6 +25,37 @@
       }
     }
   },
+  
+  "type": "number",
+  "title": {
+		"en": "Power"
+  },
+
+	"energy": {
+    "cumulative": true,
+    "cumulativeImportedCapability": "meter_power.imported",
+    "cumulativeExportedCapability": "meter_power.exported"
+	},
+
+	"units": {
+    "en": "W"
+  },
+
+	"insights": true,
+	"desc": {
+		"en": "Power in watt (W)"
+  },
+
+	"options": {
+    "isApproximated": {
+      "type": "boolean",
+      "default": false,
+      "desc": {
+        "en": "This flag is used to determine that the device itself has no power measurement functionality, but that the driver calculates the energy use."
+      }
+    }
+  },
+
   "platforms": [
     "local",
     "cloud"

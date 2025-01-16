@@ -15,6 +15,15 @@ const ThermostatModeToCapability = {
   'Cool': 'cool',
 }
 
+const ThermostatModeToSettings = {
+  'off': 0,
+  'heat': 1,
+  'cool': 2
+}
+
+let thermostatPreviousMode = []
+let thermostatCurrentMode = []
+
 class ZmThermostat16A extends ZwaveDevice {
   onNodeInit() {
 
@@ -22,11 +31,12 @@ class ZmThermostat16A extends ZwaveDevice {
     this.registerCapability('meter_power', 'METER');
     this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL');
     this.registerCapability('target_temperature', 'THERMOSTAT_SETPOINT');
+    this.registerCapability('onoff', 'THERMOSTAT_OPERATING_STATE')
+    this.registerCapabilityListener('onoff', this.onCapabilityOnoff.bind(this));
     this.registerThermostatModeCapability();
   }
 
   registerThermostatModeCapability () {
-
     this.registerCapability('thermostat_mode_13570', 'THERMOSTAT_MODE', {
       get: 'THERMOSTAT_MODE_GET',
       getOpts: {
@@ -36,6 +46,8 @@ class ZmThermostat16A extends ZwaveDevice {
       setParser: value => {
   
         this.log('THERMOSTAT_MODE_SET ', value)
+        thermostatCurrentMode = value
+
         if (!CapabilityToThermostatMode.hasOwnProperty(value)) {
           return null
         }
@@ -69,15 +81,13 @@ class ZmThermostat16A extends ZwaveDevice {
 
             let isOff = capabilityMode === 'off'
             this.setCapabilityValue('onoff', !isOff).catch(this.error)
-  
+
             return capabilityMode
           }
         }
-  
         return null
       },
     });
-
     this.registerCapability('thermostat_state_13570', 'THERMOSTAT_OPERATING_STATE', {
       getOpts: {
         getOnStart: true,
@@ -87,7 +97,7 @@ class ZmThermostat16A extends ZwaveDevice {
       reportParser: report => {
         if (report && report.hasOwnProperty('Level') && report.Level.hasOwnProperty('Operating State')) {
 
-          const state = report['Level']['Operating State']
+          let state = report['Level']['Operating State']
 
           if (typeof state === 'string') {
             

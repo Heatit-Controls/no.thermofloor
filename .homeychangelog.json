@@ -40,5 +40,8 @@
   },
   "3.9.1": {
     "en": "Minor bug fixes"
+  },
+  "3.9.2": {
+    "en": "Change Z-TEMP3 class to \"thermostat\" from \"other\""
   }
 }

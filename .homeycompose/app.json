@@ -5,7 +5,7 @@
     "en": "Heatit Controls"
   },
   "brandColor": "#cc3333",
-  "version": "3.9.1",
+  "version": "3.9.2",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",

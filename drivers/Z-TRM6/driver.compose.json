@@ -26,8 +26,7 @@
           "id": "off",
           "title": {
             "en": "Off"
-          },
-          "insights": true
+          }
         },
         {
           "id": "heat",
@@ -48,17 +47,6 @@
           }
         }
       ]
-    },
-		"thermostat_state_13570": {
-			"greyout": true,
-			"titleTrue": {
-				"en": "Active",
-				"nl": "Actief"
-			},
-			"titleFalse": {
-				"en": "Idle",
-				"nl": "Uit"
-			}
     },
     "measure_power": {
       "approximated": true
@@ -148,6 +136,13 @@
           "nl": "Sends Thermostat Mode Set commands based on own setpoint to allow for use as master thermostat."
         }
       }
-    }
+    },
+    "defaultConfiguration": [
+      {
+        "id": 18,
+        "size": 2,
+        "value": 300
+      }
+    ]
   }
 }
