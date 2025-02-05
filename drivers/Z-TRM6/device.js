@@ -34,13 +34,14 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 		//  4 or 5 => External sensor
 		//  6 => No sensor (null)
 		this.PARAM2_SENSOR_MAP = {
-			1: 'measure_temperature.floor',
+			0: 'measure_temperature.floor',
+			1: 'measure_temperature.internal',
 			2: 'measure_temperature.internal',
-			3: 'measure_temperature.internal',
+			3: 'measure_temperature.external',
 			4: 'measure_temperature.external',
-			5: 'measure_temperature.external',
-			6: null
+			5: 'measure_temperature.internal',
 		};
+		
 
 		// Default selected sensor (internal sensor)
 		this.selectedTemperatureCapability = 'measure_temperature.internal';
@@ -227,6 +228,23 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 		this.log('Z-TRM6 has been initialized');
 		this.setAvailable().catch(this.error);
 	}
+
+	async onSettings({ oldSettings, newSettings, changedKeys }) {
+		if (changedKeys.includes('sensor_mode')) {
+		  // Convert the sensor_mode setting value to a number.
+		  const sensorMode = parseInt(newSettings.sensor_mode, 10);
+		  // Update the internal property to select which sensor value should be used for measure_temperature.
+		  this.selectedTemperatureCapability = this.PARAM2_SENSOR_MAP[sensorMode] || 'measure_temperature.internal';
+		  this.log(`Sensor mode changed to ${sensorMode}. Selected temperature capability set to: ${this.selectedTemperatureCapability}`);
+		}
+	  
+		// If your parent class has its own onSettings implementation, call it:
+		if (super.onSettings) {
+		  return super.onSettings({ oldSettings, newSettings, changedKeys });
+		}
+		return Promise.resolve(true);
+	  }
+	  
 
 	onDeleted() {
 		this.homey.clearInterval(timer);
