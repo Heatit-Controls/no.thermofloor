@@ -5,7 +5,8 @@
 	"main": "app.js",
 	"dependencies": {
 		"homey-zigbeedriver": "^2.0.1",
-		"homey-zwavedriver": "^2.1.10"
+		"homey-zwavedriver": "^2.1.10",
+		"requirements": "^2.0.2"
 	},
 	"devDependencies": {
 		"eslint": "^7.17.0",
