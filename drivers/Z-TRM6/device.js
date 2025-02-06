@@ -41,7 +41,6 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 			4: 'measure_temperature.external',
 			5: 'measure_temperature.internal',
 		};
-		
 
 		// Default selected sensor (internal sensor)
 		this.selectedTemperatureCapability = 'measure_temperature.internal';
@@ -51,38 +50,6 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 			'measure_temperature.external': 3,
 			'measure_temperature.floor': 4,
 		};
-
-		// Example (commented-out) capabilities for power measurements…
-		/*
-		this.registerCapability('measure_power', 'METER', {
-			report: 'METER_REPORT',
-			reportParserV5: report => {
-				const bool = report && report.hasOwnProperty('Properties2')
-					&& report.Properties2['Scale bits 10'] === 2
-				this.log("measure_power" , bool)
-				if (bool) {
-					this.log("measure_power" , report['Meter Value (Parsed)'])
-					return report['Meter Value (Parsed)'];
-				}
-				return 0
-			},
-			multiChannelNodeId: 1,
-		});
-		this.registerCapability('meter_power', 'METER', {
-			report: 'METER_REPORT',
-			reportParserV5: report => {
-				const bool = report && report.hasOwnProperty('Properties2')
-					&& report.Properties2['Scale bits 10'] === 0
-				this.log("meter_power" , bool)
-				if (bool) {
-					this.log("meter_power" , report['Meter Value (Parsed)'])
-					return report['Meter Value (Parsed)'];
-				}
-				return 0
-			},
-			multiChannelNodeId: 1,
-		});
-		*/
 
 		// Listen for multi-channel meter reports
 		this.registerMultiChannelReportListener(1, "METER", "METER_REPORT", report => {
@@ -100,14 +67,15 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 		// Register the main measure_temperature capability (for backwards compatibility)
 		this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL');
 
+		// Register a single target_temperature capability block
 		this.registerCapability('target_temperature', 'THERMOSTAT_SETPOINT', {
 			getOpts: {
 				getOnStart: true,
 			},
 			getParser: () => {
-				// Retrieve the setpointType based on the thermostat mode
-				const setpointType = Mode2Setpoint[this.getCapabilityValue('thermostat_mode') || 'Heat'];
-				// Return getParser object with correct setpointType
+				// Retrieve the setpointType based on the current thermostat_mode
+				const currentMode = this.getCapabilityValue('thermostat_mode') || 'Heat';
+				const setpointType = Mode2Setpoint[currentMode] || 'Heating 1'; // fallback
 				return {
 					Level: {
 						'Setpoint Type': setpointType !== 'not supported' ? setpointType : 'Heating 1',
@@ -116,21 +84,29 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 			},
 			set: 'THERMOSTAT_SETPOINT_SET',
 			setParserV3: setpointValue => {
-				this.log('Mode2Setpoint', setpointValue, this.getCapabilityValue('thermostat_mode'), Mode2Setpoint[this.getCapabilityValue('thermostat_mode') || 'Heat']);
-				const setpointType = Mode2Setpoint[this.getCapabilityValue('thermostat_mode') || 'Heat'];
-				this.log('Setting thermostat setpoint to:', setpointValue, 'for setpointType', setpointType);
-				if (setpointType !== 'not supported') {
+				const currentMode = this.getCapabilityValue('thermostat_mode') || 'Heat';
+				const setpointType = Mode2Setpoint[currentMode];
+				this.log('Mode2Setpoint ->', setpointValue, currentMode, setpointType);
+
+				if (setpointType !== 'not supported' && setpointType) {
 					// Store thermostat setpoint based on thermostat type
 					this.setStoreValue(`thermostatsetpointValue.${setpointType}`, setpointValue).catch(this.error);
+
 					// Update device settings setpoint value
 					const setpointSetting = Setpoint2Setting[setpointType];
 					this.setSettings({
 						[setpointSetting]: setpointValue * 10,
 					}).catch(this.error);
-					// Prepare the buffer value
+
+					// Prepare the buffer
 					const bufferValue = Buffer.alloc(2);
-					bufferValue.writeUInt16BE((Math.round(setpointValue * 2) / 2 * 10).toFixed(0));
-					this.log('Set thermostat setpointValue:', setpointValue, setpointValue * 10, (Math.round(setpointValue * 2) / 2 * 10).toFixed(0), bufferValue);
+					const scaled = (Math.round(setpointValue * 2) / 2 * 10).toFixed(0);
+					bufferValue.writeUInt16BE(scaled);
+
+					this.log(
+						`Set thermostat setpointValue: ${setpointValue}, scaled to: ${scaled}, buffer:`,
+						bufferValue
+					);
 					return {
 						Level: {
 							'Setpoint Type': setpointType,
@@ -148,11 +124,14 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 			report: 'THERMOSTAT_SETPOINT_REPORT',
 			reportParserV3: report => {
 				this.log('reportParserV3 thermostat setpoint report:', report);
-				if (report && report.hasOwnProperty('Level2')
-					&& report.Level2.hasOwnProperty('Scale')
-					&& report.Level2.hasOwnProperty('Precision')
-					&& report.Level2.Scale === 0
-					&& typeof report.Level2.Size !== 'undefined') {
+				if (
+					report &&
+					report.hasOwnProperty('Level2') &&
+					report.Level2.hasOwnProperty('Scale') &&
+					report.Level2.hasOwnProperty('Precision') &&
+					report.Level2.Scale === 0 &&
+					typeof report.Level2.Size !== 'undefined'
+				) {
 					let readValue;
 					try {
 						readValue = report.Value.readUIntBE(0, report.Level2.Size);
@@ -162,7 +141,8 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 					if (typeof readValue !== 'undefined') {
 						const setpointValue = readValue / 10 ** report.Level2.Precision;
 						const setpointType = report.Level['Setpoint Type'];
-						this.log('Received thermostat setpoint report: Setpoint type', setpointType, ' Setpoint value', setpointValue);
+						this.log('Received setpoint report:', setpointType, setpointValue);
+
 						if (setpointType !== 'not supported') {
 							this.setStoreValue(`thermostatsetpointValue.${setpointType}`, setpointValue).catch(this.error);
 						}
@@ -170,58 +150,57 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 						this.setSettings({
 							[setpointSetting]: setpointValue * 10,
 						}).catch(this.error);
-						if (setpointType === Mode2Setpoint[this.getCapabilityValue('thermostat_mode') || 'Heat']) {
+
+						// Only update the UI if the current mode matches the type
+						const currentMode = this.getCapabilityValue('thermostat_mode') || 'Heat';
+						if (setpointType === Mode2Setpoint[currentMode]) {
 							this.log('Updated thermostat setpoint on UI to', setpointValue);
 							return setpointValue;
 						}
 						return null;
 					}
-					return null;
 				}
 				return null;
 			},
 			multiChannelNodeId: 1,
 		});
 
-        
+		// Configuration Report listener
 		this.registerReportListener('CONFIGURATION', 'CONFIGURATION_REPORT', async report => {
 			try {
 				if (report?.['Parameter Number'] !== 2) {
 					this.log(`Ignoring CONFIGURATION_REPORT - Parameter ${report?.['Parameter Number']}`);
 					return; // Skip processing for other parameters
 				}
-		
-				// Get the raw value, handling both Buffer and plain object (if needed)
-				let rawValue;
+
 				const confValRaw = report['Configuration Value (Raw)'];
+				let rawValue;
+
 				if (Buffer.isBuffer(confValRaw)) {
-					// Convert the Buffer to an array of numbers
 					rawValue = Array.from(confValRaw);
 				} else if (confValRaw && Array.isArray(confValRaw.data)) {
-					// If it happens to be a plain object with a data property
 					rawValue = confValRaw.data;
 				} else {
 					this.log(`Invalid Configuration Value format: ${JSON.stringify(report, null, 2)}`);
 					return;
 				}
-		
+
 				const parsedValue = rawValue[0];
-		
 				this.log(`Updating settings - Parameter 2: ${parsedValue}`);
-		
-				// Store the parameter value into settings
-				await this.setSettings({
-					sensor_mode: String(parsedValue)
-				});
-		
-				this.log(`Settings updated: sensor_mode = ${parsedValue}`);
+
+				await this.setSettings({ sensor_mode: String(parsedValue) });
+
+				// Also update selectedTemperatureCapability here
+				this.selectedTemperatureCapability = this.PARAM2_SENSOR_MAP[parsedValue] || 'measure_temperature.internal'
+				this.log(`Settings updated: sensor_mode = ${parsedValue}, selectedTemperatureCapability = ${this.selectedTemperatureCapability}`
+                
+				);
+
 			} catch (error) {
 				this.log(`Error processing CONFIGURATION_REPORT: ${error.message}`);
 			}
 		});
-		
-        
-    
+
 		await this.registerThermostatModeCapability();
 		await this.registerTemperature();
 
@@ -230,29 +209,25 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 	}
 
 	async onSettings({ oldSettings, newSettings, changedKeys }) {
-		if (changedKeys.includes('sensor_mode')) {
-		  // Convert the sensor_mode setting value to a number.
-		  const sensorMode = parseInt(newSettings.sensor_mode, 10);
-		  // Update the internal property to select which sensor value should be used for measure_temperature.
-		  this.selectedTemperatureCapability = this.PARAM2_SENSOR_MAP[sensorMode] || 'measure_temperature.internal';
-		  this.log(`Sensor mode changed to ${sensorMode}. Selected temperature capability set to: ${this.selectedTemperatureCapability}`);
-		}
-	  
 		// If your parent class has its own onSettings implementation, call it:
 		if (super.onSettings) {
-		  return super.onSettings({ oldSettings, newSettings, changedKeys });
+			await super.onSettings({ oldSettings, newSettings, changedKeys });
 		}
-		return Promise.resolve(true);
-	  }
-	  
+
+		if (changedKeys.includes('sensor_mode')) {
+			const sensorMode = parseInt(newSettings.sensor_mode, 10);
+			this.selectedTemperatureCapability = this.PARAM2_SENSOR_MAP[sensorMode] || 'measure_temperature.internal';
+			this.log(`Sensor mode changed to ${sensorMode}. Selected temperature capability set to: ${this.selectedTemperatureCapability}`);
+		}
+
+		return true;
+	}
 
 	onDeleted() {
 		this.homey.clearInterval(timer);
 		super.onDeleted();
 	}
 
-	// Modified registerTemperature method to update main measure_temperature
-	// only when the reporting sensor is the one selected.
 	async registerTemperature() {
 		Object.keys(this.capabilityMultiChannelNodeIdObj).forEach(capabilityId => {
 			if (capabilityId.includes('measure_temperature')) {
@@ -281,7 +256,8 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 								if (report.Level.Scale === 0) {
 									// Only update the main measure_temperature if this sensor is selected.
 									if (capabilityId === this.selectedTemperatureCapability) {
-										this.setCapabilityValue('measure_temperature', report['Sensor Value (Parsed)']).catch(this.error);
+										this.setCapabilityValue('measure_temperature', report['Sensor Value (Parsed)'])
+											.catch(this.error);
 									}
 									return report['Sensor Value (Parsed)'];
 								}
@@ -303,15 +279,11 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 			},
 			set: 'THERMOSTAT_MODE_SET',
 			setParser: value => {
-				if (!CapabilityToThermostatMode.hasOwnProperty(value)) {
-					return null;
-				}
+				if (!CapabilityToThermostatMode.hasOwnProperty(value)) return null;
 				const mode = CapabilityToThermostatMode[value];
-				if (typeof mode !== 'string') {
-					return null;
-				}
+				if (typeof mode !== 'string') return null;
 				return {
-					'Level': {
+					Level: {
 						'No of Manufacturer Data fields': 0,
 						'Mode': mode,
 					},
@@ -321,11 +293,11 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 			report: 'THERMOSTAT_MODE_REPORT',
 			reportParser: report => {
 				this.log('Thermostat mode report:', report);
-				if (report && report.hasOwnProperty('Level') && report.Level.hasOwnProperty('Mode')) {
+				if (report && report.Level && report.Level.Mode) {
 					const mode = report.Level.Mode;
 					if (typeof mode === 'string' && ThermostatModeToCapability.hasOwnProperty(mode)) {
 						const capabilityMode = ThermostatModeToCapability[mode];
-						this.log('Capability Mode ', capabilityMode);
+						this.log('Capability Mode', capabilityMode);
 						return capabilityMode;
 					}
 				}
@@ -333,6 +305,8 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 			},
 			multiChannelNodeId: 1,
 		});
+
+		// Thermostat operating state
 		this.registerCapability('thermostat_state_13570', 'THERMOSTAT_OPERATING_STATE', {
 			getOpts: {
 				getOnStart: true,
@@ -341,7 +315,7 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 			report: 'THERMOSTAT_OPERATING_STATE_REPORT',
 			reportParser: report => {
 				this.log('THERMOSTAT_OPERATING_STATE report:', report);
-				if (report && report.hasOwnProperty('Level') && report.Level.hasOwnProperty('Operating State')) {
+				if (report && report.Level && report.Level['Operating State']) {
 					const state = report.Level['Operating State'];
 					if (typeof state === 'string') {
 						const thermostatStateObj = {
@@ -359,54 +333,6 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 		});
 
 		this.setAvailable().catch(this.error);
-
-		// Register the target temperature capability and setpoint types
-		this.registerCapability('target_temperature', 'THERMOSTAT_SETPOINT', {
-			getOpts: {
-				getOnStart: true,
-			},
-			getParser: () => {
-				const thermostatMode = this.getCapabilityValue('thermostat_mode') || 'Heat';
-				const setpointType = Mode2Setpoint[thermostatMode];
-				if (!setpointType) {
-					this.error(`Setpoint type for mode "${thermostatMode}" is undefined`);
-					return null;
-				}
-				this.log('Current mode:', thermostatMode, 'Setpoint type:', setpointType);
-				return {
-					Level: {
-						'Setpoint Type': setpointType !== 'not supported' ? setpointType : 'Heating 1',
-					},
-				};
-			},
-			set: 'THERMOSTAT_SETPOINT_SET',
-			setParserV3: setpointValue => {
-				const thermostatMode = (this.getCapabilityValue('thermostat_mode') || 'heat').toLowerCase();
-				const setpointType = Mode2Setpoint[thermostatMode];
-				this.log('Current mode is:', thermostatMode, 'Mapped to Setpoint type:', setpointType);
-				if (!setpointType) {
-					this.error(`Setpoint type for mode "${thermostatMode}" is undefined`);
-					return null;
-				}
-				this.log('Setting thermostat setpoint to:', setpointValue, 'for setpointType', setpointType);
-				if (setpointType !== 'not supported') {
-					const bufferValue = Buffer.alloc(2);
-					bufferValue.writeUInt16BE((Math.round(setpointValue * 2) / 2 * 10).toFixed(0));
-					return {
-						Level: {
-							'Setpoint Type': setpointType,
-						},
-						Level2: {
-							Size: 2,
-							Scale: 0,
-							Precision: 1,
-						},
-						Value: bufferValue,
-					};
-				}
-				return null;
-			},
-		});
 	}
 }
 
