@@ -43,5 +43,14 @@
   },
   "3.9.2": {
     "en": "Change Z-TEMP3 class to \"thermostat\" from \"other\""
+  },
+  "3.9.3": {
+    "en": "Update Z-Han/Z-Han2"
+  },
+  "3.9.4": {
+    "en": "Fixed ZM-Thermostat driver"
+  },
+  "3.9.5": {
+    "en": "Fixed onoff on ZM-Thermostat. Fixed Z-TRM6 showing incorrect sensor in Setpoint UI. Added onoff on Z-TEMP3."
   }
 }

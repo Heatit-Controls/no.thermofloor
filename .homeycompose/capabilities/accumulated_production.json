@@ -1,0 +1,28 @@
+{
+    "type": "number",
+    "title": {
+      "en": "kVAh"
+    },
+    "decimals": 2,
+    "units": {
+      "en": "kVAh"
+    },
+    "desc": {
+      "en": "volt amper usage in an hour (kVAh)"
+    },
+    "chartType": "spline",
+    "options": {
+      "isApproximated": {
+        "type": "boolean",
+        "default": false,
+        "desc": {
+          "en": "This flag is used to determine that the device itself has no power measurement functionality, but that the driver calculates the kVAh use."
+        }
+      }
+    },
+    "insights": true,
+    "getable": true,
+    "setable": false,
+    "uiComponent": "sensor",
+    "icon": "/assets/alarm_power.svg"
+  }

@@ -6,7 +6,7 @@
     "en": "Heatit Controls"
   },
   "brandColor": "#cc3333",
-  "version": "3.9.2",
+  "version": "3.9.5",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -472,6 +472,7 @@
         "title": {
           "en": "Thermostat state changed to"
         },
+        "deprecated": true,
         "titleFormatted": {
           "en": "Thermostat state changed to [[state]]"
         },
@@ -853,21 +854,35 @@
       {
         "id": "thermostat_mode_changed",
         "title": {
-          "en": "Thermostat mode changed",
-          "nl": "Thermostaatmodus is veranderd",
-          "de": "Thermostat-Modus hat sich geändert",
-          "fr": "Le mode du thermostat a changé",
-          "it": "La modalità del termostato è cambiata",
-          "sv": "Termostatläge ändrades",
-          "no": "Termostatmodus ble endret",
-          "es": "El modo del termostato ha cambiado",
-          "da": "Termostattilstand er blevet ændret",
-          "ru": "Режим термостата изменен",
-          "pl": "Zmiana trybu termostatu",
-          "ko": "온도조절기 모드 변경됨"
+          "en": "Thermostat mode changed"
         },
         "titleFormatted": {
-          "en": "Thermostat has changed to [[thermostat_mode_changed]]"
+          "en": "Thermostat mode has changed"
+        },
+        "tokens": [
+          {
+            "name": "thermostat_mode",
+            "title": {
+              "en": "Thermostat Mode"
+            },
+            "type": "string"
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ZM-Thermostat-16A"
+          }
+        ]
+      },
+      {
+        "id": "thermostat_state_changed",
+        "title": {
+          "en": "Thermostat state changed"
+        },
+        "titleFormatted": {
+          "en": "Thermostat state changed to [[thermostat_state]]"
         },
         "args": [
           {
@@ -876,62 +891,84 @@
             "filter": "driver_id=ZM-Thermostat-16A"
           },
           {
-            "name": "thermostat_mode_changed",
+            "name": "thermostat_state",
             "type": "dropdown",
+            "title": {
+              "en": "Thermostat State"
+            },
             "values": [
               {
-                "id": "heat",
-                "title": {
-                  "en": "Heat",
-                  "nl": "Verhitten",
-                  "de": "Heizen",
-                  "fr": "Chauffer",
-                  "it": "Calore",
-                  "sv": "Värme",
-                  "no": "Varme",
-                  "es": "Calentar",
-                  "da": "Opvarm",
-                  "ru": "Обогрев",
-                  "pl": "Ogrzewanie",
-                  "ko": "난방"
+                "id": "Idle",
+                "label": {
+                  "en": "Idle"
                 }
               },
               {
-                "id": "cool",
-                "title": {
-                  "en": "Cool",
-                  "nl": "Koelen",
-                  "de": "Kühlen",
-                  "fr": "Refroidir",
-                  "it": "Raffreddamento",
-                  "sv": "Kyla",
-                  "no": "Avkjøle",
-                  "es": "Enfriar",
-                  "da": "Køl ned",
-                  "ru": "Охлаждение",
-                  "pl": "Chłodzenie",
-                  "ko": "냉방"
+                "id": "Heating",
+                "label": {
+                  "en": "Heating"
                 }
               },
               {
-                "id": "off",
-                "title": {
-                  "en": "Off",
-                  "nl": "Uit",
-                  "de": "Aus",
-                  "fr": "Désactivé",
-                  "it": "Disattivata",
-                  "sv": "Av",
-                  "no": "Av",
-                  "es": "Desactivado",
-                  "da": "Deaktiveret",
-                  "ru": "Выкл",
-                  "pl": "Wył",
-                  "ko": "끔"
+                "id": "Cooling",
+                "label": {
+                  "en": "Cooling"
                 }
               }
-            ],
-            "meta": {}
+            ]
+          }
+        ]
+      },
+      {
+        "id": "meter_power_changed",
+        "title": {
+          "en": "The energy meter changed"
+        },
+        "titleFormatted": {
+          "en": "Energy meter changed"
+        },
+        "tokens": [
+          {
+            "name": "meter_power",
+            "title": {
+              "en": "Energy"
+            },
+            "type": "number",
+            "example": 25
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ZM-Thermostat-16A"
+          }
+        ]
+      },
+      {
+        "id": "measure_power_changed",
+        "highlight": true,
+        "title": {
+          "en": "The power changed"
+        },
+        "titleFormatted": {
+          "en": "The power meter changed"
+        },
+        "tokens": [
+          {
+            "name": "measure_power",
+            "title": {
+              "en": "Power"
+            },
+            "type": "number",
+            "example": 7.5
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=ZM-Thermostat-16A"
           }
         ]
       }
@@ -968,18 +1005,7 @@
       {
         "id": "thermostat_mode_is",
         "title": {
-          "en": "Thermostat mode !{{is|is not}}",
-          "nl": "Thermostaatmodus !{{is|is niet}}",
-          "de": "Thermostat-Modus !{{ist|ist nicht}}",
-          "fr": "Mode thermostat !{{est|n'est pas}}",
-          "it": "La modalità del termostato !{{è|non è}}",
-          "sv": "Termostatläge !{{är|är inte}}",
-          "no": "Termostatmodus !{{er|er ikke}}",
-          "es": "El modo del termostato !{{está|no está}}",
-          "da": "Termostattilstand !{{er|er ikke}}",
-          "ru": "Режим термостата !{{|не}}",
-          "pl": "Tryb termostatu !{{to|to nie}}",
-          "ko": "온도조절기 모드가 다음으로 설정!{{됨|되지 않음}}"
+          "en": "Thermostat mode !{{is|is not}}"
         },
         "titleFormatted": {
           "en": "Thermostat mode is [[thermostat_mode]]"
@@ -993,60 +1019,27 @@
           {
             "name": "thermostat_mode",
             "type": "dropdown",
+            "title": "Thermostat mode is",
             "values": [
               {
                 "id": "heat",
                 "title": {
-                  "en": "Heat",
-                  "nl": "Verhitten",
-                  "de": "Heizen",
-                  "fr": "Chauffer",
-                  "it": "Calore",
-                  "sv": "Värme",
-                  "no": "Varme",
-                  "es": "Calentar",
-                  "da": "Opvarm",
-                  "ru": "Обогрев",
-                  "pl": "Ogrzewanie",
-                  "ko": "난방"
+                  "en": "Heat"
                 }
               },
               {
                 "id": "cool",
                 "title": {
-                  "en": "Cool",
-                  "nl": "Koelen",
-                  "de": "Kühlen",
-                  "fr": "Refroidir",
-                  "it": "Raffreddamento",
-                  "sv": "Kyla",
-                  "no": "Avkjøle",
-                  "es": "Enfriar",
-                  "da": "Køl ned",
-                  "ru": "Охлаждение",
-                  "pl": "Chłodzenie",
-                  "ko": "냉방"
+                  "en": "Cool"
                 }
               },
               {
                 "id": "off",
                 "title": {
-                  "en": "Off",
-                  "nl": "Uit",
-                  "de": "Aus",
-                  "fr": "Désactivé",
-                  "it": "Disattivata",
-                  "sv": "Av",
-                  "no": "Av",
-                  "es": "Desactivado",
-                  "da": "Deaktiveret",
-                  "ru": "Выкл",
-                  "pl": "Wył",
-                  "ko": "끔"
+                  "en": "Off"
                 }
               }
-            ],
-            "meta": {}
+            ]
           }
         ]
       }
@@ -1359,18 +1352,7 @@
       {
         "id": "thermostat_mode_set",
         "title": {
-          "en": "Set the mode",
-          "nl": "Stel de modus in",
-          "de": "Modus setzen",
-          "fr": "Définir le mode",
-          "it": "Imposta la modalità",
-          "sv": "Ställ in läget",
-          "no": "Innstill modusen",
-          "es": "Configurar el modo",
-          "da": "Indstil tilstanden",
-          "ru": "Установить режим",
-          "pl": "Ustaw tryb",
-          "ko": "모드 설정"
+          "en": "Set the mode"
         },
         "titleFormatted": {
           "en": "Thermostat mode set [[thermostat_mode]]"
@@ -1384,60 +1366,27 @@
           {
             "name": "thermostat_mode",
             "type": "dropdown",
+            "title": "Thermostat mode set",
             "values": [
               {
                 "id": "heat",
                 "title": {
-                  "en": "Heat",
-                  "nl": "Verhitten",
-                  "de": "Heizen",
-                  "fr": "Chauffer",
-                  "it": "Calore",
-                  "sv": "Värme",
-                  "no": "Varme",
-                  "es": "Calentar",
-                  "da": "Opvarm",
-                  "ru": "Обогрев",
-                  "pl": "Ogrzewanie",
-                  "ko": "난방"
+                  "en": "Heat"
                 }
               },
               {
                 "id": "cool",
                 "title": {
-                  "en": "Cool",
-                  "nl": "Koelen",
-                  "de": "Kühlen",
-                  "fr": "Refroidir",
-                  "it": "Raffreddamento",
-                  "sv": "Kyla",
-                  "no": "Avkjøle",
-                  "es": "Enfriar",
-                  "da": "Køl ned",
-                  "ru": "Охлаждение",
-                  "pl": "Chłodzenie",
-                  "ko": "냉방"
+                  "en": "Cool"
                 }
               },
               {
                 "id": "off",
                 "title": {
-                  "en": "Off",
-                  "nl": "Uit",
-                  "de": "Aus",
-                  "fr": "Désactivé",
-                  "it": "Disattivata",
-                  "sv": "Av",
-                  "no": "Av",
-                  "es": "Desactivado",
-                  "da": "Deaktiveret",
-                  "ru": "Выкл",
-                  "pl": "Wył",
-                  "ko": "끔"
+                  "en": "Off"
                 }
               }
-            ],
-            "meta": {}
+            ]
           }
         ]
       }
@@ -4252,11 +4201,6 @@
       "title": {
         "en": "Power"
       },
-      "energy": {
-        "cumulative": true,
-        "cumulativeImportedCapability": "meter_power.imported",
-        "cumulativeExportedCapability": "meter_power.exported"
-      },
       "units": {
         "en": "W"
       },
@@ -4533,8 +4477,7 @@
       "class": "sensor",
       "capabilities": [
         "meter_power",
-        "meter_power.imported",
-        "meter_power.exported",
+        "accumulated_production",
         "measure_power",
         "measure_voltage",
         "measure_current",
@@ -4544,16 +4487,6 @@
       "capabilitiesOptions": {
         "measure_power": {
           "approximated": true
-        },
-        "meter_power.imported": {
-          "title": {
-            "en": "Imported Energy"
-          }
-        },
-        "meter_power.exported": {
-          "title": {
-            "en": "Exported Energy"
-          }
         },
         "button.reset_meter": {
           "maintenanceAction": true,
@@ -6090,7 +6023,8 @@
         "thermostat_state_13570",
         "measure_temperature",
         "measure_battery",
-        "measure_humidity"
+        "measure_humidity",
+        "onoff"
       ],
       "capabilitiesOptions": {
         "measure_temperature": {
@@ -8149,7 +8083,8 @@
               "id": "off",
               "title": {
                 "en": "Off"
-              }
+              },
+              "insights": true
             },
             {
               "id": "heat",
@@ -8170,6 +8105,17 @@
               }
             }
           ]
+        },
+        "thermostat_state_13570": {
+          "greyout": true,
+          "titleTrue": {
+            "en": "Active",
+            "nl": "Actief"
+          },
+          "titleFalse": {
+            "en": "Idle",
+            "nl": "Uit"
+          }
         },
         "measure_power": {
           "approximated": true
@@ -8261,14 +8207,7 @@
               "nl": "Sends Thermostat Mode Set commands based on own setpoint to allow for use as master thermostat."
             }
           }
-        },
-        "defaultConfiguration": [
-          {
-            "id": 18,
-            "size": 2,
-            "value": 300
-          }
-        ]
+        }
       },
       "id": "Z-TRM6",
       "settings": [
@@ -12128,7 +12067,7 @@
       "class": "thermostat",
       "capabilities": [
         "measure_temperature",
-        "thermostat_mode_13570",
+        "thermostat_mode",
         "target_temperature",
         "thermostat_state_13570",
         "measure_power",
@@ -12140,6 +12079,28 @@
           "min": 5,
           "max": 40,
           "step": 0.5
+        },
+        "thermostat_mode": {
+          "values": [
+            {
+              "id": "off",
+              "title": {
+                "en": "Off"
+              }
+            },
+            {
+              "id": "heat",
+              "title": {
+                "en": "Heat"
+              }
+            },
+            {
+              "id": "cool",
+              "title": {
+                "en": "Cool"
+              }
+            }
+          ]
         }
       },
       "platforms": [
@@ -12457,6 +12418,34 @@
     }
   ],
   "capabilities": {
+    "accumulated_production": {
+      "type": "number",
+      "title": {
+        "en": "kVAh"
+      },
+      "decimals": 2,
+      "units": {
+        "en": "kVAh"
+      },
+      "desc": {
+        "en": "volt amper usage in an hour (kVAh)"
+      },
+      "chartType": "spline",
+      "options": {
+        "isApproximated": {
+          "type": "boolean",
+          "default": false,
+          "desc": {
+            "en": "This flag is used to determine that the device itself has no power measurement functionality, but that the driver calculates the kVAh use."
+          }
+        }
+      },
+      "insights": true,
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/alarm_power.svg"
+    },
     "alarm_power": {
       "type": "boolean",
       "title": {
@@ -12657,96 +12646,68 @@
     "thermostat_mode_tf": {
       "type": "enum",
       "title": {
-        "en": "Thermostat mode",
-        "nl": "Thermostaatmodus",
-        "de": "Thermostat-Modus",
-        "fr": "Mode thermostat",
-        "it": "Modalità termostato",
-        "sv": "Termostatläge",
-        "no": "Termostatmodus",
-        "es": "Modo del termostato",
-        "da": "Termostattilstand",
-        "ru": "Режим термостата",
-        "pl": "Tryb termostatu",
-        "ko": "온도조절기 모드"
+        "en": "Thermostat mode"
       },
       "desc": {
-        "en": "Mode of the thermostat",
-        "nl": "Modus van de thermostaat",
-        "de": "Modus des Thermostates",
-        "fr": "Mode du thermostat",
-        "it": "Modalità del termostato",
-        "sv": "Läge för termostaten",
-        "no": "Modus for termostaten",
-        "es": "Modo del termostato",
-        "da": "Tilstand for termostat",
-        "ru": "Режим термостата",
-        "pl": "Tryb termostatu",
-        "ko": "온도조절기의 모드"
+        "en": "Mode of the thermostat"
       },
       "values": [
         {
           "id": "heat",
           "title": {
-            "en": "Heat",
-            "nl": "Verhitten",
-            "de": "Heizen",
-            "fr": "Chauffer",
-            "it": "Calore",
-            "sv": "Värme",
-            "no": "Varme",
-            "es": "Calentar",
-            "da": "Opvarm",
-            "ru": "Обогрев",
-            "pl": "Ogrzewanie",
-            "ko": "난방"
+            "en": "Heat"
           }
         },
         {
           "id": "cool",
           "title": {
-            "en": "Cool",
-            "nl": "Koelen",
-            "de": "Kühlen",
-            "fr": "Refroidir",
-            "it": "Raffreddamento",
-            "sv": "Kyla",
-            "no": "Avkjøle",
-            "es": "Enfriar",
-            "da": "Køl ned",
-            "ru": "Охлаждение",
-            "pl": "Chłodzenie",
-            "ko": "냉방"
+            "en": "Cool"
           }
         },
         {
           "id": "energy save heat",
           "title": {
-            "en": "ECO",
-            "nl": "ECO"
+            "en": "ECO"
           }
         },
         {
           "id": "off",
           "title": {
-            "en": "Off",
-            "nl": "Uit",
-            "de": "Aus",
-            "fr": "Désactivé",
-            "it": "Disattivata",
-            "sv": "Av",
-            "no": "Av",
-            "es": "Desactivado",
-            "da": "Deaktiveret",
-            "ru": "Выкл",
-            "pl": "Wył",
-            "ko": "끔"
+            "en": "Off"
           }
         }
       ],
       "getable": true,
       "setable": true,
       "uiComponent": "picker"
+    },
+    "thermostat_onoff": {
+      "type": "boolean",
+      "icon": "/assets/thermofloor_onoff.svg",
+      "noblink": false,
+      "greyout": true,
+      "label": {
+        "true": {
+          "en": "Heating Active"
+        },
+        "false": {
+          "en": "Heating Idle"
+        }
+      },
+      "title": {
+        "en": "Heating"
+      },
+      "desc": {
+        "en": "State of the thermostat"
+      },
+      "getable": true,
+      "insights": true,
+      "insightsTitleTrue": {
+        "en": "Heating active"
+      },
+      "insightsTitleFalse": {
+        "en": "Heating Idle"
+      }
     },
     "thermostat_state": {
       "type": "boolean",
