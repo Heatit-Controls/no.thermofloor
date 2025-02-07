@@ -3,7 +3,7 @@
 const Homey = require('homey');
 const { ZwaveDevice } = require('homey-zwavedriver');
 const { Mode2Setpoint } = require('../../lib/map/ZTEMP3_mappings.js');
-const {Setpoint2Setting} = require("../../lib/map/ZTEMP3_mappings");
+const { Setpoint2Setting } = require("../../lib/map/ZTEMP3_mappings");
 
 const CapabilityToThermostatMode = {
   'off': 'Off',
@@ -42,6 +42,26 @@ class ZmThermostat16A extends ZwaveDevice {
 
     this.thermostatModeChangedTrigger = this.homey.flow.getDeviceTriggerCard('thermostat_mode_changed');
     this.thermostatStateChangedTrigger = this.homey.flow.getDeviceTriggerCard('thermostat_state_changed');
+
+    // Listen for reset_meter maintenance action
+    this.registerCapabilityListener('button.reset_meter', async () => {
+      let commandClassMeter = null;
+      commandClassMeter = this.getCommandClass('METER');
+      if (commandClassMeter && commandClassMeter.hasOwnProperty('METER_RESET')) {
+        const result = await commandClassMeter.METER_RESET({});
+        if (result !== 'TRANSMIT_COMPLETE_OK') throw result;
+      }
+      else {
+        throw new Error('Reset meter not supported');
+      }
+    });
+
+    if (this.hasCapability('meter_power')) this.registerCapability('meter_power', 'METER');
+    if (this.hasCapability('measure_power')) this.registerCapability('measure_power', 'METER');
+
+    this.log('ZM-Dimmer has been initialized');
+
+    this.setAvailable().catch(this.error);
   }
 
   async onCapabilityOnoff(value, opts) {
@@ -69,6 +89,7 @@ class ZmThermostat16A extends ZwaveDevice {
       this.setCapabilityValue('thermostat_mode', 'off');
     }
   }
+
   registerThermostatSetpointCapability() {
     this.registerCapability('target_temperature', 'THERMOSTAT_SETPOINT', {
       getOpts: {
@@ -163,6 +184,7 @@ class ZmThermostat16A extends ZwaveDevice {
       }
     });
   }
+
   registerThermostatModeCapability() {
     // Register the thermostat mode capability
     this.registerCapability('thermostat_mode', 'THERMOSTAT_MODE', {

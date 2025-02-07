@@ -26,6 +26,17 @@
         "en": "Press the configuration button 3 times."
       }
     },
+
+    "button.reset_meter": {
+      "maintenanceAction": true,
+      "title": {
+        "en": "Reset power meter"
+      },
+      "desc": {
+        "en": "Reset the accumulated power usage (kWh), note that this can not be reversed."
+      }
+    },
+    
     "associationGroups": [1],
     "associationGroupsOptions": {
       "1": {

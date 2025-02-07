@@ -1,76 +1,92 @@
 {
-  "id": "ZM-Thermostat16A",
-  "name": {
-    "en": "ZM Thermostat 16A"
-  },
-  
+	"id": "ZM-Thermostat16A",
+	"name": {
+		"en": "ZM Thermostat 16A"
+	},
 	"class": "thermostat",
-  "capabilities": [
-	"measure_temperature",
-	"thermostat_mode",
-	"target_temperature",
-	"thermostat_state_13570",
-	"measure_power",
-	"meter_power",
-	"onoff"
-],
-
-  "capabilitiesOptions": {
-	"target_temperature": {
-      "min": 5,
-      "max": 40,
-      "step": 0.5
-    },
-	"thermostat_mode": {
-      "values" :[
-        {
-          "id": "off",
-          "title": {
-            "en": "Off"
-          }
-        },
-        {
-          "id": "heat",
-          "title": {
-            "en": "Heat"
-          }
-        },
-        {
-          "id": "cool",
-          "title": {
-            "en": "Cool"
-          }
-        }
-      ]
-    }
-  },
-	"platforms": ["local", "cloud"],
-  "connectivity": ["zwave"],
-  "icon": "{{driverAssetsPath}}/icon.svg",
-  "images": {
-  	"small": "{{driverAssetsPath}}/images/small.png",
-  	"large": "{{driverAssetsPath}}/images/large.png"
-  },
+	"capabilities": [
+		"measure_temperature",
+		"thermostat_mode",
+		"target_temperature",
+		"thermostat_state_13570",
+		"measure_power",
+		"meter_power",
+		"onoff"
+	],
+	"capabilitiesOptions": {
+		"target_temperature": {
+			"min": 5,
+			"max": 40,
+			"step": 0.5
+		},
+		"thermostat_mode": {
+			"values": [
+				{
+					"id": "off",
+					"title": {
+						"en": "Off"
+					}
+				},
+				{
+					"id": "heat",
+					"title": {
+						"en": "Heat"
+					}
+				},
+				{
+					"id": "cool",
+					"title": {
+						"en": "Cool"
+					}
+				}
+			]
+		},
+	"button.reset_meter": {
+			"maintenanceAction": true,
+			"title": {
+				"en": "Reset power meter"
+			},
+			"desc": {
+				"en": "Reset the accumulated power usage (kWh), note that this can not be reversed."
+			}
+		}
+	},
+	"platforms": [
+		"local",
+		"cloud"
+	],
+	"connectivity": [
+		"zwave"
+	],
+	"icon": "{{driverAssetsPath}}/icon.svg",
+	"images": {
+		"small": "{{driverAssetsPath}}/images/small.png",
+		"large": "{{driverAssetsPath}}/images/large.png"
+	},
 	"zwave": {
-	  "manufacturerId": 411,
-	  "productTypeId": 4,
-	  "productId": 13570,
-	  "security": ["none"],
-	  "zwaveAllianceProductId": 4305,
-	  "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4305",
-	  "imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=4305&which=21",
-	  "learnmode": {
-		  "image": "{{driverAssetsPath}}/learnmode.svg",
-		  "instruction": {
-			  "en": "Press the configuration button 3 times."
-		  }
-	  },
-		"associationGroups": [1],
-	  "associationGroupsOptions": {
-		  "1": {
-			  "hint": {
-				  "en": "Z-Wave Lifeline group. The Homey controller should be here"
-			  }
+		"manufacturerId": 411,
+		"productTypeId": 4,
+		"productId": 13570,
+		"security": [
+			"none"
+		],
+		"zwaveAllianceProductId": 4305,
+		"zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4305",
+		"imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=4305&which=21",
+		"learnmode": {
+			"image": "{{driverAssetsPath}}/learnmode.svg",
+			"instruction": {
+				"en": "Press the configuration button 3 times."
+			}
+		},
+		"associationGroups": [
+			1
+		],
+		"associationGroupsOptions": {
+			"1": {
+				"hint": {
+					"en": "Z-Wave Lifeline group. The Homey controller should be here"
+				}
 			},
 			"2": {
 				"hint": {
