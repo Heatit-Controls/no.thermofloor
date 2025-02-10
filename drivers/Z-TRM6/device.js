@@ -209,7 +209,6 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 	}
 
 	async onSettings({ oldSettings, newSettings, changedKeys }) {
-		// If your parent class has its own onSettings implementation, call it:
 		if (super.onSettings) {
 			await super.onSettings({ oldSettings, newSettings, changedKeys });
 		}
