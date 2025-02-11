@@ -105,10 +105,10 @@
   "zwave": {
     "manufacturerId": 411,
     "productTypeId": [
-      48
+      50
     ],
     "productId": [
-      12289
+      12801
     ],
     "security": [
       "none"

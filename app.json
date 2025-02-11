@@ -8926,7 +8926,8 @@
               "id": "off",
               "title": {
                 "en": "Off"
-              }
+              },
+              "insights": true
             },
             {
               "id": "heat",
@@ -8948,6 +8949,17 @@
             }
           ]
         },
+        "thermostat_state_13570": {
+          "greyout": true,
+          "titleTrue": {
+            "en": "Active",
+            "nl": "Actief"
+          },
+          "titleFalse": {
+            "en": "Idle",
+            "nl": "Uit"
+          }
+        },
         "measure_power": {
           "approximated": true
         },
@@ -8959,6 +8971,9 @@
           "desc": {
             "en": "Reset the accumulated power usage (kWh), note that this can not be reversed."
           }
+        },
+        "measure_temperature": {
+          "title": "temperature"
         },
         "measure_temperature.internal": {
           "title": "internal temperature"
@@ -9006,7 +9021,6 @@
             "en": "1. Hold the Center button for 5 seconds. The display will show “OFF”.\n2. Press the ”+” button once to see “CON” in the display.\n3 Start the configuration mode on the thermostat by holding the Center button for approximately 2 seconds.\n4. Configuration mode is indicated on the device by rotating LED segments on the display."
           }
         },
-        "associationGroups": [],
         "associationGroupsMultiChannel": [
           1
         ],
@@ -9035,14 +9049,7 @@
               "nl": "Sends Thermostat Mode Set commands based on own setpoint to allow for use as master thermostat."
             }
           }
-        },
-        "defaultConfiguration": [
-          {
-            "id": 18,
-            "size": 2,
-            "value": 300
-          }
-        ]
+        }
       },
       "id": "Z-TRM6-DC",
       "settings": [
@@ -11748,6 +11755,15 @@
             "en": "Press the configuration button 3 times."
           }
         },
+        "button.reset_meter": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Reset power meter"
+          },
+          "desc": {
+            "en": "Reset the accumulated power usage (kWh), note that this can not be reversed."
+          }
+        },
         "associationGroups": [
           1
         ],
@@ -12101,6 +12117,15 @@
               }
             }
           ]
+        },
+        "button.reset_meter": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Reset power meter"
+          },
+          "desc": {
+            "en": "Reset the accumulated power usage (kWh), note that this can not be reversed."
+          }
         }
       },
       "platforms": [
