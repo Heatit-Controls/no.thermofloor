@@ -24,8 +24,11 @@ class Z_TEMP2Device extends ThermostatTwoModeDevice {
 
     // register a settings parser
     this.registerSetting('Proximity_sensor_enabled', value => (value ? 1 : 0));
-
     this.setAvailable().catch(this.error);
+
+    if (this.getClass() !== 'thermostat') {
+      await this.setClass('thermostat').catch(this.error)
+    }
   }
 
 }
