@@ -23,7 +23,7 @@ const CapabilityToFanMode = {
 	'low': 'Low',
 	'medium': 'Medium',
 	'high': 'High',
-	'auto medium' : 'Auto Medium'
+	'auto medium' : 'Auto Medium',
   };
   
   const FanModeToCapability = {
