@@ -1,0 +1,28 @@
+{
+	"type": "boolean",
+	"icon": "/assets/thermofloor_onoff.svg",
+	"noblink": false,
+	"greyout": true,
+	"label": {
+		"true": {
+			"en": "Heating Active"
+		},
+		"false": {
+			"en": "Heating Idle"
+		}
+	},
+	"title": {
+		"en": "Heating"
+	},
+	"desc": {
+		"en": "State of the thermostat"
+	},
+	"getable": true,
+	"insights": true,
+	"insightsTitleTrue": {
+		"en": "Heating active"
+	},
+	"insightsTitleFalse": {
+		"en": "Heating Idle"
+	}
+}

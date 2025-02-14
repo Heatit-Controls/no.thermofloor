@@ -27,12 +27,13 @@ ZwaveDevice.setMaxListeners(20);
 
 class ZTRM6Device extends ThermostatFourModeDevice {
 	async onNodeInit() {
+		this.log('Initializing Z-TRM6 device...');
 
 		// Mapping of parameter 2 values to sensor capabilities:
-		//  1 => Floor sensor
-		//  2 or 3 => Internal sensor
-		//  4 or 5 => External sensor
-		//  6 => No sensor (null)
+		//  0 => Floor sensor
+		//  1 or 2 => Internal sensor
+		//  3 or 4 => External sensor
+		//  5 => Internal sensor
 		this.PARAM2_SENSOR_MAP = {
 			0: 'measure_temperature.floor',
 			1: 'measure_temperature.internal',
@@ -41,9 +42,6 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 			4: 'measure_temperature.external',
 			5: 'measure_temperature.internal',
 		};
-
-		// Default selected sensor (internal sensor)
-		this.selectedTemperatureCapability = 'measure_temperature.internal';
 
 		this.capabilityMultiChannelNodeIdObj = {
 			'measure_temperature.internal': 2,
@@ -189,27 +187,38 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 				this.log(`Updating settings - Parameter 2: ${parsedValue}`);
 
 				await this.setSettings({ sensor_mode: String(parsedValue) });
-
+				await this.setStoreValue('sensor_mode', parsedValue);
 				// Also update selectedTemperatureCapability here
-				this.selectedTemperatureCapability = this.PARAM2_SENSOR_MAP[parsedValue] || 'measure_temperature.internal'
-				this.log(`Settings updated: sensor_mode = ${parsedValue}, selectedTemperatureCapability = ${this.selectedTemperatureCapability}`
-                
-				);
-
+				this.selectedTemperatureCapability = this.PARAM2_SENSOR_MAP[parsedValue] || 'measure_temperature.internal';
+				this.log(`Settings updated: sensor_mode = ${parsedValue}, selectedTemperatureCapability = ${this.selectedTemperatureCapability}`);
 			} catch (error) {
 				this.log(`Error processing CONFIGURATION_REPORT: ${error.message}`);
 			}
 		});
 
+		// Register thermostat mode and temperature capabilities
 		await this.registerThermostatModeCapability();
 		await this.registerTemperature();
+
+		// Now retrieve sensor_mode and set the selected sensor
+		try {
+			const settings = await this.getSettings();
+			const sensorMode = parseInt(settings.sensor_mode, 10);
+			this.selectedTemperatureCapability = this.PARAM2_SENSOR_MAP[sensorMode] || 'measure_temperature.internal';
+			this.log(`Initialized with sensor mode: ${sensorMode}. Selected temperature capability set to: ${this.selectedTemperatureCapability}`);
+			await this.setStoreValue('selectedTemperatureCapability', this.selectedTemperatureCapability);
+			// Force an update of measure_temperature from the selected sensor
+			const latestValue = await this.getCapabilityValue(this.selectedTemperatureCapability);
+			this.setCapabilityValue('measure_temperature', latestValue).catch(this.error);
+		} catch (err) {
+			this.log('Error retrieving settings:', err);
+		}
 
 		this.log('Z-TRM6 has been initialized');
 		this.setAvailable().catch(this.error);
 	}
 
 	async onSettings({ oldSettings, newSettings, changedKeys }) {
-		// If your parent class has its own onSettings implementation, call it:
 		if (super.onSettings) {
 			await super.onSettings({ oldSettings, newSettings, changedKeys });
 		}
@@ -218,6 +227,10 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 			const sensorMode = parseInt(newSettings.sensor_mode, 10);
 			this.selectedTemperatureCapability = this.PARAM2_SENSOR_MAP[sensorMode] || 'measure_temperature.internal';
 			this.log(`Sensor mode changed to ${sensorMode}. Selected temperature capability set to: ${this.selectedTemperatureCapability}`);
+
+			// Update the measure_temperature capability with the new sensor value
+			const latestValue = await this.getCapabilityValue(this.selectedTemperatureCapability);
+			this.setCapabilityValue('measure_temperature', latestValue).catch(this.error);
 		}
 
 		return true;
@@ -232,7 +245,7 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 		Object.keys(this.capabilityMultiChannelNodeIdObj).forEach(capabilityId => {
 			if (capabilityId.includes('measure_temperature')) {
 				const subName = capabilityId.split('.')[1];
-				// If no subName (main capability) exists, register normally…
+				// If no subName exists, register normally…
 				if (this.hasCapability(capabilityId) && subName === undefined) {
 					this.registerCapability(capabilityId, 'SENSOR_MULTILEVEL', {
 						getOpts: { getOnStart: true },
@@ -274,9 +287,7 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 	registerThermostatModeCapability() {
 		this.registerCapability('thermostat_mode', 'THERMOSTAT_MODE', {
 			get: 'THERMOSTAT_MODE_GET',
-			getOpts: {
-				getOnStart: true,
-			},
+			getOpts: { getOnStart: true },
 			set: 'THERMOSTAT_MODE_SET',
 			setParser: value => {
 				if (!CapabilityToThermostatMode.hasOwnProperty(value)) return null;
@@ -308,9 +319,7 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 
 		// Thermostat operating state
 		this.registerCapability('thermostat_state_13570', 'THERMOSTAT_OPERATING_STATE', {
-			getOpts: {
-				getOnStart: true,
-			},
+			getOpts: { getOnStart: true },
 			get: 'THERMOSTAT_OPERATING_STATE_GET',
 			report: 'THERMOSTAT_OPERATING_STATE_REPORT',
 			reportParser: report => {

@@ -3,6 +3,7 @@
 	"title": {
 		"en": "Thermostat state changed to"
 	},
+	"deprecated": true,
 	"titleFormatted": {
 		"en": "Thermostat state changed to [[state]]"
 	},

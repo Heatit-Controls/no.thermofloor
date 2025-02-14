@@ -23,16 +23,36 @@ class ZmSingleRelay16 extends ZwaveDevice {
         this.sceneFlowTrigger.trigger(this, null, data);
       }
     });
+
+    // Listen for reset_meter maintenance action
+    this.registerCapabilityListener('button.reset_meter', async () => {
+      let commandClassMeter = null;
+      commandClassMeter = this.getCommandClass('METER');
+      if (commandClassMeter && commandClassMeter.hasOwnProperty('METER_RESET')) {
+        const result = await commandClassMeter.METER_RESET({});
+        if (result !== 'TRANSMIT_COMPLETE_OK') throw result;
+      }
+      else {
+        throw new Error('Reset meter not supported');
+      }
+    });
+
+    if (this.hasCapability('meter_power')) this.registerCapability('meter_power', 'METER');
+    if (this.hasCapability('measure_power')) this.registerCapability('measure_power', 'METER');
+
+    this.log('ZM-Dimmer has been initialized');
+
+    this.setAvailable().catch(this.error);
   }
 
   sceneRunListener(args, state) {
     return (state
-            && state.hasOwnProperty('button')
-            && state.hasOwnProperty('scene')
-            && args.hasOwnProperty('button')
-            && args.hasOwnProperty('scene')
-            && state.button === args.button
-            && state.scene === args.scene);
+      && state.hasOwnProperty('button')
+      && state.hasOwnProperty('scene')
+      && args.hasOwnProperty('button')
+      && args.hasOwnProperty('scene')
+      && state.button === args.button
+      && state.scene === args.scene);
   }
 }
 

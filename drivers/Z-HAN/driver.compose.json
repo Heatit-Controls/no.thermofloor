@@ -31,12 +31,6 @@
 		"en": "Power"
   },
 
-	"energy": {
-    "cumulative": true,
-    "cumulativeImportedCapability": "meter_power.imported",
-    "cumulativeExportedCapability": "meter_power.exported"
-	},
-
 	"units": {
     "en": "W"
   },

@@ -1,90 +1,34 @@
 {
 	"type": "enum",
 	"title": {
-	  "en": "Thermostat mode",
-	  "nl": "Thermostaatmodus",
-	  "de": "Thermostat-Modus",
-	  "fr": "Mode thermostat",
-	  "it": "Modalità termostato",
-	  "sv": "Termostatläge",
-	  "no": "Termostatmodus",
-	  "es": "Modo del termostato",
-	  "da": "Termostattilstand",
-	  "ru": "Режим термостата",
-	  "pl": "Tryb termostatu",
-	  "ko": "온도조절기 모드"
+	  "en": "Thermostat mode"
 	},
 	"desc": {
-	  "en": "Mode of the thermostat",
-	  "nl": "Modus van de thermostaat",
-	  "de": "Modus des Thermostates",
-	  "fr": "Mode du thermostat",
-	  "it": "Modalità del termostato",
-	  "sv": "Läge för termostaten",
-	  "no": "Modus for termostaten",
-	  "es": "Modo del termostato",
-	  "da": "Tilstand for termostat",
-	  "ru": "Режим термостата",
-	  "pl": "Tryb termostatu",
-	  "ko": "온도조절기의 모드"
+	  "en": "Mode of the thermostat"
 	},
 	"values": [
 	  {
 		"id": "heat",
 		"title": {
-		  "en": "Heat",
-		  "nl": "Verhitten",
-		  "de": "Heizen",
-		  "fr": "Chauffer",
-		  "it": "Calore",
-		  "sv": "Värme",
-		  "no": "Varme",
-		  "es": "Calentar",
-		  "da": "Opvarm",
-		  "ru": "Обогрев",
-		  "pl": "Ogrzewanie",
-		  "ko": "난방"
+		  "en": "Heat"
 		}
 	  },
 	  {
 		"id": "cool",
 		"title": {
-		  "en": "Cool",
-		  "nl": "Koelen",
-		  "de": "Kühlen",
-		  "fr": "Refroidir",
-		  "it": "Raffreddamento",
-		  "sv": "Kyla",
-		  "no": "Avkjøle",
-		  "es": "Enfriar",
-		  "da": "Køl ned",
-		  "ru": "Охлаждение",
-		  "pl": "Chłodzenie",
-		  "ko": "냉방"
+		  "en": "Cool"
 		}
 	  },
 	  {
 		"id": "energy save heat",
 		"title": {
-		  "en": "ECO",
-		  "nl": "ECO"
+		  "en": "ECO"
 		}
 	  },
 	  {
 		"id": "off",
 		"title": {
-		  "en": "Off",
-		  "nl": "Uit",
-		  "de": "Aus",
-		  "fr": "Désactivé",
-		  "it": "Disattivata",
-		  "sv": "Av",
-		  "no": "Av",
-		  "es": "Desactivado",
-		  "da": "Deaktiveret",
-		  "ru": "Выкл",
-		  "pl": "Wył",
-		  "ko": "끔"
+		  "en": "Off"
 		}
 	  }
 	],
@@ -96,18 +40,7 @@
 		{
 		  "id": "thermostat_mode_changed",
 		  "title": {
-			"en": "Thermostat mode changed",
-			"nl": "Thermostaatmodus is veranderd",
-			"de": "Thermostat-Modus hat sich geändert",
-			"fr": "Le mode du thermostat a changé",
-			"it": "La modalità del termostato è cambiata",
-			"sv": "Termostatläge ändrades",
-			"no": "Termostatmodus ble endret",
-			"es": "El modo del termostato ha cambiado",
-			"da": "Termostattilstand er blevet ændret",
-			"ru": "Режим термостата изменен",
-			"pl": "Zmiana trybu termostatu",
-			"ko": "온도조절기 모드 변경됨"
+			"en": "Thermostat mode changed"
 		  },
 		  "args": [
 			{
@@ -117,35 +50,13 @@
 				{
 				  "id": "heat",
 				  "title": {
-					"en": "Heat",
-					"nl": "Verhitten",
-					"de": "Heizen",
-					"fr": "Chauffer",
-					"it": "Calore",
-					"sv": "Värme",
-					"no": "Varme",
-					"es": "Calentar",
-					"da": "Opvarm",
-					"ru": "Обогрев",
-					"pl": "Ogrzewanie",
-					"ko": "난방"
+					"en": "Heat"
 				  }
 				},
 				{
 				  "id": "cool",
 				  "title": {
-					"en": "Cool",
-					"nl": "Koelen",
-					"de": "Kühlen",
-					"fr": "Refroidir",
-					"it": "Raffreddamento",
-					"sv": "Kyla",
-					"no": "Avkjøle",
-					"es": "Enfriar",
-					"da": "Køl ned",
-					"ru": "Охлаждение",
-					"pl": "Chłodzenie",
-					"ko": "냉방"
+					"en": "Cool"
 				  }
 				},
 				{
@@ -157,18 +68,7 @@
 				{
 				  "id": "off",
 				  "title": {
-					"en": "Off",
-					"nl": "Uit",
-					"de": "Aus",
-					"fr": "Désactivé",
-					"it": "Disattivata",
-					"sv": "Av",
-					"no": "Av",
-					"es": "Desactivado",
-					"da": "Deaktiveret",
-					"ru": "Выкл",
-					"pl": "Wył",
-					"ko": "끔"
+					"en": "Off"
 				  }
 				}
 			  ],
@@ -183,18 +83,7 @@
 		{
 		  "id": "thermostat_mode_is",
 		  "title": {
-			"en": "Thermostat mode !{{is|is not}}",
-			"nl": "Thermostaatmodus !{{is|is niet}}",
-			"de": "Thermostat-Modus !{{ist|ist nicht}}",
-			"fr": "Mode thermostat !{{est|n'est pas}}",
-			"it": "La modalità del termostato !{{è|non è}}",
-			"sv": "Termostatläge !{{är|är inte}}",
-			"no": "Termostatmodus !{{er|er ikke}}",
-			"es": "El modo del termostato !{{está|no está}}",
-			"da": "Termostattilstand !{{er|er ikke}}",
-			"ru": "Режим термостата !{{|не}}",
-			"pl": "Tryb termostatu !{{to|to nie}}",
-			"ko": "온도조절기 모드가 다음으로 설정!{{됨|되지 않음}}"
+			"en": "Thermostat mode !{{is|is not}}"
 		  },
 		  "args": [
 			{
@@ -204,35 +93,13 @@
 				{
 				  "id": "heat",
 				  "title": {
-					"en": "Heat",
-					"nl": "Verhitten",
-					"de": "Heizen",
-					"fr": "Chauffer",
-					"it": "Calore",
-					"sv": "Värme",
-					"no": "Varme",
-					"es": "Calentar",
-					"da": "Opvarm",
-					"ru": "Обогрев",
-					"pl": "Ogrzewanie",
-					"ko": "난방"
+					"en": "Heat"
 				  }
 				},
 				{
 				  "id": "cool",
 				  "title": {
-					"en": "Cool",
-					"nl": "Koelen",
-					"de": "Kühlen",
-					"fr": "Refroidir",
-					"it": "Raffreddamento",
-					"sv": "Kyla",
-					"no": "Avkjøle",
-					"es": "Enfriar",
-					"da": "Køl ned",
-					"ru": "Охлаждение",
-					"pl": "Chłodzenie",
-					"ko": "냉방"
+					"en": "Cool"
 				  }
 				},
 				{
@@ -244,18 +111,7 @@
 				{
 				  "id": "off",
 				  "title": {
-					"en": "Off",
-					"nl": "Uit",
-					"de": "Aus",
-					"fr": "Désactivé",
-					"it": "Disattivata",
-					"sv": "Av",
-					"no": "Av",
-					"es": "Desactivado",
-					"da": "Deaktiveret",
-					"ru": "Выкл",
-					"pl": "Wył",
-					"ko": "끔"
+					"en": "Off"
 				  }
 				}
 			  ],
@@ -270,18 +126,7 @@
 		{
 		  "id": "thermostat_mode_set",
 		  "title": {
-			"en": "Set the mode",
-			"nl": "Stel de modus in",
-			"de": "Modus setzen",
-			"fr": "Définir le mode",
-			"it": "Imposta la modalità",
-			"sv": "Ställ in läget",
-			"no": "Innstill modusen",
-			"es": "Configurar el modo",
-			"da": "Indstil tilstanden",
-			"ru": "Установить режим",
-			"pl": "Ustaw tryb",
-			"ko": "모드 설정"
+			"en": "Set the mode"
 		  },
 		  "args": [
 			{
@@ -291,35 +136,13 @@
 				{
 				  "id": "heat",
 				  "title": {
-					"en": "Heat",
-					"nl": "Verhitten",
-					"de": "Heizen",
-					"fr": "Chauffer",
-					"it": "Calore",
-					"sv": "Värme",
-					"no": "Varme",
-					"es": "Calentar",
-					"da": "Opvarm",
-					"ru": "Обогрев",
-					"pl": "Ogrzewanie",
-					"ko": "난방"
+					"en": "Heat"
 				  }
 				},
 				{
 				  "id": "cool",
 				  "title": {
-					"en": "Cool",
-					"nl": "Koelen",
-					"de": "Kühlen",
-					"fr": "Refroidir",
-					"it": "Raffreddamento",
-					"sv": "Kyla",
-					"no": "Avkjøle",
-					"es": "Enfriar",
-					"da": "Køl ned",
-					"ru": "Охлаждение",
-					"pl": "Chłodzenie",
-					"ko": "냉방"
+					"en": "Cool"
 				  }
 				},
 				{
@@ -332,18 +155,7 @@
 				{
 				  "id": "off",
 				  "title": {
-					"en": "Off",
-					"nl": "Uit",
-					"de": "Aus",
-					"fr": "Désactivé",
-					"it": "Disattivata",
-					"sv": "Av",
-					"no": "Av",
-					"es": "Desactivado",
-					"da": "Deaktiveret",
-					"ru": "Выкл",
-					"pl": "Wył",
-					"ko": "끔"
+					"en": "Off"
 				  }
 				}
 			  ],
