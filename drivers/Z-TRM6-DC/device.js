@@ -199,7 +199,6 @@ class ZTRM6DCDevice extends ThermostatFourModeDevice {
 			multiChannelNodeId: 1,
 		});
 
-		// Listen for CONFIGURATION_REPORT (parameter 2) to update sensor_mode
 		this.registerReportListener('CONFIGURATION', 'CONFIGURATION_REPORT', async report => {
 			try {
 				if (report?.['Parameter Number'] !== 2) {
@@ -219,11 +218,9 @@ class ZTRM6DCDevice extends ThermostatFourModeDevice {
 				const parsedValue = rawValue[0];
 				this.log(`Updating settings - Parameter 2: ${parsedValue}`);
 				await this.setSettings({ sensor_mode: String(parsedValue) });
-				// Also update selectedTemperatureCapability here
+				// Update selectedTemperatureCapability here
 				this.selectedTemperatureCapability = this.PARAM2_SENSOR_MAP[parsedValue] || 'measure_temperature.internal';
-				this.log(
-					`Settings updated: sensor_mode = ${parsedValue}, selectedTemperatureCapability = ${this.selectedTemperatureCapability}`
-				);
+				this.log(`Settings updated: sensor_mode = ${parsedValue}, selectedTemperatureCapability = ${this.selectedTemperatureCapability}`);
 			} catch (error) {
 				this.log(`Error processing CONFIGURATION_REPORT: ${error.message}`);
 			}
@@ -231,6 +228,21 @@ class ZTRM6DCDevice extends ThermostatFourModeDevice {
 
 		await this.registerThermostatModeCapability();
 		await this.registerTemperature();
+
+
+		try {
+			const settings = await this.getSettings();
+			const sensorMode = parseInt(settings.sensor_mode, 10);
+			this.selectedTemperatureCapability = this.PARAM2_SENSOR_MAP[sensorMode] || 'measure_temperature.internal'; //set based on value read in sensorMode setting, if falsey, default to internal sensor
+			this.log(`Initialized with sensor mode: ${sensorMode}. Selected temperature capability set to: ${this.selectedTemperatureCapability}`);
+			await this.setStoreValue('selectedTemperatureCapability', this.selectedTemperatureCapability);
+			// Force an update of measure_temperature from the selected sensor
+			const latestValue = await this.getCapabilityValue(this.selectedTemperatureCapability);
+			this.setCapabilityValue('measure_temperature', latestValue).catch(this.error);
+		} catch (err) {
+			this.log('Error retrieving settings:', err);
+		}
+
 
 		this.log('Z-TRM6 DC has been initialized');
 
