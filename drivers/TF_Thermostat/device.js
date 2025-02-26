@@ -93,6 +93,16 @@ class TF_ThermostatDevice extends ZwaveDevice {
           const thermostatMode = report.Level.Mode;
           this.log('Received thermostat mode report:', thermostatMode);
 
+          // Ensure mode_name is a string
+          const modeName = this.homey.__(`mode.${thermostatMode}`) || thermostatMode; // Fallback to thermostatMode if localization fails
+          const thermostatModeObj = {
+            mode: thermostatMode,
+            mode_name: typeof modeName === 'string' ? modeName : thermostatMode, // Ensure this is a string
+          };
+
+          // Trigger the flow card
+          this.homey.app.triggerThermofloorModeChanged.trigger(this, thermostatModeObj, null);
+
           // 1. Update thermostat setpoint value based on matching thermostat mode
           const setpointType = Mode2Setpoint[thermostatMode];
 
@@ -109,11 +119,6 @@ class TF_ThermostatDevice extends ZwaveDevice {
 
           // 3. Trigger mode trigger cards if the mode is actually changed
           if (this.getCapabilityValue('thermofloor_mode') != thermostatMode) {
-            const thermostatModeObj = {
-              mode: thermostatMode,
-              mode_name: this.homey.__(`mode.${thermostatMode}`),
-            };
-            this.homey.app.triggerThermofloorModeChanged.trigger(this, thermostatModeObj, null);
             this.homey.app.triggerThermofloorModeChangedTo.trigger(this, null, thermostatModeObj);
 
             // 4. Update onoff state when the thermostat mode is off

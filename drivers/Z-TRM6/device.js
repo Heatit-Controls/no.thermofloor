@@ -163,7 +163,6 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 			multiChannelNodeId: 1,
 		});
 
-		// Configuration Report listener
 		this.registerReportListener('CONFIGURATION', 'CONFIGURATION_REPORT', async report => {
 			try {
 				if (report?.['Parameter Number'] !== 2) {
@@ -182,13 +181,10 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 					this.log(`Invalid Configuration Value format: ${JSON.stringify(report, null, 2)}`);
 					return;
 				}
-
 				const parsedValue = rawValue[0];
 				this.log(`Updating settings - Parameter 2: ${parsedValue}`);
-
 				await this.setSettings({ sensor_mode: String(parsedValue) });
-				await this.setStoreValue('sensor_mode', parsedValue);
-				// Also update selectedTemperatureCapability here
+				// Update selectedTemperatureCapability here
 				this.selectedTemperatureCapability = this.PARAM2_SENSOR_MAP[parsedValue] || 'measure_temperature.internal';
 				this.log(`Settings updated: sensor_mode = ${parsedValue}, selectedTemperatureCapability = ${this.selectedTemperatureCapability}`);
 			} catch (error) {
@@ -200,11 +196,11 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 		await this.registerThermostatModeCapability();
 		await this.registerTemperature();
 
-		// Now retrieve sensor_mode and set the selected sensor
+		// Set SelectedTemperatureCapability in onNodeInit to ensure it is persistant across reboot
 		try {
 			const settings = await this.getSettings();
 			const sensorMode = parseInt(settings.sensor_mode, 10);
-			this.selectedTemperatureCapability = this.PARAM2_SENSOR_MAP[sensorMode] || 'measure_temperature.internal';
+			this.selectedTemperatureCapability = this.PARAM2_SENSOR_MAP[sensorMode] || 'measure_temperature.internal'; //set based on value read in sensorMode setting, if falsey, default to internal sensor
 			this.log(`Initialized with sensor mode: ${sensorMode}. Selected temperature capability set to: ${this.selectedTemperatureCapability}`);
 			await this.setStoreValue('selectedTemperatureCapability', this.selectedTemperatureCapability);
 			// Force an update of measure_temperature from the selected sensor

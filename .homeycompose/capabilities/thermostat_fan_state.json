@@ -1,0 +1,42 @@
+{
+	"type": "enum",
+	"uiComponent": "sensor",
+	"icon": "/assets/thermostat_state.svg",
+	"noblink": false,
+	"greyout": true,
+	"getable": true,
+	"setable": false,
+	"insights": true,
+	"title": {
+		"en": "Fan State"
+	},
+	"desc": {
+		"en": "Fan State of the thermostat"
+	},
+	"values": [
+		{
+			"id": "Idle",
+			"title": {
+				"en": "Idle"
+			}
+		},
+		{
+			"id": "Low",
+			"title": {
+				"en": "Running low"
+			}
+		},
+		{
+			"id": "Medium",
+			"title": {
+				"en": "Running medium"
+			}
+		},
+		{
+			"id": "High",
+			"title": {
+				"en": "Running high"
+			}
+		}
+	]
+}

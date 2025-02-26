@@ -151,9 +151,10 @@ class Z_TRM2fxDevice extends ZwaveDevice {
 
         // 3. Trigger mode trigger cards if the mode is actually changed
         if (this.getCapabilityValue('thermofloor_mode') !== thermostatMode) {
+          const modeName = this.homey.__(`mode.${thermostatMode}`) || thermostatMode; // Ensure this is a string
           const thermostatModeObj = {
             mode: thermostatMode,
-            mode_name: this.homey.__(`mode.${thermostatMode}`),
+            mode_name: modeName, // This should now be a string
           };
           this.homey.app.triggerThermofloorModeChanged.trigger(this, thermostatModeObj, null);
           this.homey.app.triggerThermofloorModeChangedTo.trigger(this, null, thermostatModeObj);
@@ -195,9 +196,10 @@ class Z_TRM2fxDevice extends ZwaveDevice {
 
           // 3. Trigger mode trigger cards if the mode is actually changed
           if (this.getCapabilityValue('thermofloor_mode') !== thermostatMode) {
+            const modeName = this.homey.__(`mode.${thermostatMode}`) || thermostatMode;
             const thermostatModeObj = {
               mode: thermostatMode,
-              mode_name: this.homey.__(`mode.${thermostatMode}`),
+              mode_name: modeName, 
             };
             this.homey.app.triggerThermofloorModeChanged.trigger(this, thermostatModeObj, null);
             this.homey.app.triggerThermofloorModeChangedTo.trigger(this, null, thermostatModeObj);
@@ -579,12 +581,70 @@ module.exports = Z_TRM2fxDevice;
 2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- SECURITY_2_COMMANDS_SUPPORTED_REPORT
 2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- SECURITY_2_CAPABILITIES_GET
 2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- SECURITY_2_CAPABILITIES_REPORT
-2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- CommandClass: COMMAND_CLASS_BASIC
-2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- Version: 1
-2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- Commands:
-2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- BASIC_GET
-2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- BASIC_REPORT
-2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- BASIC_SET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- CommandClass: COMMAND_CLASS_SUPERVISION
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Version: 1
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Commands:
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- SUPERVISION_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- SUPERVISION_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] - CommandClass: COMMAND_CLASS_CONFIGURATION
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Version: 3
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Commands:
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_BULK_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_BULK_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_BULK_SET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_SET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_NAME_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_NAME_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_INFO_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_INFO_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_PROPERTIES_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_PROPERTIES_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] - CommandClass: COMMAND_CLASS_FIRMWARE_UPDATE_MD
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Version: 4
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Commands:
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- FIRMWARE_MD_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- FIRMWARE_MD_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- FIRMWARE_UPDATE_MD_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- FIRMWARE_UPDATE_MD_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- FIRMWARE_UPDATE_MD_REQUEST_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- FIRMWARE_UPDATE_MD_REQUEST_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- FIRMWARE_UPDATE_MD_STATUS_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- FIRMWARE_UPDATE_ACTIVATION_SET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- FIRMWARE_UPDATE_ACTIVATION_STATUS_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] - CommandClass: COMMAND_CLASS_THERMOSTAT_SETPOINT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Version: 3
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Commands:
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_SETPOINT_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_SETPOINT_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_SETPOINT_SET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_SETPOINT_SUPPORTED_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_SETPOINT_SUPPORTED_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_SETPOINT_CAPABILITIES_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_SETPOINT_CAPABILITIES_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] - CommandClass: COMMAND_CLASS_THERMOSTAT_MODE
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Version: 3
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Commands:
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_MODE_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_MODE_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_MODE_SET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_MODE_SUPPORTED_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_MODE_SUPPORTED_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] - CommandClass: COMMAND_CLASS_METER
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Version: 3
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Commands:
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- METER_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- METER_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- METER_RESET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- METER_SUPPORTED_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- METER_SUPPORTED_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] - CommandClass: COMMAND_CLASS_BASIC
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Version: 2
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Commands:
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- BASIC_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- BASIC_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- BASIC_SET
 2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] - MultiChannelNode: 2
 2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] - DeviceClassGeneric: GENERIC_TYPE_SENSOR_MULTILEVEL
 2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- CommandClass: COMMAND_CLASS_ZWAVEPLUS_INFO
@@ -630,12 +690,70 @@ module.exports = Z_TRM2fxDevice;
 2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- SECURITY_2_COMMANDS_SUPPORTED_REPORT
 2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- SECURITY_2_CAPABILITIES_GET
 2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- SECURITY_2_CAPABILITIES_REPORT
-2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- CommandClass: COMMAND_CLASS_BASIC
-2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- Version: 1
-2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- Commands:
-2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- BASIC_GET
-2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- BASIC_REPORT
-2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- BASIC_SET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- CommandClass: COMMAND_CLASS_SUPERVISION
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Version: 1
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Commands:
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- SUPERVISION_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- SUPERVISION_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] - CommandClass: COMMAND_CLASS_CONFIGURATION
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Version: 3
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Commands:
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_BULK_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_BULK_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_BULK_SET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_SET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_NAME_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_NAME_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_INFO_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_INFO_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_PROPERTIES_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- CONFIGURATION_PROPERTIES_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] - CommandClass: COMMAND_CLASS_FIRMWARE_UPDATE_MD
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Version: 4
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Commands:
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- FIRMWARE_MD_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- FIRMWARE_MD_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- FIRMWARE_UPDATE_MD_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- FIRMWARE_UPDATE_MD_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- FIRMWARE_UPDATE_MD_REQUEST_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- FIRMWARE_UPDATE_MD_REQUEST_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- FIRMWARE_UPDATE_MD_STATUS_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- FIRMWARE_UPDATE_ACTIVATION_SET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- FIRMWARE_UPDATE_ACTIVATION_STATUS_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] - CommandClass: COMMAND_CLASS_THERMOSTAT_SETPOINT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Version: 3
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Commands:
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_SETPOINT_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_SETPOINT_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_SETPOINT_SET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_SETPOINT_SUPPORTED_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_SETPOINT_SUPPORTED_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_SETPOINT_CAPABILITIES_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_SETPOINT_CAPABILITIES_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] - CommandClass: COMMAND_CLASS_THERMOSTAT_MODE
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Version: 3
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Commands:
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_MODE_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_MODE_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_MODE_SET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_MODE_SUPPORTED_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- THERMOSTAT_MODE_SUPPORTED_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] - CommandClass: COMMAND_CLASS_METER
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Version: 3
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Commands:
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- METER_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- METER_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- METER_RESET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- METER_SUPPORTED_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- METER_SUPPORTED_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] - CommandClass: COMMAND_CLASS_BASIC
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Version: 2
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- Commands:
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- BASIC_GET
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- BASIC_REPORT
+2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- BASIC_SET
 2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] - MultiChannelNode: 3
 2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] - DeviceClassGeneric: GENERIC_TYPE_SENSOR_MULTILEVEL
 2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- CommandClass: COMMAND_CLASS_ZWAVEPLUS_INFO
@@ -680,7 +798,6 @@ module.exports = Z_TRM2fxDevice;
 2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- SECURITY_2_COMMANDS_SUPPORTED_GET
 2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- SECURITY_2_COMMANDS_SUPPORTED_REPORT
 2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- SECURITY_2_CAPABILITIES_GET
-2019-09-14 15:25:28 [err] [ManagerDrivers] [Z-TRM2fx] [0] CommandClass: SENSOR_MULTILEVEL in main node undefined
 2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- SECURITY_2_CAPABILITIES_REPORT
 2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- CommandClass: COMMAND_CLASS_BASIC
 2019-09-14 15:25:28 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- Version: 1
@@ -973,24 +1090,11 @@ module.exports = Z_TRM2fxDevice;
 2019-09-15 08:20:06 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- Commands:
 2019-09-15 08:20:06 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- SUPERVISION_GET
 2019-09-15 08:20:06 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- SUPERVISION_REPORT
-2019-09-15 08:20:06 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- CommandClass: COMMAND_CLASS_THERMOSTAT_SETPOINT
-2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- Version: 3
+2019-09-15 08:20:06 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- CommandClass: COMMAND_CLASS_SENSOR_MULTILEVEL
+2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- Version: 1
 2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- Commands:
-2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- THERMOSTAT_SETPOINT_GET
-2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- THERMOSTAT_SETPOINT_REPORT
-2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- THERMOSTAT_SETPOINT_SET
-2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- THERMOSTAT_SETPOINT_SUPPORTED_GET
-2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- THERMOSTAT_SETPOINT_SUPPORTED_REPORT
-2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- THERMOSTAT_SETPOINT_CAPABILITIES_GET
-2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- THERMOSTAT_SETPOINT_CAPABILITIES_REPORT
-2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- CommandClass: COMMAND_CLASS_THERMOSTAT_MODE
-2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- Version: 3
-2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- Commands:
-2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- THERMOSTAT_MODE_GET
-2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- THERMOSTAT_MODE_REPORT
-2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- THERMOSTAT_MODE_SET
-2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- THERMOSTAT_MODE_SUPPORTED_GET
-2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- THERMOSTAT_MODE_SUPPORTED_REPORT
+2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- SENSOR_MULTILEVEL_GET
+2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] ---- SENSOR_MULTILEVEL_REPORT
 2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] -- CommandClass: COMMAND_CLASS_BASIC
 2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- Version: 1
 2019-09-15 08:20:07 [log] [ManagerDrivers] [Z-TRM2fx] [0] --- Commands:

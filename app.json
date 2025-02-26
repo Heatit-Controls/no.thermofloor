@@ -6,8 +6,8 @@
     "en": "Heatit Controls"
   },
   "brandColor": "#cc3333",
-  "version": "3.9.7",
-  "compatibility": ">=5.0.0",
+  "version": "3.9.8",
+  "compatibility": ">=12.2.0",
   "platforms": [
     "local",
     "cloud"
@@ -46,7 +46,6 @@
       "Multireg",
       "Heatit",
       "Heat it",
-      "Magnum",
       "Thermo-Floor",
       "underfloor heating"
     ],
@@ -62,7 +61,6 @@
       "Multireg",
       "Heatit",
       "Heat it",
-      "Magnum",
       "Thermo-Floor"
     ]
   },
@@ -12606,6 +12604,86 @@
         "en": "Heating idle",
         "nl": "Verwarming uitgeschakeld"
       }
+    },
+    "thermostat_fan_mode": {
+      "type": "enum",
+      "title": {
+        "en": "Fan Mode"
+      },
+      "desc": {
+        "en": "Fan mode on the thermostat"
+      },
+      "values": [
+        {
+          "id": "Low",
+          "title": {
+            "en": "Low"
+          }
+        },
+        {
+          "id": "Medium",
+          "title": {
+            "en": "Medium"
+          }
+        },
+        {
+          "id": "Auto medium",
+          "title": {
+            "en": "Auto"
+          }
+        },
+        {
+          "id": "High",
+          "title": {
+            "en": "High"
+          }
+        }
+      ],
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker"
+    },
+    "thermostat_fan_state": {
+      "type": "enum",
+      "uiComponent": "sensor",
+      "icon": "/assets/thermostat_state.svg",
+      "noblink": false,
+      "greyout": true,
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "title": {
+        "en": "Fan State"
+      },
+      "desc": {
+        "en": "Fan State of the thermostat"
+      },
+      "values": [
+        {
+          "id": "Idle",
+          "title": {
+            "en": "Idle"
+          }
+        },
+        {
+          "id": "Low",
+          "title": {
+            "en": "Running low"
+          }
+        },
+        {
+          "id": "Medium",
+          "title": {
+            "en": "Running medium"
+          }
+        },
+        {
+          "id": "High",
+          "title": {
+            "en": "Running high"
+          }
+        }
+      ]
     },
     "thermostat_mode_13570": {
       "type": "enum",
