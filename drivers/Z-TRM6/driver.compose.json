@@ -6,7 +6,7 @@
   "capabilities": [
     "thermostat_mode",
     "target_temperature",
-    "thermostat_state_13570",
+    "thermostat_state_IdleHeatCool",
     "meter_power",
     "measure_power",
     "measure_temperature",
@@ -49,16 +49,31 @@
         }
       ]
     },
-		"thermostat_state_13570": {
+		"thermostat_state_IdleHeatCool": {
 			"greyout": true,
-			"titleTrue": {
-				"en": "Active",
-				"nl": "Actief"
+			"title": {
+				"en": "State"
 			},
-			"titleFalse": {
-				"en": "Idle",
-				"nl": "Uit"
-			}
+			"values": [
+				{
+					"id": "Idle",
+					"title": {
+						"en": "Idle"
+					}
+				},
+				{
+					"id": "Heating",
+					"title": {
+						"en": "Heating"
+					}
+				},
+				{
+					"id": "Cooling",
+					"title": {
+						"en": "Cooling"
+					}
+				}
+			]
     },
     "measure_power": {
       "approximated": true
