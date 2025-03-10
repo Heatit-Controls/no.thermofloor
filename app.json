@@ -12717,6 +12717,102 @@
       "getable": true,
       "setable": true
     },
+    "thermostat_mode_OffHeat": {
+      "type": "enum",
+      "title": {
+        "en": "Thermostat mode"
+      },
+      "desc": {
+        "en": "Mode of the thermostat"
+      },
+      "uiComponent": "picker",
+      "values": [
+        {
+          "id": "off",
+          "title": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "heat",
+          "title": {
+            "en": "Heating"
+          }
+        }
+      ],
+      "getable": true,
+      "setable": true
+    },
+    "thermostat_mode_OffHeatCool": {
+      "type": "enum",
+      "title": {
+        "en": "Thermostat mode"
+      },
+      "desc": {
+        "en": "Mode of the thermostat"
+      },
+      "uiComponent": "picker",
+      "values": [
+        {
+          "id": "off",
+          "title": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "heat",
+          "title": {
+            "en": "Heating"
+          }
+        },
+        {
+          "id": "cool",
+          "title": {
+            "en": "Cooling"
+          }
+        }
+      ],
+      "getable": true,
+      "setable": true
+    },
+    "thermostat_mode_OffHeatCoolEco": {
+      "type": "enum",
+      "title": {
+        "en": "Thermostat mode"
+      },
+      "desc": {
+        "en": "Mode of the thermostat"
+      },
+      "uiComponent": "picker",
+      "values": [
+        {
+          "id": "off",
+          "title": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "heat",
+          "title": {
+            "en": "Heating"
+          }
+        },
+        {
+          "id": "cool",
+          "title": {
+            "en": "Cooling"
+          }
+        },
+        {
+          "id": "energy save heat",
+          "title": {
+            "en": "Heating"
+          }
+        }
+      ],
+      "getable": true,
+      "setable": true
+    },
     "thermostat_mode_single": {
       "type": "enum",
       "uiComponent": "picker",
@@ -12882,6 +12978,87 @@
           }
         }
       ]
+    },
+    "thermostat_state_IdleHeat": {
+      "type": "enum",
+      "uiComponent": "sensor",
+      "icon": "/assets/thermofloor_onoff.svg",
+      "noblink": false,
+      "greyout": true,
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "title": {
+        "en": "State"
+      },
+      "desc": {
+        "en": "State of the thermostat"
+      },
+      "values": [
+        {
+          "id": "Idle",
+          "title": {
+            "en": "Idle"
+          }
+        },
+        {
+          "id": "Heating",
+          "title": {
+            "en": "Heating"
+          }
+        }
+      ],
+      "insightsTitleIdle": {
+        "en": "Heating idle"
+      },
+      "insightsTitleHeating": {
+        "en": "Heating active"
+      }
+    },
+    "thermostat_state_IdleHeatCool": {
+      "type": "enum",
+      "uiComponent": "sensor",
+      "icon": "/assets/thermostat_state.svg",
+      "noblink": false,
+      "greyout": true,
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "title": {
+        "en": "State"
+      },
+      "desc": {
+        "en": "State of the thermostat"
+      },
+      "values": [
+        {
+          "id": "Idle",
+          "title": {
+            "en": "Idle"
+          }
+        },
+        {
+          "id": "Heating",
+          "title": {
+            "en": "Heating"
+          }
+        },
+        {
+          "id": "Cooling",
+          "title": {
+            "en": "Cooling"
+          }
+        }
+      ],
+      "insightsTitleIdle": {
+        "en": "Heating idle"
+      },
+      "insightsTitleHeating": {
+        "en": "Heating active"
+      },
+      "insightsTitleCooling": {
+        "en": "Cooling active"
+      }
     }
   }
 }
