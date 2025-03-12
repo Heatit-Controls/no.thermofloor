@@ -55,5 +55,8 @@
   },
   "3.9.8": {
     "en": "Fixed persistance in Measure_temperature on TRM6 and TRM6 DC."
+  },
+  "3.9.9": {
+    "en": "Changed TRM6 code and a lot of other small changes to reduce errors"
   }
 }
