@@ -229,9 +229,6 @@ class ZTRM6DCDevice extends ThermostatFourModeDevice {
 		await this.registerThermostatModeCapability();
 		await this.registerTemperature();
 
-		// Default selected sensor (internal sensor)
-		this.selectedTemperatureCapability = 'measure_temperature.internal';
-
 		try {
 			const settings = await this.getSettings();
 			const sensorMode = parseInt(settings.sensor_mode, 10);
