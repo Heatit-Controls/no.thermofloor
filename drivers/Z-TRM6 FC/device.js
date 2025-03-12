@@ -1,133 +1,68 @@
 'use strict';
 const { ZwaveDevice } = require('homey-zwavedriver');
 const Homey = require('homey');
+const { Mode2Setpoint } = require('../../lib/map/ZTEMP3_mappings.js');
+const { Setpoint2Setting } = require("../../lib/map/ZTEMP3_mappings");
 
-const ThermostatFourModeDevice = require('../../lib/ThermostatFourModeDevice');
-const { Mode2Setpoint, Setpoint2Setting } = require('../../lib/map/ZTEMP3_mappings.js');
+class ZTRM6Device extends ZwaveDevice {
+	constructor(...args) {
+		super(...args);
+		
+		// Define constants as class properties
+		this.CapabilityToThermostatMode = {
+			'off': 'Off',
+			'heat': 'Heat',
+			'cool': 'Cool',
+			'energy save heat': 'Energy Save Heat',
+		};
 
-const CapabilityToThermostatMode = {
-	'off': 'Off',
-	'heat': 'Heat',
-	'cool': 'Cool',
-	'energy save heat': 'Energy Save Heat',
-};
-
-const ThermostatModeToCapability = {
-	'Off': 'off',
-	'Heat': 'heat',
-	'Cool': 'cool',
-	'Energy Save Heat': 'energy save heat',
-};
-
-const CapabilityToFanMode = {
-	'low': 'Low',
-	'medium': 'Medium',
-	'high': 'High',
-	'auto medium' : 'Auto Medium'
-  };
-  
-  const FanModeToCapability = {
-	'Low': 'low',
-	'Medium': 'medium',
-	'High': 'high',
-	'Auto Medium': 'auto medium',
-  };
-
-ZwaveDevice.setMaxListeners(20);
-
-class ZTRM6FCDevice extends ThermostatFourModeDevice {
+		this.ThermostatModeToCapability = {
+			'Off': 'off',
+			'Heat': 'heat',
+			'Cool': 'cool',
+			'Energy Save Heat': 'energy save heat',
+		};
+	}
+	
 	async onNodeInit() {
-		this.log('Initializing Z-TRM6 FC device...');
+		// enable debug logging
 		this.enableDebug();
+		
+		//map param 2 to sensor to show correct temp in measure.temperature
 
-		this.registerCapability('meter_power', 'METER');
-		this.registerCapability('measure_power', 'METER');
-
-		this.registerCapability('thermostat_fan_mode', 'THERMOSTAT_FAN_MODE', {
-			get: 'THERMOSTAT_FAN_MODE_GET',
-			getOpts: { 
-				getOnStart: true 
-			},
-
-			set: 'THERMOSTAT_FAN_MODE_SET',
-			setParser: value => {
-				const normalizedValue = value.toLowerCase();
-				if (!CapabilityToFanMode.hasOwnProperty(normalizedValue)) return null;
-				const fanMode = CapabilityToFanMode[normalizedValue];
-				if (typeof fanMode !== 'string') return null;
-			  
-				const payload = {
-				  Level: {
-					'No of Manufacturer Data fields': 0,
-					'Fan Mode': fanMode,
-				  },
-				  'Manufacturer Data': Buffer.from([]),
-				};
-			  
-				this.log('Sending fan mode payload:', JSON.stringify(payload));
-				return payload;
-			  },
-
-			  
-			report: 'THERMOSTAT_FAN_MODE_REPORT',
-			reportParser: report => {
-				this.log('Fan mode report:', report);
-				if (report && report.Level && report.Level.Mode) {
-					const mode = report.Level.Mode;
-					if (typeof mode === 'string' && FanModeToCapability.hasOwnProperty(mode)) {
-						const capabilityFanMode = FanModeToCapability[mode];
-						this.log('Capability Mode', capabilityFanMode);
-						return capabilityFanMode;
-					}
-				}
-				return null;
-			},
-		});
-
-		  
-
-
-		this.registerCapability('fan_state', 'THERMOSTAT_FAN_STATE', {
-			get: 'THERMOSTAT_FAN_STATE_GET',
-			report: 'THERMOSTAT_FAN_STATE_REPORT',
-			reportParser: report => {
-				this.log('Fan state report:', report);
-				if (report && report.Level && report.Level['Fan State']) {
-					const state = report.Level['Fan State'];
-					if (FanStateToCapability.hasOwnProperty(state)) {
-						return FanStateToCapability[state];
-					}
-				}
-				return null;
-			},
-		});
-
+		// print the node's info to the console
+		// this.printNode();
+		
+		// register capabilities for this device
 
 		this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL', {
-			getOpts: { getOnStart: true },
-			report: 'SENSOR_MULTILEVEL_REPORT',
-			reportParser: report => {
-				if (
-					report &&
-					report.hasOwnProperty('Sensor Type') &&
-					report['Sensor Type'] === 'Temperature (version 1)' &&
-					report.hasOwnProperty('Sensor Value (Parsed)') &&
-					report.hasOwnProperty('Level') &&
-					report.Level.hasOwnProperty('Scale')
-				) {
-					// Some devices send this when no sensor is connected
-					if (report['Sensor Value (Parsed)'] === -999.9) return null;
-					if (report.Level.Scale === 0) {
-						this.setCapabilityValue('measure_temperature', report['Sensor Value (Parsed)'])
-							.catch(this.error);
-						return report['Sensor Value (Parsed)'];
-					}
-				}
-				return null;
+			getOpts: {
+				getOnStart: true,
 			},
 		});
-	
 
+		this.registerCapability('meter_power', 'METER', {
+			getOpts: {
+				getOnStart: true,
+			},
+		});
+		this.registerCapability('measure_power', 'METER', {
+			getOpts: {
+				getOnStart: true,
+			},
+		});
+		this.registerCapability('fan_mode', 'THERMOSTAT_FAN_MODE', {
+			getOpts: {
+				getOnStart: true,
+			},
+		});
+		this.registerCapability('fan_state', 'THERMOSTAT_FAN_STATE', {
+			getOpts: {
+				getOnStart: true,
+			},
+		});
+		
+		
 		this.registerCapability('target_temperature', 'THERMOSTAT_SETPOINT', {
 			getOpts: {
 				getOnStart: true,
@@ -142,8 +77,6 @@ class ZTRM6FCDevice extends ThermostatFourModeDevice {
 					},
 				};
 			},
-
-			
 			set: 'THERMOSTAT_SETPOINT_SET',
 			setParserV3: setpointValue => {
 				const currentMode = this.getCapabilityValue('thermostat_mode') || 'Heat';
@@ -224,25 +157,16 @@ class ZTRM6FCDevice extends ThermostatFourModeDevice {
 				}
 				return null;
 			},
+			multiChannelNodeId: 1,
 		});
 
-
-		// Register thermostat mode and temperature capabilities
-		await this.registerThermostatModeCapability();
-
-		this.log('Z-TRM6 FC has been initialized');
-		this.setAvailable().catch(this.error);
-	}
-
-
-	registerThermostatModeCapability() {
 		this.registerCapability('thermostat_mode', 'THERMOSTAT_MODE', {
 			get: 'THERMOSTAT_MODE_GET',
 			getOpts: { getOnStart: true },
 			set: 'THERMOSTAT_MODE_SET',
 			setParser: value => {
-				if (!CapabilityToThermostatMode.hasOwnProperty(value)) return null;
-				const mode = CapabilityToThermostatMode[value];
+				if (!this.CapabilityToThermostatMode.hasOwnProperty(value)) return null;
+				const mode = this.CapabilityToThermostatMode[value];
 				if (typeof mode !== 'string') return null;
 				return {
 					Level: {
@@ -257,19 +181,117 @@ class ZTRM6FCDevice extends ThermostatFourModeDevice {
 				this.log('Thermostat mode report:', report);
 				if (report && report.Level && report.Level.Mode) {
 					const mode = report.Level.Mode;
-					if (typeof mode === 'string' && ThermostatModeToCapability.hasOwnProperty(mode)) {
-						const capabilityMode = ThermostatModeToCapability[mode];
+					if (typeof mode === 'string' && this.ThermostatModeToCapability.hasOwnProperty(mode)) {
+						const capabilityMode = this.ThermostatModeToCapability[mode];
 						this.log('Capability Mode', capabilityMode);
 						return capabilityMode;
 					}
 				}
 				return null;
 			},
+			multiChannelNodeId: 1,
 		});
 
-		// Thermostat operating state
-		this.registerCapability('thermostat_state_13570', 'THERMOSTAT_OPERATING_STATE', {
-			getOpts: { getOnStart: true },
+		try {
+			const settings = await this.getSettings();
+			const sensorMode = parseInt(settings.sensor_mode, 10);
+			const selectedTemperatureCapability = this.PARAM2_SENSOR_MAP[sensorMode] || 'measure_temperature.internal';
+			this.log(`Initialized with sensor mode: ${sensorMode}. Selected temperature capability set to: ${selectedTemperatureCapability}`);
+			await this.setStoreValue('selectedTemperatureCapability', selectedTemperatureCapability);
+			// Update measure_temperature with value fgrom selected sensor
+			const latestValue = await this.getCapabilityValue(selectedTemperatureCapability);
+			this.setCapabilityValue('measure_temperature', latestValue).catch(err => 
+				this.error(`Failed to update measure_temperature: ${err.message}`)
+			);
+		} catch (err) {
+			this.log('Error retrieving settings:', err);
+		}
+		this.registerReportListener('CONFIGURATION', 'CONFIGURATION_REPORT', async report => {
+			try {
+				const confValRaw = report['Configuration Value (Raw)'];
+				const paramNum = report?.['Parameter Number'];
+				
+				// Find the matching setting in the manifest
+				const manifestSettings = this.getManifestSettings();
+				const matchingSetting = manifestSettings.find(setting => 
+					setting.zwave && setting.zwave.index === paramNum
+				);
+				
+				// Get parameter size and signed status from the manifest
+				const paramSize = matchingSetting?.zwave?.size || 1;
+				// Parameters are signed by default unless explicitly set to false
+				const isSigned = !(matchingSetting?.zwave?.signed === false);
+				
+				let parsedValue;
+				let valueBuffer;
+				
+				if (Buffer.isBuffer(confValRaw)) {
+					valueBuffer = confValRaw;
+				} else if (confValRaw && Array.isArray(confValRaw.data)) {
+					valueBuffer = Buffer.from(confValRaw.data);
+				} else {
+					this.log(`Invalid Configuration Value format: ${JSON.stringify(report, null, 2)}`);
+					return;
+				}
+				
+				// Read the appropriate number of bytes based on manifest settings
+				if (paramSize === 1) {
+					parsedValue = isSigned 
+						? valueBuffer.readInt8(0) 
+						: valueBuffer.readUInt8(0);
+				} else if (paramSize === 2) {
+					parsedValue = isSigned 
+						? valueBuffer.readInt16BE(0) 
+						: valueBuffer.readUInt16BE(0);
+				} else if (paramSize === 4) {
+					parsedValue = isSigned 
+						? valueBuffer.readInt32BE(0) 
+						: valueBuffer.readUInt32BE(0);
+				}
+				
+				this.log(`Updating settings - Parameter ${paramNum}: ${parsedValue} (size: ${paramSize}, signed: ${isSigned})`);
+				
+				if (paramNum === 2) {
+					// Special handling for sensor mode
+					await this.setSettings({ sensor_mode: String(parsedValue) });
+					const selectedTemperatureCapability = this.PARAM2_SENSOR_MAP[parsedValue] || 'measure_temperature.internal';
+					this.log(`Settings updated: sensor_mode = ${parsedValue}, selectedTemperatureCapability = ${selectedTemperatureCapability}`);
+					await this.setStoreValue('selectedTemperatureCapability', selectedTemperatureCapability);
+					
+					// Update the measure_temperature with the value from the newly selected sensor
+					const latestValue = await this.getCapabilityValue(selectedTemperatureCapability);
+					this.log(`Updating measure_temperature to ${latestValue} from ${selectedTemperatureCapability} after configuration change`);
+					try {
+						await this.setCapabilityValue('measure_temperature', latestValue);
+					} catch (err) {
+						this.error(`Failed to update measure_temperature: ${err.message}`);
+					}
+				} else {
+					if (matchingSetting) {
+						let settingValue = parsedValue;
+						if (matchingSetting.type === 'checkbox') {
+							settingValue = Boolean(parsedValue);
+						} else if (matchingSetting.type === 'dropdown') {
+							settingValue = String(parsedValue);
+						}
+						
+						this.log(`Found matching setting ${matchingSetting.id} for parameter ${paramNum}, setting value to ${settingValue}`);
+						await this.setSettings({ [matchingSetting.id]: settingValue });
+						this.log(`Updated setting ${matchingSetting.id} (parameter ${paramNum}) to ${settingValue}`);
+					} else {
+						await this.setSettings({ [`param_${paramNum}`]: parsedValue });
+						this.log(`Updated parameter ${paramNum} to ${parsedValue} (no matching setting ID found)`);
+					}
+				}
+			} catch (error) {
+				this.error(`Error processing CONFIGURATION_REPORT: ${error.message}`);
+			}
+		});
+
+		this.registerCapability('thermostat_state_IdleHeatCool', 'THERMOSTAT_OPERATING_STATE', {
+			getOpts: {
+				getOnStart: true,
+			},
 			get: 'THERMOSTAT_OPERATING_STATE_GET',
 			report: 'THERMOSTAT_OPERATING_STATE_REPORT',
 			reportParser: report => {
@@ -281,17 +303,46 @@ class ZTRM6FCDevice extends ThermostatFourModeDevice {
 							state: state,
 							state_name: this.homey.__(`state.${state}`),
 						};
-						this.homey.app.triggerThermostatStateChangedTo.trigger(this, null, thermostatStateObj);
-						this.setCapabilityValue('thermostat_state_13570', state).catch(this.error);
+						if (this.homey.app && this.homey.app.triggerThermostatStateChangedTo) {
+							this.homey.app.triggerThermostatStateChangedTo.trigger(this, null, thermostatStateObj)
+								.catch(err => this.error('Error triggering flow card:', err));
+						}
 						return state;
 					}
 				}
 				return null;
 			},
+			multiChannelNodeId: 1,
 		});
 
 		this.setAvailable().catch(this.error);
+
+	}
+	async onSettings({ oldSettings, newSettings, changedKeys }) {
+		if (super.onSettings) {
+			await super.onSettings({ oldSettings, newSettings, changedKeys });
+		}
+
+		if (changedKeys.includes('sensor_mode')) {
+			const sensorMode = parseInt(newSettings.sensor_mode, 10);
+			const selectedTemperatureCapability = this.PARAM2_SENSOR_MAP[sensorMode] || 'measure_temperature.internal';
+			this.log(`Sensor mode changed to ${sensorMode}. Selected temperature capability set to: ${selectedTemperatureCapability}`);
+			
+			// Store the updated capability selection
+			await this.setStoreValue('selectedTemperatureCapability', selectedTemperatureCapability);
+			
+			// Update the measure_temperature with the value from the newly selected sensor
+			const latestValue = await this.getCapabilityValue(selectedTemperatureCapability);
+			this.log(`Updating measure_temperature to ${latestValue} from ${selectedTemperatureCapability} after sensor mode change`);
+			try {
+				await this.setCapabilityValue('measure_temperature', latestValue);
+			} catch (err) {
+				this.error(`Failed to update measure_temperature: ${err.message}`);
+			}
+		}
+
+		return true;
 	}
 }
 
-module.exports = ZTRM6FCDevice;
+module.exports = ZTRM6Device;
