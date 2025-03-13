@@ -28,6 +28,13 @@ class ZTRM6Device extends ZwaveDevice {
 		// enable debug logging
 		this.enableDebug();
 		
+		if (this.hasCapability('thermostat_state_IdleHeatCool') === false) {
+			await this.addCapability('thermostat_state_IdleHeatCool');
+		}
+		if (this.hasCapability('thermostat_state_13570') === true) {
+			await this.removeCapability('thermostat_state_13570');
+		}
+		
 		//map param 2 to sensor to show correct temp in measure.temperature
 		this.PARAM2_SENSOR_MAP = {
 			0: 'measure_temperature.floor',
