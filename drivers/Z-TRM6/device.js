@@ -1,27 +1,9 @@
 'use strict';
 const { ZwaveDevice } = require('homey-zwavedriver');
 const Homey = require('homey');
-
-const ThermostatFourModeDevice = require('../../lib/ThermostatFourModeDevice');
-// Import Mode2Setpoint from mappings file
 const { Mode2Setpoint } = require('../../lib/map/ZTEMP3_mappings.js');
 const { Setpoint2Setting } = require("../../lib/map/ZTEMP3_mappings");
 
-const CapabilityToThermostatMode = {
-	'off': 'Off',
-	'heat': 'Heat',
-	'cool': 'Cool',
-	'energy save heat': 'Energy Save Heat',
-};
-
-const ThermostatModeToCapability = {
-	'Off': 'off',
-	'Heat': 'heat',
-	'Cool': 'cool',
-	'Energy Save Heat': 'energy save heat',
-};
-
-let timer = null;
 
 ZwaveDevice.setMaxListeners(20);
 

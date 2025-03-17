@@ -8906,11 +8906,12 @@
         "thermostat_mode",
         "target_temperature",
         "measure_temperature",
-        "thermostat_state_13570",
+        "thermostat_state_IdleHeatCoolFan",
         "meter_power",
         "measure_power",
         "button.reset_meter",
-        "thermostat_fan_mode"
+        "fan_mode",
+        "thermostat_fan_state"
       ],
       "capabilitiesOptions": {
         "meter_power": {
@@ -8942,10 +8943,16 @@
               "title": {
                 "en": "ECO"
               }
+            },
+            {
+              "id": "fan",
+              "title": {
+                "en": "Fan"
+              }
             }
           ]
         },
-        "thermostat_state_13570": {
+        "thermostat_state_IdleHeatCoolFan": {
           "greyout": true,
           "titleTrue": {
             "en": "Active",
@@ -8975,6 +8982,40 @@
         },
         "measure_temperature": {
           "title": "temperature"
+        },
+        "fan_mode": {
+          "values": [
+            {
+              "id": "Low",
+              "title": {
+                "en": "Low"
+              }
+            },
+            {
+              "id": "Medium",
+              "title": {
+                "en": "Medium"
+              }
+            },
+            {
+              "id": "High",
+              "title": {
+                "en": "High"
+              }
+            },
+            {
+              "id": "Auto Medium",
+              "title": {
+                "en": "Auto"
+              }
+            },
+            {
+              "id": "Circulation",
+              "title": {
+                "en": "Circulation"
+              }
+            }
+          ]
         }
       },
       "platforms": [
@@ -9005,7 +9046,7 @@
         "learnmode": {
           "image": "/drivers/Z-TRM6 FC/assets/learnmode.svg",
           "instruction": {
-            "en": "1. Hold the Center button for 5 seconds. The display will show “OFF”.\n2. Press the ”+” button once to see “CON” in the display.\n3 Start the configuration mode on the thermostat by holding the Center button for approximately 2 seconds.\n4. Configuration mode is indicated on the device by rotating LED segments on the display."
+            "en": "1. Hold the Center button for 5 seconds. The display will show \"OFF\".\n2. Press the \"+\" button once to see \"CON\" in the display.\n3 Start the configuration mode on the thermostat by holding the Center button for approximately 2 seconds.\n4. Configuration mode is indicated on the device by rotating LED segments on the display."
           }
         },
         "associationGroups": [],
@@ -13490,21 +13531,27 @@
           }
         },
         {
-          "id": "Low",
+          "id": "Running",
           "title": {
             "en": "Running low"
           }
         },
         {
-          "id": "Medium",
+          "id": "Running Medium",
           "title": {
             "en": "Running medium"
           }
         },
         {
-          "id": "High",
+          "id": "Running High",
           "title": {
             "en": "Running high"
+          }
+        },
+        {
+          "id": "Circulation mode",
+          "title": {
+            "en": "Circulation mode"
           }
         }
       ]
@@ -13703,6 +13750,48 @@
           "id": "Cooling",
           "title": {
             "en": "Cooling"
+          }
+        }
+      ]
+    },
+    "thermostat_state_IdleHeatCoolFan": {
+      "type": "enum",
+      "uiComponent": "sensor",
+      "icon": "/assets/thermostat_state.svg",
+      "noblink": false,
+      "greyout": true,
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "title": {
+        "en": "State"
+      },
+      "desc": {
+        "en": "State of the thermostat"
+      },
+      "values": [
+        {
+          "id": "Idle",
+          "title": {
+            "en": "Idle"
+          }
+        },
+        {
+          "id": "Heating",
+          "title": {
+            "en": "Heating"
+          }
+        },
+        {
+          "id": "Cooling",
+          "title": {
+            "en": "Cooling"
+          }
+        },
+        {
+          "id": "Vent_Economizer",
+          "title": {
+            "en": "Vent/Economizer"
           }
         }
       ]

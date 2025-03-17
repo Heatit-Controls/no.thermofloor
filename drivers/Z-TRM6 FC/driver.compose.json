@@ -7,14 +7,14 @@
     "thermostat_mode",
     "target_temperature",
     "measure_temperature",
-    "thermostat_state_13570",
+    "thermostat_state_IdleHeatCoolFan",
 
     "meter_power",
     "measure_power",
     "button.reset_meter",
 
-    "thermostat_fan_mode"
- 
+    "fan_mode",
+    "thermostat_fan_state"
   ],
   "capabilitiesOptions": {
     "meter_power": {
@@ -46,11 +46,17 @@
           "title": {
             "en": "ECO"
           }
+        },
+        {
+          "id": "fan",
+          "title": {
+            "en": "Fan"
+          }
         }
       ]
     },
 
-		"thermostat_state_13570": {
+		"thermostat_state_IdleHeatCoolFan": {
 			"greyout": true,
 			"titleTrue": {
 				"en": "Active",
@@ -80,6 +86,40 @@
     },
     "measure_temperature": {
       "title": "temperature"
+    },
+    "fan_mode": {
+      "values": [
+        {
+          "id": "Low",
+          "title": {
+            "en": "Low"
+          }
+        },
+        {
+          "id": "Medium",
+          "title": {
+            "en": "Medium"
+          }
+        },
+        {
+          "id": "High",
+          "title": {
+            "en": "High"
+          }
+        },
+        {
+          "id": "Auto Medium",
+          "title": {
+            "en": "Auto"
+          }
+        },
+        {
+          "id": "Circulation",
+          "title": {
+            "en": "Circulation"
+          }
+        }
+      ]
     }
   },
   "platforms": [
@@ -110,7 +150,7 @@
     "learnmode": {
       "image": "{{driverAssetsPath}}/learnmode.svg",
       "instruction": {
-        "en": "1. Hold the Center button for 5 seconds. The display will show “OFF”.\n2. Press the ”+” button once to see “CON” in the display.\n3 Start the configuration mode on the thermostat by holding the Center button for approximately 2 seconds.\n4. Configuration mode is indicated on the device by rotating LED segments on the display."
+        "en": "1. Hold the Center button for 5 seconds. The display will show \"OFF\".\n2. Press the \"+\" button once to see \"CON\" in the display.\n3 Start the configuration mode on the thermostat by holding the Center button for approximately 2 seconds.\n4. Configuration mode is indicated on the device by rotating LED segments on the display."
       }
     },
     "associationGroups": [],
