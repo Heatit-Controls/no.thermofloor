@@ -52,6 +52,12 @@
           "title": {
             "en": "Fan"
           }
+        },
+        {
+          "id": "auto",
+          "title": {
+            "en": "Auto"
+          }
         }
       ]
     },

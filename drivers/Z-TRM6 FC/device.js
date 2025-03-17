@@ -88,32 +88,40 @@ class ZTRM6FCDevice extends ZwaveDevice {
 					return null;
 				}
 			
-				
-				return {
-					Properties1: {
-						Off: false,
-						'Fan Mode': zwaveFanMode,
-					},
-					'Manufacturer Data': Buffer.from([0]),
-				};
+				try {
+					return {
+						Properties1: {
+							Off: false,
+							'Fan Mode': zwaveFanMode,
+						},
+						'Manufacturer Data': Buffer.from([0]),
+					};
+				} catch (err) {
+					this.error(`Error creating fan mode command: ${err.message}`);
+					return null;
+				}
 			},
 			report: 'THERMOSTAT_FAN_MODE_REPORT',
 			reportParser: report => {
 				this.log('THERMOSTAT_FAN_MODE report:', report);
 				if (!report) return null;
 				
-				if (report.hasOwnProperty('Properties1') && report.Properties1.hasOwnProperty('Fan Mode')) {
-					const zwaveFanMode = report.Properties1['Fan Mode'];
-					this.log('Received fan mode report:', zwaveFanMode);
-					
-					// Convert Z-Wave fan mode to capability value
-					const fanMode = this.FanModeToCapability[zwaveFanMode];
-					if (!fanMode) {
-						this.log('Unknown fan mode received:', zwaveFanMode);
-						return null;
+				try {
+					if (report.hasOwnProperty('Properties1') && report.Properties1.hasOwnProperty('Fan Mode')) {
+						const zwaveFanMode = report.Properties1['Fan Mode'];
+						this.log('Received fan mode report:', zwaveFanMode);
+						
+						// Convert Z-Wave fan mode to capability value
+						const fanMode = this.FanModeToCapability[zwaveFanMode];
+						if (!fanMode) {
+							this.log('Unknown fan mode received:', zwaveFanMode);
+							return null;
+						}
+											
+						return fanMode;
 					}
-										
-					return fanMode;
+				} catch (err) {
+					this.error(`Error processing fan mode report: ${err.message}`);
 				}
 				return null;
 			},
@@ -127,13 +135,25 @@ class ZTRM6FCDevice extends ZwaveDevice {
 			report: 'THERMOSTAT_FAN_STATE_REPORT',
 			reportParser: report => {
 				this.log('THERMOSTAT_FAN_STATE report:', report);
-				if (report && report.Properties1 && report.Properties1['Fan Operating State']) {
-					const state = report.Properties1['Fan Operating State'];
-					
-					if (typeof state === 'string') {
-						this.log('Fan state:', state);
-						return state;
+				try {
+					if (report && report.Properties1 && report.Properties1['Fan Operating State']) {
+						const state = report.Properties1['Fan Operating State'];
+						
+						if (typeof state === 'string') {
+							this.log('Fan state:', state);
+							return state;
+						}
+					} else if (report && report.Level && report.Level['Fan Operating State']) {
+						// Handle the new format where the state is in Level instead of Properties1
+						const state = report.Level['Fan Operating State'];
+						
+						if (typeof state === 'string') {
+							this.log('Fan state (from Level):', state);
+							return state;
+						}
 					}
+				} catch (err) {
+					this.error(`Error processing fan state report: ${err.message}`);
 				}
 				return null;
 			},
@@ -145,14 +165,34 @@ class ZTRM6FCDevice extends ZwaveDevice {
 				getOnStart: true,
 			},
 			getParser: () => {
-				// Retrieve the setpointType based on the current thermostat_mode
-				const currentMode = this.getCapabilityValue('thermostat_mode') || 'Heat';
-				const setpointType = Mode2Setpoint[currentMode] || 'Heating 1'; // fallback
-				return {
-					Level: {
-						'Setpoint Type': setpointType !== 'not supported' ? setpointType : 'Heating 1',
-					},
-				};
+				try {
+					// Retrieve the setpointType based on the current thermostat_mode
+					const currentMode = this.getCapabilityValue('thermostat_mode') || 'Heat';
+					const setpointType = Mode2Setpoint[currentMode] || 'Heating 1'; // fallback
+					
+					if (!setpointType) {
+						this.error(`No setpoint type found for mode: ${currentMode}`);
+						return {
+							Level: {
+								'Setpoint Type': 'Heating 1', // Default fallback
+							},
+						};
+					}
+					
+					return {
+						Level: {
+							'Setpoint Type': setpointType !== 'not supported' ? setpointType : 'Heating 1',
+						},
+					};
+				} catch (err) {
+					this.error(`Error in target_temperature getParser: ${err.message}`);
+					// Return a safe default
+					return {
+						Level: {
+							'Setpoint Type': 'Heating 1',
+						},
+					};
+				}
 			},
 			set: 'THERMOSTAT_SETPOINT_SET',
 			setParserV3: setpointValue => {
@@ -166,30 +206,40 @@ class ZTRM6FCDevice extends ZwaveDevice {
 
 					// Update device settings setpoint value
 					const setpointSetting = Setpoint2Setting[setpointType];
+					if (!setpointSetting) {
+						this.error(`No matching setting found for setpoint type: ${setpointType}`);
+						return null;
+					}
+					
 					this.setSettings({
 						[setpointSetting]: setpointValue * 10,
 					}).catch(this.error);
 
 					// Prepare the buffer
 					const bufferValue = Buffer.alloc(2);
-					const scaled = (Math.round(setpointValue * 2) / 2 * 10).toFixed(0);
-					bufferValue.writeUInt16BE(scaled);
+					try {
+						const scaled = (Math.round(setpointValue * 2) / 2 * 10).toFixed(0);
+						bufferValue.writeUInt16BE(parseInt(scaled, 10));
 
-					this.log(
-						`Set thermostat setpointValue: ${setpointValue}, scaled to: ${scaled}, buffer:`,
-						bufferValue
-					);
-					return {
-						Level: {
-							'Setpoint Type': setpointType,
-						},
-						Level2: {
-							Size: 2,
-							Scale: 0,
-							Precision: 1,
-						},
-						Value: bufferValue,
-					};
+						this.log(
+							`Set thermostat setpointValue: ${setpointValue}, scaled to: ${scaled}, buffer:`,
+							bufferValue
+						);
+						return {
+							Level: {
+								'Setpoint Type': setpointType,
+							},
+							Level2: {
+								Size: 2,
+								Scale: 0,
+								Precision: 1,
+							},
+							Value: bufferValue,
+						};
+					} catch (err) {
+						this.error(`Error creating buffer for setpoint value: ${err.message}`);
+						return null;
+					}
 				}
 				return null;
 			},
@@ -202,26 +252,40 @@ class ZTRM6FCDevice extends ZwaveDevice {
 					report.Level2.hasOwnProperty('Scale') &&
 					report.Level2.hasOwnProperty('Precision') &&
 					report.Level2.Scale === 0 &&
-					typeof report.Level2.Size !== 'undefined'
+					typeof report.Level2.Size !== 'undefined' &&
+					report.Value && Buffer.isBuffer(report.Value) &&
+					report.Value.length >= report.Level2.Size
 				) {
 					let readValue;
 					try {
 						readValue = report.Value.readUIntBE(0, report.Level2.Size);
 					} catch (err) {
+						this.error(`Error reading setpoint value: ${err.message}`);
 						return null;
 					}
 					if (typeof readValue !== 'undefined') {
 						const setpointValue = readValue / 10 ** report.Level2.Precision;
-						const setpointType = report.Level['Setpoint Type'];
+						const setpointType = report.Level && report.Level['Setpoint Type'];
+						if (!setpointType) {
+							this.error('Missing Setpoint Type in report');
+							return null;
+						}
+						
 						this.log('Received setpoint report:', setpointType, setpointValue);
 
 						if (setpointType !== 'not supported') {
-							this.setStoreValue(`thermostatsetpointValue.${setpointType}`, setpointValue).catch(this.error);
+							this.setStoreValue(`thermostatsetpointValue.${setpointType}`, setpointValue)
+								.catch(err => this.error(`Error storing setpoint value: ${err.message}`));
 						}
+						
 						const setpointSetting = Setpoint2Setting[setpointType];
-						this.setSettings({
-							[setpointSetting]: setpointValue * 10,
-						}).catch(this.error);
+						if (!setpointSetting) {
+							this.error(`No matching setting found for setpoint type: ${setpointType}`);
+						} else {
+							this.setSettings({
+								[setpointSetting]: setpointValue * 10,
+							}).catch(err => this.error(`Error updating settings: ${err.message}`));
+						}
 
 						// Only update the UI if the current mode matches the type
 						const currentMode = this.getCapabilityValue('thermostat_mode') || 'Heat';
@@ -251,26 +315,38 @@ class ZTRM6FCDevice extends ZwaveDevice {
 					this.log('thermostat_mode setParser - invalid mode type');
 					return null;
 				}
-				const result = {
-					Level: {
-						'No of Manufacturer Data fields': 0,
-						'Mode': mode,
-					},
-					'Manufacturer Data': Buffer.from([]),
-				};
-				this.log('thermostat_mode setParser - sending:', JSON.stringify(result));
-				return result;
+				
+				try {
+					const result = {
+						Level: {
+							'No of Manufacturer Data fields': 0,
+							'Mode': mode,
+						},
+						'Manufacturer Data': Buffer.from([]),
+					};
+					this.log('thermostat_mode setParser - sending:', JSON.stringify(result));
+					return result;
+				} catch (err) {
+					this.error(`Error creating thermostat mode command: ${err.message}`);
+					return null;
+				}
 			},
 			report: 'THERMOSTAT_MODE_REPORT',
 			reportParser: report => {
 				this.log('Thermostat mode report:', report);
-				if (report && report.Level && report.Level.Mode) {
-					const mode = report.Level.Mode;
-					if (typeof mode === 'string' && this.ThermostatModeToCapability.hasOwnProperty(mode)) {
-						const capabilityMode = this.ThermostatModeToCapability[mode];
-						this.log('Capability Mode', capabilityMode);
-						return capabilityMode;
+				try {
+					if (report && report.Level && report.Level.Mode) {
+						const mode = report.Level.Mode;
+						if (typeof mode === 'string' && this.ThermostatModeToCapability.hasOwnProperty(mode)) {
+							const capabilityMode = this.ThermostatModeToCapability[mode];
+							this.log('Capability Mode', capabilityMode);
+							return capabilityMode;
+						} else {
+							this.log(`Unknown thermostat mode received: ${mode}`);
+						}
 					}
+				} catch (err) {
+					this.error(`Error processing thermostat mode report: ${err.message}`);
 				}
 				return null;
 			},
@@ -281,6 +357,11 @@ class ZTRM6FCDevice extends ZwaveDevice {
 			try {
 				const confValRaw = report['Configuration Value (Raw)'];
 				const paramNum = report?.['Parameter Number'];
+				
+				if (paramNum === undefined || paramNum === null) {
+					this.error('Missing Parameter Number in CONFIGURATION_REPORT');
+					return;
+				}
 				
 				// Find the matching setting in the manifest
 				const manifestSettings = this.getManifestSettings();
@@ -301,23 +382,37 @@ class ZTRM6FCDevice extends ZwaveDevice {
 				} else if (confValRaw && Array.isArray(confValRaw.data)) {
 					valueBuffer = Buffer.from(confValRaw.data);
 				} else {
-					this.log(`Invalid Configuration Value format: ${JSON.stringify(report, null, 2)}`);
+					this.error(`Invalid Configuration Value format: ${JSON.stringify(report, null, 2)}`);
+					return;
+				}
+				
+				// Check if buffer has enough bytes
+				if (valueBuffer.length < paramSize) {
+					this.error(`Buffer too small for parameter size: ${valueBuffer.length} < ${paramSize}`);
 					return;
 				}
 				
 				// Read the appropriate number of bytes based on manifest settings
-				if (paramSize === 1) {
-					parsedValue = isSigned 
-						? valueBuffer.readInt8(0) 
-						: valueBuffer.readUInt8(0);
-				} else if (paramSize === 2) {
-					parsedValue = isSigned 
-						? valueBuffer.readInt16BE(0) 
-						: valueBuffer.readUInt16BE(0);
-				} else if (paramSize === 4) {
-					parsedValue = isSigned 
-						? valueBuffer.readInt32BE(0) 
-						: valueBuffer.readUInt32BE(0);
+				try {
+					if (paramSize === 1) {
+						parsedValue = isSigned 
+							? valueBuffer.readInt8(0) 
+							: valueBuffer.readUInt8(0);
+					} else if (paramSize === 2) {
+						parsedValue = isSigned 
+							? valueBuffer.readInt16BE(0) 
+							: valueBuffer.readUInt16BE(0);
+					} else if (paramSize === 4) {
+						parsedValue = isSigned 
+							? valueBuffer.readInt32BE(0) 
+							: valueBuffer.readUInt32BE(0);
+					} else {
+						this.error(`Unsupported parameter size: ${paramSize}`);
+						return;
+					}
+				} catch (err) {
+					this.error(`Error reading configuration value: ${err.message}`);
+					return;
 				}
 				
 				this.log(`Updating settings - Parameter ${paramNum}: ${parsedValue} (size: ${paramSize}, signed: ${isSigned})`);
@@ -359,22 +454,29 @@ class ZTRM6FCDevice extends ZwaveDevice {
 					}
 					
 					if (typeof state === 'string') {
-						const thermostatStateObj = {
-							state: state,
-							state_name: this.homey.__(`state.${state}`),
-						};
-						if (this.homey.app && this.homey.app.triggerThermostatStateChangedTo) {
-							this.homey.app.triggerThermostatStateChangedTo.trigger(this, null, thermostatStateObj)
-								.catch(err => this.error('Error triggering flow card:', err));
+						try {
+							const thermostatStateObj = {
+								state: state,
+								state_name: typeof this.homey.__ === 'function' ? 
+									this.homey.__(`state.${state}`) : 
+									state,
+							};
+							if (this.homey.app && this.homey.app.triggerThermostatStateChangedTo) {
+								this.homey.app.triggerThermostatStateChangedTo.trigger(this, null, thermostatStateObj)
+									.catch(err => this.error('Error triggering flow card:', err));
+							}
+							return state;
+						} catch (err) {
+							this.error(`Error processing thermostat state: ${err.message}`);
+							return state; // Still return the state even if trigger fails
 						}
-						return state;
 					}
 				}
 				return null;
 			},
 		});
 
-		this.setAvailable().catch(this.error);
+		this.setAvailable().catch(err => this.error(`Error setting device available: ${err.message}`));
 
 	}
 }
