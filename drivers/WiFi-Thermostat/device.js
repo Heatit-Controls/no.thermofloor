@@ -49,6 +49,8 @@ module.exports = class MyDevice extends Homey.Device {
                 try {
                     const parsedData = JSON.parse(rawData);
                     this.setCapabilityValue('measure_temperature', parsedData.internalTemperature).catch(this.error);
+                    this.setCapabilityValue('measure_temperature.external', parsedData.externalTemperature).catch(this.error);
+                    this.setCapabilityValue('measure_temperature.floor', parsedData.floorTemperature).catch(this.error);
                     this.setCapabilityValue('target_temperature', parsedData.parameters.heatingSetpoint).catch(this.error);
                     let kWh = this.getCapabilityValue('meter_power');
                     kWh = kWh + (parsedData.currentPower * (this.getSettings().interval / 3600)) / 1000;
