@@ -2560,6 +2560,118 @@
       ]
     },
     {
+      "name": {
+        "en": "WiFi-Panel-Heater"
+      },
+      "class": "heater",
+      "capabilities": [
+        "meter_power",
+        "measure_power",
+        "target_temperature",
+        "measure_temperature",
+        "onoff"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [],
+      "images": {
+        "small": "/drivers/WiFi-Panel-Heater/assets/images/small.png",
+        "large": "/drivers/WiFi-Panel-Heater/assets/images/large.png",
+        "xlarge": "/drivers/WiFi-Panel-Heater/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "WiFi-Panel-Heater",
+      "settings": [
+        {
+          "id": "interval",
+          "type": "number",
+          "label": {
+            "en": "Report interval (s)"
+          },
+          "value": 30,
+          "min": 30,
+          "max": 500000,
+          "units": {
+            "en": "Seconds"
+          }
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "WiFi-Thermostat"
+      },
+      "class": "thermostat",
+      "capabilities": [
+        "meter_power",
+        "measure_power",
+        "target_temperature",
+        "measure_temperature",
+        "measure_temperature.external",
+        "measure_temperature.floor",
+        "onoff"
+      ],
+      "capabilitiesOptions": {
+        "measure_temperature.external": {
+          "title": "external temperature"
+        },
+        "measure_temperature.floor": {
+          "title": "floor temperature"
+        }
+      },
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [],
+      "images": {
+        "small": "/drivers/WiFi-Thermostat/assets/images/small.png",
+        "large": "/drivers/WiFi-Thermostat/assets/images/large.png",
+        "xlarge": "/drivers/WiFi-Thermostat/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "WiFi-Thermostat",
+      "settings": [
+        {
+          "id": "interval",
+          "type": "number",
+          "label": {
+            "en": "Report interval (s)"
+          },
+          "value": 30,
+          "min": 30,
+          "max": 500000,
+          "units": {
+            "en": "Seconds"
+          }
+        }
+      ]
+    },
+    {
       "id": "Z-DIN-616",
       "name": {
         "en": "Z-DIN-616"
@@ -12441,57 +12553,6 @@
         "xlarge": "/drivers/Zig-Dim/assets/images/xlarge.png"
       },
       "id": "Zig-Dim"
-    },
-    {
-      "name": {
-        "en": "WiFi-Panel-Heater"
-      },
-      "class": "heater",
-      "capabilities": [
-        "meter_power",
-        "measure_power",
-        "target_temperature",
-        "measure_temperature",
-        "onoff"
-      ],
-      "platforms": [
-        "local"
-      ],
-      "connectivity": [],
-      "images": {
-        "small": "/drivers/wifi-panel-heater/assets/images/small.png",
-        "large": "/drivers/wifi-panel-heater/assets/images/large.png",
-        "xlarge": "/drivers/wifi-panel-heater/assets/images/xlarge.png"
-      },
-      "pair": [
-        {
-          "id": "list_devices",
-          "template": "list_devices",
-          "navigation": {
-            "next": "add_devices"
-          }
-        },
-        {
-          "id": "add_devices",
-          "template": "add_devices"
-        }
-      ],
-      "id": "wifi-panel-heater",
-      "settings": [
-        {
-          "id": "interval",
-          "type": "number",
-          "label": {
-            "en": "Report interval (s)"
-          },
-          "value": 30,
-          "min": 30,
-          "max": 500000,
-          "units": {
-            "en": "Seconds"
-          }
-        }
-      ]
     }
   ],
   "capabilities": {
