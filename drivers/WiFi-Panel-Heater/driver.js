@@ -1,5 +1,6 @@
-import Homey from 'homey';
-import http from 'node:http';
+'use strict';
+const Homey = require('homey');
+const http = require('node:http');
 
 module.exports = class MyDriver extends Homey.Driver {
 
@@ -16,7 +17,6 @@ module.exports = class MyDriver extends Homey.Driver {
      * This should return an array with the data of devices that are available for pairing.
      */
     async onPairListDevices() {
-
 
         let discoveryStrategy = this.homey.discovery.getStrategy("arp");
         let discoveryResults = discoveryStrategy.getDiscoveryResults();
@@ -37,31 +37,15 @@ module.exports = class MyDriver extends Homey.Driver {
 
         for (const element of allDevices) {
             if (await this.isNotWiFiPanelHeater(element.store.address)) {
-                compatibleDevices = compatibleDevices.filter(obj => obj.store.address !== element.store.address) //Remove
+                compatibleDevices = compatibleDevices.filter(obj => obj.store.address !== element.store.address); //Remove
             }
         }
 
-
         return compatibleDevices;
-
-
-        return [
-            // Example device data, note that `store` is optional
-            {
-                name: 'Panel Heater',
-                data: {
-                    id: 'my-device1',
-                },
-                store: {
-                    address: '127.0.0.1',
-                },
-            },
-        ];
     }
 
-    async isNotWiFiPanelHeater(ip: string) {
-
-        this.log('isWiFiPanelHeater IP ' + ip)
+    async isNotWiFiPanelHeater(ip) {
+        this.log('isWiFiPanelHeater IP ' + ip);
 
         return new Promise((resolve) => {
             http.get({
@@ -81,23 +65,21 @@ module.exports = class MyDriver extends Homey.Driver {
                     try {
                         const parsedData = JSON.parse(rawData);
                         if (parsedData.parameters.panelMode != null) {
-                            this.log('isWiFiPanelHeater true')
-                            resolve(false)
+                            this.log('isWiFiPanelHeater true');
+                            resolve(false);
                         } else {
-                            resolve(true)
+                            resolve(true);
                         }
                     } catch (e) {
                         //this.log(e.message);
-                        resolve(true)
+                        resolve(true);
                     }
                 });
 
             }).on('error', (e) => {
-                this.log('isWiFiPanelHeater false')
-                resolve(true)
+                this.log('isWiFiPanelHeater false');
+                resolve(true);
             });
-        })
+        });
     }
-
-    
 }
