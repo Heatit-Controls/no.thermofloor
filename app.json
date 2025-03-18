@@ -6,7 +6,7 @@
     "en": "Heatit Controls"
   },
   "brandColor": "#cc3333",
-  "version": "3.9.7",
+  "version": "4.0.0",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -12916,6 +12916,25 @@
           }
         }
       ]
+    }
+  },
+  "discovery": {
+    "arp": {
+      "type": "mac",
+      "mac": {
+        "manufacturer": [
+          [
+            132,
+            247,
+            3
+          ],
+          [
+            84,
+            50,
+            4
+          ]
+        ]
+      }
     }
   }
 }
