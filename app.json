@@ -2561,7 +2561,7 @@
     },
     {
       "name": {
-        "en": "WiFi-Panel-Heater"
+        "en": "WiFi6-Panel-Heater"
       },
       "class": "heater",
       "capabilities": [
@@ -2612,7 +2612,7 @@
     },
     {
       "name": {
-        "en": "WiFi-Thermostat"
+        "en": "WiFi6-Thermostat"
       },
       "class": "thermostat",
       "capabilities": [
