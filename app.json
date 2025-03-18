@@ -2561,7 +2561,7 @@
     },
     {
       "name": {
-        "en": "WiFi-Panel-Heater"
+        "en": "WiFi Panel"
       },
       "class": "heater",
       "capabilities": [
@@ -2576,9 +2576,9 @@
       ],
       "connectivity": [],
       "images": {
-        "small": "/drivers/WiFi-Panel-Heater/assets/images/small.png",
-        "large": "/drivers/WiFi-Panel-Heater/assets/images/large.png",
-        "xlarge": "/drivers/WiFi-Panel-Heater/assets/images/xlarge.png"
+        "small": "/drivers/WiFi Panel/assets/images/small.png",
+        "large": "/drivers/WiFi Panel/assets/images/large.png",
+        "xlarge": "/drivers/WiFi Panel/assets/images/xlarge.png"
       },
       "pair": [
         {
@@ -2593,7 +2593,7 @@
           "template": "add_devices"
         }
       ],
-      "id": "WiFi-Panel-Heater",
+      "id": "WiFi Panel",
       "settings": [
         {
           "id": "interval",
@@ -2612,7 +2612,7 @@
     },
     {
       "name": {
-        "en": "WiFi-Thermostat"
+        "en": "WiFi6"
       },
       "class": "thermostat",
       "capabilities": [
@@ -2637,9 +2637,9 @@
       ],
       "connectivity": [],
       "images": {
-        "small": "/drivers/WiFi-Thermostat/assets/images/small.png",
-        "large": "/drivers/WiFi-Thermostat/assets/images/large.png",
-        "xlarge": "/drivers/WiFi-Thermostat/assets/images/xlarge.png"
+        "small": "/drivers/WiFi6/assets/images/small.png",
+        "large": "/drivers/WiFi6/assets/images/large.png",
+        "xlarge": "/drivers/WiFi6/assets/images/xlarge.png"
       },
       "pair": [
         {
@@ -2654,7 +2654,7 @@
           "template": "add_devices"
         }
       ],
-      "id": "WiFi-Thermostat",
+      "id": "WiFi6",
       "settings": [
         {
           "id": "interval",
