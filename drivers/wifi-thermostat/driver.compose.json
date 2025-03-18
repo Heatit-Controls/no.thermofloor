@@ -14,10 +14,10 @@
   ],
   "capabilitiesOptions": {
     "measure_temperature.external": {
-      "title": "external temperature"
+      "title": "External temperature"
     },
     "measure_temperature.floor": {
-      "title": "floor temperature"
+      "title": "Floor temperature"
     }
   },
   "platforms": [
