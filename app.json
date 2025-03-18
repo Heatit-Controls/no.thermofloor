@@ -12441,6 +12441,57 @@
         "xlarge": "/drivers/Zig-Dim/assets/images/xlarge.png"
       },
       "id": "Zig-Dim"
+    },
+    {
+      "name": {
+        "en": "WiFi-Panel-Heater"
+      },
+      "class": "heater",
+      "capabilities": [
+        "meter_power",
+        "measure_power",
+        "target_temperature",
+        "measure_temperature",
+        "onoff"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [],
+      "images": {
+        "small": "/drivers/wifi-panel-heater/assets/images/small.png",
+        "large": "/drivers/wifi-panel-heater/assets/images/large.png",
+        "xlarge": "/drivers/wifi-panel-heater/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "wifi-panel-heater",
+      "settings": [
+        {
+          "id": "interval",
+          "type": "number",
+          "label": {
+            "en": "Report interval (s)"
+          },
+          "value": 30,
+          "min": 30,
+          "max": 500000,
+          "units": {
+            "en": "Seconds"
+          }
+        }
+      ]
     }
   ],
   "capabilities": {
