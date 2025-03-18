@@ -41,18 +41,6 @@ module.exports = class MyDriver extends Homey.Driver {
         }
 
         return compatibleDevices;
-
-        return [
-            {
-                name: 'WiFi Thermostat',
-                data: {
-                    id: 'my-device1',
-                },
-                store: {
-                    address: '192.168.1.130',
-                },
-            },
-        ];
     }
 
     async isNotWiFiThermostat(ip) {

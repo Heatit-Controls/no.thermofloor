@@ -9,7 +9,6 @@ module.exports = class MyDriver extends Homey.Driver {
      */
     async onInit() {
         this.log('Diver has been initialized');
-        //this.log(this.homey.arp)
     }
 
     /**
