@@ -7,6 +7,13 @@
 		"min": 30,
 		"max": 500000,
 		"units": { "en": "Seconds" }
+	},
+	{
+		"id": "IP-address",
+		"type": "text",
+		"label": { "en": "IP-address" },
+		"value": "192.168.1.xxx",
+		"hint": { "en": "The IP address of the thermostat. You find it in the MyHeatit app." }
 	}
 
 ]
