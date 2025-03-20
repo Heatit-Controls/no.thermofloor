@@ -2561,7 +2561,11 @@
     },
     {
       "name": {
+<<<<<<< HEAD
         "en": "WiFi-Panel"
+=======
+        "en": "WiFi Panel"
+>>>>>>> origin/4.0.0
       },
       "class": "heater",
       "capabilities": [
@@ -2623,7 +2627,11 @@
     },
     {
       "name": {
+<<<<<<< HEAD
         "en": "WiFi6-Thermostat"
+=======
+        "en": "WiFi6"
+>>>>>>> origin/4.0.0
       },
       "class": "thermostat",
       "capabilities": [

@@ -1,6 +1,10 @@
 {
   "name": {
+<<<<<<< HEAD
     "en": "WiFi-Panel"
+=======
+    "en": "WiFi Panel"
+>>>>>>> origin/4.0.0
   },
   "class": "heater",
   "capabilities": [
