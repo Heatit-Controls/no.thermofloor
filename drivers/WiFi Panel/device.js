@@ -78,7 +78,7 @@ module.exports = class MyDevice extends Homey.Device {
     async refreshState() {
 
         const client = http.get({
-            hostname: this.getStore().address,
+            hostname: this.IPaddress,
             port: 80,
             path: '/api/status',
             agent: false,
@@ -137,7 +137,7 @@ module.exports = class MyDevice extends Homey.Device {
         this.log('setParameters');
 
         const options = {
-            hostname: this.getStore().address,
+            hostname: this.IPaddress,
             port: 80,
             path: '/api/parameters',
             method: 'POST',
