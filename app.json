@@ -2579,6 +2579,9 @@
         "small": "/drivers/WiFi Panel/assets/images/small.png",
         "large": "/drivers/WiFi Panel/assets/images/large.png",
         "xlarge": "/drivers/WiFi Panel/assets/images/xlarge.png"
+        "small": "/drivers/WiFi Panel/assets/images/small.png",
+        "large": "/drivers/WiFi Panel/assets/images/large.png",
+        "xlarge": "/drivers/WiFi Panel/assets/images/xlarge.png"
       },
       "pair": [
         {
@@ -2593,6 +2596,7 @@
           "template": "add_devices"
         }
       ],
+      "id": "WiFi Panel",
       "id": "WiFi Panel",
       "settings": [
         {
@@ -2651,6 +2655,9 @@
         "small": "/drivers/WiFi6/assets/images/small.png",
         "large": "/drivers/WiFi6/assets/images/large.png",
         "xlarge": "/drivers/WiFi6/assets/images/xlarge.png"
+        "small": "/drivers/WiFi6/assets/images/small.png",
+        "large": "/drivers/WiFi6/assets/images/large.png",
+        "xlarge": "/drivers/WiFi6/assets/images/xlarge.png"
       },
       "pair": [
         {
@@ -2665,6 +2672,7 @@
           "template": "add_devices"
         }
       ],
+      "id": "WiFi6",
       "id": "WiFi6",
       "settings": [
         {
