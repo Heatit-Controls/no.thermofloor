@@ -27,14 +27,22 @@ module.exports = class MyDevice extends Homey.Device {
         this.setAvailable();
 
         //Load settings
-        this.IPaddress = this.getIpAddress();
+        this.IPaddress = await this.getIpAddressAndSetSetting();
+
         this.ReportInterval = this.getReportInterval();
         this.refreshStateLoop()
        
     }
 
-    getIpAddress() {
+    async getIpAddressAndSetSetting() {
         if (this.getStore().address != null) {
+
+            if (!this.isValidIpAddress(this.getSettings().IPaddress.trim())) {
+                await this.setSettings({
+                    IPaddress: this.getStore().address,
+                });
+            }
+
             return this.getStore().address;
         } else {
             return this.getSettings().IPaddress.trim();
@@ -46,11 +54,12 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     ipIsValid() {
-        if (!this.getStore().address) {
+        if (this.getStore().address != null) {
             return true
         } else if (this.isValidIpAddress(this.getSettings().IPaddress.trim())) {
             return true
         } else {
+            this.setUnavailable('Please check that you have entered a valid IP address under advanced settings and that the device is turned on.').catch(this.error);
             return false
         }
     }
@@ -72,7 +81,7 @@ module.exports = class MyDevice extends Homey.Device {
         }, this.ReportInterval * 1000);
     }
 
-    async refreshState() {
+    refreshState() {
         this.log("refreshState")
         const client = http.get({
             hostname: this.IPaddress,
@@ -186,8 +195,8 @@ module.exports = class MyDevice extends Homey.Device {
         changedKeys,
     }) {
         this.log("My heatit WiFi device settings where changed");
-        this.IPaddress = this.getIpAddress();
-        this.ReportInterval = this.getReportInterval();
+        this.IPaddress = newSettings.IPaddress;
+        this.ReportInterval = newSettings.interval;
     }
 
     /**
