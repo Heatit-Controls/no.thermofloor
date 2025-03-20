@@ -29,10 +29,7 @@ module.exports = class MyDevice extends Homey.Device {
         //Load settings
         this.IPaddress = this.getIpAddress();
         this.ReportInterval = this.getReportInterval();
-
-        if (this.ipIsValid()) {
-            this.refreshStateLoop()
-        }
+        this.refreshStateLoop()
        
     }
 
@@ -40,7 +37,7 @@ module.exports = class MyDevice extends Homey.Device {
         if (this.getStore().address != null) {
             return this.getStore().address;
         } else {
-            return this.getSettings().IPaddress;
+            return this.getSettings().IPaddress.trim();
         }
     }
 
@@ -51,13 +48,25 @@ module.exports = class MyDevice extends Homey.Device {
     ipIsValid() {
         if (!this.getStore().address) {
             return true
+        } else if (this.isValidIpAddress(this.getSettings().IPaddress.trim())) {
+            return true
         } else {
             return false
         }
     }
 
+    isValidIpAddress(ip) {
+        const ipv4Pattern =
+            /^(\d{1,3}\.){3}\d{1,3}$/;
+        const ipv6Pattern =
+            /^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$/;
+        return ipv4Pattern.test(ip) || ipv6Pattern.test(ip);
+    }
+
     refreshStateLoop() {
-        this.refreshState()
+        if (this.ipIsValid()) {
+            this.refreshState()
+        }
         setTimeout(() => {
             this.refreshStateLoop()
         }, this.ReportInterval * 1000);
