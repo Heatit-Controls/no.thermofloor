@@ -14,7 +14,6 @@ module.exports = class MyDevice extends Homey.Device {
             this.heatingSetpoint(value);
         });
 
-
         this.registerCapabilityListener('onoff', async (value) => {
             this.log("Changed On/Off", value);
             if (value) {
@@ -27,14 +26,47 @@ module.exports = class MyDevice extends Homey.Device {
         this.setCapabilityValue('measure_power', 0).catch(this.error);
         this.setAvailable();
 
-        setInterval(() => {
-            this.refreshState()
-        }, this.getSettings().interval * 1000);
+        //Load settings
+        this.IPaddress = this.getIpAddress();
+        this.ReportInterval = this.getReportInterval();
+
+        if (this.ipIsValid()) {
+            this.refreshStateLoop()
+        }
+       
+    }
+
+    getIpAddress() {
+        if (this.getStore().address != null) {
+            return this.getStore().address;
+        } else {
+            return this.getSettings().IPaddress;
+        }
+    }
+
+    getReportInterval() {
+        return this.getSettings().interval;
+    }
+
+    ipIsValid() {
+        if (!this.getStore().address) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    refreshStateLoop() {
+        this.refreshState()
+        setTimeout(() => {
+            this.refreshStateLoop()
+        }, this.ReportInterval * 1000);
     }
 
     async refreshState() {
+        this.log("refreshState")
         const client = http.get({
-            hostname: this.getStore().address,
+            hostname: this.IPaddress,
             port: 80,
             path: '/api/status',
             agent: false,
@@ -94,7 +126,7 @@ module.exports = class MyDevice extends Homey.Device {
         this.log('setParameters');
 
         const options = {
-            hostname: this.getStore().address,
+            hostname: this.IPaddress,
             port: 80,
             path: '/api/parameters',
             method: 'POST',
@@ -145,6 +177,8 @@ module.exports = class MyDevice extends Homey.Device {
         changedKeys,
     }) {
         this.log("My heatit WiFi device settings where changed");
+        this.IPaddress = this.getIpAddress();
+        this.ReportInterval = this.getReportInterval();
     }
 
     /**

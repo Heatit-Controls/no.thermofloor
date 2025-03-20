@@ -34,14 +34,26 @@ module.exports = class MyDriver extends Homey.Driver {
 
         let compatibleDevices = allDevices;
 
-        //for (const element of allDevices) {
-        //    if (await this.isNotWiFiThermostat(element.store.address)) {
-        //        compatibleDevices = compatibleDevices.filter(obj => obj.store.address !== element.store.address); //Remove
-        //    }
-        //}
+        for (const element of allDevices) {
+            if (await this.isNotWiFiThermostat(element.store.address)) {
+                compatibleDevices = compatibleDevices.filter(obj => obj.store.address !== element.store.address); //Remove
+            }
+        }
 
-        return compatibleDevices;
+        if (compatibleDevices.length == 0) {
+            return [
+                {
+                    name: "Add manually",
+                    data: {
+                        id: "WiFi-Thermostat" + Math.floor(Math.random() * 1000000000000),
+                    },
+                },
+            ];
+        }else {
+            return compatibleDevices;
+        }
     }
+
 
     async isNotWiFiThermostat(ip) {
 
