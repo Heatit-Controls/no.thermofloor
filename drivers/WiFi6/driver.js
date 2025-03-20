@@ -49,7 +49,8 @@ module.exports = class MyDriver extends Homey.Driver {
                     },
                 },
             ];
-        }else {
+        }
+        else {
             return compatibleDevices;
         }
     }

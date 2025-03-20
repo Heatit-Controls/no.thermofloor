@@ -40,6 +40,20 @@ module.exports = class MyDriver extends Homey.Driver {
             }
         }
 
+        if (compatibleDevices.length == 0) {
+            return [
+                {
+                    name: "Add manually",
+                    data: {
+                        id: "WiFi-Panel" + Math.floor(Math.random() * 1000000000000),
+                    },
+                },
+            ];
+        }
+        else {
+            return compatibleDevices;
+        }
+
         return compatibleDevices;
     }
 
