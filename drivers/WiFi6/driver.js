@@ -34,11 +34,11 @@ module.exports = class MyDriver extends Homey.Driver {
 
         let compatibleDevices = allDevices;
 
-        for (const element of allDevices) {
-            if (await this.isNotWiFiThermostat(element.store.address)) {
-                compatibleDevices = compatibleDevices.filter(obj => obj.store.address !== element.store.address); //Remove
-            }
-        }
+        //for (const element of allDevices) {
+        //    if (await this.isNotWiFiThermostat(element.store.address)) {
+        //        compatibleDevices = compatibleDevices.filter(obj => obj.store.address !== element.store.address); //Remove
+        //    }
+        //}
 
         return compatibleDevices;
     }
