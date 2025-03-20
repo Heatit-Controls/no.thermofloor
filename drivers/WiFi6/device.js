@@ -28,9 +28,9 @@ module.exports = class MyDevice extends Homey.Device {
 
         //Load settings
         this.IPaddress = await this.getIpAddressAndSetSetting();
+        this.ReportInterval = this.getSettings().interval;
 
-        this.ReportInterval = this.getReportInterval();
-        this.refreshStateLoop()
+        this.refreshStateLoop();
        
     }
 
@@ -49,17 +49,13 @@ module.exports = class MyDevice extends Homey.Device {
         }
     }
 
-    getReportInterval() {
-        return this.getSettings().interval;
-    }
-
     ipIsValid() {
         if (this.getStore().address != null) {
             return true
         } else if (this.isValidIpAddress(this.getSettings().IPaddress.trim())) {
             return true
         } else {
-            this.setUnavailable('Please check that you have entered a valid IP address under advanced settings and that the device is turned on.').catch(this.error);
+            this.setUnavailable('Please check that you have entered a valid IP address in advanced settings and that the device is turned on.').catch(this.error);
             return false
         }
     }

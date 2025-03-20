@@ -9,7 +9,7 @@
 		"units": { "en": "Seconds" }
 	},
 	{
-		"id": "IP-address",
+		"id": "IPaddress",
 		"type": "text",
 		"label": { "en": "IP address" },
 		"value": "192.168.1.xxx",

@@ -24,10 +24,55 @@ module.exports = class MyDevice extends Homey.Device {
         this.setCapabilityValue('measure_power', 0).catch(this.error);
         this.setAvailable();
 
-        setInterval(() => {
-            this.refreshState();
-        }, this.getSettings().interval * 1000);
+        //Load settings
+        this.IPaddress = await this.getIpAddressAndSetSetting();
+        this.ReportInterval = this.getSettings().interval;
 
+        this.refreshStateLoop();
+      
+    }
+
+    async getIpAddressAndSetSetting() {
+        if (this.getStore().address != null) {
+
+            if (!this.isValidIpAddress(this.getSettings().IPaddress.trim())) {
+                await this.setSettings({
+                    IPaddress: this.getStore().address,
+                });
+            }
+
+            return this.getStore().address;
+        } else {
+            return this.getSettings().IPaddress.trim();
+        }
+    }
+
+    ipIsValid() {
+        if (this.getStore().address != null) {
+            return true
+        } else if (this.isValidIpAddress(this.getSettings().IPaddress.trim())) {
+            return true
+        } else {
+            this.setUnavailable('Please check that you have entered a valid IP address in advanced settings and that the device is turned on.').catch(this.error);
+            return false
+        }
+    }
+
+    isValidIpAddress(ip) {
+        const ipv4Pattern =
+            /^(\d{1,3}\.){3}\d{1,3}$/;
+        const ipv6Pattern =
+            /^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$/;
+        return ipv4Pattern.test(ip) || ipv6Pattern.test(ip);
+    }
+
+    refreshStateLoop() {
+        if (this.ipIsValid()) {
+            this.refreshState()
+        }
+        setTimeout(() => {
+            this.refreshStateLoop()
+        }, this.ReportInterval * 1000);
     }
 
     async refreshState() {
@@ -131,6 +176,8 @@ module.exports = class MyDevice extends Homey.Device {
         changedKeys,
     }) {
         this.log("My heatit WiFi device settings where changed");
+        this.IPaddress = newSettings.IPaddress;
+        this.ReportInterval = newSettings.interval;
     }
 
     async onRenamed(name) {
