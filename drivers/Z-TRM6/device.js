@@ -5,7 +5,7 @@ const Homey = require('homey');
 const ThermostatFourModeDevice = require('../../lib/ThermostatFourModeDevice');
 // Import Mode2Setpoint from mappings file
 const { Mode2Setpoint } = require('../../lib/map/ZTEMP3_mappings.js');
-const { Setpoint2Setting } = require("../../lib/map/ZTEMP3_mappings");
+const { Setpoint2Setting } = require('../../lib/map/ZTEMP3_mappings');
 
 const CapabilityToThermostatMode = {
 	'off': 'Off',
@@ -48,16 +48,19 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 			'measure_temperature.external': 3,
 			'measure_temperature.floor': 4,
 		};
+		if (this.hasCapability('regulation_mode') === false) {
+			await this.addCapability('regulation_mode');
+		}
 
 		// Listen for multi-channel meter reports
-		this.registerMultiChannelReportListener(1, "METER", "METER_REPORT", report => {
+		this.registerMultiChannelReportListener(1, 'METER', 'METER_REPORT', report => {
 			const bool = report && report.hasOwnProperty('Properties2');
-			this.log("METER_REPORT", report);
+			this.log('METER_REPORT', report);
 			if (bool && report.Properties2['Scale bits 10'] === 0) {
-				this.log("meter_power", report['Meter Value (Parsed)']);
+				this.log('meter_power', report['Meter Value (Parsed)']);
 				this.setCapabilityValue('meter_power', report['Meter Value (Parsed)']).catch(this.error);
 			} else if (bool && report.Properties2['Scale bits 10'] === 2) {
-				this.log("measure_power", report['Meter Value (Parsed)']);
+				this.log('measure_power', report['Meter Value (Parsed)']);
 				this.setCapabilityValue('measure_power', report['Meter Value (Parsed)']).catch(this.error);
 			}
 		});
@@ -191,6 +194,8 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 				// Also update selectedTemperatureCapability here
 				this.selectedTemperatureCapability = this.PARAM2_SENSOR_MAP[parsedValue] || 'measure_temperature.internal';
 				this.log(`Settings updated: sensor_mode = ${parsedValue}, selectedTemperatureCapability = ${this.selectedTemperatureCapability}`);
+
+
 			} catch (error) {
 				this.log(`Error processing CONFIGURATION_REPORT: ${error.message}`);
 			}
@@ -199,6 +204,7 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 		// Register thermostat mode and temperature capabilities
 		await this.registerThermostatModeCapability();
 		await this.registerTemperature();
+		this.regulationMode();
 
 		// Now retrieve sensor_mode and set the selected sensor
 		try {
@@ -216,6 +222,39 @@ class ZTRM6Device extends ThermostatFourModeDevice {
 
 		this.log('Z-TRM6 has been initialized');
 		this.setAvailable().catch(this.error);
+	}
+
+	regulationMode() {
+		this.registerReportListener('CONFIGURATION', 'CONFIGURATION_REPORT', async report => {
+			try {
+				if (report?.['Parameter Number'] === 25) {
+					const regulationValue = report['Configuration Value (Raw)'];
+					let rawRegulationValue
+
+					if (Buffer.isBuffer(regulationValue)) {
+						rawRegulationValue = Array.from(regulationValue);
+					} else {
+						this.log(`Invalid Configuration Value format: ${JSON.stringify(report, null, 2)}`);
+						return;
+					}
+
+					const parsedRegulationValue = rawRegulationValue[0];
+					this.setCapabilityValue('regulation_mode', parseInt(parsedRegulationValue));
+				}
+			} catch (error) {
+				this.log(`Error processing CONFIGURATION_REPORT: ${error.message}`);
+			}
+		});
+
+		this.registerCapabilityListener('regulation_mode', async (value) => {
+			this.setCapabilityValue('regulation_mode', value);
+
+			this.configurationSet({
+				index: 0x19,
+				size: 0x01,
+				signed: false
+			}, value)
+		});
 	}
 
 	async onSettings({ oldSettings, newSettings, changedKeys }) {
