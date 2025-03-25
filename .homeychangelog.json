@@ -52,5 +52,8 @@
   },
   "3.9.5": {
     "en": "Fixed onoff on ZM-Thermostat. Fixed Z-TRM6 showing incorrect sensor in Setpoint UI. Added onoff on Z-TEMP3."
+  },
+  "4.0.0": {
+    "en": "Added support Heatit WiFi6 and WiFi Panel"
   }
 }

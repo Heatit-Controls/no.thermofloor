@@ -8199,6 +8199,7 @@
         "thermostat_mode",
         "target_temperature",
         "thermostat_state_13570",
+        "regulation_mode",
         "meter_power",
         "measure_power",
         "measure_temperature",
@@ -12654,6 +12655,23 @@
       "uiComponent": "toggle",
       "uiQuickAction": false,
       "icon": "/assets/alarm_siren.svg"
+    },
+    "regulation_mode": {
+      "type": "number",
+      "title": {
+        "en": "Dim level",
+        "nl": "Dim niveau"
+      },
+      "chartType": "stepLine",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "units": {
+        "en": "%"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "slider"
     },
     "scene_notification_custom_capability": {
       "type": "boolean",
