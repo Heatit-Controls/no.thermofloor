@@ -295,6 +295,7 @@ class ZTRM6Device extends ZwaveDevice {
 				
 				try {
 					if (paramNum === this.getManifestSettings().find(setting => setting.id === 'sensor_mode').zwave.index) {
+						this.log('sensor_mode change detected');
 						// Special handling for sensor mode
 						await this.setSettings({ sensor_mode: String(parsedValue) });
 						const selectedTemperatureCapability = this.PARAM2_SENSOR_MAP[parsedValue] || 'measure_temperature.internal';
@@ -310,8 +311,14 @@ class ZTRM6Device extends ZwaveDevice {
 							this.error(`Failed to update measure_temperature: ${err.message}`);
 						}
 					} else if (paramNum === this.getManifestSettings().find(setting => setting.id === 'power_reg_active_time').zwave.index) {
+						this.log('power_reg_active_time change detected');
 						this.log('power_reg_active_time changed to', parsedValue);
-						await this.setCapabilityValue('powerregulator_mode', parsedValue);
+						try {
+							await this.setCapabilityValue('powerregulator_mode', parsedValue);
+							await this.setSettings({ power_reg_active_time: parsedValue });
+						} catch (error) {
+							this.error(`Failed to update powerregulator settings: ${error.message}`);
+						}
 					} else {
 						if (matchingSetting) {
 							let settingValue = parsedValue;
@@ -367,6 +374,8 @@ class ZTRM6Device extends ZwaveDevice {
 		this.registerCapabilityListener('powerregulator_mode', async (value) => {
 			try {
 				this.setCapabilityValue('powerregulator_mode', value);
+				this.setSettings({ power_reg_active_time: value });
+
 			} catch (error) {
 				this.error(`Failed to update powerregulator_mode: ${error.message}`);
 			}
