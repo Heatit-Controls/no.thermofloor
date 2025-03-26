@@ -1,7 +1,7 @@
 {
     "type": "number",
     "title": {
-      "en": "Regulation level"
+      "en": "Powerregulator level"
     },
     "chartType": "stepLine",
     "min": 1,
