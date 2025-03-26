@@ -1,0 +1,16 @@
+{
+    "type": "number",
+    "title": {
+      "en": "Regulation level"
+    },
+    "chartType": "stepLine",
+    "min": 1,
+    "max": 10,
+    "step": 1,
+    "units": {
+      "en": "%"
+    },
+    "getable": true,
+    "setable": true,
+    "uiComponent": "slider"
+  }
