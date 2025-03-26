@@ -6,7 +6,7 @@
   "capabilities": [
     "thermostat_mode",
     "target_temperature",
-    "thermostat_state_13570",
+    "thermostat_state_IdleHeatCool",
     "powerregulator_mode",
     "meter_power",
     "measure_power",
@@ -50,7 +50,7 @@
         }
       ]
     },
-		"thermostat_state_13570": {
+		"thermostat_state_IdleHeatCool": {
 			"greyout": true,
 			"titleTrue": {
 				"en": "Active",
@@ -68,7 +68,7 @@
       "maintenanceAction": true,
       "title": {
         "en": "Reset power meter"
-      },
+      }, 
       "desc": {
         "en": "Reset the accumulated power usage (kWh), note that this can not be reversed."
       }
