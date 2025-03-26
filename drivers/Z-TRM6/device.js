@@ -26,7 +26,7 @@ class ZTRM6Device extends ZwaveDevice {
 	
 	async onNodeInit() {
 		// enable debug logging
-		this.enableDebug();
+		//this.enableDebug();
 		
 		if (this.hasCapability('thermostat_state_IdleHeatCool') === false) {
 			await this.addCapability('thermostat_state_IdleHeatCool');
