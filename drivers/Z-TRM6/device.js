@@ -294,7 +294,7 @@ class ZTRM6Device extends ZwaveDevice {
 				this.log(`Updating settings - Parameter ${paramNum}: ${parsedValue} (size: ${paramSize}, signed: ${isSigned})`);
 				
 				try {
-					if (paramNum === 2) {
+					if (paramNum === this.getManifestSettings().find(setting => setting.id === 'sensor_mode').zwave.index) {
 						// Special handling for sensor mode
 						await this.setSettings({ sensor_mode: String(parsedValue) });
 						const selectedTemperatureCapability = this.PARAM2_SENSOR_MAP[parsedValue] || 'measure_temperature.internal';
@@ -309,7 +309,7 @@ class ZTRM6Device extends ZwaveDevice {
 						} catch (err) {
 							this.error(`Failed to update measure_temperature: ${err.message}`);
 						}
-					} else if (paramNum === 25) {
+					} else if (paramNum === this.getManifestSettings().find(setting => setting.id === 'power_reg_active_time').zwave.index) {
 						this.log('power_reg_active_time changed to', parsedValue);
 						await this.setCapabilityValue('powerregulator_mode', parsedValue);
 					} else {
