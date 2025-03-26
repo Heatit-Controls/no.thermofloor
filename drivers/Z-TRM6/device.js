@@ -7,7 +7,7 @@ const { Setpoint2Setting } = require("../../lib/map/ZTEMP3_mappings");
 class ZTRM6Device extends ZwaveDevice {
 	constructor(...args) {
 		super(...args);
-		
+
 		// Define constants as class properties
 		this.CapabilityToThermostatMode = {
 			'off': 'Off',
@@ -23,18 +23,25 @@ class ZTRM6Device extends ZwaveDevice {
 			'Energy Save Heat': 'energy save heat',
 		};
 	}
-	
+
 	async onNodeInit() {
 		// enable debug logging
-		this.enableDebug();
-		
+		//this.enableDebug();
+
+		this.PRegulatorModeListener();
+
 		if (this.hasCapability('thermostat_state_IdleHeatCool') === false) {
 			await this.addCapability('thermostat_state_IdleHeatCool');
 		}
+
+		if (this.hasCapability('power_regulator_mode') === false) {
+			await this.addCapability('power_regulator_mode');
+		}
+
 		if (this.hasCapability('thermostat_state_13570') === true) {
 			await this.removeCapability('thermostat_state_13570');
 		}
-		
+
 		//map param 2 to sensor to show correct temp in measure.temperature
 		this.PARAM2_SENSOR_MAP = {
 			0: 'measure_temperature.floor',
@@ -47,7 +54,7 @@ class ZTRM6Device extends ZwaveDevice {
 
 		// print the node's info to the console
 		// this.printNode();
-		
+
 		// register capabilities for this device
 		this.registerCapability('measure_temperature.internal', 'SENSOR_MULTILEVEL', {
 			getOpts: {
@@ -78,7 +85,7 @@ class ZTRM6Device extends ZwaveDevice {
 
 					this.log(`Getting value from ${selectedTemperatureCapability}`);
 					const value = this.getCapabilityValue(selectedTemperatureCapability);
-					
+
 					return value;
 				} catch (error) {
 					this.error(`Error in measure_temperature reportParser: ${error.message}`);
@@ -100,7 +107,7 @@ class ZTRM6Device extends ZwaveDevice {
 			},
 			multiChannelNodeId: 1
 		});
-		
+
 		this.registerCapability('target_temperature', 'THERMOSTAT_SETPOINT', {
 			getOpts: {
 				getOnStart: true,
@@ -238,7 +245,7 @@ class ZTRM6Device extends ZwaveDevice {
 			await this.setStoreValue('selectedTemperatureCapability', selectedTemperatureCapability);
 			// Update measure_temperature with value fgrom selected sensor
 			const latestValue = await this.getCapabilityValue(selectedTemperatureCapability);
-			this.setCapabilityValue('measure_temperature', latestValue).catch(err => 
+			this.setCapabilityValue('measure_temperature', latestValue).catch(err =>
 				this.error(`Failed to update measure_temperature: ${err.message}`)
 			);
 		} catch (err) {
@@ -246,23 +253,27 @@ class ZTRM6Device extends ZwaveDevice {
 		}
 		this.registerReportListener('CONFIGURATION', 'CONFIGURATION_REPORT', async report => {
 			try {
-				const confValRaw = report['Configuration Value (Raw)'];
+				let confValRaw = report['Configuration Value (Raw)'];
 				const paramNum = report?.['Parameter Number'];
-				
+
+				if (paramNum === 25) {
+					this.PRegulatorMode();
+				}
+
 				// Find the matching setting in the manifest
 				const manifestSettings = this.getManifestSettings();
-				const matchingSetting = manifestSettings.find(setting => 
+				const matchingSetting = manifestSettings.find(setting =>
 					setting.zwave && setting.zwave.index === paramNum
 				);
-				
+
 				// Get parameter size and signed status from the manifest
 				const paramSize = matchingSetting?.zwave?.size || 1;
 				// Parameters are signed by default unless explicitly set to false
 				const isSigned = !(matchingSetting?.zwave?.signed === false);
-				
+
 				let parsedValue;
 				let valueBuffer;
-				
+
 				if (Buffer.isBuffer(confValRaw)) {
 					valueBuffer = confValRaw;
 				} else if (confValRaw && Array.isArray(confValRaw.data)) {
@@ -271,31 +282,31 @@ class ZTRM6Device extends ZwaveDevice {
 					this.log(`Invalid Configuration Value format: ${JSON.stringify(report, null, 2)}`);
 					return;
 				}
-				
+
 				// Read the appropriate number of bytes based on manifest settings
 				if (paramSize === 1) {
-					parsedValue = isSigned 
-						? valueBuffer.readInt8(0) 
+					parsedValue = isSigned
+						? valueBuffer.readInt8(0)
 						: valueBuffer.readUInt8(0);
 				} else if (paramSize === 2) {
-					parsedValue = isSigned 
-						? valueBuffer.readInt16BE(0) 
+					parsedValue = isSigned
+						? valueBuffer.readInt16BE(0)
 						: valueBuffer.readUInt16BE(0);
 				} else if (paramSize === 4) {
-					parsedValue = isSigned 
-						? valueBuffer.readInt32BE(0) 
+					parsedValue = isSigned
+						? valueBuffer.readInt32BE(0)
 						: valueBuffer.readUInt32BE(0);
 				}
-				
+
 				this.log(`Updating settings - Parameter ${paramNum}: ${parsedValue} (size: ${paramSize}, signed: ${isSigned})`);
-				
+
 				if (paramNum === 2) {
 					// Special handling for sensor mode
 					await this.setSettings({ sensor_mode: String(parsedValue) });
 					const selectedTemperatureCapability = this.PARAM2_SENSOR_MAP[parsedValue] || 'measure_temperature.internal';
 					this.log(`Settings updated: sensor_mode = ${parsedValue}, selectedTemperatureCapability = ${selectedTemperatureCapability}`);
 					await this.setStoreValue('selectedTemperatureCapability', selectedTemperatureCapability);
-					
+
 					// Update the measure_temperature with the value from the newly selected sensor
 					const latestValue = await this.getCapabilityValue(selectedTemperatureCapability);
 					this.log(`Updating measure_temperature to ${latestValue} from ${selectedTemperatureCapability} after configuration change`);
@@ -312,7 +323,7 @@ class ZTRM6Device extends ZwaveDevice {
 						} else if (matchingSetting.type === 'dropdown') {
 							settingValue = String(parsedValue);
 						}
-						
+
 						this.log(`Found matching setting ${matchingSetting.id} for parameter ${paramNum}, setting value to ${settingValue}`);
 						await this.setSettings({ [matchingSetting.id]: settingValue });
 						this.log(`Updated setting ${matchingSetting.id} (parameter ${paramNum}) to ${settingValue}`);
@@ -365,10 +376,10 @@ class ZTRM6Device extends ZwaveDevice {
 			const sensorMode = parseInt(newSettings.sensor_mode, 10);
 			const selectedTemperatureCapability = this.PARAM2_SENSOR_MAP[sensorMode] || 'measure_temperature.internal';
 			this.log(`Sensor mode changed to ${sensorMode}. Selected temperature capability set to: ${selectedTemperatureCapability}`);
-			
+
 			// Store the updated capability selection
 			await this.setStoreValue('selectedTemperatureCapability', selectedTemperatureCapability);
-			
+
 			// Update the measure_temperature with the value from the newly selected sensor
 			const latestValue = await this.getCapabilityValue(selectedTemperatureCapability);
 			this.log(`Updating measure_temperature to ${latestValue} from ${selectedTemperatureCapability} after sensor mode change`);
@@ -380,6 +391,32 @@ class ZTRM6Device extends ZwaveDevice {
 		}
 
 		return true;
+	}
+
+	PRegulatorMode() {
+		let rawRegulationValue
+
+		if (Buffer.isBuffer(confValRaw)) {
+			rawRegulationValue = Array.from(confValRaw);
+		} else {
+			this.log(`Invalid Configuration Value format: ${JSON.stringify(report, null, 2)}`);
+			return;
+		}
+
+		const parsedRegulationValue = rawRegulationValue[0];
+		this.setCapabilityValue('power_regulator_mode', parseInt(parsedRegulationValue));
+	}
+
+	PRegulatorModeListener() {
+		this.registerCapabilityListener('power_regulator_mode', async (value) => {
+			this.setCapabilityValue('power_regulator_mode', value);
+
+			this.configurationSet({
+				index: 0x19,
+				size: 0x01,
+				signed: false
+			}, value)
+		});
 	}
 }
 

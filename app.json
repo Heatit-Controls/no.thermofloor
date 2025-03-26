@@ -8063,6 +8063,7 @@
         "thermostat_mode",
         "target_temperature",
         "thermostat_state_IdleHeatCool",
+        "power_regulator_mode",
         "meter_power",
         "measure_power",
         "measure_temperature",
@@ -11601,7 +11602,7 @@
                   }
                 },
                 {
-                  "id": "1",
+                  "id": "2",
                   "label": {
                     "en": "Scene controller and dimming function"
                   }
@@ -11643,7 +11644,7 @@
                   }
                 },
                 {
-                  "id": "1",
+                  "id": "2",
                   "label": {
                     "en": "Scene controller and dimming function"
                   }
@@ -12533,6 +12534,22 @@
       "uiComponent": "toggle",
       "uiQuickAction": false,
       "icon": "/assets/alarm_siren.svg"
+    },
+    "power_regulator_mode": {
+      "type": "number",
+      "title": {
+        "en": "Regulation level"
+      },
+      "chartType": "stepLine",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "units": {
+        "en": "%"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "slider"
     },
     "scene_notification_custom_capability": {
       "type": "boolean",
