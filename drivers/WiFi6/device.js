@@ -92,6 +92,7 @@ module.exports = class MyDevice extends Homey.Device {
                 try {
                     const parsedData = JSON.parse(rawData);
                     this.setMeasureTemperature(parsedData);
+                    this.setOpenWindowDetectionFromThermostat(parsedData);
                     this.setCapabilityValue('measure_temperature.external', parsedData.externalTemperature).catch(this.error);
                     this.setCapabilityValue('measure_temperature.floor', parsedData.floorTemperature).catch(this.error);
                     this.setCapabilityValue('target_temperature', parsedData.parameters.heatingSetpoint).catch(this.error);
@@ -113,12 +114,12 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     debug(msg) {
-        //return //Off
+        return //Off
         this.log(msg)
     }
 
     setMeasureTemperature(thermostatData) {
-        let settingSensorMode = parseInt(this.getSettings().sensorMode)
+        let settingSensorMode = parseInt(this.getSettings().sensorMode);
         this.debug("settingSensorMode: " + settingSensorMode.toString() + " Thermostat sensorValue: " + thermostatData.parameters.sensorMode.toString())
         if (settingSensorMode != thermostatData.parameters.sensorMode) {
             settingSensorMode = thermostatData.parameters.sensorMode;
@@ -147,6 +148,16 @@ module.exports = class MyDevice extends Homey.Device {
             this.setCapabilityValue('measure_temperature', thermostatData.internalTemperature).catch(this.error);
         }
         //5 = Power regulator mode(PWER)
+    }
+
+    setOpenWindowDetectionFromThermostat(thermostatData) {
+        let openWindowDetectionSetting = this.getSettings().openWindowDetection;
+        this.debug("openWindowDetectionSetting: " + openWindowDetectionSetting.toString() + " Thermostat openWindowDetection: " + thermostatData.parameters.OWD.openWindowDetection.toString())
+        if (openWindowDetectionSetting != thermostatData.parameters.OWD.openWindowDetection) {
+            //Save changes from thermostat
+            this.debug("Open Window Detection changed on thermostat");
+            this.setSettings({ openWindowDetection: thermostatData.parameters.OWD.openWindowDetection });
+        }
     }
 
     async setOperatingModeOn() {
