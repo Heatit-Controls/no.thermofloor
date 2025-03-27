@@ -47,7 +47,7 @@
 		"id": "openWindowDetection",
 		"type": "checkbox",
 		"value": false,
-		"label": { "en": "Open Window Detection" }
+		"label": { "en": "Open window detection" }
 	}
 
 ]
