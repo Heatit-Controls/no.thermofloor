@@ -14,7 +14,7 @@ class ZTRM6FCDevice extends ZwaveDevice {
 			'heat': 'Heat',
 			'cool': 'Cool',
 			'energy save heat': 'Energy Save Heat',
-			'auto': 'Auto',
+			'auto changeover': 'Auto Changeover',
 			'fan': 'Fan Only',
 		};
 
@@ -23,7 +23,7 @@ class ZTRM6FCDevice extends ZwaveDevice {
 			'Heat': 'heat',
 			'Cool': 'cool',
 			'Energy Save Heat': 'energy save heat',
-			'Auto': 'auto',
+			'Auto Changeover': 'auto changeover',
 			'Fan Only': 'fan',
 		};
 		
@@ -48,7 +48,7 @@ class ZTRM6FCDevice extends ZwaveDevice {
 	
 	async onNodeInit() {
 		// enable debug logging
-		this.enableDebug();
+		//this.enableDebug();
 		
 
 		// print the node's info to the console
@@ -358,11 +358,6 @@ class ZTRM6FCDevice extends ZwaveDevice {
 				const confValRaw = report['Configuration Value (Raw)'];
 				const paramNum = report?.['Parameter Number'];
 				
-				if (paramNum === undefined || paramNum === null) {
-					this.error('Missing Parameter Number in CONFIGURATION_REPORT');
-					return;
-				}
-				
 				// Find the matching setting in the manifest
 				const manifestSettings = this.getManifestSettings();
 				const matchingSetting = manifestSettings.find(setting => 
@@ -382,60 +377,51 @@ class ZTRM6FCDevice extends ZwaveDevice {
 				} else if (confValRaw && Array.isArray(confValRaw.data)) {
 					valueBuffer = Buffer.from(confValRaw.data);
 				} else {
-					this.error(`Invalid Configuration Value format: ${JSON.stringify(report, null, 2)}`);
-					return;
-				}
-				
-				// Check if buffer has enough bytes
-				if (valueBuffer.length < paramSize) {
-					this.error(`Buffer too small for parameter size: ${valueBuffer.length} < ${paramSize}`);
+					this.log(`Invalid Configuration Value format: ${JSON.stringify(report, null, 2)}`);
 					return;
 				}
 				
 				// Read the appropriate number of bytes based on manifest settings
-				try {
-					if (paramSize === 1) {
-						parsedValue = isSigned 
-							? valueBuffer.readInt8(0) 
-							: valueBuffer.readUInt8(0);
-					} else if (paramSize === 2) {
-						parsedValue = isSigned 
-							? valueBuffer.readInt16BE(0) 
-							: valueBuffer.readUInt16BE(0);
-					} else if (paramSize === 4) {
-						parsedValue = isSigned 
-							? valueBuffer.readInt32BE(0) 
-							: valueBuffer.readUInt32BE(0);
-					} else {
-						this.error(`Unsupported parameter size: ${paramSize}`);
-						return;
-					}
-				} catch (err) {
-					this.error(`Error reading configuration value: ${err.message}`);
-					return;
+				if (paramSize === 1) {
+					parsedValue = isSigned 
+						? valueBuffer.readInt8(0) 
+						: valueBuffer.readUInt8(0);
+				} else if (paramSize === 2) {
+					parsedValue = isSigned 
+						? valueBuffer.readInt16BE(0) 
+						: valueBuffer.readUInt16BE(0);
+				} else if (paramSize === 4) {
+					parsedValue = isSigned 
+						? valueBuffer.readInt32BE(0) 
+						: valueBuffer.readUInt32BE(0);
 				}
 				
 				this.log(`Updating settings - Parameter ${paramNum}: ${parsedValue} (size: ${paramSize}, signed: ${isSigned})`);
 				
-				if (matchingSetting) {
-					let settingValue = parsedValue;
-					if (matchingSetting.type === 'checkbox') {
-						settingValue = Boolean(parsedValue);
-					} else if (matchingSetting.type === 'dropdown') {
-						settingValue = String(parsedValue);
+				try {
+					if (matchingSetting) {
+						let settingValue = parsedValue;
+						if (matchingSetting.type === 'checkbox') {
+							settingValue = Boolean(parsedValue);
+						} else if (matchingSetting.type === 'dropdown') {
+							settingValue = String(parsedValue);
+						}
+						
+						this.log(`Found matching setting ${matchingSetting.id} for parameter ${paramNum}, setting value to ${settingValue}`);
+						await this.setSettings({ [matchingSetting.id]: settingValue });
+						this.log(`Updated setting ${matchingSetting.id} (parameter ${paramNum}) to ${settingValue}`);
+					} else {
+						await this.setSettings({ [`param_${paramNum}`]: parsedValue });
+						this.log(`Updated parameter ${paramNum} to ${parsedValue} (no matching setting ID found)`);
 					}
-					
-					this.log(`Found matching setting ${matchingSetting.id} for parameter ${paramNum}, setting value to ${settingValue}`);
-					await this.setSettings({ [matchingSetting.id]: settingValue });
-					this.log(`Updated setting ${matchingSetting.id} (parameter ${paramNum}) to ${settingValue}`);
-				} else {
-					await this.setSettings({ [`param_${paramNum}`]: parsedValue });
-					this.log(`Updated parameter ${paramNum} to ${parsedValue} (no matching setting ID found)`);
+				} catch (error) {
+					this.error(`Error processing CONFIGURATION_REPORT settings: ${error.message}`);
 				}
 			} catch (error) {
 				this.error(`Error processing CONFIGURATION_REPORT: ${error.message}`);
 			}
 		});
+
 
 		this.registerCapability('thermostat_state_IdleHeatCoolFan', 'THERMOSTAT_OPERATING_STATE', {
 			getOpts: {

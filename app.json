@@ -6,7 +6,7 @@
     "en": "Heatit Controls"
   },
   "brandColor": "#cc3333",
-  "version": "3.9.7",
+  "version": "4.0.0",
   "compatibility": ">=12.2.0",
   "platforms": [
     "local",
@@ -2554,6 +2554,140 @@
               }
             }
           ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "WiFi-Panel"
+      },
+      "class": "heater",
+      "capabilities": [
+        "meter_power",
+        "measure_power",
+        "target_temperature",
+        "measure_temperature",
+        "onoff"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [],
+      "images": {
+        "small": "/drivers/WiFi Panel/assets/images/small.png",
+        "large": "/drivers/WiFi Panel/assets/images/large.png",
+        "xlarge": "/drivers/WiFi Panel/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "WiFi Panel",
+      "settings": [
+        {
+          "id": "interval",
+          "type": "number",
+          "label": {
+            "en": "Report interval (s)"
+          },
+          "value": 30,
+          "min": 30,
+          "max": 500000,
+          "units": {
+            "en": "Seconds"
+          }
+        },
+        {
+          "id": "IPaddress",
+          "type": "text",
+          "label": {
+            "en": "IP address"
+          },
+          "value": "192.168.1.xxx",
+          "hint": {
+            "en": "The IP address of the panel heater. You find it in the MyHeatit app."
+          }
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "WiFi6-Thermostat"
+      },
+      "class": "thermostat",
+      "capabilities": [
+        "meter_power",
+        "measure_power",
+        "target_temperature",
+        "measure_temperature",
+        "measure_temperature.external",
+        "measure_temperature.floor",
+        "onoff"
+      ],
+      "capabilitiesOptions": {
+        "measure_temperature.external": {
+          "title": "External temperature"
+        },
+        "measure_temperature.floor": {
+          "title": "Floor temperature"
+        }
+      },
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [],
+      "images": {
+        "small": "/drivers/WiFi6/assets/images/small.png",
+        "large": "/drivers/WiFi6/assets/images/large.png",
+        "xlarge": "/drivers/WiFi6/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "WiFi6",
+      "settings": [
+        {
+          "id": "interval",
+          "type": "number",
+          "label": {
+            "en": "Report interval (s)"
+          },
+          "value": 30,
+          "min": 30,
+          "max": 500000,
+          "units": {
+            "en": "Seconds"
+          }
+        },
+        {
+          "id": "IPaddress",
+          "type": "text",
+          "label": {
+            "en": "IP address"
+          },
+          "value": "192.168.1.xxx",
+          "hint": {
+            "en": "The IP address of the thermostat. You find it in the MyHeatit app."
+          }
         }
       ]
     },
@@ -8062,7 +8196,8 @@
       "capabilities": [
         "thermostat_mode",
         "target_temperature",
-        "thermostat_state_13570",
+        "thermostat_state_IdleHeatCool",
+        "powerregulator_mode",
         "meter_power",
         "measure_power",
         "measure_temperature",
@@ -8104,7 +8239,7 @@
             }
           ]
         },
-        "thermostat_state_13570": {
+        "thermostat_state_IdleHeatCool": {
           "greyout": true,
           "titleTrue": {
             "en": "Active",
@@ -8951,9 +9086,9 @@
               }
             },
             {
-              "id": "auto",
+              "id": "auto changeover",
               "title": {
-                "en": "Auto"
+                "en": "Auto Changeover"
               }
             }
           ]
@@ -9428,7 +9563,7 @@
           }
         },
         {
-          "id": "auto_setpoint",
+          "id": "auto_changeover_setpoint",
           "type": "number",
           "label": {
             "en": "AUTO setpoint"
@@ -9765,6 +9900,94 @@
             "min": 40,
             "max": 100
           }
+        },
+        {
+          "id": "2/4 pipe system",
+          "type": "dropdown",
+          "label": {
+            "en": "2/4 pipe system"
+          },
+          "hint": {
+            "en": "Select if the system is a 2, or 4 pipe system (0 = 2 pipe system ; 1 = 4 pipe system)"
+          },
+          "zwave": {
+            "index": 30,
+            "size": 1
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "2 Pipe system (Default)"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "4 Pipe system"
+              }
+            }
+          ]
+        },
+        {
+          "id": "low_temperature_protection",
+          "type": "dropdown",
+          "label": {
+            "en": "Low temperature protection"
+          },
+          "hint": {
+            "en": "Set low temperature protection, will turn on if the temperature is below the setpoint (0 = Disabled; 5-10:°C, Default is 0"
+          },
+          "zwave": {
+            "index": 31,
+            "size": 1
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Disabled"
+              }
+            },
+            {
+              "id": "5",
+              "label": {
+                "en": "5°C"
+              }
+            },
+            {
+              "id": "6",
+              "label": {
+                "en": "6°C"
+              }
+            },
+            {
+              "id": "7",
+              "label": {
+                "en": "7°C"
+              }
+            },
+            {
+              "id": "8",
+              "label": {
+                "en": "8°C"
+              }
+            },
+            {
+              "id": "9",
+              "label": {
+                "en": "9°C"
+              }
+            },
+            {
+              "id": "10",
+              "label": {
+                "en": "10°C"
+              }
+            }
+          ]
         }
       ]
     },
@@ -13390,6 +13613,22 @@
       "uiQuickAction": false,
       "icon": "/assets/alarm_siren.svg"
     },
+    "powerregulator_mode": {
+      "type": "number",
+      "title": {
+        "en": "Powerregulator level"
+      },
+      "chartType": "stepLine",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "units": {
+        "en": "%"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "slider"
+    },
     "scene_notification_custom_capability": {
       "type": "boolean",
       "title": {
@@ -13594,6 +13833,102 @@
       "getable": true,
       "setable": true
     },
+    "thermostat_mode_OffHeat": {
+      "type": "enum",
+      "title": {
+        "en": "Thermostat mode"
+      },
+      "desc": {
+        "en": "Mode of the thermostat"
+      },
+      "uiComponent": "picker",
+      "values": [
+        {
+          "id": "off",
+          "title": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "heat",
+          "title": {
+            "en": "Heating"
+          }
+        }
+      ],
+      "getable": true,
+      "setable": true
+    },
+    "thermostat_mode_OffHeatCool": {
+      "type": "enum",
+      "title": {
+        "en": "Thermostat mode"
+      },
+      "desc": {
+        "en": "Mode of the thermostat"
+      },
+      "uiComponent": "picker",
+      "values": [
+        {
+          "id": "off",
+          "title": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "heat",
+          "title": {
+            "en": "Heating"
+          }
+        },
+        {
+          "id": "cool",
+          "title": {
+            "en": "Cooling"
+          }
+        }
+      ],
+      "getable": true,
+      "setable": true
+    },
+    "thermostat_mode_OffHeatCoolEco": {
+      "type": "enum",
+      "title": {
+        "en": "Thermostat mode"
+      },
+      "desc": {
+        "en": "Mode of the thermostat"
+      },
+      "uiComponent": "picker",
+      "values": [
+        {
+          "id": "off",
+          "title": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "heat",
+          "title": {
+            "en": "Heating"
+          }
+        },
+        {
+          "id": "cool",
+          "title": {
+            "en": "Cooling"
+          }
+        },
+        {
+          "id": "energy save heat",
+          "title": {
+            "en": "Heating"
+          }
+        }
+      ],
+      "getable": true,
+      "setable": true
+    },
     "thermostat_mode_single": {
       "type": "enum",
       "uiComponent": "picker",
@@ -13760,6 +14095,87 @@
         }
       ]
     },
+    "thermostat_state_IdleHeat": {
+      "type": "enum",
+      "uiComponent": "sensor",
+      "icon": "/assets/thermofloor_onoff.svg",
+      "noblink": false,
+      "greyout": true,
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "title": {
+        "en": "State"
+      },
+      "desc": {
+        "en": "State of the thermostat"
+      },
+      "values": [
+        {
+          "id": "Idle",
+          "title": {
+            "en": "Idle"
+          }
+        },
+        {
+          "id": "Heating",
+          "title": {
+            "en": "Heating"
+          }
+        }
+      ],
+      "insightsTitleIdle": {
+        "en": "Heating idle"
+      },
+      "insightsTitleHeating": {
+        "en": "Heating active"
+      }
+    },
+    "thermostat_state_IdleHeatCool": {
+      "type": "enum",
+      "uiComponent": "sensor",
+      "icon": "/assets/thermostat_state.svg",
+      "noblink": false,
+      "greyout": true,
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "title": {
+        "en": "State"
+      },
+      "desc": {
+        "en": "State of the thermostat"
+      },
+      "values": [
+        {
+          "id": "Idle",
+          "title": {
+            "en": "Idle"
+          }
+        },
+        {
+          "id": "Heating",
+          "title": {
+            "en": "Heating"
+          }
+        },
+        {
+          "id": "Cooling",
+          "title": {
+            "en": "Cooling"
+          }
+        }
+      ],
+      "insightsTitleIdle": {
+        "en": "Heating idle"
+      },
+      "insightsTitleHeating": {
+        "en": "Heating active"
+      },
+      "insightsTitleCooling": {
+        "en": "Cooling active"
+      }
+    },
     "thermostat_state_IdleHeatCoolFan": {
       "type": "enum",
       "uiComponent": "sensor",
@@ -13801,6 +14217,25 @@
           }
         }
       ]
+    }
+  },
+  "discovery": {
+    "arp": {
+      "type": "mac",
+      "mac": {
+        "manufacturer": [
+          [
+            84,
+            50,
+            4
+          ],
+          [
+            132,
+            247,
+            3
+          ]
+        ]
+      }
     }
   }
 }

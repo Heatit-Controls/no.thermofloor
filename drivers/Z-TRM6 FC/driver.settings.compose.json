@@ -145,7 +145,7 @@
     "attr": { "min": 50, "max": 400 }
   },
   {
-    "id": "auto_setpoint",
+    "id": "auto_changeover_setpoint",
     "type": "number",
     "label": { "en": "AUTO setpoint" },
     "hint": { "en": "Set the setpoint for AUTO mode (5°C to 40°C)" },
@@ -285,5 +285,34 @@
     "zwave": { "index": 29, "size": 1 },
     "value": 50,
     "attr": { "min": 40, "max": 100 }
+  },
+  {
+    "id": "2/4 pipe system",
+    "type": "dropdown",
+    "label": { "en": "2/4 pipe system" },
+    "hint": { "en": "Select if the system is a 2, or 4 pipe system (0 = 2 pipe system ; 1 = 4 pipe system)" },
+    "zwave": { "index": 30, "size": 1 },
+    "value": "0",
+    "values": [
+      { "id": "0", "label": { "en": "2 Pipe system (Default)" } },
+      { "id": "1", "label": { "en": "4 Pipe system" } }
+    ]
+  },
+  {
+    "id": "low_temperature_protection",
+    "type": "dropdown",
+    "label": { "en": "Low temperature protection" },
+    "hint": { "en": "Set low temperature protection, will turn on if the temperature is below the setpoint (0 = Disabled; 5-10:°C, Default is 0" },
+    "zwave": { "index": 31, "size": 1 },
+    "value": "0",
+    "values": [
+      { "id": "0", "label": { "en": "Disabled" } },
+      { "id": "5", "label": { "en": "5°C" } },
+      { "id": "6", "label": { "en": "6°C" } },
+      { "id": "7", "label": { "en": "7°C" } },
+      { "id": "8", "label": { "en": "8°C" } },
+      { "id": "9", "label": { "en": "9°C" } },
+      { "id": "10", "label": { "en": "10°C" } }
+    ]
   }
 ]
