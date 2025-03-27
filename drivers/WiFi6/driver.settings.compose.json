@@ -14,6 +14,34 @@
 		"label": { "en": "IP address" },
 		"value": "192.168.1.xxx",
 		"hint": { "en": "The IP address of the thermostat. You find it in the MyHeatit app." }
+	},
+	{
+		"id": "sensorMode",
+		"type": "dropdown",
+		"value": "1",
+		"label": { "en": "Default mode" },
+		"values": [
+			{
+				"id": "0",
+				"label": { "en": "Floor sensor (F)" }
+			},
+			{
+				"id": "1",
+				"label": { "en": "Internal sensor (A) (Default)" }
+			},
+			{
+				"id": "2",
+				"label": { "en": "Internal sensor & floor sensor limitation (AF)" }
+			},
+			{
+				"id": "3",
+				"label": { "en": "External sensor (A2)" }
+			},
+			{
+				"id": "4",
+				"label": { "en": "External sensor & floor sensor limitation (A2F)" }
+			}
+		]
 	}
 
 ]
