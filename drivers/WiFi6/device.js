@@ -11,15 +11,15 @@ module.exports = class MyDevice extends Homey.Device {
         this.log('Device has been initialized');
         this.registerCapabilityListener('target_temperature', async (value) => {
             this.log("Changed temp", value);
-            this.heatingSetpoint(value);
+            this.setHeatingSetpoint(value);
         });
 
         this.registerCapabilityListener('onoff', async (value) => {
             this.log("Changed On/Off", value);
             if (value) {
-                this.operatingModeOn()
+                this.setOperatingModeOn()
             } else {
-                this.operatingModeOff()
+                this.setOoperatingModeOff()
             }
         });
 
@@ -115,21 +115,28 @@ module.exports = class MyDevice extends Homey.Device {
         });
     }
 
-    async operatingModeOn() {
+    async setOperatingModeOn() {
         const postData = JSON.stringify({
             'operatingMode': 1,
         });
         await this.setParameters(postData);
     }
 
-    async operatingModeOff() {
+    async setSensorMode(mode) {
+        const postData = JSON.stringify({
+            'sensorMode': parseInt(mode),
+        });
+        await this.setParameters(postData);
+    }
+
+    async setOoperatingModeOff() {
         const postData = JSON.stringify({
             'operatingMode': 0,
         });
         await this.setParameters(postData);
     }
 
-    async heatingSetpoint(value) {
+    async setHeatingSetpoint(value) {
         const postData = JSON.stringify({
             'heatingSetpoint': value,
         });
@@ -193,6 +200,9 @@ module.exports = class MyDevice extends Homey.Device {
         this.log("My heatit WiFi device settings where changed");
         this.IPaddress = newSettings.IPaddress;
         this.ReportInterval = newSettings.interval;
+        if (oldSettings.sensorMode != newSettings.sensorMode) {
+            await this.setSensorMode(newSettings.sensorMode);
+        }
     }
 
     /**
@@ -208,5 +218,5 @@ module.exports = class MyDevice extends Homey.Device {
      */
     async onDeleted() {
         this.log('My heatit WiFi device has been deleted');
-    }
+    }   
 };

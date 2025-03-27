@@ -2668,6 +2668,17 @@
       "id": "WiFi6",
       "settings": [
         {
+          "id": "IPaddress",
+          "type": "text",
+          "label": {
+            "en": "IP address"
+          },
+          "value": "192.168.1.xxx",
+          "hint": {
+            "en": "The IP address of the thermostat. You find it in the MyHeatit app."
+          }
+        },
+        {
           "id": "interval",
           "type": "number",
           "label": {
@@ -2678,17 +2689,6 @@
           "max": 500000,
           "units": {
             "en": "Seconds"
-          }
-        },
-        {
-          "id": "IPaddress",
-          "type": "text",
-          "label": {
-            "en": "IP address"
-          },
-          "value": "192.168.1.xxx",
-          "hint": {
-            "en": "The IP address of the thermostat. You find it in the MyHeatit app."
           }
         },
         {
@@ -2730,6 +2730,14 @@
               }
             }
           ]
+        },
+        {
+          "id": "openWindowDetection",
+          "type": "checkbox",
+          "value": false,
+          "label": {
+            "en": "Open Window Detection"
+          }
         }
       ]
     },
