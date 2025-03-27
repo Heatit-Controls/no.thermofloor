@@ -1,10 +1,6 @@
 {
   "name": {
-<<<<<<< HEAD
-    "en": "WiFi6-Thermostat"
-=======
     "en": "WiFi6"
->>>>>>> origin/4.0.0
   },
   "class": "thermostat",
   "capabilities": [
