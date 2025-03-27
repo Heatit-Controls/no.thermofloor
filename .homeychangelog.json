@@ -53,7 +53,6 @@
   "3.9.5": {
     "en": "Fixed onoff on ZM-Thermostat. Fixed Z-TRM6 showing incorrect sensor in Setpoint UI. Added onoff on Z-TEMP3."
   },
-    },
   "3.9.8": {
     "en": "Fixed persistance in Measure_temperature on TRM6 and TRM6 DC."
   },
