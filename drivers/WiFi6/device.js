@@ -10,12 +10,12 @@ module.exports = class MyDevice extends Homey.Device {
     async onInit() {
         this.log('Device has been initialized');
         this.registerCapabilityListener('target_temperature', async (value) => {
-            this.log("Changed temp", value);
+            this.debug("Changed temp", value);
             this.setHeatingSetpoint(value);
         });
 
         this.registerCapabilityListener('onoff', async (value) => {
-            this.log("Changed On/Off", value);
+            this.debug("Changed On/Off", value);
             if (value) {
                 this.setOperatingModeOn()
             } else {
@@ -75,7 +75,7 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     refreshState() {
-        this.log("refreshState")
+        this.debug("refreshState")
         const client = http.get({
             hostname: this.IPaddress,
             port: 80,
@@ -112,14 +112,18 @@ module.exports = class MyDevice extends Homey.Device {
         });
     }
 
+    debug(msg) {
+        return //Off
+        this.log(msg)
+    }
 
     setMeasureTemperature(thermostatData) {
         let settingSensorMode = parseInt(this.getSettings().sensorMode)
-        this.log("settingSensorMode: " + settingSensorMode.toString() + " Thermostat sensorValue: " + thermostatData.parameters.sensorMode.toString())
+        this.debug("settingSensorMode: " + settingSensorMode.toString() + " Thermostat sensorValue: " + thermostatData.parameters.sensorMode.toString())
         if (settingSensorMode != thermostatData.parameters.sensorMode) {
             settingSensorMode = thermostatData.parameters.sensorMode;
             //Save changes from thermostat
-            this.log("Sensor mode changed on thermostat");
+            this.debug("Sensor mode changed on thermostat");
             this.setSettings({ sensorMode: settingSensorMode.toString()});
         }
         
@@ -174,7 +178,7 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     async setParameters(postData) {
-        this.log('setParameters');
+        this.debug('setParameters');
 
         const options = {
             hostname: this.IPaddress,
@@ -188,8 +192,8 @@ module.exports = class MyDevice extends Homey.Device {
         };
 
         const req = http.request(options, (res) => {
-            this.log(`STATUS: ${res.statusCode}`);
-            this.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+            this.debug(`STATUS: ${res.statusCode}`);
+            this.debug(`HEADERS: ${JSON.stringify(res.headers)}`);
             res.setEncoding('utf8');
             res.on('data', (chunk) => {
                 this.log(`BODY: ${chunk}`);

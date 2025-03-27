@@ -2736,7 +2736,7 @@
           "type": "checkbox",
           "value": false,
           "label": {
-            "en": "Open Window Detection"
+            "en": "Open window detection"
           }
         }
       ]
