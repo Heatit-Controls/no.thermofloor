@@ -92,7 +92,7 @@ module.exports = class MyDevice extends Homey.Device {
             res.on('end', () => {
                 try {
                     const parsedData = JSON.parse(rawData);
-                    await setMeasureTemperature(parsedData);
+                    await this.setMeasureTemperature(parsedData);
                     this.setCapabilityValue('measure_temperature.external', parsedData.externalTemperature).catch(this.error);
                     this.setCapabilityValue('measure_temperature.floor', parsedData.floorTemperature).catch(this.error);
                     this.setCapabilityValue('target_temperature', parsedData.parameters.heatingSetpoint).catch(this.error);
