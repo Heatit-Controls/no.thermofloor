@@ -6,7 +6,7 @@
   },
   "brandColor": "#cc3333",
   "version": "4.0.0",
-  "compatibility": ">=12.0.0",
+  "compatibility": ">=12.2.0",
   "platforms": [
     "local",
     "cloud"
@@ -45,7 +45,6 @@
       "Multireg",
       "Heatit",
       "Heat it",
-      "Magnum",
       "Thermo-Floor",
       "underfloor heating"
     ],
@@ -61,7 +60,6 @@
       "Multireg",
       "Heatit",
       "Heat it",
-      "Magnum",
       "Thermo-Floor"
     ]
   },

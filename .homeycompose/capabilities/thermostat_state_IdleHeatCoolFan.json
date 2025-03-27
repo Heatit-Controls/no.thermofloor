@@ -7,11 +7,12 @@
 	"getable": true,
 	"setable": false,
 	"insights": true,
+	
 	"title": {
-		"en": "Fan State"
+		"en": "State"
 	},
 	"desc": {
-		"en": "Fan State of the thermostat"
+		"en": "State of the thermostat"
 	},
 	"values": [
 		{
@@ -21,28 +22,23 @@
 			}
 		},
 		{
-			"id": "Running",
+			"id": "Heating",
 			"title": {
-				"en": "Running low"
+				"en": "Heating"
 			}
 		},
 		{
-			"id": "Running Medium",
+			"id": "Cooling",
 			"title": {
-				"en": "Running medium"
+				"en": "Cooling"
 			}
 		},
 		{
-			"id": "Running High",
+			"id": "Vent_Economizer",
 			"title": {
-				"en": "Running high"
-			}
-		},
-		{
-			"id": "Circulation mode",
-			"title": {
-				"en": "Circulation mode"
+				"en": "Vent/Economizer"
 			}
 		}
 	]
+
 }
