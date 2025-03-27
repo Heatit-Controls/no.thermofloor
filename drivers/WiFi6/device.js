@@ -19,7 +19,7 @@ module.exports = class MyDevice extends Homey.Device {
             if (value) {
                 this.setOperatingModeOn()
             } else {
-                this.setOoperatingModeOff()
+                this.setOperatingModeOff()
             }
         });
 
@@ -38,9 +38,7 @@ module.exports = class MyDevice extends Homey.Device {
         if (this.getStore().address != null) {
 
             if (!this.isValidIpAddress(this.getSettings().IPaddress.trim())) {
-                await this.setSettings({
-                    IPaddress: this.getStore().address,
-                });
+                await this.setSettings({IPaddress: this.getStore().address,});
             }
 
             return this.getStore().address;
@@ -94,7 +92,7 @@ module.exports = class MyDevice extends Homey.Device {
             res.on('end', () => {
                 try {
                     const parsedData = JSON.parse(rawData);
-                    this.setCapabilityValue('measure_temperature', parsedData.internalTemperature).catch(this.error);
+                    await setMeasureTemperature(parsedData);
                     this.setCapabilityValue('measure_temperature.external', parsedData.externalTemperature).catch(this.error);
                     this.setCapabilityValue('measure_temperature.floor', parsedData.floorTemperature).catch(this.error);
                     this.setCapabilityValue('target_temperature', parsedData.parameters.heatingSetpoint).catch(this.error);
@@ -115,6 +113,33 @@ module.exports = class MyDevice extends Homey.Device {
         });
     }
 
+    async setMeasureTemperature(thermostatData) {
+        let settingSensorMode = parseInt(this.getSettings().sensorMode)
+        if (settingSensorMode != thermostatData.parameters.sensorValue) {
+            settingSensorMode = thermostatData.parameters.sensorValue;
+            //Save changes from thermostat
+            await this.setSettings({ sensorMode: thermostatData.parameters.sensorValue.toString(), });
+        }
+        
+        if (settingSensorMode == 0) {
+            //0 = Floor sensor(F)
+            this.setCapabilityValue('measure_temperature', thermostatData.floorTemperature).catch(this.error);
+        } else if (settingSensorMode == 1) {
+            //1 = Internal sensor(A)(Default)
+            this.setCapabilityValue('measure_temperature', thermostatData.internalTemperature).catch(this.error);
+        } else if (settingSensorMode == 2) {
+            //2 = Internal sensor & floor sensor limitation(AF)
+            this.setCapabilityValue('measure_temperature', (thermostatData.internalTemperature + thermostatData.floorTemperature)/2).catch(this.error);
+        } else if (settingSensorMode == 3) {
+            //3 = External sensor(A2)
+            this.setCapabilityValue('measure_temperature', thermostatData.externalTemperature).catch(this.error);
+        } else if (settingSensorMode == 4) {
+            //4 = External sensor & floor sensor limitation(A2F)
+            this.setCapabilityValue('measure_temperature', (thermostatData.externalTemperature + thermostatData.floorTemperature)/2).catch(this.error);
+        }
+        //5 = Power regulator mode(PWER)
+    }
+
     async setOperatingModeOn() {
         const postData = JSON.stringify({
             'operatingMode': 1,
@@ -129,7 +154,7 @@ module.exports = class MyDevice extends Homey.Device {
         await this.setParameters(postData);
     }
 
-    async setOoperatingModeOff() {
+    async setOperatingModeOff() {
         const postData = JSON.stringify({
             'operatingMode': 0,
         });
