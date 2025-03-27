@@ -113,7 +113,7 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     debug(msg) {
-        return //Off
+        //return //Off
         this.log(msg)
     }
 
@@ -160,6 +160,14 @@ module.exports = class MyDevice extends Homey.Device {
         const postData = JSON.stringify({
             'sensorMode': parseInt(mode),
         });
+        await this.setParameters(postData);
+    }
+
+    async setOpenWindowDetection(mode) {
+        const postData = JSON.stringify({
+            'openWindowDetection': mode
+        });
+        this.debug(postData)
         await this.setParameters(postData);
     }
 
@@ -236,6 +244,9 @@ module.exports = class MyDevice extends Homey.Device {
         this.ReportInterval = newSettings.interval;
         if (oldSettings.sensorMode != newSettings.sensorMode) {
             await this.setSensorMode(newSettings.sensorMode);
+        }
+        if (oldSettings.openWindowDetection != newSettings.openWindowDetection) {
+            await this.setOpenWindowDetection(newSettings.openWindowDetection);
         }
     }
 
