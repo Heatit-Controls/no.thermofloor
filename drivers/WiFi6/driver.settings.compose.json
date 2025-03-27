@@ -42,6 +42,12 @@
 				"label": { "en": "External sensor & floor sensor limitation (A2F)" }
 			}
 		]
+	},
+	{
+		"id": "openWindowDetection",
+		"type": "checkbox",
+		"value": false,
+		"label": { "en": "Open Window Detection" }
 	}
 
 ]
