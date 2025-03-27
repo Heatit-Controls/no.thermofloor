@@ -19,7 +19,7 @@
 		"id": "sensorMode",
 		"type": "dropdown",
 		"value": "1",
-		"label": { "en": "Default mode" },
+		"label": { "en": "Sensor mode" },
 		"values": [
 			{
 				"id": "0",
