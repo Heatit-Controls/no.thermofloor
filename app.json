@@ -6,8 +6,8 @@
     "en": "Heatit Controls"
   },
   "brandColor": "#cc3333",
-  "version": "4.0.0",
-  "compatibility": ">=12.0.0",
+  "version": "4.0.1",
+  "compatibility": ">=12.2.0",
   "platforms": [
     "local",
     "cloud"
@@ -46,7 +46,6 @@
       "Multireg",
       "Heatit",
       "Heat it",
-      "Magnum",
       "Thermo-Floor",
       "underfloor heating"
     ],
@@ -62,7 +61,6 @@
       "Multireg",
       "Heatit",
       "Heat it",
-      "Magnum",
       "Thermo-Floor"
     ]
   },
@@ -12867,21 +12865,27 @@
           }
         },
         {
-          "id": "Low",
+          "id": "Running",
           "title": {
             "en": "Running low"
           }
         },
         {
-          "id": "Medium",
+          "id": "Running Medium",
           "title": {
             "en": "Running medium"
           }
         },
         {
-          "id": "High",
+          "id": "Running High",
           "title": {
             "en": "Running high"
+          }
+        },
+        {
+          "id": "Circulation mode",
+          "title": {
+            "en": "Circulation mode"
           }
         }
       ]
@@ -13260,6 +13264,48 @@
       "insightsTitleCooling": {
         "en": "Cooling active"
       }
+    },
+    "thermostat_state_IdleHeatCoolFan": {
+      "type": "enum",
+      "uiComponent": "sensor",
+      "icon": "/assets/thermostat_state.svg",
+      "noblink": false,
+      "greyout": true,
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "title": {
+        "en": "State"
+      },
+      "desc": {
+        "en": "State of the thermostat"
+      },
+      "values": [
+        {
+          "id": "Idle",
+          "title": {
+            "en": "Idle"
+          }
+        },
+        {
+          "id": "Heating",
+          "title": {
+            "en": "Heating"
+          }
+        },
+        {
+          "id": "Cooling",
+          "title": {
+            "en": "Cooling"
+          }
+        },
+        {
+          "id": "Vent_Economizer",
+          "title": {
+            "en": "Vent/Economizer"
+          }
+        }
+      ]
     }
   },
   "discovery": {

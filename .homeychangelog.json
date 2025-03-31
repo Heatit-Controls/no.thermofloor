@@ -64,5 +64,8 @@
   },
   "4.0.0": {
     "en": "Added support Heatit WiFi6 and WiFi Panel"
+  },
+  "4.0.1": {
+    "en": "Updated TRM6 driver, added Powerregulator. Updated WiFi integrations."
   }
 }
