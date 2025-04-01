@@ -6,6 +6,7 @@ module.exports = class MyDevice extends Homey.Device {
 
     async onInit() {
         this.log('Device has been initialized');
+        this.isDebug = true;
         this.deviceIsDeleted = false;
         this.registerCapabilityListener('target_temperature', async (value) => {
             this.debug("Changed temp", value);
@@ -29,7 +30,6 @@ module.exports = class MyDevice extends Homey.Device {
         this.ReportInterval = this.getSettings().interval;
 
         this.refreshStateLoop();
-      
     }
 
     async getIpAddressAndSetSetting() {
@@ -119,8 +119,9 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     debug(msg) {
-        //return //Off
-        this.log(msg)
+        if (this.isDebug) {
+            this.log(msg);
+        }
     }
 
     async setPanelModeOn() {
