@@ -48,6 +48,12 @@
 		"type": "checkbox",
 		"value": false,
 		"label": { "en": "Open window detection" }
+	},
+	{
+		"id": "disableButtons",
+		"type": "checkbox",
+		"value": false,
+		"label": { "en": "Child lock" }
 	}
 
 ]
