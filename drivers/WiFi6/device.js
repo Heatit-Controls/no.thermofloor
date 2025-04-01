@@ -9,6 +9,7 @@ module.exports = class MyDevice extends Homey.Device {
      */
     async onInit() {
         this.log('Device has been initialized');
+        this.deviceIsDeleted = false;
         this.registerCapabilityListener('target_temperature', async (value) => {
             this.debug("Changed temp", value);
             this.setHeatingSetpoint(value);
@@ -66,6 +67,11 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     refreshStateLoop() {
+
+        if (this.deviceIsDeleted) {
+            return; //Abort
+        }
+
         if (this.ipIsValid()) {
             this.refreshState()
         }
@@ -295,6 +301,7 @@ module.exports = class MyDevice extends Homey.Device {
      * onDeleted is called when the user deleted the device.
      */
     async onDeleted() {
+        this.deviceIsDeleted = true;
         this.log('My heatit WiFi device has been deleted');
     }   
 };
