@@ -2632,7 +2632,7 @@
           "type": "checkbox",
           "value": false,
           "label": {
-            "en": "Child lock"
+            "en": "Disable buttons"
           }
         }
       ]
@@ -2760,7 +2760,7 @@
           "type": "checkbox",
           "value": false,
           "label": {
-            "en": "Child lock"
+            "en": "Disable buttons"
           }
         }
       ]
