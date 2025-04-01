@@ -6,7 +6,7 @@
     "en": "Heatit Controls"
   },
   "brandColor": "#cc3333",
-  "version": "3.9.7",
+  "version": "4.0.0",
   "compatibility": ">=5.0.0",
   "platforms": [
     "local",
@@ -2556,6 +2556,140 @@
               }
             }
           ]
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "WiFi-Panel"
+      },
+      "class": "heater",
+      "capabilities": [
+        "meter_power",
+        "measure_power",
+        "target_temperature",
+        "measure_temperature",
+        "onoff"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [],
+      "images": {
+        "small": "/drivers/WiFi Panel/assets/images/small.png",
+        "large": "/drivers/WiFi Panel/assets/images/large.png",
+        "xlarge": "/drivers/WiFi Panel/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "WiFi Panel",
+      "settings": [
+        {
+          "id": "interval",
+          "type": "number",
+          "label": {
+            "en": "Report interval (s)"
+          },
+          "value": 30,
+          "min": 30,
+          "max": 500000,
+          "units": {
+            "en": "Seconds"
+          }
+        },
+        {
+          "id": "IPaddress",
+          "type": "text",
+          "label": {
+            "en": "IP address"
+          },
+          "value": "192.168.1.xxx",
+          "hint": {
+            "en": "The IP address of the panel heater. You find it in the MyHeatit app."
+          }
+        }
+      ]
+    },
+    {
+      "name": {
+        "en": "WiFi6-Thermostat"
+      },
+      "class": "thermostat",
+      "capabilities": [
+        "meter_power",
+        "measure_power",
+        "target_temperature",
+        "measure_temperature",
+        "measure_temperature.external",
+        "measure_temperature.floor",
+        "onoff"
+      ],
+      "capabilitiesOptions": {
+        "measure_temperature.external": {
+          "title": "External temperature"
+        },
+        "measure_temperature.floor": {
+          "title": "Floor temperature"
+        }
+      },
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [],
+      "images": {
+        "small": "/drivers/WiFi6/assets/images/small.png",
+        "large": "/drivers/WiFi6/assets/images/large.png",
+        "xlarge": "/drivers/WiFi6/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "WiFi6",
+      "settings": [
+        {
+          "id": "interval",
+          "type": "number",
+          "label": {
+            "en": "Report interval (s)"
+          },
+          "value": 30,
+          "min": 30,
+          "max": 500000,
+          "units": {
+            "en": "Seconds"
+          }
+        },
+        {
+          "id": "IPaddress",
+          "type": "text",
+          "label": {
+            "en": "IP address"
+          },
+          "value": "192.168.1.xxx",
+          "hint": {
+            "en": "The IP address of the thermostat. You find it in the MyHeatit app."
+          }
         }
       ]
     },
@@ -12804,6 +12938,25 @@
           }
         }
       ]
+    }
+  },
+  "discovery": {
+    "arp": {
+      "type": "mac",
+      "mac": {
+        "manufacturer": [
+          [
+            84,
+            50,
+            4
+          ],
+          [
+            132,
+            247,
+            3
+          ]
+        ]
+      }
     }
   }
 }
