@@ -182,6 +182,14 @@ module.exports = class MyDevice extends Homey.Device {
         await this.setParameters(postData);
     }
 
+    async setDisableButtons(mode) {
+        const postData = JSON.stringify({
+            'disableButtons': mode
+        });
+        this.debug(postData)
+        await this.setParameters(postData);
+    }
+
     async setOperatingModeOff() {
         const postData = JSON.stringify({
             'operatingMode': 0,
@@ -258,6 +266,9 @@ module.exports = class MyDevice extends Homey.Device {
         }
         if (oldSettings.openWindowDetection != newSettings.openWindowDetection) {
             await this.setOpenWindowDetection(newSettings.openWindowDetection);
+        }
+        if (oldSettings.disableButtons != newSettings.disableButtons) {
+            await this.setDisableButtons(newSettings.disableButtons);
         }
     }
 
