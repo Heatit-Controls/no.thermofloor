@@ -1,0 +1,37 @@
+{
+	"type": "enum",
+	"uiComponent": "sensor",
+	"icon": "/assets/thermofloor_onoff.svg",
+	"noblink": false,
+	"greyout": true,
+	"getable": true,
+	"setable": false,
+	"insights": true,
+	
+	"title": {
+		"en": "State"
+	},
+	"desc": {
+		"en": "State of the thermostat"
+	},
+	"values": [
+		{
+			"id": "Idle",
+			"title": {
+				"en": "Idle"
+			}
+		},
+		{
+			"id": "Heating",
+			"title": {
+				"en": "Heating"
+			}
+		}
+	],
+	"insightsTitleIdle": {
+		"en": "Heating idle"
+	},
+	"insightsTitleHeating": {
+		"en": "Heating active"
+	}
+}

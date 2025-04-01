@@ -1,0 +1,44 @@
+{
+	"type": "enum",
+	"uiComponent": "sensor",
+	"icon": "/assets/thermostat_state.svg",
+	"noblink": false,
+	"greyout": true,
+	"getable": true,
+	"setable": false,
+	"insights": true,
+	
+	"title": {
+		"en": "State"
+	},
+	"desc": {
+		"en": "State of the thermostat"
+	},
+	"values": [
+		{
+			"id": "Idle",
+			"title": {
+				"en": "Idle"
+			}
+		},
+		{
+			"id": "Heating",
+			"title": {
+				"en": "Heating"
+			}
+		},
+		{
+			"id": "Cooling",
+			"title": {
+				"en": "Cooling"
+			}
+		},
+		{
+			"id": "Vent_Economizer",
+			"title": {
+				"en": "Vent/Economizer"
+			}
+		}
+	]
+
+}

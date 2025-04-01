@@ -6,8 +6,8 @@
     "en": "Heatit Controls"
   },
   "brandColor": "#cc3333",
-  "version": "4.0.0",
-  "compatibility": ">=5.0.0",
+  "version": "4.0.2",
+  "compatibility": ">=12.2.0",
   "platforms": [
     "local",
     "cloud"
@@ -46,7 +46,6 @@
       "Multireg",
       "Heatit",
       "Heat it",
-      "Magnum",
       "Thermo-Floor",
       "underfloor heating"
     ],
@@ -62,7 +61,6 @@
       "Multireg",
       "Heatit",
       "Heat it",
-      "Magnum",
       "Thermo-Floor"
     ]
   },
@@ -2561,7 +2559,7 @@
     },
     {
       "name": {
-        "en": "WiFi-Panel"
+        "en": "WiFi Panel"
       },
       "class": "heater",
       "capabilities": [
@@ -2623,7 +2621,7 @@
     },
     {
       "name": {
-        "en": "WiFi6-Thermostat"
+        "en": "WiFi6"
       },
       "class": "thermostat",
       "capabilities": [
@@ -2668,6 +2666,17 @@
       "id": "WiFi6",
       "settings": [
         {
+          "id": "IPaddress",
+          "type": "text",
+          "label": {
+            "en": "IP address"
+          },
+          "value": "192.168.1.xxx",
+          "hint": {
+            "en": "The IP address of the thermostat. You find it in the MyHeatit app."
+          }
+        },
+        {
           "id": "interval",
           "type": "number",
           "label": {
@@ -2681,14 +2690,51 @@
           }
         },
         {
-          "id": "IPaddress",
-          "type": "text",
+          "id": "sensorMode",
+          "type": "dropdown",
+          "value": "1",
           "label": {
-            "en": "IP address"
+            "en": "Sensor mode"
           },
-          "value": "192.168.1.xxx",
-          "hint": {
-            "en": "The IP address of the thermostat. You find it in the MyHeatit app."
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Floor sensor (F)"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "Internal sensor (A) (Default)"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "Internal sensor & floor sensor limitation (AF)"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "External sensor (A2)"
+              }
+            },
+            {
+              "id": "4",
+              "label": {
+                "en": "External sensor & floor sensor limitation (A2F)"
+              }
+            }
+          ]
+        },
+        {
+          "id": "openWindowDetection",
+          "type": "checkbox",
+          "value": false,
+          "label": {
+            "en": "Open window detection"
           }
         }
       ]
@@ -4317,6 +4363,9 @@
         "measure_temperature",
         "button.reset_meter"
       ],
+      "energy": {
+        "cumulative": true
+      },
       "capabilitiesOptions": {
         "measure_power": {
           "approximated": true
@@ -8198,7 +8247,8 @@
       "capabilities": [
         "thermostat_mode",
         "target_temperature",
-        "thermostat_state_13570",
+        "thermostat_state_IdleHeatCool",
+        "powerregulator_mode",
         "meter_power",
         "measure_power",
         "measure_temperature",
@@ -8240,7 +8290,7 @@
             }
           ]
         },
-        "thermostat_state_13570": {
+        "thermostat_state_IdleHeatCool": {
           "greyout": true,
           "titleTrue": {
             "en": "Active",
@@ -12655,6 +12705,22 @@
       "uiQuickAction": false,
       "icon": "/assets/alarm_siren.svg"
     },
+    "powerregulator_mode": {
+      "type": "number",
+      "title": {
+        "en": "Powerregulator level"
+      },
+      "chartType": "stepLine",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "units": {
+        "en": "%"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "slider"
+    },
     "scene_notification_custom_capability": {
       "type": "boolean",
       "title": {
@@ -12741,6 +12807,92 @@
         "nl": "Verwarming uitgeschakeld"
       }
     },
+    "thermostat_fan_mode": {
+      "type": "enum",
+      "title": {
+        "en": "Fan Mode"
+      },
+      "desc": {
+        "en": "Fan mode on the thermostat"
+      },
+      "values": [
+        {
+          "id": "Low",
+          "title": {
+            "en": "Low"
+          }
+        },
+        {
+          "id": "Medium",
+          "title": {
+            "en": "Medium"
+          }
+        },
+        {
+          "id": "Auto medium",
+          "title": {
+            "en": "Auto"
+          }
+        },
+        {
+          "id": "High",
+          "title": {
+            "en": "High"
+          }
+        }
+      ],
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker"
+    },
+    "thermostat_fan_state": {
+      "type": "enum",
+      "uiComponent": "sensor",
+      "icon": "/assets/thermostat_state.svg",
+      "noblink": false,
+      "greyout": true,
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "title": {
+        "en": "Fan State"
+      },
+      "desc": {
+        "en": "Fan State of the thermostat"
+      },
+      "values": [
+        {
+          "id": "Idle",
+          "title": {
+            "en": "Idle"
+          }
+        },
+        {
+          "id": "Running",
+          "title": {
+            "en": "Running low"
+          }
+        },
+        {
+          "id": "Running Medium",
+          "title": {
+            "en": "Running medium"
+          }
+        },
+        {
+          "id": "Running High",
+          "title": {
+            "en": "Running high"
+          }
+        },
+        {
+          "id": "Circulation mode",
+          "title": {
+            "en": "Circulation mode"
+          }
+        }
+      ]
+    },
     "thermostat_mode_13570": {
       "type": "enum",
       "uiComponent": "picker",
@@ -12767,6 +12919,102 @@
           "id": "cool",
           "title": {
             "en": "Cooling"
+          }
+        }
+      ],
+      "getable": true,
+      "setable": true
+    },
+    "thermostat_mode_OffHeat": {
+      "type": "enum",
+      "title": {
+        "en": "Thermostat mode"
+      },
+      "desc": {
+        "en": "Mode of the thermostat"
+      },
+      "uiComponent": "picker",
+      "values": [
+        {
+          "id": "off",
+          "title": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "heat",
+          "title": {
+            "en": "Heating"
+          }
+        }
+      ],
+      "getable": true,
+      "setable": true
+    },
+    "thermostat_mode_OffHeatCool": {
+      "type": "enum",
+      "title": {
+        "en": "Thermostat mode"
+      },
+      "desc": {
+        "en": "Mode of the thermostat"
+      },
+      "uiComponent": "picker",
+      "values": [
+        {
+          "id": "off",
+          "title": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "heat",
+          "title": {
+            "en": "Heating"
+          }
+        },
+        {
+          "id": "cool",
+          "title": {
+            "en": "Cooling"
+          }
+        }
+      ],
+      "getable": true,
+      "setable": true
+    },
+    "thermostat_mode_OffHeatCoolEco": {
+      "type": "enum",
+      "title": {
+        "en": "Thermostat mode"
+      },
+      "desc": {
+        "en": "Mode of the thermostat"
+      },
+      "uiComponent": "picker",
+      "values": [
+        {
+          "id": "off",
+          "title": {
+            "en": "Off"
+          }
+        },
+        {
+          "id": "heat",
+          "title": {
+            "en": "Heating"
+          }
+        },
+        {
+          "id": "cool",
+          "title": {
+            "en": "Cooling"
+          }
+        },
+        {
+          "id": "energy save heat",
+          "title": {
+            "en": "Heating"
           }
         }
       ],
@@ -12935,6 +13183,129 @@
           "id": "Cooling",
           "title": {
             "en": "Cooling"
+          }
+        }
+      ]
+    },
+    "thermostat_state_IdleHeat": {
+      "type": "enum",
+      "uiComponent": "sensor",
+      "icon": "/assets/thermofloor_onoff.svg",
+      "noblink": false,
+      "greyout": true,
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "title": {
+        "en": "State"
+      },
+      "desc": {
+        "en": "State of the thermostat"
+      },
+      "values": [
+        {
+          "id": "Idle",
+          "title": {
+            "en": "Idle"
+          }
+        },
+        {
+          "id": "Heating",
+          "title": {
+            "en": "Heating"
+          }
+        }
+      ],
+      "insightsTitleIdle": {
+        "en": "Heating idle"
+      },
+      "insightsTitleHeating": {
+        "en": "Heating active"
+      }
+    },
+    "thermostat_state_IdleHeatCool": {
+      "type": "enum",
+      "uiComponent": "sensor",
+      "icon": "/assets/thermostat_state.svg",
+      "noblink": false,
+      "greyout": true,
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "title": {
+        "en": "State"
+      },
+      "desc": {
+        "en": "State of the thermostat"
+      },
+      "values": [
+        {
+          "id": "Idle",
+          "title": {
+            "en": "Idle"
+          }
+        },
+        {
+          "id": "Heating",
+          "title": {
+            "en": "Heating"
+          }
+        },
+        {
+          "id": "Cooling",
+          "title": {
+            "en": "Cooling"
+          }
+        }
+      ],
+      "insightsTitleIdle": {
+        "en": "Heating idle"
+      },
+      "insightsTitleHeating": {
+        "en": "Heating active"
+      },
+      "insightsTitleCooling": {
+        "en": "Cooling active"
+      }
+    },
+    "thermostat_state_IdleHeatCoolFan": {
+      "type": "enum",
+      "uiComponent": "sensor",
+      "icon": "/assets/thermostat_state.svg",
+      "noblink": false,
+      "greyout": true,
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "title": {
+        "en": "State"
+      },
+      "desc": {
+        "en": "State of the thermostat"
+      },
+      "values": [
+        {
+          "id": "Idle",
+          "title": {
+            "en": "Idle"
+          }
+        },
+        {
+          "id": "Heating",
+          "title": {
+            "en": "Heating"
+          }
+        },
+        {
+          "id": "Cooling",
+          "title": {
+            "en": "Cooling"
+          }
+        },
+        {
+          "id": "Vent_Economizer",
+          "title": {
+            "en": "Vent/Economizer"
           }
         }
       ]
