@@ -6,7 +6,7 @@ module.exports = class MyDevice extends Homey.Device {
 
     async onInit() {
         this.log('Device has been initialized');
-        this.isDebug = true;
+        this.isDebug = false;
         this.deviceIsDeleted = false;
         this.registerCapabilityListener('target_temperature', async (value) => {
             this.debug("Changed temp", value);
