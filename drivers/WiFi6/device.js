@@ -8,7 +8,7 @@ module.exports = class MyDevice extends Homey.Device {
      * onInit is called when the device is initialized.
      */
     async onInit() {
-        this.log('Device has been initialized'); 
+        this.log('WiFi device has been initialized'); 
         this.isDebug = false;
         this.deviceIsDeleted = false;
         this.registerCapabilityListener('target_temperature', async (value) => {
