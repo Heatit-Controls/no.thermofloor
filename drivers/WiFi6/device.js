@@ -185,17 +185,17 @@ module.exports = class MyDevice extends Homey.Device {
         await this.setParameters(postData);
     }
 
-    async setOpenWindowDetection(mode) {
+    async setOpenWindowDetection(value) {
         const postData = JSON.stringify({
-            'openWindowDetection': mode
+            'openWindowDetection': value
         });
         this.debug(postData)
         await this.setParameters(postData);
     }
 
-    async setDisableButtons(mode) {
+    async setDisableButtons(value) {
         const postData = JSON.stringify({
-            'disableButtons': mode
+            'disableButtons': value
         });
         this.debug(postData)
         await this.setParameters(postData);

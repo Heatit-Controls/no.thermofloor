@@ -131,6 +131,22 @@ module.exports = class MyDevice extends Homey.Device {
         await this.setParameters(postData);
     }
 
+    async setOpenWindowDetection(value) {
+        const postData = JSON.stringify({
+            'openWindowDetection': value
+        });
+        this.debug(postData)
+        await this.setParameters(postData);
+    }
+
+    async setDisableButtons(value) {
+        const postData = JSON.stringify({
+            'disableButtons': value
+        });
+        this.debug(postData)
+        await this.setParameters(postData);
+    }
+
     async setHeatingSetpoint(value) {
         const postData = JSON.stringify({
             'heatingSetpoint': value,
@@ -183,6 +199,12 @@ module.exports = class MyDevice extends Homey.Device {
         this.log("My heatit WiFi device settings where changed");
         this.IPaddress = newSettings.IPaddress;
         this.ReportInterval = newSettings.interval;
+        if (oldSettings.openWindowDetection != newSettings.openWindowDetection) {
+            await this.setOpenWindowDetection(newSettings.openWindowDetection);
+        }
+        if (oldSettings.disableButtons != newSettings.disableButtons) {
+            await this.setDisableButtons(newSettings.disableButtons);
+        }
     }
 
     async onRenamed(name) {
