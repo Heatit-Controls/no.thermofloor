@@ -8,16 +8,16 @@ module.exports = class MyDevice extends Homey.Device {
 
         this.log('Device has been initialized');
         this.registerCapabilityListener('target_temperature', async (value) => {
-            this.log("Changed temp", value);
-            this.heatingSetpoint(value);
+            this.debug("Changed temp", value);
+            this.setHeatingSetpoint(value);
         });
 
         this.registerCapabilityListener('onoff', async (value) => {
-            this.log("Changed On/Off", value);
+            this.debug("Changed On/Off", value);
             if (value) {
-                this.panelModeOn();
+                this.setPanelModeOn();
             } else {
-                this.panelModeOff();
+                this.setPanelModeOff();
             }
         });
 
@@ -107,26 +107,31 @@ module.exports = class MyDevice extends Homey.Device {
         }).on('error', (e) => {
             this.setCapabilityValue('measure_power', 0).catch(this.error);
             this.setUnavailable('Cannot reach device on local WiFi').catch(this.error);
-            this.log('Cannot reach device on local WiFi');
+            this.debug('Cannot reach device on local WiFi');
         });
 
     }
 
-    async panelModeOn() {
+    debug(msg) {
+        //return //Off
+        this.log(msg)
+    }
+
+    async setPanelModeOn() {
         const postData = JSON.stringify({
             'panelMode': 1,
         });
         await this.setParameters(postData);
     }
 
-    async panelModeOff() {
+    async setPanelModeOff() {
         const postData = JSON.stringify({
             'panelMode': 0,
         });
         await this.setParameters(postData);
     }
 
-    async heatingSetpoint(value) {
+    async setHeatingSetpoint(value) {
         const postData = JSON.stringify({
             'heatingSetpoint': value,
         });
@@ -134,7 +139,7 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     async setParameters(postData) {
-        this.log('setParameters');
+        this.debug('setParameters');
 
         const options = {
             hostname: this.IPaddress,
@@ -148,11 +153,11 @@ module.exports = class MyDevice extends Homey.Device {
         };
 
         const req = http.request(options, (res) => {
-            this.log(`STATUS: ${res.statusCode}`);
-            this.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+            this.debug(`STATUS: ${res.statusCode}`);
+            this.debug(`HEADERS: ${JSON.stringify(res.headers)}`);
             res.setEncoding('utf8');
             res.on('data', (chunk) => {
-                this.log(`BODY: ${chunk}`);
+                this.debug(`BODY: ${chunk}`);
             });
             res.on('end', () => {
             });
