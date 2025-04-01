@@ -53,7 +53,7 @@
 		"id": "disableButtons",
 		"type": "checkbox",
 		"value": false,
-		"label": { "en": "Child lock" }
+		"label": { "en": "Disable buttons" }
 	}
 
 ]

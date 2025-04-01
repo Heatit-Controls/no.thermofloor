@@ -94,6 +94,7 @@ module.exports = class MyDevice extends Homey.Device {
                 try {
                     const parsedData = JSON.parse(rawData);
                     this.setCapabilityValue('measure_temperature', parsedData.roomTemperature).catch(this.error);
+                    this.setOpenWindowDetectionFromThermostat(parsedData);
                     this.setCapabilityValue('target_temperature', parsedData.parameters.heatingSetpoint).catch(this.error);
                     let kWh = this.getCapabilityValue('meter_power');
                     kWh = kWh + (parsedData.currentPower * (this.getSettings().interval / 3600)) / 1000;
@@ -139,9 +140,23 @@ module.exports = class MyDevice extends Homey.Device {
         await this.setParameters(postData);
     }
 
+    setOpenWindowDetectionFromThermostat(data) {
+        let openWindowDetectionSetting = this.getSettings().openWindowDetection;
+        this.debug("openWindowDetectionSetting: " + openWindowDetectionSetting.toString() + " WiFi Panel openWindowDetection: " + data.parameters.OWD.openWindowDetection.toString())
+        if (openWindowDetectionSetting != data.parameters.OWD.openWindowDetection) {
+            //Save changes from thermostat
+            this.debug("Open Window Detection changed on WiFi Panel");
+            this.setSettings({ openWindowDetection: data.parameters.OWD.openWindowDetection });
+        }
+    }
+
     async setDisableButtons(value) {
+        let disableButtons = 0;
+        if (value) {
+            disableButtons = 1;
+        }
         const postData = JSON.stringify({
-            'disableButtons': value
+            'disableButtons': disableButtons
         });
         this.debug(postData)
         await this.setParameters(postData);

@@ -19,7 +19,7 @@
     "id": "openWindowDetection",
     "type": "checkbox",
     "value": false,
-    "label": { "en": "Open window detection" }
+    "label": { "en": "Disable buttons" }
   },
   {
     "id": "disableButtons",

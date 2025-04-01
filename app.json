@@ -2596,6 +2596,17 @@
       "id": "WiFi Panel",
       "settings": [
         {
+          "id": "IPaddress",
+          "type": "text",
+          "label": {
+            "en": "IP address"
+          },
+          "value": "192.168.1.xxx",
+          "hint": {
+            "en": "The IP address of the panel heater. You find it in the MyHeatit app."
+          }
+        },
+        {
           "id": "interval",
           "type": "number",
           "label": {
@@ -2609,14 +2620,19 @@
           }
         },
         {
-          "id": "IPaddress",
-          "type": "text",
+          "id": "openWindowDetection",
+          "type": "checkbox",
+          "value": false,
           "label": {
-            "en": "IP address"
-          },
-          "value": "192.168.1.xxx",
-          "hint": {
-            "en": "The IP address of the panel heater. You find it in the MyHeatit app."
+            "en": "Open window detection"
+          }
+        },
+        {
+          "id": "disableButtons",
+          "type": "checkbox",
+          "value": false,
+          "label": {
+            "en": "Child lock"
           }
         }
       ]
