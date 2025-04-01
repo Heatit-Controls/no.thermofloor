@@ -93,6 +93,7 @@ module.exports = class MyDevice extends Homey.Device {
                     const parsedData = JSON.parse(rawData);
                     this.setMeasureTemperature(parsedData);
                     this.setOpenWindowDetectionFromThermostat(parsedData);
+                    this.setDisableButtonsFromThermostat(parsedData);
                     this.setCapabilityValue('measure_temperature.external', parsedData.externalTemperature).catch(this.error);
                     this.setCapabilityValue('measure_temperature.floor', parsedData.floorTemperature).catch(this.error);
                     this.setCapabilityValue('target_temperature', parsedData.parameters.heatingSetpoint).catch(this.error);
@@ -109,12 +110,12 @@ module.exports = class MyDevice extends Homey.Device {
         }).on('error', (e) => {
             this.setCapabilityValue('measure_power', 0).catch(this.error);
             this.setUnavailable('Cannot reach device on local WiFi').catch(this.error);
-            this.log('Cannot reach device on local WiFi');
+            this.debug('Cannot reach device on local WiFi');
         });
     }
 
     debug(msg) {
-        return //Off
+        //return //Off
         this.log(msg)
     }
 
@@ -157,6 +158,16 @@ module.exports = class MyDevice extends Homey.Device {
             //Save changes from thermostat
             this.debug("Open Window Detection changed on thermostat");
             this.setSettings({ openWindowDetection: thermostatData.parameters.OWD.openWindowDetection });
+        }
+    }
+
+    setDisableButtonsFromThermostat(thermostatData) {
+        let disableButtonsSetting = this.getSettings().disableButtons;
+        this.debug("disableButtonsSetting: " + disableButtonsSetting.toString() + " Thermostat disableButtons: " + thermostatData.parameters.disableButtons.toString())
+        if (disableButtonsSetting != thermostatData.parameters.disableButtons) {
+            //Save changes from thermostat
+            this.debug("Disable Buttons changed on thermostat");
+            this.setSettings({ disableButtons: thermostatData.parameters.disableButtons });
         }
     }
 
