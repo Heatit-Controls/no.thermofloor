@@ -2693,17 +2693,6 @@
           }
         },
         {
-          "id": "IPaddress",
-          "type": "text",
-          "label": {
-            "en": "IP address"
-          },
-          "value": "192.168.1.xxx",
-          "hint": {
-            "en": "The IP address of the thermostat. You find it in the MyHeatit app."
-          }
-        },
-        {
           "id": "interval",
           "type": "number",
           "label": {
@@ -2720,11 +2709,7 @@
           "id": "sensorMode",
           "type": "dropdown",
           "value": "1",
-          "id": "sensorMode",
-          "type": "dropdown",
-          "value": "1",
           "label": {
-            "en": "Sensor mode"
             "en": "Sensor mode"
           },
           "values": [
@@ -8325,6 +8310,12 @@
               "id": "energy save heat",
               "title": {
                 "en": "ECO"
+              }
+            },
+            {
+              "id": "Powerregulator",
+              "title": {
+                "en": "Power Regulator"
               }
             }
           ]

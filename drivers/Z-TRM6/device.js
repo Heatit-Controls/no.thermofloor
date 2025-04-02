@@ -26,7 +26,7 @@ class ZTRM6Device extends ZwaveDevice {
 	
 	async onNodeInit() {
 		// enable debug logging
-		//this.enableDebug();
+		this.enableDebug();
 		
 		if (this.hasCapability('thermostat_state_IdleHeatCool') === false) {
 			await this.addCapability('thermostat_state_IdleHeatCool');
@@ -207,6 +207,23 @@ class ZTRM6Device extends ZwaveDevice {
 			getOpts: { getOnStart: true },
 			set: 'THERMOSTAT_MODE_SET',
 			setParser: value => {
+				// Handle special case for Powerregulator
+				if (value === 'Powerregulator') {
+					// Change the sensor_mode parameter to 5 (Power regulator mode)
+					try {
+						this.configurationSet({
+							index: 2, // The index of the sensor_mode parameter
+							size: 1,  // Size in bytes
+							signed: false
+						}, 5);  // Value 5 corresponds to PWER, Power regulator mode
+					} catch (error) {
+						this.error(`Failed to set power regulator mode: ${error.message}`);
+					}
+					
+					// Don't send thermostat mode command
+					return null;
+				}
+				
 				if (!this.CapabilityToThermostatMode.hasOwnProperty(value)) return null;
 				const mode = this.CapabilityToThermostatMode[value];
 				if (typeof mode !== 'string') return null;
@@ -309,6 +326,15 @@ class ZTRM6Device extends ZwaveDevice {
 							await this.setCapabilityValue('measure_temperature', latestValue);
 						} catch (err) {
 							this.error(`Failed to update measure_temperature: ${err.message}`);
+						}
+						
+						// Set thermostat_mode to 'Powerregulator' if sensor_mode is 5 (PWER)
+						if (parsedValue === 5) {
+							try {
+								await this.setCapabilityValue('thermostat_mode', 'Powerregulator');
+							} catch (error) {
+								this.error(`Failed to update thermostat_mode to Powerregulator: ${error.message}`);
+							}
 						}
 					} else if (paramNum === this.getManifestSettings().find(setting => setting.id === 'power_reg_active_time').zwave.index) {
 						this.log('power_reg_active_time change detected');

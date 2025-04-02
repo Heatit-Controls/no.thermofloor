@@ -224,7 +224,6 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     async setHeatingSetpoint(value) {
-    async setHeatingSetpoint(value) {
         const postData = JSON.stringify({
             'heatingSetpoint': value,
         });
@@ -316,6 +315,5 @@ module.exports = class MyDevice extends Homey.Device {
     async onDeleted() {
         this.deviceIsDeleted = true;
         this.log('My heatit WiFi device has been deleted');
-    }   
-    }   
+    }
 };

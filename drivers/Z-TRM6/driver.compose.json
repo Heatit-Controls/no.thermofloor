@@ -47,6 +47,12 @@
           "title": {
             "en": "ECO"
           }
+        },
+        {
+          "id": "Powerregulator",
+          "title": {
+            "en": "Power Regulator"
+          }
         }
       ]
     },
