@@ -52,5 +52,23 @@
   },
   "3.9.5": {
     "en": "Fixed onoff on ZM-Thermostat. Fixed Z-TRM6 showing incorrect sensor in Setpoint UI. Added onoff on Z-TEMP3."
+  },
+  "3.9.8": {
+    "en": "Fixed persistance in Measure_temperature on TRM6 and TRM6 DC."
+  },
+  "3.9.9": {
+    "en": "Changed TRM6 code and a lot of other small changes to reduce errors"
+  },
+  "3.9.10": {
+    "en": "Capability changes TRM6"
+  },
+  "4.0.0": {
+    "en": "Added support Heatit WiFi6 and WiFi Panel"
+  },
+  "4.0.1": {
+    "en": "Updated TRM6 driver, added Powerregulator. Updated WiFi integrations."
+  },
+  "4.0.2": {
+    "en": "Add Cumulative for HAN/HAN B"
   }
 }

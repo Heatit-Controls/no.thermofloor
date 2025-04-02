@@ -14,13 +14,18 @@ module.exports = class MyDevice extends Homey.Device {
         this.registerCapabilityListener('target_temperature', async (value) => {
             this.debug("Changed temp", value);
             this.setHeatingSetpoint(value);
+            this.debug("Changed temp", value);
+            this.setHeatingSetpoint(value);
         });
 
         this.registerCapabilityListener('onoff', async (value) => {
             this.debug("Changed On/Off", value);
+            this.debug("Changed On/Off", value);
             if (value) {
                 this.setOperatingModeOn()
+                this.setOperatingModeOn()
             } else {
+                this.setOperatingModeOff()
                 this.setOperatingModeOff()
             }
         });
@@ -39,6 +44,7 @@ module.exports = class MyDevice extends Homey.Device {
         if (this.getStore().address != null) {
 
             if (!this.isValidIpAddress(this.getSettings().IPaddress.trim())) {
+                await this.setSettings({IPaddress: this.getStore().address,});
                 await this.setSettings({IPaddress: this.getStore().address,});
             }
 
@@ -82,6 +88,7 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     refreshState() {
+        this.debug("refreshState")
         this.debug("refreshState")
         const client = http.get({
             hostname: this.IPaddress,
@@ -217,6 +224,7 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     async setHeatingSetpoint(value) {
+    async setHeatingSetpoint(value) {
         const postData = JSON.stringify({
             'heatingSetpoint': value,
         });
@@ -224,6 +232,7 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     async setParameters(postData) {
+        this.debug('setParameters');
         this.debug('setParameters');
 
         const options = {
@@ -238,6 +247,8 @@ module.exports = class MyDevice extends Homey.Device {
         };
 
         const req = http.request(options, (res) => {
+            this.debug(`STATUS: ${res.statusCode}`);
+            this.debug(`HEADERS: ${JSON.stringify(res.headers)}`);
             this.debug(`STATUS: ${res.statusCode}`);
             this.debug(`HEADERS: ${JSON.stringify(res.headers)}`);
             res.setEncoding('utf8');
@@ -305,5 +316,6 @@ module.exports = class MyDevice extends Homey.Device {
     async onDeleted() {
         this.deviceIsDeleted = true;
         this.log('My heatit WiFi device has been deleted');
+    }   
     }   
 };

@@ -1,0 +1,176 @@
+{
+    "type": "enum",
+    "title": {
+      "en": "Fan Mode"
+    },
+    "desc": {
+      "en": "Fan mode on the thermostat"
+    },
+    "values": [
+        {
+        "id": "Low",
+        "title": {
+            "en": "Low"
+        }
+        },
+        {
+        "id": "Medium",
+        "title": {
+            "en": "Medium"
+        }
+        },
+                        {
+        "id": "Auto medium",
+        "title": {
+            "en": "Auto"
+        }
+        },
+        {
+        "id": "High",
+        "title": {
+            "en": "High"
+        }
+        }
+    ],
+    "getable": true,
+    "setable": true,
+    "uiComponent": "picker",
+    "$flow": {
+      "triggers": [
+        {
+          "id": "fan_mode_changed",
+          "title": {
+            "en": "Fan mode changed"
+          },
+          "args": [
+            {
+              "name": "thermostat_fan_mode",
+              "type": "dropdown",
+              "values": [
+                {
+                  "id": "Idle",
+                  "title": {
+                    "en": "Idle"
+                  }
+                },
+                {
+                  "id": "Low",
+                  "title": {
+                    "en": "Low"
+                  }
+                },
+                {
+                  "id": "Medium",
+                  "title": {
+                    "en": "Medium"
+                  }
+                },
+                {
+                  "id": "High",
+                  "title": {
+                    "en": "High"
+                  }
+                }
+              ],
+              "meta": {
+                "$values": true
+              }
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "id": "fan_mode_is",
+          "title": {
+            "en": "Fan mode !{{is|is not}}"
+          },
+          "args": [
+            {
+              "name": "fan_mode",
+              "type": "dropdown",
+              "values": [
+                {
+                  "id": "Idle",
+                  "title": {
+                    "en": "Idle"
+                  }
+                },
+                {
+                  "id": "Low",
+                  "title": {
+                    "en": "Low"
+                  }
+                },
+                {
+                  "id": "Medium",
+                  "title": {
+                    "en": "Medium"
+                  }
+                },
+                {
+                  "id": "High",
+                  "title": {
+                    "en": "High"
+                  }
+                }
+              ],
+              "meta": {
+                "$values": true
+              }
+            }
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "id": "fan_mode_set",
+          "title": {
+            "en": "Set fan mode"
+          },
+          "args": [
+            {
+              "name": "fan_mode",
+              "type": "dropdown",
+              "values": [
+                {
+                  "id": "Idle",
+                  "title": {
+                    "en": "Idle"
+                  }
+                },
+                {
+                  "id": "Low",
+                  "title": {
+                    "en": "Low"
+                  }
+                },
+                {
+                  "id": "Medium",
+                  "title": {
+                    "en": "Medium"
+                  }
+                },
+                                {
+                  "id": "Auto medium",
+                  "title": {
+                    "en": "Auto"
+                  }
+                },
+                {
+                  "id": "High",
+                  "title": {
+                    "en": "High"
+                  }
+                }
+              ],
+              "meta": {
+                "$values": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+  
