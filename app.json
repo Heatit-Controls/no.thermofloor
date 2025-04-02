@@ -8388,7 +8388,7 @@
         "learnmode": {
           "image": "/drivers/Z-TRM6/assets/learnmode.svg",
           "instruction": {
-            "en": "1. Hold the Center button for 5 seconds. The display will show \"OFF\".\n2. Press the \"+\" button once to see \"CON\" in the display.\n3 Start the configuration mode on the thermostat by holding the Center button for approximately 2 seconds.\n4. Configuration mode is indicated on the device by rotating LED segments on the display."
+            "en": "1. Hold the Center button for 5 seconds. The display will show “OFF”.\n2. Press the ”+” button once to see “CON” in the display.\n3 Start the configuration mode on the thermostat by holding the Center button for approximately 2 seconds.\n4. Configuration mode is indicated on the device by rotating LED segments on the display."
           }
         },
         "associationGroups": [],
