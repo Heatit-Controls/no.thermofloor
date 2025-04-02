@@ -40,11 +40,6 @@ class ZTRM6Device extends ZwaveDevice {
 			await this.removeCapability('powerregulator_mode');
 		}
 
-		// Remove target_humidity capability if it exists (from previous implementation)
-		if (this.hasCapability('target_humidity') === true) {
-			await this.removeCapability('target_humidity');
-		}
-
 		// Store the original temperature options for restoring later
 		this._originalTempOptions = {
 			min: 5,
@@ -64,13 +59,6 @@ class ZTRM6Device extends ZwaveDevice {
 		if (storedPowerRegValue === null || storedPowerRegValue === undefined) {
 			await this.setStoreValue('power_reg_value', 5); // Default to middle value (5 = 50%)
 		}
-
-		// Get current power regulator value from device
-		this.configurationGet({
-			index: this.getParameterIndex('power_reg_active_time'),
-			size: 0x01,
-			signed: false
-		}).catch(this.error);
 
 		//map param 2 to sensor to show correct temp in measure.temperature
 		this.PARAM2_SENSOR_MAP = {
@@ -141,45 +129,12 @@ class ZTRM6Device extends ZwaveDevice {
 		this.registerCapability('target_temperature', 'THERMOSTAT_SETPOINT', {
 			getOpts: {
 				getOnStart: true,
+				getOnOnline: true,
 			},
-			getParser: async () => {
+			get: async (options) => {
+				// For regular modes, retrieve the setpointType
 				try {
-					// First check the sensor mode to determine if we're in powerregulator mode
-					const settings = await this.getSettings();
-					const sensorMode = parseInt(settings.sensor_mode, 10);
-					
-					// If in powerregulator mode (sensor_mode = 5), get the power_reg_active_time
-					if (sensorMode === 5) {
-						this.log('Device in powerregulator mode, getting power_reg_active_time');
-						
-						// Setup UI for powerregulator mode
-						await this.setCapabilityOptions('target_temperature', this._powerRegulatorTempOptions)
-							.catch(err => this.error(`Failed to set powerregulator options: ${err.message}`));
-						
-						// Get power_reg_active_time configuration parameter
-						this.configurationGet({
-							index: this.getParameterIndex('power_reg_active_time'),
-							size: 0x01,
-							signed: false
-						}).catch(this.error);
-						
-						// Don't send THERMOSTAT_SETPOINT_GET
-						return null;
-					} else {
-						// Restore temperature options for normal thermostat mode
-						await this.setCapabilityOptions('target_temperature', this._originalTempOptions)
-							.catch(err => this.error(`Failed to restore original temp options: ${err.message}`));
-					}
-					
-					// Check if the device is in powerregulator mode based on capability
 					const currentMode = this.getCapabilityValue('thermostat_mode');
-					if (currentMode === 'Powerregulator') {
-						// In powerregulator mode, we don't need to get the thermostat setpoint
-						// Return null here to prevent sending the command
-						return null;
-					}
-					
-					// For regular modes, retrieve the setpointType
 					const setpointType = Mode2Setpoint[currentMode] || 'Heating 1'; // fallback
 					return {
 						Level: {
@@ -605,24 +560,70 @@ class ZTRM6Device extends ZwaveDevice {
 
 	async initPowerRegulatorMode() {
 		try {
-			// Initialize the device with the stored or settings power regulator value if needed
 			const currentMode = this.getCapabilityValue('thermostat_mode');
 			if (currentMode === 'Powerregulator') {
-				// Make sure we have the correct temperature scale
 				await this.setCapabilityOptions('target_temperature', this._powerRegulatorTempOptions)
 					.catch(err => this.error(`Failed to set powerregulator temp options: ${err.message}`));
 				
-				// Get the current power regulator value from store or settings
-				const powerRegValue = this.getPowerRegulatorValue();
+				const powerRegIndex = this.getParameterIndex('power_reg_active_time');
 				
-				// Set the target_temperature to match the power regulator value
+				if (powerRegIndex !== null) {
+					this.log(`Requesting power_reg_active_time from device...`);
+					
+					try {
+						const configResult = await this.node.CommandClass.COMMAND_CLASS_CONFIGURATION.CONFIGURATION_GET({
+							'Parameter Number': powerRegIndex
+						});
+						
+						if (configResult) {
+							this.log('Received power regulator configuration:', configResult);
+							const confValRaw = configResult['Configuration Value (Raw)'];
+							
+							const { paramSize, isSigned } = this.getParameterInfo(powerRegIndex);
+							
+							const parsedValue = this.parseConfigurationValue(confValRaw, paramSize, isSigned);
+							this.log(`Parsed power regulator value: ${parsedValue}`);
+							
+							if (parsedValue !== null && parsedValue !== undefined) {
+								await this.setStoreValue('power_reg_value', parsedValue);
+								await this.setSettings({ power_reg_active_time: parsedValue });
+								
+								const displayValue = parsedValue * 10;
+								this.log(`Setting target_temperature to ${displayValue}`);
+								await this.setCapabilityValue('target_temperature', displayValue);
+								return;
+							}
+						}
+					} catch (configError) {
+						this.error(`Error getting configuration: ${configError.message}`);
+					}
+					
+					this.log('Using fallback for power regulator value');
+					const fallbackValue = this.getPowerRegulatorValue();
+					await this.setCapabilityValue('target_temperature', fallbackValue * 10)
+						.catch(err => this.error(`Failed to set fallback temperature: ${err.message}`));
+					
+					return;
+				}
+				
+				this.error('Could not determine parameter index for power_reg_active_time');
+				const powerRegValue = this.getPowerRegulatorValue();
 				await this.setCapabilityValue('target_temperature', powerRegValue * 10)
 					.catch(err => this.error(`Failed to set target_temperature: ${err.message}`));
 				
-				this.log(`Power regulator mode initialized with value: ${powerRegValue * 10}°`);
+				this.log(`Power regulator mode initialized with fallback value: ${powerRegValue * 10}°`);
 			}
 		} catch (error) {
 			this.error(`Error in initPowerRegulatorMode: ${error.message}`);
+			
+			try {
+				if (this.getCapabilityValue('thermostat_mode') === 'Powerregulator') {
+					const powerRegValue = this.getPowerRegulatorValue();
+					await this.setCapabilityValue('target_temperature', powerRegValue * 10);
+				}
+			} catch (innerError) {
+				this.error(`Final fallback also failed: ${innerError.message}`);
+			}
 		}
 	}
 
