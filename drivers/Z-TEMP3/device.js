@@ -210,12 +210,12 @@ class ZTEMP3Device extends ZwaveDevice {
                                 const capabilityMode = ThermostatModeToCapability[mode];
                                 const currentOnoff = this.getCapabilityValue('onoff');
                                 if (capabilityMode === 'heat' || capabilityMode === 'cool' || capabilityMode === 'energy save heat') {
-                                    if (currentOnoff === true) {
+                                    if (!urrentOnoff) {
                                         this.setCapabilityValue('onoff', true).catch(this.error);
                                     }
                                 }
                                 if (capabilityMode === 'off') {
-                                    if (currentOnoff === false) {
+                                    if (!currentOnoff) {
                                         this.setCapabilityValue('onoff', false).catch(this.error);
                                     }
                                 }
