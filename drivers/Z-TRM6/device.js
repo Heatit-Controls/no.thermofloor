@@ -89,7 +89,9 @@ class ZTRM6Device extends ZwaveDevice {
 		});
 
 		this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL', {
-			getOpts,
+			getOpts: {
+				getOnStart: true,
+			},
 			report: 'SENSOR_MULTILEVEL_REPORT',
 			reportParser: report => {
 				try {
@@ -680,7 +682,6 @@ class ZTRM6Device extends ZwaveDevice {
 		try {
 			const paramNum = report['Parameter Number'];
 			const confValRaw = report['Configuration Value (Raw)'];
-			const paramNum = report?.['Parameter Number'];
 			
 			// Get parameter info
 			const { matchingSetting, paramSize, isSigned } = this.getParameterInfo(paramNum);
