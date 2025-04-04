@@ -32,7 +32,12 @@ class ZTEMP3Device extends ZwaveDevice {
         if (this.hasCapability('onoff') === false) {
             await this.addCapability('onoff');
         }
-        this.registerCapabilityListener('onoff', this.onCapabilityOnoff.bind(this));
+        if (this.hasCapability('thermostat_state_IdleHeatCool') === false) {
+            await this.addCapability('thermostat_state_IdleHeatCool');
+        }
+        if (this.hasCapability('thermostat_state_13570') === true) {
+            await this.removeCapability('thermostat_state_13570');
+        }
         //add thermostat class to Z-Temp3 that are already paired
         if (this.getClass() !== 'thermostat') {
             await this.setClass('thermostat').catch(this.error)

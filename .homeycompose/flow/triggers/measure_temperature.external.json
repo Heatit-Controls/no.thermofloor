@@ -25,7 +25,7 @@
   "tokens": [
     {
       "name": "measure_temperature.external",
-      "title": "temperature",
+      "title": "external temperature",
       "type": "number",
       "example": 23.5
     }

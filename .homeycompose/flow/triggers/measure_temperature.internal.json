@@ -25,7 +25,7 @@
   "tokens": [
     {
       "name": "measure_temperature.internal",
-      "title": "temperature",
+      "title": "internal temperature",
       "type": "number",
       "example": 23.5
     }

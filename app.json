@@ -137,7 +137,7 @@
         "tokens": [
           {
             "name": "measure_temperature.external",
-            "title": "temperature",
+            "title": "external temperature",
             "type": "number",
             "example": 23.5
           }
@@ -170,7 +170,7 @@
         "tokens": [
           {
             "name": "measure_temperature.floor",
-            "title": "temperature",
+            "title": "floor temperature",
             "type": "number",
             "example": 23.5
           }
@@ -315,7 +315,7 @@
         "tokens": [
           {
             "name": "measure_temperature.internal",
-            "title": "temperature",
+            "title": "internal temperature",
             "type": "number",
             "example": 23.5
           }
