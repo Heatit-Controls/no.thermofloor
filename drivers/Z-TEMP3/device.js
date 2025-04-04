@@ -32,16 +32,43 @@ class ZTEMP3Device extends ZwaveDevice {
         if (this.hasCapability('onoff') === false) {
             await this.addCapability('onoff');
         }
-        if (this.hasCapability('thermostat_state_IdleHeatCool') === false) {
-            await this.addCapability('thermostat_state_IdleHeatCool');
-        }
         if (this.hasCapability('thermostat_state_13570') === true) {
             await this.removeCapability('thermostat_state_13570');
         }
+        if (this.hasCapability('thermostat_state_IdleHeatCool') === false) {
+            await this.addCapability('thermostat_state_IdleHeatCool');
+        }
+
         //add thermostat class to Z-Temp3 that are already paired
         if (this.getClass() !== 'thermostat') {
             await this.setClass('thermostat').catch(this.error)
         }
+
+        this.registerCapability('thermostat_state_IdleHeatCool', 'THERMOSTAT_OPERATING_STATE', {	
+            getOpts: { getOnStart: true },
+            get: 'THERMOSTAT_OPERATING_STATE_GET',
+            report: 'THERMOSTAT_OPERATING_STATE_REPORT',
+            reportParser: report => {
+                if (report?.Level?.['Operating State']) {
+                    const state = report.Level['Operating State'];
+                    if (typeof state === 'string') {
+                        const thermostatStateObj = {
+                            state,
+                            state_name: this.homey.__(`state.${state}`),
+                        };
+                        
+                        if (this.homey.app?.triggerThermostatStateChangedTo) {
+                            this.homey.app.triggerThermostatStateChangedTo
+                                .trigger(this, null, thermostatStateObj)
+                                .catch(err => this.error('Error triggering flow card:', err));
+                        }
+                        return state;
+                    }
+                }
+                return null;
+            },
+        });
+
     }
 
     async onCapabilityOnoff(value, opts) {
@@ -227,35 +254,8 @@ class ZTEMP3Device extends ZwaveDevice {
             this.error('Error registering thermostat_mode capability:', error);
         }
 
-        try {
-            this.registerCapability('thermostat_state_IdleHeatCool', 'THERMOSTAT_OPERATING_STATE', {
-                getOpts: {
-                    getOnStart: true,
-                },
-                get: 'THERMOSTAT_OPERATING_STATE_GET',
-                report: 'THERMOSTAT_OPERATING_STATE_REPORT',
-                reportParser: report => {
-                    if (report && report.Level && report.Level['Operating State']) {
-                        const state = report.Level['Operating State'];
-                        if (typeof state === 'string') {
-                            const thermostatStateObj = {
-                                state: state,
-                                state_name: this.homey.__(`state.${state}`),
-                            };
-                            if (this.homey.app && this.homey.app.triggerThermostatStateChangedTo) {
-                                this.homey.app.triggerThermostatStateChangedTo.trigger(this, null, thermostatStateObj)
-                                    .catch(err => this.error('Error triggering flow card:', err));
-                            }
-                            return state;
-                        }
-                    }
-                    return null;
-                },
-                multiChannelNodeId: 1,
-            });
-        } catch (error) {
-            this.error('Error registering thermostat_state capability:', error);
-        }
+
+            
 
 
         this.setAvailable().catch(error => this.error('Error setting device available:', error));
