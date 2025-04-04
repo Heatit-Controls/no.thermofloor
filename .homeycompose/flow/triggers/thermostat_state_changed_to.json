@@ -10,7 +10,7 @@
 		{
 			"name": "device",
 			"type": "device",
-			"filter": "driver_id=ZM-Thermostat-16A|Z-TRM6"
+			"filter": "driver_id=ZM-Thermostat-16A|Z-TRM6|Z-TEMP3"
 		},
 		{
 			"name": "state",

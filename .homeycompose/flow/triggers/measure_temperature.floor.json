@@ -14,7 +14,7 @@
 		{
 			"name": "device",
 			"type": "device",
-			"filter": "driver_id=TF_Thermostat_FW1.92|Z-TRM2fx|Z-TRM3"
+			"filter": "capabilities=TF_Thermostat_FW1.92|Z-TRM2fx|Z-TRM3"
 	   }
   ],
   "tokens": [
