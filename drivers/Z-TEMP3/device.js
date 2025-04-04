@@ -21,7 +21,6 @@ const ThermostatModeToCapability = {
 class ZTEMP3Device extends ZwaveDevice {
     async onNodeInit() {
 
-        this.registerCapability('target_temperature', 'THERMOSTAT_SETPOINT');
         this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL');
         this.registerCapability('measure_battery', 'BATTERY');
         this.registerCapability('measure_humidity', 'SENSOR_MULTILEVEL');
@@ -58,7 +57,6 @@ class ZTEMP3Device extends ZwaveDevice {
 							state,
 							state_name: this.homey.__(`state.${state}`) || state,
 						};
-						this.log('thermostatStateObj', thermostatStateObj);
 						
 						this.driver.triggerThermostatState(this, { state }, { state });
 						return state;
@@ -84,7 +82,6 @@ class ZTEMP3Device extends ZwaveDevice {
             const currentMode = this.getCapabilityValue('thermostat_mode');
             if (currentMode !== 'off') {
                 await this.setStoreValue('previousMode', currentMode);
-                this.log(`Stored previous mode: ${currentMode}`);
             }
 
             await this.executeCapabilitySetCommand('thermostat_mode', 'THERMOSTAT_MODE', 'off')
@@ -96,14 +93,15 @@ class ZTEMP3Device extends ZwaveDevice {
     }
 
     registerThermostatSetpointCapability() {
+        const currentMode = this.getCapabilityValue('thermostat_mode') || 'Heat';
+        const setpointType = Mode2Setpoint[currentMode] || 'Heating 1';
+        const setpointSetting = Setpoint2Setting[setpointType];
+
         this.registerCapability('target_temperature', 'THERMOSTAT_SETPOINT', {
             getOpts: {
                 getOnStart: true,
             },
             getParser: () => {
-                // Retrieve the setpointType based on the current thermostat_mode
-                const currentMode = this.getCapabilityValue('thermostat_mode') || 'Heat';
-                const setpointType = Mode2Setpoint[currentMode] || 'Heating 1'; // fallback
                 return {
                     Level: {
                         'Setpoint Type': setpointType !== 'not supported' ? setpointType : 'Heating 1',
@@ -112,14 +110,9 @@ class ZTEMP3Device extends ZwaveDevice {
             },
             set: 'THERMOSTAT_SETPOINT_SET',
             setParserV3: setpointValue => {
-                const currentMode = this.getCapabilityValue('thermostat_mode') || 'Heat';
-                const setpointType = Mode2Setpoint[currentMode];
-                this.log('Mode2Setpoint ->', setpointValue, currentMode, setpointType);
-
                 if (setpointType !== 'not supported' && setpointType) {
                     this.setStoreValue(`thermostatsetpointValue.${setpointType}`, setpointValue).catch(this.error);
 
-                    const setpointSetting = Setpoint2Setting[setpointType];
                     this.setSettings({
                         [setpointSetting]: setpointValue * 10,
                     }).catch(this.error);
@@ -128,10 +121,6 @@ class ZTEMP3Device extends ZwaveDevice {
                     const scaled = (Math.round(setpointValue * 2) / 2 * 10).toFixed(0);
                     bufferValue.writeUInt16BE(scaled);
 
-                    this.log(
-                        `Set thermostat setpointValue: ${setpointValue}, scaled to: ${scaled}, buffer:`,
-                        bufferValue
-                    );
                     return {
                         Level: {
                             'Setpoint Type': setpointType,
@@ -148,7 +137,6 @@ class ZTEMP3Device extends ZwaveDevice {
             },
             report: 'THERMOSTAT_SETPOINT_REPORT',
             reportParserV3: report => {
-                this.log('reportParserV3 thermostat setpoint report:', report);
                 if (
                     report &&
                     report.hasOwnProperty('Level2') &&
@@ -166,20 +154,17 @@ class ZTEMP3Device extends ZwaveDevice {
                     if (typeof readValue !== 'undefined') {
                         const setpointValue = readValue / 10 ** report.Level2.Precision;
                         const setpointType = report.Level['Setpoint Type'];
-                        this.log('Received setpoint report:', setpointType, setpointValue);
 
                         if (setpointType !== 'not supported') {
                             this.setStoreValue(`thermostatsetpointValue.${setpointType}`, setpointValue).catch(this.error);
                         }
-                        const setpointSetting = Setpoint2Setting[setpointType];
+
                         this.setSettings({
                             [setpointSetting]: setpointValue * 10,
                         }).catch(this.error);
 
                         // Only update the UI if the current mode matches the type
-                        const currentMode = this.getCapabilityValue('thermostat_mode') || 'Heat';
                         if (setpointType === Mode2Setpoint[currentMode]) {
-                            this.log('Updated thermostat setpoint on UI to', setpointValue);
                             return setpointValue;
                         }
                         return null;
@@ -223,15 +208,14 @@ class ZTEMP3Device extends ZwaveDevice {
                             const mode = report.Level.Mode;
                             if (typeof mode === 'string' && ThermostatModeToCapability.hasOwnProperty(mode)) {
                                 const capabilityMode = ThermostatModeToCapability[mode];
-                                this.log('Capability Mode:', capabilityMode);
                                 const currentOnoff = this.getCapabilityValue('onoff');
                                 if (capabilityMode === 'heat' || capabilityMode === 'cool' || capabilityMode === 'energy save heat') {
-                                    if (!currentOnoff) {
+                                    if (currentOnoff === true) {
                                         this.setCapabilityValue('onoff', true).catch(this.error);
                                     }
                                 }
                                 if (capabilityMode === 'off') {
-                                    if (currentOnoff) {
+                                    if (currentOnoff === false) {
                                         this.setCapabilityValue('onoff', false).catch(this.error);
                                     }
                                 }
