@@ -847,15 +847,12 @@ class ZTRM6Device extends ZwaveDevice {
 	}
 	
 	getParameterInfo(paramNum) {
-		// Find the matching setting in the manifest
 		const manifestSettings = this.getManifestSettings();
 		const matchingSetting = manifestSettings.find(setting => 
 			setting.zwave && setting.zwave.index === paramNum
 		);
 		
-		// Get parameter size and signed status from the manifest
 		const paramSize = matchingSetting?.zwave?.size || 1;
-		// Parameters are signed by default unless explicitly set to false
 		const isSigned = !(matchingSetting?.zwave?.signed === false);
 		
 		return { matchingSetting, paramSize, isSigned };
