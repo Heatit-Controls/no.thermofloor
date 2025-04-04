@@ -117,6 +117,11 @@
           "nl": "De temperatuur van de externe sensor is veranderd",
           "de": "Temperatur des externen Sensors hat sich geändert"
         },
+        "titleFormatted": {
+          "en": "The temperature of [[device]] changed",
+          "nl": "De temperatuur van [[device]] is veranderd",
+          "de": "Temperatur von [[device]] hat sich geändert"
+        },
         "args": [
           {
             "name": "device",
@@ -139,6 +144,11 @@
           "en": "The temperature of the floor sensor changed",
           "nl": "De temperatuur van de vloer sensor is veranderd",
           "de": "Temperatur des Fußboden Sensors hat sich geändert"
+        },
+        "titleFormatted": {
+          "en": "The temperature of [[device]] changed",
+          "nl": "De temperatuur van [[device]] is veranderd",
+          "de": "Temperatur von [[device]] hat sich geändert"
         },
         "args": [
           {
@@ -274,6 +284,11 @@
           "en": "The temperature of the internal sensor changed",
           "nl": "De temperatuur van de interne sensor is veranderd",
           "de": "Temperatur des internen Sensors hat sich geändert"
+        },
+        "titleFormatted": {
+          "en": "The temperature of [[device]] changed",
+          "nl": "De temperatuur van [[device]] is veranderd",
+          "de": "Temperatur von [[device]] hat sich geändert"
         },
         "args": [
           {
@@ -462,7 +477,7 @@
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=ZM-Thermostat-16A|Z-TRM6"
+            "filter": "driver_id=ZM-Thermostat-16A|Z-TRM6|Z-TEMP3"
           },
           {
             "name": "state",
