@@ -1,31 +1,26 @@
 {
   "id": "measure_temperature.external_changed",
   "title": {
-    "en": "The external temperature of [[device]] changed",
-    "nl": "De externe temperatuur van [[device]] is veranderd",
-		"de": "Die externe Temperatur von [[device]] hat sich geändert"
+    "en": "The temperature of the external sensor changed",
+    "nl": "De temperatuur van de externe sensor is veranderd",
+		"de": "Temperatur des externen Sensors hat sich geändert"
   },
   "titleFormatted": {
-    "en": "The external temperature of [[device]] changed",
-    "nl": "De externe temperatuur van [[device]] is veranderd",
-    "de": "Die externe Temperatur von [[device]] hat sich geändert"
+    "en": "The temperature of the external sensor changed",
+    "nl": "De temperatuur van de externe sensor is veranderd",
+    "de": "Temperatur des externen Sensors hat sich geändert"
   },
   "args": [
 		{
 			"name": "device",
 			"type": "device",
-			"filter": "capabilities=measure_temperature.external",
-			"title": {
-				"en": "Device",
-				"nl": "Apparaat",
-				"de": "Gerät"
-			}
+			"filter": "driver_id=TF_Thermostat_FW1.92|Z-TRM2fx|Z-TRM3"
 	   }
   ],
   "tokens": [
     {
       "name": "measure_temperature.external",
-      "title": "external temperature",
+      "title": "temperature",
       "type": "number",
       "example": 23.5
     }

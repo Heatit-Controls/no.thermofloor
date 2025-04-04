@@ -113,31 +113,26 @@
       {
         "id": "measure_temperature.external_changed",
         "title": {
-          "en": "The external temperature of [[device]] changed",
-          "nl": "De externe temperatuur van [[device]] is veranderd",
-          "de": "Die externe Temperatur von [[device]] hat sich geändert"
+          "en": "The temperature of the external sensor changed",
+          "nl": "De temperatuur van de externe sensor is veranderd",
+          "de": "Temperatur des externen Sensors hat sich geändert"
         },
         "titleFormatted": {
-          "en": "The external temperature of [[device]] changed",
-          "nl": "De externe temperatuur van [[device]] is veranderd",
-          "de": "Die externe Temperatur von [[device]] hat sich geändert"
+          "en": "The temperature of the external sensor changed",
+          "nl": "De temperatuur van de externe sensor is veranderd",
+          "de": "Temperatur des externen Sensors hat sich geändert"
         },
         "args": [
           {
             "name": "device",
             "type": "device",
-            "filter": "capabilities=measure_temperature.external",
-            "title": {
-              "en": "Device",
-              "nl": "Apparaat",
-              "de": "Gerät"
-            }
+            "filter": "driver_id=TF_Thermostat_FW1.92|Z-TRM2fx|Z-TRM3"
           }
         ],
         "tokens": [
           {
             "name": "measure_temperature.external",
-            "title": "external temperature",
+            "title": "temperature",
             "type": "number",
             "example": 23.5
           }
@@ -146,31 +141,26 @@
       {
         "id": "measure_temperature.floor_changed",
         "title": {
-          "en": "The floor temperature of [[device]] changed",
-          "nl": "De vloer temperatuur van [[device]] is veranderd",
-          "de": "Die Bodentemperatur von [[device]] hat sich geändert"
+          "en": "The temperature of the floor sensor changed",
+          "nl": "De temperatuur van de vloer sensor is veranderd",
+          "de": "Temperatur des Fußboden Sensors hat sich geändert"
         },
         "titleFormatted": {
-          "en": "The floor temperature of [[device]] changed",
-          "nl": "De vloer temperatuur van [[device]] is veranderd",
-          "de": "Die Bodentemperatur von [[device]] hat sich geändert"
+          "en": "The temperature of the floor sensor changed",
+          "nl": "De temperatuur van de vloer sensor is veranderd",
+          "de": "Temperatur des Fußboden Sensors hat sich geändert"
         },
         "args": [
           {
             "name": "device",
             "type": "device",
-            "filter": "capabilities=measure_temperature.floor",
-            "title": {
-              "en": "Device",
-              "nl": "Apparaat",
-              "de": "Gerät"
-            }
+            "filter": "driver_id=TF_Thermostat_FW1.92|Z-TRM2fx|Z-TRM3"
           }
         ],
         "tokens": [
           {
             "name": "measure_temperature.floor",
-            "title": "floor temperature",
+            "title": "temperature",
             "type": "number",
             "example": 23.5
           }
@@ -291,31 +281,26 @@
       {
         "id": "measure_temperature.internal_changed",
         "title": {
-          "en": "The internal temperature of [[device]] changed",
-          "nl": "De interne temperatuur van [[device]] is veranderd",
-          "de": "Die interne Temperatur von [[device]] hat sich geändert"
+          "en": "The temperature of the internal sensor changed",
+          "nl": "De temperatuur van de interne sensor is veranderd",
+          "de": "Temperatur des internen Sensors hat sich geändert"
         },
         "titleFormatted": {
-          "en": "The internal temperature of [[device]] changed",
-          "nl": "De interne temperatuur van [[device]] is veranderd",
-          "de": "Die interne Temperatur von [[device]] hat sich geändert"
+          "en": "The temperature of the internal sensor changed",
+          "nl": "De temperatuur van de interne sensor is veranderd",
+          "de": "Temperatur des internen Sensors hat sich geändert"
         },
         "args": [
           {
             "name": "device",
             "type": "device",
-            "filter": "capabilities=measure_temperature.internal",
-            "title": {
-              "en": "Device",
-              "nl": "Apparaat",
-              "de": "Gerät"
-            }
+            "filter": "driver_id=TF_Thermostat_FW1.92|Z-TRM3"
           }
         ],
         "tokens": [
           {
             "name": "measure_temperature.internal",
-            "title": "internal temperature",
+            "title": "temperature",
             "type": "number",
             "example": 23.5
           }
@@ -485,6 +470,7 @@
         "title": {
           "en": "Thermostat state changed to"
         },
+        "deprecated": true,
         "titleFormatted": {
           "en": "Thermostat state changed to [[state]]"
         },
@@ -492,8 +478,7 @@
           {
             "name": "device",
             "type": "device",
-            "highlight": true,
-            "filter": "driver_id=ZM-Thermostat-16A|Z-TRM6|Z-TEMP3"
+            "filter": "driver_id=ZM-Thermostat-16A|Z-TRM6"
           },
           {
             "name": "state",
@@ -691,6 +676,92 @@
               "en": "Scene"
             },
             "type": "autocomplete"
+          }
+        ]
+      },
+      {
+        "id": "ztemp3_thermostat_state_IdleHeatCool",
+        "title": {
+          "en": "Thermostat state changed"
+        },
+        "titleFormatted": {
+          "en": "Thermostat state changed to [[thermostat_state]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Z-TEMP3"
+          },
+          {
+            "name": "thermostat_state",
+            "type": "dropdown",
+            "title": {
+              "en": "Thermostat State"
+            },
+            "values": [
+              {
+                "id": "Idle",
+                "label": {
+                  "en": "Idle"
+                }
+              },
+              {
+                "id": "Heating",
+                "label": {
+                  "en": "Heating"
+                }
+              },
+              {
+                "id": "Cooling",
+                "label": {
+                  "en": "Cooling"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ztrm6_thermostat_state_IdleHeatCool",
+        "title": {
+          "en": "Thermostat state changed"
+        },
+        "titleFormatted": {
+          "en": "Thermostat state changed to [[thermostat_state]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Z-TRM6"
+          },
+          {
+            "name": "thermostat_state",
+            "type": "dropdown",
+            "title": {
+              "en": "Thermostat State"
+            },
+            "values": [
+              {
+                "id": "Idle",
+                "label": {
+                  "en": "Idle"
+                }
+              },
+              {
+                "id": "Heating",
+                "label": {
+                  "en": "Heating"
+                }
+              },
+              {
+                "id": "Cooling",
+                "label": {
+                  "en": "Cooling"
+                }
+              }
+            ]
           }
         ]
       },

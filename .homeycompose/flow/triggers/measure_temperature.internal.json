@@ -1,31 +1,26 @@
 {
   "id": "measure_temperature.internal_changed",
   "title": {
-    "en": "The internal temperature of [[device]] changed",
-    "nl": "De interne temperatuur van [[device]] is veranderd",
-		"de": "Die interne Temperatur von [[device]] hat sich geändert"
+    "en": "The temperature of the internal sensor changed",
+    "nl": "De temperatuur van de interne sensor is veranderd",
+		"de": "Temperatur des internen Sensors hat sich geändert"
   },
   "titleFormatted": {
-    "en": "The internal temperature of [[device]] changed",
-    "nl": "De interne temperatuur van [[device]] is veranderd",
-    "de": "Die interne Temperatur von [[device]] hat sich geändert"
+    "en": "The temperature of the internal sensor changed",
+    "nl": "De temperatuur van de interne sensor is veranderd",
+    "de": "Temperatur des internen Sensors hat sich geändert"
   },
   "args": [
 		{
 			"name": "device",
 			"type": "device",
-			"filter": "capabilities=measure_temperature.internal",
-			"title": {
-				"en": "Device",
-				"nl": "Apparaat",
-				"de": "Gerät"
-			}
+			"filter": "driver_id=TF_Thermostat_FW1.92|Z-TRM3"
 	   }
   ],
   "tokens": [
     {
       "name": "measure_temperature.internal",
-      "title": "internal temperature",
+      "title": "temperature",
       "type": "number",
       "example": 23.5
     }

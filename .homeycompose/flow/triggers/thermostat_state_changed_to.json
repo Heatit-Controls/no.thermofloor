@@ -3,6 +3,7 @@
 	"title": {
 		"en": "Thermostat state changed to"
 	},
+	"deprecated": true,
 	"titleFormatted": {
 		"en": "Thermostat state changed to [[state]]"
 	},
@@ -10,8 +11,7 @@
 		{
 			"name": "device",
 			"type": "device",
-			"highlight": true,
-			"filter": "driver_id=ZM-Thermostat-16A|Z-TRM6|Z-TEMP3"
+			"filter": "driver_id=ZM-Thermostat-16A|Z-TRM6"
 		},
 		{
 			"name": "state",

@@ -313,7 +313,9 @@ class ZTRM6Device extends ZwaveDevice {
 		});
 
 	this.registerCapability('thermostat_state_IdleHeatCool', 'THERMOSTAT_OPERATING_STATE', {	
-			getOpts: { getOnStart: true },
+			getOpts: {
+				getOnStart: true,
+			},
 			get: 'THERMOSTAT_OPERATING_STATE_GET',
 			report: 'THERMOSTAT_OPERATING_STATE_REPORT',
 			reportParser: report => {
@@ -322,14 +324,11 @@ class ZTRM6Device extends ZwaveDevice {
 					if (typeof state === 'string') {
 						const thermostatStateObj = {
 							state,
-							state_name: this.homey.__(`state.${state}`),
+							state_name: this.homey.__(`state.${state}`) || state,
 						};
+						this.log('thermostatStateObj', thermostatStateObj);
 						
-						if (this.homey.app?.triggerThermostatStateChangedTo) {
-							this.homey.app.triggerThermostatStateChangedTo
-								.trigger(this, null, thermostatStateObj)
-								.catch(err => this.error('Error triggering flow card:', err));
-						}
+						this.driver.triggerThermostatState(this, { state }, { state });
 						return state;
 					}
 				}

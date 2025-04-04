@@ -45,30 +45,28 @@ class ZTEMP3Device extends ZwaveDevice {
         }
 
         this.registerCapability('thermostat_state_IdleHeatCool', 'THERMOSTAT_OPERATING_STATE', {	
-            getOpts: { getOnStart: true },
-            get: 'THERMOSTAT_OPERATING_STATE_GET',
-            report: 'THERMOSTAT_OPERATING_STATE_REPORT',
-            reportParser: report => {
-                if (report?.Level?.['Operating State']) {
-                    const state = report.Level['Operating State'];
-                    if (typeof state === 'string') {
-                        const thermostatStateObj = {
-                            state,
-                            state_name: this.homey.__(`state.${state}`),
-                        };
-                        
-                        if (this.homey.app?.triggerThermostatStateChangedTo) {
-                            this.homey.app.triggerThermostatStateChangedTo
-                                .trigger(this, null, thermostatStateObj)
-                                .catch(err => this.error('Error triggering flow card:', err));
-                        }
-                        return state;
-                    }
-                }
-                return null;
-            },
+			getOpts: {
+				getOnStart: true,
+			},
+			get: 'THERMOSTAT_OPERATING_STATE_GET',
+			report: 'THERMOSTAT_OPERATING_STATE_REPORT',
+			reportParser: report => {
+				if (report?.Level?.['Operating State']) {
+					const state = report.Level['Operating State'];
+					if (typeof state === 'string') {
+						const thermostatStateObj = {
+							state,
+							state_name: this.homey.__(`state.${state}`) || state,
+						};
+						this.log('thermostatStateObj', thermostatStateObj);
+						
+						this.driver.triggerThermostatState(this, { state }, { state });
+						return state;
+					}
+				}
+				return null;
+			},
         });
-
     }
 
     async onCapabilityOnoff(value, opts) {
