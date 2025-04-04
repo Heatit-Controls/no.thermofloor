@@ -223,32 +223,35 @@ class ZTEMP3Device extends ZwaveDevice {
         }
 
         try {
-            this.registerCapability('thermostat_state_13570', 'THERMOSTAT_OPERATING_STATE', {
+            this.registerCapability('thermostat_state_IdleHeatCool', 'THERMOSTAT_OPERATING_STATE', {
                 getOpts: {
                     getOnStart: true,
                 },
                 get: 'THERMOSTAT_OPERATING_STATE_GET',
                 report: 'THERMOSTAT_OPERATING_STATE_REPORT',
                 reportParser: report => {
-                    try {
-                        if (report?.Level?.['Operating State']) {
-                            const state = report.Level['Operating State'];
-                            if (typeof state === 'string') {
-                                this.setCapabilityValue('thermostat_state_13570', state).catch(this.error);
-                                return state;
+                    if (report && report.Level && report.Level['Operating State']) {
+                        const state = report.Level['Operating State'];
+                        if (typeof state === 'string') {
+                            const thermostatStateObj = {
+                                state: state,
+                                state_name: this.homey.__(`state.${state}`),
+                            };
+                            if (this.homey.app && this.homey.app.triggerThermostatStateChangedTo) {
+                                this.homey.app.triggerThermostatStateChangedTo.trigger(this, null, thermostatStateObj)
+                                    .catch(err => this.error('Error triggering flow card:', err));
                             }
+                            return state;
                         }
-                        this.error('Invalid report structure for thermostat_state:', report);
-                        return null;
-                    } catch (error) {
-                        this.error('Error in reportParser for thermostat_state:', error);
-                        return null;
                     }
+                    return null;
                 },
+                multiChannelNodeId: 1,
             });
         } catch (error) {
             this.error('Error registering thermostat_state capability:', error);
         }
+
 
         this.setAvailable().catch(error => this.error('Error setting device available:', error));
     }

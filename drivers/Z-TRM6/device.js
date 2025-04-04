@@ -21,12 +21,42 @@ class ZTRM6Device extends ZwaveDevice {
 			'Cool': 'cool',
 			'Energy Save Heat': 'energy save heat',
 		};
+	}
+	
+	async onNodeInit() {
+		//this.enableDebug();
+		//this.printNode();
 
-		// Temperature options
-		this._originalTempOptions = { min: 5, max: 40, step: 0.5 };
-		this._powerRegulatorTempOptions = { min: 10, max: 100, step: 10 };
+		
+		if (this.hasCapability('thermostat_state_IdleHeatCool') === false) {
+			await this.addCapability('thermostat_state_IdleHeatCool');
+		}
+		if (this.hasCapability('thermostat_state_13570') === true) {
+			await this.removeCapability('thermostat_state_13570');
+		}
+		
+		if (this.hasCapability('powerregulator_mode') === true) {
+			await this.removeCapability('powerregulator_mode');
+		}
 
-		// Map sensor modes to temperature capability
+		this._originalTempOptions = {
+			min: 5,
+			max: 40,
+			step: 0.5
+		};
+		
+		this._powerRegulatorTempOptions = {
+			min: 10,
+			max: 100,
+			step: 10
+		};
+
+		const storedPowerRegValue = this.getStoreValue('power_reg_value');
+		if (storedPowerRegValue === null || storedPowerRegValue === undefined) {
+			await this.setStoreValue('power_reg_value', 5); // Default to middle value (5 = 50%)
+		}
+
+		//map param 2 to sensor to show correct temp in measure.temperature
 		this.PARAM2_SENSOR_MAP = {
 			0: 'measure_temperature.floor',
 			1: 'measure_temperature.internal',
@@ -35,59 +65,29 @@ class ZTRM6Device extends ZwaveDevice {
 			4: 'measure_temperature.external',
 			5: 'measure_temperature.internal',
 		};
-	}
-	
-	async onNodeInit() {
-		//this.enableDebug();
-		
-		// Ensure device has correct capabilities
-		if (!this.hasCapability('thermostat_state_IdleHeatCool')) {
-			await this.addCapability('thermostat_state_IdleHeatCool');
-		}
-		if (this.hasCapability('thermostat_state_13570')) {
-			await this.removeCapability('thermostat_state_13570');
-		}
-		if (this.hasCapability('powerregulator_mode')) {
-			await this.removeCapability('powerregulator_mode');
-		}
-		
-		// Initialize power regulator value if not set
-		if (this.getStoreValue('power_reg_value') === null) {
-			await this.setStoreValue('power_reg_value', 5);
-		}
 
-		// Register all capabilities
-		this.registerTemperatureCapabilities();
-		this.registerPowerCapabilities();
-		this.registerTargetTemperatureCapability();
-		this.registerThermostatModeCapability();
-		this.registerThermostatStateCapability();
 		
-		// Register configuration report listener
-		this.registerReportListener('CONFIGURATION', 'CONFIGURATION_REPORT', 
-			report => this.handleConfigurationReport(report));
-		
-		// Apply initial setup based on current settings
-		await this.initializeDeviceState();
-		
-		// Initialize powerregulator value if in that mode
-		await this.initPowerRegulatorMode();
-		
-		this.setAvailable().catch(this.error);
-	}
-
-	registerTemperatureCapabilities() {
-		const getOpts = { getOnStart: true };
-		
-		// Register individual sensor readings
-		['internal', 'external', 'floor'].forEach((sensor, idx) => {
-			this.registerCapability(`measure_temperature.${sensor}`, 'SENSOR_MULTILEVEL', {
-				getOpts,
-				multiChannelNodeId: idx + 2 // Internal = 2, External = 3, Floor = 4
-			});
+		this.registerCapability('measure_temperature.internal', 'SENSOR_MULTILEVEL', {
+			getOpts: {
+				getOnStart: true,
+			},
+			multiChannelNodeId: 2
 		});
-		
-		// Register the main temperature reading that combines sensors based on selected sensor
+
+		this.registerCapability('measure_temperature.external', 'SENSOR_MULTILEVEL', {
+			getOpts: {
+				getOnStart: true,
+			},
+			multiChannelNodeId: 3
+		});
+
+		this.registerCapability('measure_temperature.floor', 'SENSOR_MULTILEVEL', {
+			getOpts: {
+				getOnStart: true,
+			},
+			multiChannelNodeId: 4
+		});
+
 		this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL', {
 			getOpts,
 			report: 'SENSOR_MULTILEVEL_REPORT',
@@ -101,23 +101,28 @@ class ZTRM6Device extends ZwaveDevice {
 				}
 			}
 		});
-	}
 
-	registerPowerCapabilities() {
-		const getOpts = { getOnStart: true };
-		
-		['meter_power', 'measure_power'].forEach(capability => {
-			this.registerCapability(capability, 'METER', {
-				getOpts,
-				multiChannelNodeId: 1
-			});
+		this.registerCapability('meter_power', 'METER', {
+			getOpts: {
+				getOnStart: true,
+			},
+			multiChannelNodeId: 1
+		});
+
+		this.registerCapability('measure_power', 'METER', {
+			getOpts: {
+				getOnStart: true,
+			},
+			multiChannelNodeId: 1
 		});
 	}
 
 	registerTargetTemperatureCapability() {
 		this.registerCapability('target_temperature', 'THERMOSTAT_SETPOINT', {
-			getOpts: { getOnStart: true, getOnOnline: true },
-			get: async () => {
+			getOpts: {
+				getOnStart: true,
+			},
+			get: async (options) => {
 				try {
 					const currentMode = this.getCapabilityValue('thermostat_mode');
 					const setpointType = Mode2Setpoint[currentMode] || 'Heating 1';
@@ -135,34 +140,34 @@ class ZTRM6Device extends ZwaveDevice {
 			setParserV3: setpointValue => {
 				const currentMode = this.getCapabilityValue('thermostat_mode');
 				
-				// Handle powerregulator mode separately
 				if (currentMode === 'Powerregulator') {
-					const powerRegValue = Math.max(10, Math.min(100, Math.round(setpointValue / 10) * 10));
-					this.setStoreValue('power_reg_value', powerRegValue / 10).catch(this.error);
+					// When in powerregulator mode, use target_temperature directly as the powerregulator level
+					// We're limiting the value to 10-100 range (steps of 10)
+					let powerRegValue = Math.round(setpointValue / 10) * 10;
+					powerRegValue = Math.max(10, Math.min(100, powerRegValue));
+					this.setStoreValue('power_reg_value', powerRegValue).catch(this.error);
+					this.setSettings({ power_reg_active_time: powerRegValue / 10 }).catch(err => {
+						this.error(`Failed to update power_reg_active_time setting: ${err.message}`);
+					});
 					
 					this.configurationSet({
 						index: this.getParameterIndex('power_reg_active_time'),
 						size: 0x01,
 						signed: false
-					}, powerRegValue / 10);
-					
-					this.setSettings({ power_reg_active_time: powerRegValue / 10 })
-						.catch(err => this.error(`Failed to update power_reg_active_time: ${err.message}`));
-					
+					}, powerRegValue / 10); // /10 to convert 10-100 to 1-10 in parameter values
 					return null;
 				}
 				
-				// Regular thermostat mode handling
 				const setpointType = Mode2Setpoint[currentMode];
 				
 				if (setpointType !== 'not supported' && setpointType) {
-					// Store setpoint value and update settings
 					this.setStoreValue(`thermostatsetpointValue.${setpointType}`, setpointValue).catch(this.error);
-					
+
 					const setpointSetting = Setpoint2Setting[setpointType];
-					this.setSettings({ [setpointSetting]: setpointValue * 10 }).catch(this.error);
-					
-					// Prepare buffer for Z-Wave command
+					this.setSettings({
+						[setpointSetting]: setpointValue * 10,
+					}).catch(this.error);
+
 					const bufferValue = Buffer.alloc(2);
 					const scaled = (Math.round(setpointValue * 2) / 2 * 10).toFixed(0);
 					bufferValue.writeUInt16BE(scaled);
@@ -178,18 +183,38 @@ class ZTRM6Device extends ZwaveDevice {
 			report: 'THERMOSTAT_SETPOINT_REPORT',
 			reportParserV3: report => {
 				try {
-					// Don't process reports when in powerregulator mode
-					if (this.getCapabilityValue('thermostat_mode') === 'Powerregulator') return null;
+					const currentMode = this.getCapabilityValue('thermostat_mode');
 					
-					if (report?.Level2?.Scale === 0 && typeof report.Level2.Size !== 'undefined') {
-						const readValue = report.Value.readUIntBE(0, report.Level2.Size);
-						const setpointValue = readValue / 10 ** report.Level2.Precision;
-						const setpointType = report.Level['Setpoint Type'];
-						
-						if (setpointType !== 'not supported') {
-							this.setStoreValue(`thermostatsetpointValue.${setpointType}`, setpointValue)
-								.catch(err => this.error(`Failed to store setpoint value: ${err.message}`));
-								
+					if (currentMode === 'Powerregulator') {
+						return null;
+					}
+					
+					this.log('reportParserV3 thermostat setpoint report:', report);
+					if (
+						report &&
+						report.hasOwnProperty('Level2') &&
+						report.Level2.hasOwnProperty('Scale') &&
+						report.Level2.hasOwnProperty('Precision') &&
+						report.Level2.Scale === 0 &&
+						typeof report.Level2.Size !== 'undefined'
+					) {
+						let readValue;
+						try {
+							readValue = report.Value.readUIntBE(0, report.Level2.Size);
+						} catch (err) {
+							this.error(`Error reading setpoint value: ${err.message}`);
+							return null;
+						}
+						if (typeof readValue !== 'undefined') {
+							const setpointValue = readValue / 10 ** report.Level2.Precision;
+							const setpointType = report.Level['Setpoint Type'];
+							this.log('Received setpoint report:', setpointType, setpointValue);
+
+							if (setpointType !== 'not supported') {
+								this.setStoreValue(`thermostatsetpointValue.${setpointType}`, setpointValue).catch(err => {
+									this.error(`Failed to store setpoint value: ${err.message}`);
+								});
+							}
 							const setpointSetting = Setpoint2Setting[setpointType];
 							this.setSettings({ [setpointSetting]: setpointValue * 10 })
 								.catch(err => this.error(`Failed to update setpoint setting: ${err.message}`));
@@ -214,12 +239,54 @@ class ZTRM6Device extends ZwaveDevice {
 	registerThermostatModeCapability() {
 		this.registerCapability('thermostat_mode', 'THERMOSTAT_MODE', {
 			get: 'THERMOSTAT_MODE_GET',
-			getOpts: { getOnStart: true },
+			getOpts: { 
+				getOnStart: true,
+			},
 			set: 'THERMOSTAT_MODE_SET',
 			setParser: value => {
-				// Handle special case for Powerregulator
 				if (value === 'Powerregulator') {
-					this.handleEnterPowerRegulatorMode();
+					const currentMode = this.getCapabilityValue('thermostat_mode');
+					if (currentMode && currentMode !== 'Powerregulator') {
+						this.log(`Saving previous thermostat mode: ${currentMode}`);
+						this.setStoreValue('thermostat_mode', currentMode).catch(this.error);
+						const settings = this.getSettings();
+						if (settings && settings.sensor_mode && settings.sensor_mode !== '5') {
+							this.log(`Saving previous sensor mode: ${settings.sensor_mode}`);
+							this.setStoreValue('previous_sensor_mode', settings.sensor_mode).catch(this.error);
+						}
+					}
+					
+					this.setCapabilityOptions('target_temperature', this._powerRegulatorTempOptions)
+						.then(() => {
+							const powerRegValue = this.getPowerRegulatorValue();
+							this.setCapabilityValue('target_temperature', powerRegValue * 10).catch(this.error);
+						})
+						.catch(this.error);
+					
+					// Find sensor_mode parameter index
+					const sensorModeIndex = this.getParameterIndex('sensor_mode');
+					// Find power regulator mode value (PWER)
+					const pwrValue = 5; // Default as fallback
+					
+					// Change the sensor_mode parameter to power regulator mode
+					try {
+						this.configurationSet({
+							index: sensorModeIndex || 2, // Fallback to 2 if not found
+							size: 1,  // Size in bytes
+							signed: false
+						}, pwrValue);
+						
+						// Update the sensor_mode setting in the device settings
+						this.setSettings({
+							sensor_mode: String(pwrValue) // Update the setting to match the configuration
+						}).catch(err => {
+							this.error(`Failed to update sensor_mode setting: ${err.message}`);
+						});
+					} catch (error) {
+						this.error(`Failed to set power regulator mode: ${error.message}`);
+					}
+					
+					// Don't send thermostat mode command
 					return null;
 				} else if (this.getCapabilityValue('thermostat_mode') === 'Powerregulator') {
 					this.handleExitPowerRegulatorMode(value);
@@ -279,33 +346,73 @@ class ZTRM6Device extends ZwaveDevice {
 		});
 	}
 
-	async handleEnterPowerRegulatorMode() {
-		// Save current mode for later restoration
-		const currentMode = this.getCapabilityValue('thermostat_mode');
-		if (currentMode && currentMode !== 'Powerregulator') {
-			await this.setStoreValue('thermostat_mode', currentMode);
+	async initPowerRegulatorMode() {
+		try {
+			const currentMode = this.getCapabilityValue('thermostat_mode');
+			if (currentMode === 'Powerregulator') {
+				await this.setCapabilityOptions('target_temperature', this._powerRegulatorTempOptions)
+					.catch(err => this.error(`Failed to set powerregulator temp options: ${err.message}`));
+				
+				const powerRegIndex = this.getParameterIndex('power_reg_active_time');
+				
+				if (powerRegIndex !== null) {
+					this.log(`Requesting power_reg_active_time from device...`);
+					
+					try {
+						const configResult = await this.node.CommandClass.COMMAND_CLASS_CONFIGURATION.CONFIGURATION_GET({
+							'Parameter Number': powerRegIndex
+						});
+						
+						if (configResult) {
+							this.log('Received power regulator configuration:', configResult);
+							const confValRaw = configResult['Configuration Value (Raw)'];
+							
+							const { paramSize, isSigned } = this.getParameterInfo(powerRegIndex);
+							
+							const parsedValue = this.parseConfigurationValue(confValRaw, paramSize, isSigned);
+							this.log(`Parsed power regulator value: ${parsedValue}`);
+							
+							if (parsedValue !== null && parsedValue !== undefined) {
+								await this.setStoreValue('power_reg_value', parsedValue);
+								await this.setSettings({ power_reg_active_time: parsedValue });
+								
+								const displayValue = parsedValue * 10;
+								this.log(`Setting target_temperature to ${displayValue}`);
+								await this.setCapabilityValue('target_temperature', displayValue);
+								return;
+							}
+						}
+					} catch (configError) {
+						this.error(`Error getting configuration: ${configError.message}`);
+					}
+					
+					this.log('Using fallback for power regulator value');
+					const fallbackValue = this.getPowerRegulatorValue();
+					await this.setCapabilityValue('target_temperature', fallbackValue * 10)
+						.catch(err => this.error(`Failed to set fallback temperature: ${err.message}`));
+					
+					return;
+				}
+				
+				this.error('Could not determine parameter index for power_reg_active_time');
+				const powerRegValue = this.getPowerRegulatorValue();
+				await this.setCapabilityValue('target_temperature', powerRegValue * 10)
+					.catch(err => this.error(`Failed to set target_temperature: ${err.message}`));
+				
+				this.log(`Power regulator mode initialized with fallback value: ${powerRegValue * 10}°`);
+			}
+		} catch (error) {
+			this.error(`Error in initPowerRegulatorMode: ${error.message}`);
 			
-			// Save current sensor mode
-			const settings = this.getSettings();
-			if (settings?.sensor_mode && settings.sensor_mode !== '5') {
-				await this.setStoreValue('previous_sensor_mode', settings.sensor_mode);
+			try {
+				if (this.getCapabilityValue('thermostat_mode') === 'Powerregulator') {
+					const powerRegValue = this.getPowerRegulatorValue();
+					await this.setCapabilityValue('target_temperature', powerRegValue * 10);
+				}
+			} catch (innerError) {
+				this.error(`Final fallback also failed: ${innerError.message}`);
 			}
 		}
-		
-		// Update the temperature scale to 10-100 for powerregulator
-		await this.setCapabilityOptions('target_temperature', this._powerRegulatorTempOptions);
-		
-		// Update target temperature to match current power regulator value
-		const powerRegValue = this.getPowerRegulatorValue();
-		await this.setCapabilityValue('target_temperature', powerRegValue * 10);
-		
-		// Change sensor mode to power regulator mode (5)
-		const sensorModeIndex = this.getParameterIndex('sensor_mode') || 2;
-		await this.configurationSet({ index: sensorModeIndex, size: 1, signed: false }, 5);
-		
-		// Update settings
-		await this.setSettings({ sensor_mode: '5' })
-			.catch(err => this.error(`Failed to update sensor_mode setting: ${err.message}`));
 	}
 
 	async handleExitPowerRegulatorMode(newMode) {
@@ -411,7 +518,9 @@ class ZTRM6Device extends ZwaveDevice {
 
 		if (changedKeys.includes('sensor_mode')) {
 			const sensorMode = parseInt(newSettings.sensor_mode, 10);
+			
 			await this.updateSelectedTemperatureCapability(sensorMode);
+			
 			await this.handleThermostatModeForSensorMode(sensorMode);
 		}
 
@@ -534,17 +643,46 @@ class ZTRM6Device extends ZwaveDevice {
 			return isSigned ? valueBuffer.readInt32BE(0) : valueBuffer.readUInt32BE(0);
 		}
 		
-		return null;
+		return parsedValue;
+	}
+	
+	getParameterInfo(paramNum) {
+		const manifestSettings = this.getManifestSettings();
+		const matchingSetting = manifestSettings.find(setting => 
+			setting.zwave && setting.zwave.index === paramNum
+		);
+		
+		const paramSize = matchingSetting?.zwave?.size || 1;
+		const isSigned = !(matchingSetting?.zwave?.signed === false);
+		
+		return { matchingSetting, paramSize, isSigned };
+	}
+	
+	async processGenericParameter(paramNum, parsedValue, matchingSetting) {
+		if (matchingSetting) {
+			let settingValue = parsedValue;
+			if (matchingSetting.type === 'checkbox') {
+				settingValue = Boolean(parsedValue);
+			} else if (matchingSetting.type === 'dropdown') {
+				settingValue = String(parsedValue);
+			}
+			
+			this.log(`Found matching setting ${matchingSetting.id} for parameter ${paramNum}, setting value to ${settingValue}`);
+			await this.setSettings({ [matchingSetting.id]: settingValue });
+			this.log(`Updated setting ${matchingSetting.id} (parameter ${paramNum}) to ${settingValue}`);
+		} else {
+			await this.setSettings({ [`param_${paramNum}`]: parsedValue });
+			this.log(`Updated parameter ${paramNum} to ${parsedValue} (no matching setting ID found)`);
+		}
 	}
 
 	async handleConfigurationReport(report) {
 		try {
 			const paramNum = report['Parameter Number'];
 			const confValRaw = report['Configuration Value (Raw)'];
+			const paramNum = report?.['Parameter Number'];
 			
-			// Skip invalid reports
-			if (paramNum === undefined || !confValRaw) return;
-			
+			// Get parameter info
 			const { matchingSetting, paramSize, isSigned } = this.getParameterInfo(paramNum);
 			const parsedValue = this.parseConfigurationValue(confValRaw, paramSize, isSigned);
 			
