@@ -24,8 +24,8 @@ class ZTRM6Device extends ZwaveDevice {
 	}
 	
 	async onNodeInit() {
-		//this.enableDebug();
-		//this.printNode();
+		this.enableDebug();
+		this.printNode();
 
 		
 		if (this.hasCapability('thermostat_state_IdleHeatCool') === false) {
@@ -71,38 +71,91 @@ class ZTRM6Device extends ZwaveDevice {
 			getOpts: {
 				getOnStart: true,
 			},
+			report: 'SENSOR_MULTILEVEL_REPORT',
+			reportParser: (report, node, capabilityId) => {
+				if (
+					report &&
+					report.hasOwnProperty('Sensor Type') &&
+					report['Sensor Type'] === 'Temperature (version 1)' &&
+					report.hasOwnProperty('Sensor Value (Parsed)') &&
+					report.hasOwnProperty('Level') &&
+					report.Level.hasOwnProperty('Scale')
+				) {
+					if (report.Level.Scale === 0) {
+						if (capabilityId === this.selectedTemperatureCapability) {
+							this.setCapabilityValue('measure_temperature', report['Sensor Value (Parsed)'])
+								.catch(this.error);
+						}
+						return report['Sensor Value (Parsed)'];
+					}
+				}
+				return null;
+			},
 			multiChannelNodeId: 2
-		});
+		});	
 
 		this.registerCapability('measure_temperature.external', 'SENSOR_MULTILEVEL', {
 			getOpts: {
 				getOnStart: true,
 			},
-			multiChannelNodeId: 3
-		});
-
-		this.registerCapability('measure_temperature.floor', 'SENSOR_MULTILEVEL', {
-			getOpts: {
-				getOnStart: true,
+			report: 'SENSOR_MULTILEVEL_REPORT',
+			reportParser: (report, node, capabilityId) => {
+				if (
+					report &&
+					report.hasOwnProperty('Sensor Type') &&
+					report['Sensor Type'] === 'Temperature (version 1)' &&
+					report.hasOwnProperty('Sensor Value (Parsed)') &&
+					report.hasOwnProperty('Level') &&
+					report.Level.hasOwnProperty('Scale')
+				) {
+					if (report.Level.Scale === 0) {
+						if (capabilityId === this.selectedTemperatureCapability) {
+							this.setCapabilityValue('measure_temperature', report['Sensor Value (Parsed)'])
+								.catch(this.error);
+						}
+						return report['Sensor Value (Parsed)'];
+					}
+				}
+				return null;
 			},
-			multiChannelNodeId: 4
 		});
 
-		this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL', {
+		this.registerCapability('measure_temperature.floor', 'SENSOR_MULTILEVEL',  {
 			getOpts: {
 				getOnStart: true,
 			},
 			report: 'SENSOR_MULTILEVEL_REPORT',
-			reportParser: report => {
-				try {
-					const selectedSensor = this.getStoreValue('selectedTemperatureCapability') || 'measure_temperature.internal';
-					return this.getCapabilityValue(selectedSensor);
-				} catch (error) {
-					this.error(`Error in measure_temperature reportParser: ${error.message}`);
-					return null;
+			reportParser: (report, node, capabilityId) => {
+				if (
+					report &&
+					report.hasOwnProperty('Sensor Type') &&
+					report['Sensor Type'] === 'Temperature (version 1)' &&
+					report.hasOwnProperty('Sensor Value (Parsed)') &&
+					report.hasOwnProperty('Level') &&
+					report.Level.hasOwnProperty('Scale')
+				) {
+					if (report.Level.Scale === 0) {
+						if (capabilityId === this.selectedTemperatureCapability) {
+							this.setCapabilityValue('measure_temperature', report['Sensor Value (Parsed)'])
+								.catch(this.error);
+						}
+						return report['Sensor Value (Parsed)'];
+					}
 				}
-			}
+				return null;
+			},
+			multiChannelNodeId: 4
 		});
+
+		if (this.hasCapability('measure_temperature') === false) {
+			await this.addCapability('measure_temperature');
+		}
+
+		const selectedSensor = this.getStoreValue('selectedTemperatureCapability') || 'measure_temperature.internal';
+		const currentValue = this.getCapabilityValue(selectedSensor);
+		if (currentValue !== null) {
+			await this.setCapabilityValue('measure_temperature', currentValue);
+		}
 
 		this.registerCapability('meter_power', 'METER', {
 			getOpts: {
