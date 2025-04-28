@@ -24,13 +24,20 @@ class ZTEMP3Device extends ZwaveDevice {
         this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL');
         this.registerCapability('measure_battery', 'BATTERY');
         this.registerCapability('measure_humidity', 'SENSOR_MULTILEVEL');
-        
+
         this.registerThermostatSetpointCapability();
         this.registerThermostatModeCapability();
         //add onoff capability to Z-Temp3 that are already paired
         if (this.hasCapability('onoff') === false) {
             await this.addCapability('onoff');
         }
+
+        this.registerCapabilityListener('onoff', this.onCapabilityOnoff.bind(this));
+        //add thermostat class to Z-Temp3 that are already paired
+        if (this.getClass() !== 'thermostat') {
+            await this.setClass('thermostat').catch(this.error)
+        }
+        
         if (this.hasCapability('thermostat_state_13570') === true) {
             await this.removeCapability('thermostat_state_13570');
         }
@@ -43,27 +50,27 @@ class ZTEMP3Device extends ZwaveDevice {
             await this.setClass('thermostat').catch(this.error)
         }
 
-        this.registerCapability('thermostat_state_IdleHeatCool', 'THERMOSTAT_OPERATING_STATE', {	
-			getOpts: {
-				getOnStart: true,
-			},
-			get: 'THERMOSTAT_OPERATING_STATE_GET',
-			report: 'THERMOSTAT_OPERATING_STATE_REPORT',
-			reportParser: report => {
-				if (report?.Level?.['Operating State']) {
-					const state = report.Level['Operating State'];
-					if (typeof state === 'string') {
-						const thermostatStateObj = {
-							state,
-							state_name: this.homey.__(`state.${state}`) || state,
-						};
-						
-						this.driver.triggerThermostatState(this, { state }, { state });
-						return state;
-					}
-				}
-				return null;
-			},
+        this.registerCapability('thermostat_state_IdleHeatCool', 'THERMOSTAT_OPERATING_STATE', {
+            getOpts: {
+                getOnStart: true,
+            },
+            get: 'THERMOSTAT_OPERATING_STATE_GET',
+            report: 'THERMOSTAT_OPERATING_STATE_REPORT',
+            reportParser: report => {
+                if (report?.Level?.['Operating State']) {
+                    const state = report.Level['Operating State'];
+                    if (typeof state === 'string') {
+                        const thermostatStateObj = {
+                            state,
+                            state_name: this.homey.__(`state.${state}`) || state,
+                        };
+
+                        this.driver.triggerThermostatState(this, { state }, { state });
+                        return state;
+                    }
+                }
+                return null;
+            },
         });
     }
 
@@ -82,6 +89,32 @@ class ZTEMP3Device extends ZwaveDevice {
             const currentMode = this.getCapabilityValue('thermostat_mode');
             if (currentMode !== 'off') {
                 await this.setStoreValue('previousMode', currentMode);
+            }
+
+            await this.executeCapabilitySetCommand('thermostat_mode', 'THERMOSTAT_MODE', 'off')
+                .then(this.log(`onoff set to 'off'`))
+                .catch(this.error);
+
+            this.setCapabilityValue('thermostat_mode', 'off');
+        }
+    }
+
+    async onCapabilityOnoff(value, opts) {
+        if (value === true) {
+            const previousMode = await this.getStoreValue('previousMode') || 'heat';
+
+            await this.executeCapabilitySetCommand('thermostat_mode', 'THERMOSTAT_MODE', previousMode)
+                .then(this.log(`onoff set to ${previousMode}`))
+                .catch(this.error);
+
+            this.setCapabilityValue('thermostat_mode', previousMode);
+        }
+
+        if (value === false) {
+            const currentMode = this.getCapabilityValue('thermostat_mode');
+            if (currentMode !== 'off') {
+                await this.setStoreValue('previousMode', currentMode);
+                this.log(`Stored previous mode: ${currentMode}`);
             }
 
             await this.executeCapabilitySetCommand('thermostat_mode', 'THERMOSTAT_MODE', 'off')
@@ -237,7 +270,7 @@ class ZTEMP3Device extends ZwaveDevice {
         }
 
 
-            
+
 
 
         this.setAvailable().catch(error => this.error('Error setting device available:', error));
