@@ -6,7 +6,7 @@
     "en": "Heatit Controls"
   },
   "brandColor": "#cc3333",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "compatibility": ">=12.2.0",
   "platforms": [
     "local",
@@ -12032,7 +12032,8 @@
       "capabilities": [
         "measure_power",
         "meter_power",
-        "onoff"
+        "onoff",
+        "button.reset_meter"
       ],
       "icon": "/drivers/ZM-Single-Relay-16A/assets/icon.svg",
       "images": {
@@ -12388,7 +12389,8 @@
         "thermostat_state_13570",
         "measure_power",
         "meter_power",
-        "onoff"
+        "onoff",
+        "button.reset_meter"
       ],
       "capabilitiesOptions": {
         "target_temperature": {

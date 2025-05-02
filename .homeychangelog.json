@@ -70,5 +70,8 @@
   },
   "4.0.2": {
     "en": "Add Cumulative for HAN/HAN B"
+  },
+  "4.0.3": {
+    "en": "Improved meter reset. New Icons. Updating measured temp for trm6. New powerregulator interface trm6. Updated WiFi integrations. Added some flow cards. "
   }
 }
