@@ -99,31 +99,6 @@ class ZTEMP3Device extends ZwaveDevice {
         }
     }
 
-    async onCapabilityOnoff(value, opts) {
-        if (value === true) {
-            const previousMode = await this.getStoreValue('previousMode') || 'heat';
-
-            await this.executeCapabilitySetCommand('thermostat_mode', 'THERMOSTAT_MODE', previousMode)
-                .then(this.log(`onoff set to ${previousMode}`))
-                .catch(this.error);
-
-            this.setCapabilityValue('thermostat_mode', previousMode);
-        }
-
-        if (value === false) {
-            const currentMode = this.getCapabilityValue('thermostat_mode');
-            if (currentMode !== 'off') {
-                await this.setStoreValue('previousMode', currentMode);
-                this.log(`Stored previous mode: ${currentMode}`);
-            }
-
-            await this.executeCapabilitySetCommand('thermostat_mode', 'THERMOSTAT_MODE', 'off')
-                .then(this.log(`onoff set to 'off'`))
-                .catch(this.error);
-
-            this.setCapabilityValue('thermostat_mode', 'off');
-        }
-    }
 
     registerThermostatSetpointCapability() {
         const currentMode = this.getCapabilityValue('thermostat_mode') || 'Heat';
