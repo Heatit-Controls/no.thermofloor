@@ -3,7 +3,7 @@
 const { ZwaveDevice } = require('homey-zwavedriver');
 
 class ZmSingleRelay16 extends ZwaveDevice {
-  onNodeInit() {
+  async onNodeInit() {
     this.sceneFlowTrigger = this.driver.sceneFlowTrigger;
 
     this.registerCapability('onoff', 'SWITCH_BINARY');
@@ -24,23 +24,25 @@ class ZmSingleRelay16 extends ZwaveDevice {
       }
     });
 
-    // Listen for reset_meter maintenance action
-    this.registerCapabilityListener('button.reset_meter', async () => {
-      let commandClassMeter = null;
-      commandClassMeter = this.getCommandClass('METER');
-      if (commandClassMeter && commandClassMeter.hasOwnProperty('METER_RESET')) {
-        const result = await commandClassMeter.METER_RESET({});
-        if (result !== 'TRANSMIT_COMPLETE_OK') throw result;
-      }
-      else {
-        throw new Error('Reset meter not supported');
-      }
-    });
-
     if (this.hasCapability('meter_power')) this.registerCapability('meter_power', 'METER');
     if (this.hasCapability('measure_power')) this.registerCapability('measure_power', 'METER');
 
+    if (this.hasCapability('button.reset_meter') === false) {
+      await this.addCapability('button.reset_meter');
+    }
+
     this.setAvailable().catch(this.error);
+
+    // Register capability listener for reset meter button
+    this.registerCapabilityListener('button.reset_meter', async () => {
+      let commandClassMeter = this.getCommandClass('METER');
+      if (commandClassMeter && commandClassMeter.hasOwnProperty('METER_RESET')) {
+        const result = await commandClassMeter.METER_RESET({});
+        if (result !== 'TRANSMIT_COMPLETE_OK') throw result;
+      } else {
+        throw new Error('Reset meter not supported');
+      }
+    });
   }
 
   sceneRunListener(args, state) {

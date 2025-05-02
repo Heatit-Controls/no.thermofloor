@@ -6,7 +6,23 @@
   "platforms": ["local", "cloud"],
   "connectivity": ["zwave"],
   "class": "other",
-  "capabilities": ["measure_power", "meter_power", "onoff", "button.reset_meter"],
+  "capabilities": [
+    "measure_power", 
+    "meter_power", 
+    "onoff", 
+    "button.reset_meter"
+  ],
+  "capabilitiesOptions": {
+    "button.reset_meter": {
+      "maintenanceAction": true,
+      "title": {
+        "en": "Reset power meter"
+      },
+      "desc": {
+        "en": "Reset the accumulated power usage (kWh), note that this can not be reversed."
+      }
+    }
+  },
   "icon": "{{driverAssetsPath}}/icon.svg",
   "images": {
     "small": "{{driverAssetsPath}}/images/small.png",
@@ -24,16 +40,6 @@
       "image": "{{driverAssetsPath}}/learnmode.svg",
       "instruction": {
         "en": "Press the configuration button 3 times."
-      }
-    },
-
-    "button.reset_meter": {
-      "maintenanceAction": true,
-      "title": {
-        "en": "Reset power meter"
-      },
-      "desc": {
-        "en": "Reset the accumulated power usage (kWh), note that this can not be reversed."
       }
     },
     

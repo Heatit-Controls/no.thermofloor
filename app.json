@@ -12032,8 +12032,20 @@
       "capabilities": [
         "measure_power",
         "meter_power",
-        "onoff"
+        "onoff",
+        "button.reset_meter"
       ],
+      "capabilitiesOptions": {
+        "button.reset_meter": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Reset power meter"
+          },
+          "desc": {
+            "en": "Reset the accumulated power usage (kWh), note that this can not be reversed."
+          }
+        }
+      },
       "icon": "/drivers/ZM-Single-Relay-16A/assets/icon.svg",
       "images": {
         "small": "/drivers/ZM-Single-Relay-16A/assets/images/small.png",
@@ -12053,15 +12065,6 @@
           "image": "/drivers/ZM-Single-Relay-16A/assets/learnmode.svg",
           "instruction": {
             "en": "Press the configuration button 3 times."
-          }
-        },
-        "button.reset_meter": {
-          "maintenanceAction": true,
-          "title": {
-            "en": "Reset power meter"
-          },
-          "desc": {
-            "en": "Reset the accumulated power usage (kWh), note that this can not be reversed."
           }
         },
         "associationGroups": [
@@ -12388,7 +12391,8 @@
         "thermostat_state_13570",
         "measure_power",
         "meter_power",
-        "onoff"
+        "onoff",
+        "button.reset_meter"
       ],
       "capabilitiesOptions": {
         "target_temperature": {
