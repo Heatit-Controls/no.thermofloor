@@ -6,7 +6,7 @@
   "platforms": ["local", "cloud"],
   "connectivity": ["zwave"],
   "class": "other",
-  "capabilities": ["measure_power", "meter_power", "onoff"],
+  "capabilities": ["measure_power", "meter_power", "onoff", "button.reset_meter"],
   "icon": "{{driverAssetsPath}}/icon.svg",
   "images": {
     "small": "{{driverAssetsPath}}/images/small.png",
