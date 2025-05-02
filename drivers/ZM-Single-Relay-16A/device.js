@@ -40,8 +40,6 @@ class ZmSingleRelay16 extends ZwaveDevice {
     if (this.hasCapability('meter_power')) this.registerCapability('meter_power', 'METER');
     if (this.hasCapability('measure_power')) this.registerCapability('measure_power', 'METER');
 
-    this.log('ZM-Dimmer has been initialized');
-
     this.setAvailable().catch(this.error);
   }
 
