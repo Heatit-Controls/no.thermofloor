@@ -73,5 +73,8 @@
   },
   "4.0.3": {
     "en": "Fixed meter reset for some devices."
+  },
+  "4.0.4": {
+    "en": "Fixed meter reset for some devices."
   }
 }
