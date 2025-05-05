@@ -70,5 +70,8 @@
   },
   "4.0.2": {
     "en": "Add Cumulative for HAN/HAN B"
+  },
+  "4.0.3": {
+    "en": "Fixed meter reset for some devices."
   }
 }
