@@ -118,6 +118,7 @@ class ZTRM6Device extends ZwaveDevice {
 				}
 				return null;
 			},
+			multiChannelNodeId: 3
 		});
 
 		this.registerCapability('measure_temperature.floor', 'SENSOR_MULTILEVEL', {
@@ -372,17 +373,15 @@ class ZTRM6Device extends ZwaveDevice {
 			get: 'THERMOSTAT_OPERATING_STATE_GET',
 			report: 'THERMOSTAT_OPERATING_STATE_REPORT',
 			reportParser: report => {
-				if (report?.Level?.['Operating State']) {
-					const state = report.Level['Operating State'];
-					if (typeof state === 'string') {
-						const thermostatStateObj = {
-							state,
-							state_name: this.homey.__(`state.${state}`) || state,
-						};
-						this.log('thermostatStateObj', thermostatStateObj);
-
-						this.driver.triggerThermostatState(this, { state }, { state });
-						return state;
+                if (report?.Level?.['Operating State']) {
+                    const state = report.Level['Operating State'];
+                    if (typeof state === 'string') {
+                        const lastThermostatState = this.getStoreValue('lastThermostatState');
+                        if (lastThermostatState !== state || lastThermostatState === null) {
+                            this.driver.triggerThermostatState(this, { state }, { state });
+                            this.setStoreValue('lastThermostatState', state).catch(this.error);
+                        }
+                        return state;
 					}
 				}
 				return null;

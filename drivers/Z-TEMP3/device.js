@@ -20,6 +20,8 @@ const ThermostatModeToCapability = {
 
 class ZTEMP3Device extends ZwaveDevice {
     async onNodeInit() {
+        //this.enableDebug();
+        //this.printNode();
 
         this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL');
         this.registerCapability('measure_battery', 'BATTERY');
@@ -60,12 +62,11 @@ class ZTEMP3Device extends ZwaveDevice {
                 if (report?.Level?.['Operating State']) {
                     const state = report.Level['Operating State'];
                     if (typeof state === 'string') {
-                        const thermostatStateObj = {
-                            state,
-                            state_name: this.homey.__(`state.${state}`) || state,
-                        };
-
-                        this.driver.triggerThermostatState(this, { state }, { state });
+                        const lastThermostatState = this.getStoreValue('lastThermostatState');
+                        if (lastThermostatState !== state || lastThermostatState === null) {
+                            this.driver.triggerThermostatState(this, { state }, { state });
+                            this.setStoreValue('lastThermostatState', state).catch(this.error);
+                        }
                         return state;
                     }
                 }
