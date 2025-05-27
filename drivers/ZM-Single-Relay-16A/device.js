@@ -5,7 +5,9 @@ const { ZwaveDevice } = require('homey-zwavedriver');
 class ZmSingleRelay16 extends ZwaveDevice {
   async onNodeInit() {
     this.sceneFlowTrigger = this.driver.sceneFlowTrigger;
-
+    if (this.getClass() !== 'socket') {
+      await this.setClass('socket').catch(this.error)
+    }
     this.registerCapability('onoff', 'SWITCH_BINARY');
     this.registerCapability('measure_power', 'METER');
     this.registerCapability('meter_power', 'METER');
