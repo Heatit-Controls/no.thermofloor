@@ -27,6 +27,14 @@ class ZTRM6Device extends ZwaveDevice {
 		//this.enableDebug();
 		//this.printNode();
 
+		this.registerReportListener('CONFIGURATION', 'CONFIGURATION_REPORT', async report => {
+			try {
+				await this.handleConfigurationReport(report);
+			} catch (err) {
+				this.error(`Error in CONFIGURATION_REPORT handler: ${err.message}`);
+			}
+		});
+
 
 		if (this.hasCapability('thermostat_state_IdleHeatCool') === false) {
 			await this.addCapability('thermostat_state_IdleHeatCool');
@@ -631,6 +639,7 @@ class ZTRM6Device extends ZwaveDevice {
 		return storedValue !== null ? parseInt(storedValue, 10) : 5;
 	}
 
+
 	getParameterIndex(settingId) {
 		const setting = this.getManifestSettings().find(s => s.id === settingId);
 		return setting?.zwave?.index || null;
@@ -659,7 +668,6 @@ class ZTRM6Device extends ZwaveDevice {
 			return null;
 		}
 
-		// Read the appropriate bytes based on size
 		if (paramSize === 1) {
 			return isSigned ? valueBuffer.readInt8(0) : valueBuffer.readUInt8(0);
 		} else if (paramSize === 2) {
@@ -668,7 +676,37 @@ class ZTRM6Device extends ZwaveDevice {
 			return isSigned ? valueBuffer.readInt32BE(0) : valueBuffer.readUInt32BE(0);
 		}
 
-		return null; // Return null if parameter size is not supported
+		return null;
+	}
+
+	async handleConfigurationReport(report) {
+		try {
+			const paramNum = report['Parameter Number'];
+			const confValRaw = report['Configuration Value (Raw)'];
+
+			const { matchingSetting, paramSize, isSigned } = this.getParameterInfo(paramNum);
+			const parsedValue = this.parseConfigurationValue(confValRaw, paramSize, isSigned);
+
+			if (parsedValue === null) return;
+			if (paramNum === this.getParameterIndex('sensor_mode')) {
+				await this.setSettings({ sensor_mode: String(parsedValue) });
+				await this.updateSelectedTemperatureCapability(parsedValue);
+				await this.handleThermostatModeForSensorMode(parsedValue);
+
+			} else if (paramNum === this.getParameterIndex('power_reg_active_time')) {
+				await this.setStoreValue('power_reg_value', parsedValue);
+				await this.setSettings({ power_reg_active_time: parsedValue });
+
+				if (this.getCapabilityValue('thermostat_mode') === 'Powerregulator') {
+					await this.setCapabilityValue('target_temperature', parsedValue * 10);
+				}
+
+			} else if (matchingSetting) {
+				await this.processGenericParameter(paramNum, parsedValue, matchingSetting);
+			}
+		} catch (error) {
+			this.error(`Error processing configuration report: ${error.message}`);
+		}
 	}
 
 	async processGenericParameter(paramNum, parsedValue, matchingSetting) {
@@ -686,48 +724,6 @@ class ZTRM6Device extends ZwaveDevice {
 		} else {
 			await this.setSettings({ [`param_${paramNum}`]: parsedValue });
 			this.log(`Updated parameter ${paramNum} to ${parsedValue} (no matching setting ID found)`);
-		}
-	}
-
-	async handleConfigurationReport(report) {
-		try {
-			const paramNum = report['Parameter Number'];
-			const confValRaw = report['Configuration Value (Raw)'];
-
-			// Get parameter info
-			const { matchingSetting, paramSize, isSigned } = this.getParameterInfo(paramNum);
-			const parsedValue = this.parseConfigurationValue(confValRaw, paramSize, isSigned);
-
-			if (parsedValue === null) return;
-
-			// Handle specific parameters
-			if (paramNum === this.getParameterIndex('sensor_mode')) {
-				await this.setSettings({ sensor_mode: String(parsedValue) });
-				await this.updateSelectedTemperatureCapability(parsedValue);
-				await this.handleThermostatModeForSensorMode(parsedValue);
-
-			} else if (paramNum === this.getParameterIndex('power_reg_active_time')) {
-				await this.setStoreValue('power_reg_value', parsedValue);
-				await this.setSettings({ power_reg_active_time: parsedValue });
-
-				if (this.getCapabilityValue('thermostat_mode') === 'Powerregulator') {
-					await this.setCapabilityValue('target_temperature', parsedValue * 10);
-				}
-
-			} else if (matchingSetting) {
-				// Generic parameter handling
-				let settingValue = parsedValue;
-
-				if (matchingSetting.type === 'checkbox') {
-					settingValue = Boolean(parsedValue);
-				} else if (matchingSetting.type === 'dropdown') {
-					settingValue = String(parsedValue);
-				}
-
-				await this.setSettings({ [matchingSetting.id]: settingValue });
-			}
-		} catch (error) {
-			this.error(`Error processing configuration report: ${error.message}`);
 		}
 	}
 }
