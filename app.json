@@ -6,7 +6,7 @@
     "en": "Heatit Controls"
   },
   "brandColor": "#cc3333",
-  "version": "4.0.2",
+  "version": "4.0.5",
   "compatibility": ">=12.2.0",
   "platforms": [
     "local",
@@ -676,6 +676,92 @@
               "en": "Scene"
             },
             "type": "autocomplete"
+          }
+        ]
+      },
+      {
+        "id": "ztemp3_thermostat_state_IdleHeatCool",
+        "title": {
+          "en": "Thermostat state changed"
+        },
+        "titleFormatted": {
+          "en": "Thermostat state changed to [[thermostat_state]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Z-TEMP3"
+          },
+          {
+            "name": "thermostat_state",
+            "type": "dropdown",
+            "title": {
+              "en": "Thermostat State"
+            },
+            "values": [
+              {
+                "id": "Idle",
+                "label": {
+                  "en": "Idle"
+                }
+              },
+              {
+                "id": "Heating",
+                "label": {
+                  "en": "Heating"
+                }
+              },
+              {
+                "id": "Cooling",
+                "label": {
+                  "en": "Cooling"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ztrm6_thermostat_state_IdleHeatCool",
+        "title": {
+          "en": "Thermostat state changed"
+        },
+        "titleFormatted": {
+          "en": "Thermostat state changed to [[thermostat_state]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Z-TRM6"
+          },
+          {
+            "name": "thermostat_state",
+            "type": "dropdown",
+            "title": {
+              "en": "Thermostat State"
+            },
+            "values": [
+              {
+                "id": "Idle",
+                "label": {
+                  "en": "Idle"
+                }
+              },
+              {
+                "id": "Heating",
+                "label": {
+                  "en": "Heating"
+                }
+              },
+              {
+                "id": "Cooling",
+                "label": {
+                  "en": "Cooling"
+                }
+              }
+            ]
           }
         ]
       },
@@ -2594,6 +2680,17 @@
       "id": "WiFi Panel",
       "settings": [
         {
+          "id": "IPaddress",
+          "type": "text",
+          "label": {
+            "en": "IP address"
+          },
+          "value": "192.168.1.xxx",
+          "hint": {
+            "en": "The IP address of the panel heater. You find it in the MyHeatit app."
+          }
+        },
+        {
           "id": "interval",
           "type": "number",
           "label": {
@@ -2607,14 +2704,19 @@
           }
         },
         {
-          "id": "IPaddress",
-          "type": "text",
+          "id": "openWindowDetection",
+          "type": "checkbox",
+          "value": false,
           "label": {
-            "en": "IP address"
-          },
-          "value": "192.168.1.xxx",
-          "hint": {
-            "en": "The IP address of the panel heater. You find it in the MyHeatit app."
+            "en": "Open window detection"
+          }
+        },
+        {
+          "id": "disableButtons",
+          "type": "checkbox",
+          "value": false,
+          "label": {
+            "en": "Disable buttons"
           }
         }
       ]
@@ -2735,6 +2837,14 @@
           "value": false,
           "label": {
             "en": "Open window detection"
+          }
+        },
+        {
+          "id": "disableButtons",
+          "type": "checkbox",
+          "value": false,
+          "label": {
+            "en": "Disable buttons"
           }
         }
       ]
@@ -4988,7 +5098,7 @@
       "connectivity": [
         "zwave"
       ],
-      "class": "other",
+      "class": "socket",
       "capabilities": [
         "onoff",
         "measure_temperature.input1",
@@ -6203,7 +6313,7 @@
       "capabilities": [
         "thermostat_mode",
         "target_temperature",
-        "thermostat_state_13570",
+        "thermostat_state_IdleHeatCool",
         "measure_temperature",
         "measure_battery",
         "measure_humidity",
@@ -8248,7 +8358,6 @@
         "thermostat_mode",
         "target_temperature",
         "thermostat_state_IdleHeatCool",
-        "powerregulator_mode",
         "meter_power",
         "measure_power",
         "measure_temperature",
@@ -8286,6 +8395,12 @@
               "id": "energy save heat",
               "title": {
                 "en": "ECO"
+              }
+            },
+            {
+              "id": "Powerregulator",
+              "title": {
+                "en": "Power Regulator"
               }
             }
           ]
@@ -11913,12 +12028,24 @@
       "connectivity": [
         "zwave"
       ],
-      "class": "other",
+      "class": "socket",
       "capabilities": [
         "measure_power",
         "meter_power",
-        "onoff"
+        "onoff",
+        "button.reset_meter"
       ],
+      "capabilitiesOptions": {
+        "button.reset_meter": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Reset power meter"
+          },
+          "desc": {
+            "en": "Reset the accumulated power usage (kWh), note that this can not be reversed."
+          }
+        }
+      },
       "icon": "/drivers/ZM-Single-Relay-16A/assets/icon.svg",
       "images": {
         "small": "/drivers/ZM-Single-Relay-16A/assets/images/small.png",
@@ -11938,15 +12065,6 @@
           "image": "/drivers/ZM-Single-Relay-16A/assets/learnmode.svg",
           "instruction": {
             "en": "Press the configuration button 3 times."
-          }
-        },
-        "button.reset_meter": {
-          "maintenanceAction": true,
-          "title": {
-            "en": "Reset power meter"
-          },
-          "desc": {
-            "en": "Reset the accumulated power usage (kWh), note that this can not be reversed."
           }
         },
         "associationGroups": [
@@ -12273,7 +12391,8 @@
         "thermostat_state_13570",
         "measure_power",
         "meter_power",
-        "onoff"
+        "onoff",
+        "button.reset_meter"
       ],
       "capabilitiesOptions": {
         "target_temperature": {

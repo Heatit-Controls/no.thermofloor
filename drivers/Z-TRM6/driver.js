@@ -5,7 +5,7 @@ const Homey = require('homey');
 class Driver extends Homey.Driver {
   async onInit() {
     
-    this._thermostatState = this.homey.flow.getDeviceTriggerCard("ztemp3_thermostat_state_IdleHeatCool")
+    this._thermostatState = this.homey.flow.getDeviceTriggerCard("ztrm6_thermostat_state_IdleHeatCool")
       .registerRunListener((args, state) => {
         return args.thermostat_state === state.state;
       });

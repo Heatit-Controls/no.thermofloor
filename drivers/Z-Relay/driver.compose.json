@@ -10,7 +10,7 @@
 	},
 	"platforms": ["local", "cloud"],
 	"connectivity": ["zwave"],
-	"class": "other",
+	"class": "socket",
 	"capabilities": ["onoff", "measure_temperature.input1", "measure_temperature.input2", "alarm_water", "measure_power", "meter_power", "measure_voltage", "measure_current", "button.reset_meter"],
 	"capabilitiesOptions": {
 		"onoff": {
