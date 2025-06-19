@@ -526,9 +526,8 @@ class ZTRM6Device extends ZwaveDevice {
 
 	async handleThermostatModeForSensorMode(sensorMode) {
 		if (sensorMode === 5) {
-			if (this.getCapabilityValue('thermostat_mode') !== 'Powerregulator') {
-				await this.handleEnterPowerRegulatorMode();
-			}
+			await this.handleEnterPowerRegulatorMode();
+			await this.setCapabilityValue('thermostat_mode', 'Powerregulator');
 		} else if (this.getCapabilityValue('thermostat_mode') === 'Powerregulator') {
 			await this.handleExitPowerRegulatorMode();
 
