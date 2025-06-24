@@ -80,24 +80,12 @@ class ZTRM6Device extends ZwaveDevice {
 				getOnStart: true,
 			},
 			report: 'SENSOR_MULTILEVEL_REPORT',
-			reportParser: (report, node, capabilityId) => {
-				if (
-					report &&
-					report.hasOwnProperty('Sensor Type') &&
-					report['Sensor Type'] === 'Temperature (version 1)' &&
-					report.hasOwnProperty('Sensor Value (Parsed)') &&
-					report.hasOwnProperty('Level') &&
-					report.Level.hasOwnProperty('Scale')
-				) {
-					if (report.Level.Scale === 0) {
-						if (capabilityId === this.selectedTemperatureCapability) {
-							this.setCapabilityValue('measure_temperature', report['Sensor Value (Parsed)'])
-								.catch(this.error);
-						}
-						return report['Sensor Value (Parsed)'];
-					}
+			reportParser: report => {
+				if (this.selectedTemperatureCapability === 'measure_temperature.internal') {
+					this.setCapabilityValue('measure_temperature', report['Sensor Value (Parsed)'])
+						.catch(this.error);
 				}
-				return null;
+				return report['Sensor Value (Parsed)'];
 			},
 			multiChannelNodeId: 2
 		});
@@ -107,24 +95,12 @@ class ZTRM6Device extends ZwaveDevice {
 				getOnStart: true,
 			},
 			report: 'SENSOR_MULTILEVEL_REPORT',
-			reportParser: (report, node, capabilityId) => {
-				if (
-					report &&
-					report.hasOwnProperty('Sensor Type') &&
-					report['Sensor Type'] === 'Temperature (version 1)' &&
-					report.hasOwnProperty('Sensor Value (Parsed)') &&
-					report.hasOwnProperty('Level') &&
-					report.Level.hasOwnProperty('Scale')
-				) {
-					if (report.Level.Scale === 0) {
-						if (capabilityId === this.selectedTemperatureCapability) {
-							this.setCapabilityValue('measure_temperature', report['Sensor Value (Parsed)'])
-								.catch(this.error);
-						}
-						return report['Sensor Value (Parsed)'];
-					}
+			reportParser: report => {
+				if (this.selectedTemperatureCapability === 'measure_temperature.external') {
+					this.setCapabilityValue('measure_temperature', report['Sensor Value (Parsed)'])
+						.catch(this.error);
 				}
-				return null;
+				return report['Sensor Value (Parsed)'];
 			},
 			multiChannelNodeId: 3
 		});
@@ -134,24 +110,12 @@ class ZTRM6Device extends ZwaveDevice {
 				getOnStart: true,
 			},
 			report: 'SENSOR_MULTILEVEL_REPORT',
-			reportParser: (report, node, capabilityId) => {
-				if (
-					report &&
-					report.hasOwnProperty('Sensor Type') &&
-					report['Sensor Type'] === 'Temperature (version 1)' &&
-					report.hasOwnProperty('Sensor Value (Parsed)') &&
-					report.hasOwnProperty('Level') &&
-					report.Level.hasOwnProperty('Scale')
-				) {
-					if (report.Level.Scale === 0) {
-						if (capabilityId === this.selectedTemperatureCapability) {
-							this.setCapabilityValue('measure_temperature', report['Sensor Value (Parsed)'])
-								.catch(this.error);
-						}
-						return report['Sensor Value (Parsed)'];
-					}
+			reportParser: report => {
+				if (this.selectedTemperatureCapability === 'measure_temperature.floor') {
+					this.setCapabilityValue('measure_temperature', report['Sensor Value (Parsed)'])
+						.catch(this.error);
 				}
-				return null;
+				return report['Sensor Value (Parsed)'];
 			},
 			multiChannelNodeId: 4
 		});
@@ -562,9 +526,8 @@ class ZTRM6Device extends ZwaveDevice {
 
 	async handleThermostatModeForSensorMode(sensorMode) {
 		if (sensorMode === 5) {
-			if (this.getCapabilityValue('thermostat_mode') !== 'Powerregulator') {
-				await this.handleEnterPowerRegulatorMode();
-			}
+			await this.handleEnterPowerRegulatorMode();
+			await this.setCapabilityValue('thermostat_mode', 'Powerregulator');
 		} else if (this.getCapabilityValue('thermostat_mode') === 'Powerregulator') {
 			await this.handleExitPowerRegulatorMode();
 
