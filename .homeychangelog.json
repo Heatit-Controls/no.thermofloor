@@ -85,5 +85,8 @@
   },
   "4.0.7": {
     "en": "Update to 4.0.7"
+  },
+  "4.0.8": {
+    "en": "Fixed TRM6 issues"
   }
 }
