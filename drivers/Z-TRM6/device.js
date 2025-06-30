@@ -39,8 +39,8 @@ class ZTRM6Device extends ZwaveDevice {
 
 
 	async onNodeInit() {
-		this.enableDebug();
-		this.printNode();
+		//this.enableDebug();
+		//this.printNode();
 
 		this.registerReportListener('CONFIGURATION', 'CONFIGURATION_REPORT', async report => {
 			try {
