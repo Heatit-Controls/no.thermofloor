@@ -22,7 +22,7 @@ class DINThermostatZwaveDevice extends ZwaveDevice {
 			'Energy Save Heat': 'energy save heat',
 		};
 
-		this._originalTempOptions = { min: 5, max: 40, step: 0.5 };
+		this._originalTempOptions = { min: 2, max: 40, step: 0.5 };
 		this._powerRegulatorTempOptions = { min: 10, max: 100, step: 10 };
 
 		//map param 2 to sensor to show correct temp in measure.temperature
