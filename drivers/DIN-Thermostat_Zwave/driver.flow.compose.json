@@ -1,0 +1,42 @@
+{
+  "triggers": [
+    {
+      "id": "din_thermostat_state_IdleHeatCool",
+      "title": {
+        "en": "Thermostat state changed"
+      },
+      "titleFormatted": {
+        "en": "Thermostat state changed to [[thermostat_state]]"
+      },
+      "args": [
+        {
+          "name": "thermostat_state",
+          "type": "dropdown",
+          "title": {
+            "en": "Thermostat State"
+          },
+          "values": [
+            {
+              "id": "Idle",
+              "label": {
+                "en": "Idle"
+              }
+            },
+            {
+              "id": "Heating",
+              "label": {
+                "en": "Heating"
+              }
+            },
+            {
+              "id": "Cooling",
+              "label": {
+                "en": "Cooling"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
