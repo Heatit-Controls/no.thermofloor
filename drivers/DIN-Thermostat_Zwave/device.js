@@ -470,33 +470,11 @@ class DINThermostatZwaveDevice extends ZwaveDevice {
 		} else if (this.getCapabilityValue('thermostat_mode') === 'Powerregulator') {
 			const previousMode = await this.getStoreValue('thermostat_mode') || 'heat';
 			await this.handleExitPowerRegulatorMode(previousMode);
-			// Restore UI to the previous mode and original temperature options
 			await this.setCapabilityValue('thermostat_mode', previousMode);
-			await this.setCapabilityOptions('target_temperature', this._originalTempOptions)
-				.catch(error => {
-					this.error(`Failed to set temperature options after exiting Powerregulator: ${error.message}`);
-				});
 			const setpointType = Mode2Setpoint[previousMode];
 			if (setpointType && setpointType !== 'not supported') {
 				const previousSetpoint = await this.getStoreValue(`thermostatsetpointValue.${setpointType}`) || 21;
 				await this.setCapabilityValue('target_temperature', previousSetpoint);
-			}
-
-			// Ensure the physical device mode matches the UI after leaving Powerregulator
-			try {
-				const zwaveMode = this.CapabilityToThermostatMode[previousMode];
-				if (zwaveMode) {
-					await this.node.CommandClass['COMMAND_CLASS_THERMOSTAT_MODE']
-						.THERMOSTAT_MODE_SET({
-							Level: {
-								'No of Manufacturer Data fields': 0,
-								'Mode': zwaveMode,
-							},
-							'Manufacturer Data': Buffer.from([]),
-						});
-				}
-			} catch (error) {
-				this.error(`Failed to apply thermostat mode after leaving Powerregulator: ${error.message}`);
 			}
 		}
 	}
