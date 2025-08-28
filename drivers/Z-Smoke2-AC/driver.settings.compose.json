@@ -1,0 +1,38 @@
+[
+    {
+        "id": "smoke_detection",
+        "type": "checkbox",
+        "label": {
+            "en": "Smoke detection"
+        },
+        "hint": {
+            "en": "Choose to enable or disable the smoke detection"
+        },
+        "zwave": {
+            "index": 1,
+            "size": 1,
+            "signed": false
+        },
+        "value": true
+    },
+    {
+        "id": "adjust_temperature",
+        "type": "number",
+        "label": {
+            "en": "Adjust temperature"
+        },
+        "hint": {
+            "en": "Manually calibrate the internal sensor"
+        },
+        "zwave": {
+            "index": 2,
+            "size": 1,
+            "signed": false
+        },
+        "value": 0,
+        "attr": {
+            "min": -60,
+            "max": 60
+        }
+    }
+]
