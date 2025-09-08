@@ -1,0 +1,151 @@
+{
+  "name": {
+    "en": "ZM-Thermostat2"
+  },
+  "class": "thermostat",
+  "capabilities": [
+    "thermostat_mode",
+    "target_temperature",
+    "thermostat_state_IdleHeatCool",
+    "meter_power",
+    "measure_power",
+    "measure_temperature",
+    "button.reset_meter",
+
+    "measure_temperature.external",
+    "measure_temperature.floor"
+  ],
+  "capabilitiesOptions": {
+    "meter_power": {
+      "step": 0.1
+    },
+    "thermostat_mode": {
+      "values" :[
+        {
+          "id": "off",
+          "title": {
+            "en": "Off"
+          },
+          "insights": true
+        },
+        {
+          "id": "heat",
+          "title": {
+            "en": "Heat"
+          }
+        },
+        {
+          "id": "cool",
+          "title": {
+            "en": "Cool"
+          }
+        },
+        {
+          "id": "energy save heat",
+          "title": {
+            "en": "ECO"
+          }
+        },
+        {
+          "id": "Powerregulator",
+          "title": {
+            "en": "Power Regulator"
+          }
+        }
+      ]
+    },
+		"thermostat_state_IdleHeatCool": {
+			"greyout": true,
+			"titleTrue": {
+				"en": "Active",
+				"nl": "Actief"
+			},
+			"titleFalse": {
+				"en": "Idle",
+				"nl": "Uit"
+			}
+    },
+    "measure_power": {
+      "approximated": true
+    },
+    "button.reset_meter": {
+      "maintenanceAction": true,
+      "title": {
+        "en": "Reset power meter"
+      }, 
+      "desc": {
+        "en": "Reset the accumulated power usage (kWh), note that this can not be reversed."
+      }
+    },
+    "measure_temperature": {
+      "title": "temperature"
+    },
+    "measure_temperature.external": {
+      "title": "external temperature"
+    },
+    "measure_temperature.floor": {
+      "title": "floor temperature"
+    },
+    "target_temperature": {
+      "min": 5,
+      "max": 40,
+      "step": 0.5
+    }
+  },
+  "platforms": [
+    "local",
+    "cloud"
+  ],
+  "connectivity": [
+    "zwave"
+  ],
+  "images": {
+    "small": "{{driverAssetsPath}}/images/small.png",
+    "large": "{{driverAssetsPath}}/images/large.png",
+    "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
+  },
+  "zwave": {
+    "manufacturerId": 411,
+    "productTypeId": [
+      48
+    ],
+    "productId": [
+      12295
+    ],
+    "security": [
+      "none"
+    ],
+    "zwaveAllianceProductId": 4908,
+    "zwaveAllianceProductDocumentation": "NOT CERT YET",
+    "learnmode": {
+      "image": "{{driverAssetsPath}}/learnmode.svg",
+      "instruction": {
+        "en": "Press the reset button 3 times. The device will indicate it is in configuration mode by blinking green"
+      }
+    },
+    "associationGroups": [],
+    "associationGroupsMultiChannel": [1],
+    "associationGroupsOptions": {
+      "1": {
+        "hint": {
+          "en": "Lifeline. All run-time reporting is addressed to this group. Only one node can be assigned to this association group. \nDefault: 1.0 (Homey's ID)"
+        }
+      },
+      "2": {
+        "hint": {
+          "en": "On/off  control: This controls external heaters replicating the state of the internal relay. \nUses BASIC_SET command, values 0x00 (on) and 0xFF (on)."
+        }
+      },
+      "3": {
+        "hint": {
+          "en": "Sends Thermostat Setpoint Set commands based on own setpoint to allow for use as master thermostat."
+        }
+      },
+      "4": {
+        "hint": {
+          "en": "Sends Thermostat Mode Set commands based on own setpoint to allow for use as master thermostat."
+        }
+      }
+    }
+  }
+}
