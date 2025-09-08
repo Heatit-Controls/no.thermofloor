@@ -1,0 +1,24 @@
+{
+  "type": "boolean",
+  "title": {
+    "en": "Dust force maintenance alarm",
+    "no": "Vedlikeholdsalarm"
+  },
+  "desc": {
+    "en": "Dust force maintenance alarm",
+    "no": "Vedlikeholdsalarm"
+  },
+  "insights": true,
+  "insightsTitleTrue": {
+    "en": "Dust alarm turned on",
+    "no": "Støvalarm aktivert"
+  },
+  "insightsTitleFalse": {
+    "en": "Dust alarm turned off",
+    "no": "Støvalarm deaktivert"
+  },
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "icon": "/assets/alarm_smoke.svg"
+}

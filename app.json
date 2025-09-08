@@ -6,7 +6,7 @@
     "en": "Heatit Controls"
   },
   "brandColor": "#cc3333",
-  "version": "4.0.9",
+  "version": "4.2.0",
   "compatibility": ">=12.2.0",
   "platforms": [
     "local",
@@ -5866,6 +5866,114 @@
         "defaultConfiguration": []
       },
       "settings": []
+    },
+    {
+      "id": "Z-Smoke2-AC",
+      "name": {
+        "en": "Z-Smoke2 Detector 230V"
+      },
+      "icon": "/drivers/Z-Smoke2-AC/assets/icon.svg",
+      "images": {
+        "large": "/drivers/Z-Smoke2-AC/assets/images/large.png",
+        "small": "/drivers/Z-Smoke2-AC/assets/images/small.png"
+      },
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [
+        "zwave"
+      ],
+      "class": "sensor",
+      "capabilities": [
+        "alarm_smoke",
+        "alarm_heat",
+        "alarm_tamper",
+        "alarm_power",
+        "measure_temperature",
+        "measure_battery",
+        "alarm_siren",
+        "alarm_maintenance"
+      ],
+      "energy": {
+        "batteries": [
+          "INTERNAL"
+        ]
+      },
+      "zwave": {
+        "manufacturerId": 411,
+        "productTypeId": 3,
+        "productId": 39,
+        "security": [
+          "none"
+        ],
+        "zwaveAllianceProductId": 3933,
+        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/3933",
+        "imageRemotePath": "https://products.z-wavealliance.org/ProductImages/ProductImage?prod=3933&which=21",
+        "learnmode": {
+          "image": "/drivers/Z-Smoke2-AC/assets/learnmode.svg",
+          "instruction": {
+            "en": "Within 1.5 seconds, press the Function button 3 times. \nThe Smoke Detector will emit a 2-tone beep and the LED will turn on for ~2 seconds."
+          }
+        },
+        "associationGroups": [
+          1
+        ],
+        "associationGroupsMultiChannel": [],
+        "associationGroupsOptions": {
+          "1": {
+            "hint": {
+              "en": "Lifeline. All run-time reporting is addressed to this group. Only one node can be assigned to this association group. \nDefault: 1 (Homey's ID)",
+              "nl": "Lifeline: Association Groep 1 wordt gebruikt om alle rapportages door te geven. Slechts een node kan toegevoegd worden aan deze associatie groep. \nStandaard: 1 (Homey's ID)"
+            }
+          },
+          "2": {
+            "hint": {
+              "en": "Send BASIC SET command. When the Smoke Detector is active, it will send Basic Set (0xFF = ON). \nWhen the Smoke Detector is restored, it will send Basic Set (0x00 = OFF). \nCan be used to trigger other Smoke Detectors or switch on lights.",
+              "nl": "Stuurt BASIC SET command. Wanneer de Rookmelder actief is, wordt een Basic Set (0xFF = AAN) commando verstuurd. \n Wanneer de Rookmedler hersteld, wordt een Basic Set (0x00 = UIT) commando verstuurd. \nDeze groep kan gebruikt worden om andere Rookmelders te activeren of verlichting in te schakelen."
+            }
+          }
+        },
+        "defaultConfiguration": []
+      },
+      "settings": [
+        {
+          "id": "smoke_detection",
+          "type": "checkbox",
+          "label": {
+            "en": "Smoke detection"
+          },
+          "hint": {
+            "en": "Choose to enable or disable the smoke detection"
+          },
+          "zwave": {
+            "index": 1,
+            "size": 1,
+            "signed": false
+          },
+          "value": true
+        },
+        {
+          "id": "adjust_temperature",
+          "type": "number",
+          "label": {
+            "en": "Adjust temperature"
+          },
+          "hint": {
+            "en": "Manually calibrate the internal sensor"
+          },
+          "zwave": {
+            "index": 2,
+            "size": 1,
+            "signed": false
+          },
+          "value": 0,
+          "attr": {
+            "min": -60,
+            "max": 60
+          }
+        }
+      ]
     },
     {
       "id": "Z-TEMP2",
@@ -12775,24 +12883,52 @@
       "uiComponent": "sensor",
       "icon": "/assets/alarm_power.svg"
     },
+    "alarm_maintenance": {
+      "type": "boolean",
+      "title": {
+        "en": "Dust force maintenance alarm",
+        "no": "Vedlikeholdsalarm"
+      },
+      "desc": {
+        "en": "Dust force maintenance alarm",
+        "no": "Vedlikeholdsalarm"
+      },
+      "insights": true,
+      "insightsTitleTrue": {
+        "en": "Dust alarm turned on",
+        "no": "Støvalarm aktivert"
+      },
+      "insightsTitleFalse": {
+        "en": "Dust alarm turned off",
+        "no": "Støvalarm deaktivert"
+      },
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor",
+      "icon": "/assets/alarm_smoke.svg"
+    },
     "alarm_power": {
       "type": "boolean",
       "title": {
         "en": "Power supply alarm",
-        "nl": "Voeding alarm"
+        "nl": "Voeding alarm",
+        "no": "Strømbruddsalarm"
       },
       "desc": {
         "en": "Power supply alarm",
-        "nl": "Voeding alarm"
+        "nl": "Voeding alarm",
+        "no": "Strømbruddsalarm"
       },
       "insights": true,
       "insightsTitleTrue": {
         "en": "Power supply alarm turned on",
-        "nl": "Voeding alarm ging af"
+        "nl": "Voeding alarm ging af",
+        "no": "Strømbruddsalarm aktivert"
       },
       "insightsTitleFalse": {
         "en": "Power supply alarm turned off",
-        "nl": "Voeding alarm ging uit"
+        "nl": "Voeding alarm ging uit",
+        "no": "Strømbruddsalarm deaktivert"
       },
       "getable": true,
       "setable": false,
