@@ -128,7 +128,7 @@
       "en": "Floor sensor minimum temperature limit"
     },
     "hint": {
-      "en": "Devices the lowest temperature allowed by the thermostat when using sensor mode AF, F, A2F."
+      "en": "Devices the lowest temperature allowed by the thermostat when using sensor mode F, A2F."
     },
     "zwave": {
       "index": 4,
@@ -168,7 +168,7 @@
       "en": "Floor sensor maximum temperature limit"
     },
     "hint": {
-      "en": "Decide the highest temperature allowed by the thermostat when using sensor mode AF, F, A2F."
+      "en": "Decide the highest temperature allowed by the thermostat when using sensor mode F, A2F."
     },
     "zwave": {
       "index": 6,
@@ -188,7 +188,7 @@
       "en": "External sensor maximum temperature limit"
     },
     "hint": {
-      "en": "Decide the highest temperature allowed by the thermostat when using sensor mode AF, A2F."
+      "en": "Decide the highest temperature allowed by the thermostat when using sensor mode A2F."
     },
     "zwave": {
       "index": 7,
@@ -431,7 +431,7 @@
       "size": 2,
 	  "signed": false
     },
-    "value": 0,
+    "value": 1200,
     "attr": {
       "min": 0,
       "max": 65535
@@ -464,7 +464,7 @@
       "en": "Cooling setpoint"
     },
     "hint": {
-      "en": "Set setpoint for Heating mode."
+      "en": "Set setpoint for Cooling mode."
     },
     "zwave": {
       "index": 20,

@@ -535,7 +535,7 @@
       "en": "Cooling setpoint"
     },
     "hint": {
-      "en": "Set setpoint for Heating mode."
+      "en": "Set setpoint for Cooling mode."
     },
     "zwave": {
       "index": 23,
