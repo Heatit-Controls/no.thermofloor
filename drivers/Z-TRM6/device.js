@@ -344,6 +344,8 @@ class ZTRM6Device extends ZwaveDevice {
 				throw new Error('Reset meter not supported');
 			}
 		});
+		
+		await this.initializeDeviceState();
 	}
 
 	get selectedTemperatureCapability() {
