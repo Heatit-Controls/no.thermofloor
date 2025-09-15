@@ -103,5 +103,8 @@
   },
   "4.2.0": {
     "en": "Added Z-Smoke2"
+  },
+  "4.2.1": {
+    "en": "Fixed setpoint not updating"
   }
 }
