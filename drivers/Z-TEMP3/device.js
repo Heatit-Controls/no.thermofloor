@@ -57,9 +57,8 @@ class ZTEMP3Device extends ZwaveDevice {
             const previousMode = await this.getStoreValue('previousMode') || 'heat';
 
             await this.executeCapabilitySetCommand('thermostat_mode', 'THERMOSTAT_MODE', previousMode)
-                .then(() => this.log(`onoff set to ${previousMode}`))
                 .catch(this.error);
-            this.setCapabilityValue('thermostat_mode', previousMode);
+            await this.setCapabilityValue('thermostat_mode', previousMode).catch(this.error);
         }
 
         if (value === false) {
@@ -69,10 +68,8 @@ class ZTEMP3Device extends ZwaveDevice {
             }
 
             await this.executeCapabilitySetCommand('thermostat_mode', 'THERMOSTAT_MODE', 'off')
-                .then(this.log(`onoff set to 'off'`))
                 .catch(this.error);
-
-            this.setCapabilityValue('thermostat_mode', 'off');
+            await this.setCapabilityValue('thermostat_mode', 'off').catch(this.error);
         }
     }
 
@@ -103,7 +100,7 @@ class ZTEMP3Device extends ZwaveDevice {
                 }
 
                 const bufferValue = Buffer.alloc(2);
-                const scaled = (Math.round(setpointValue * 2) / 2 * 10) | 0; // 0 decimals, base-10 * precision 1
+                const scaled = (Math.round(setpointValue * 2) / 2 * 10) | 0;
                 bufferValue.writeUInt16BE(scaled);
 
                 return {
@@ -116,10 +113,7 @@ class ZTEMP3Device extends ZwaveDevice {
             report: 'THERMOSTAT_SETPOINT_REPORT',
 
             reportParserV3: report => {
-                this.log('reportParserV3 called with:', JSON.stringify(report, null, 2));
-
                 if (!report?.Level2 || report.Level2.Scale === undefined || report.Level2.Precision === undefined) {
-                    this.log('Report missing Level2 / Scale / Precision, skipping.');
                     return null;
                 }
 
@@ -140,27 +134,21 @@ class ZTEMP3Device extends ZwaveDevice {
                 const expectedType = Mode2Setpoint[modeCap] || 'Heating 1';
                 const setpointSetting = Setpoint2Setting[reportedType];
 
-                this.log(`Parsed setpoint: raw=${readValue}, scaled=${setpointValue}, type=${reportedType}, precision=${report.Level2.Precision}, mode=${modeCap}, expectedType=${expectedType}`);
-
                 if (reportedType && reportedType !== 'not supported') {
                     this.setStoreValue(`thermostatsetpointValue.${reportedType}`, setpointValue)
-                        .then(() => this.log(`Stored thermostatsetpointValue.${reportedType} = ${setpointValue}`))
                         .catch(this.error);
                 }
 
                 if (setpointSetting) {
                     this.setSettings({ [setpointSetting]: setpointValue * 10 })
-                        .then(() => this.log(`Updated settings: ${setpointSetting} = ${setpointValue * 10}`))
                         .catch(this.error);
                 }
 
                 // Update UI only when the report matches the active mode’s setpoint type
                 if (reportedType === expectedType) {
-                    this.log(`Returning setpointValue for UI: ${setpointValue}`);
                     return setpointValue; // ← updates target_temperature
                 }
 
-                this.log(`UI not updated: report type ${reportedType} != expected ${expectedType}`);
                 return null;
             },
         });
@@ -200,16 +188,11 @@ class ZTEMP3Device extends ZwaveDevice {
                             if (typeof mode === 'string' && ThermostatModeToCapability.hasOwnProperty(mode)) {
                                 const capabilityMode = ThermostatModeToCapability[mode];
                                 const currentOnoff = this.getCapabilityValue('onoff');
-                                if (capabilityMode === 'heat' || capabilityMode === 'cool' || capabilityMode === 'energy save heat') {
-                                    if (currentOnoff) {
-                                        this.setCapabilityValue('onoff', true).catch(this.error);
-                                    }
-                                }
-                                if (capabilityMode === 'off') {
-                                    if (!currentOnoff) {
-                                        this.setCapabilityValue('onoff', false).catch(this.error);
-                                    }
-                                }
+
+                                const shouldBeOn = (capabilityMode === 'heat' || capabilityMode === 'cool' || capabilityMode === 'energy save heat');
+                                if (shouldBeOn && !currentOnoff) this.setCapabilityValue('onoff', true).catch(this.error);
+                                if (!shouldBeOn && currentOnoff) this.setCapabilityValue('onoff', false).catch(this.error);
+
                                 return capabilityMode;
                             } else {
                                 throw new Error(`Unknown or invalid mode reported: ${mode}`);
