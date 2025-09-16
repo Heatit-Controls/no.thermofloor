@@ -109,5 +109,8 @@
   },
   "4.2.2": {
     "en": "Update Z-Smoke2 background"
+  },
+  "4.2.3": {
+    "en": "Revert"
   }
 }
