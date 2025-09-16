@@ -106,5 +106,8 @@
   },
   "4.2.1": {
     "en": "Fixed setpoint not updating"
+  },
+  "4.2.2": {
+    "en": "Update Z-Smoke2 background"
   }
 }
