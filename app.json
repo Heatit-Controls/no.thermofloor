@@ -7802,8 +7802,9 @@
             "en": "1. press the Center (confirm) button for 10 seconds. The display will show OFF. \n2. Press Right(down) button 5 times till you see Con in the display.\n3. Now start add a device to Homey.\n4. Start inclusion mode by pressing Center(confirm) button for approximately 2 seconds. The inclusion / exclusion icon will appear in the display.\n5. Confirmation will show Inc in the display. \n If Err(error) is shown on the thermostat display, inclusion might still be successfull; check the functioning of the newly added device."
           }
         },
+        "associationGroups": [],
         "associationGroupsMultiChannel": [
-          1.1
+          1
         ],
         "associationGroupsOptions": {
           "1": {
