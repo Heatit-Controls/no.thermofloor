@@ -103,5 +103,14 @@
   },
   "4.2.0": {
     "en": "Added Z-Smoke2"
+  },
+  "4.2.1": {
+    "en": "Fixed setpoint not updating"
+  },
+  "4.2.2": {
+    "en": "Update Z-Smoke2 background"
+  },
+  "4.2.3": {
+    "en": "Revert"
   }
 }
