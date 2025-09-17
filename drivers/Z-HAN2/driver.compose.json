@@ -4,8 +4,8 @@
 	"class": "sensor",
 	"capabilities": [
 		"meter_power",
-		"accumulated_production",
 		"measure_power",
+		"meter_power.exported",
 		"measure_voltage",
 		"measure_current",
 		"measure_temperature",
@@ -14,6 +14,12 @@
 	"capabilitiesOptions": {
 		"measure_power": {
 			"approximated": true
+		},
+		"meter_power.exported": {
+			"hidden": true,
+			"title": {
+				"en": "Exported Energy"
+			}
 		},
 		"button.reset_meter": {
 			"maintenanceAction": true,
@@ -31,7 +37,6 @@
 	},
 	"energy": {
 		"cumulative": true,
-		"cumulativeImportedCapability": "meter_power.imported",
 		"cumulativeExportedCapability": "meter_power.exported"
 	},
 	"units": {

@@ -2,7 +2,6 @@
 
 const { ZwaveDevice } = require('homey-zwavedriver');
 
-
 class ZHAN2Device extends ZwaveDevice {
   async onNodeInit() {
     // **Enables debugging**
@@ -17,19 +16,20 @@ class ZHAN2Device extends ZwaveDevice {
     this.registerCapability('measure_current', 'METER');
     this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL');
 
-    if (this.hasCapability('meter_power.exported')) {
-      await this.removeCapability('meter_power.exported');
-    }
-
     if (this.hasCapability("meter_power.imported")) {
       await this.removeCapability("meter_power.imported",);
     }
 
-    if (this.hasCapability('accumulated_production') === false ) {
-      await this.addCapability('accumulated_production');
+    if (this.hasCapability('meter_power.exported') === false) {
+      await this.addCapability('meter_power.exported');
     }
 
-    this.registerAccumulatedProduction();
+    if (this.hasCapability("accumulated_production")) {
+      await this.removeCapability("accumulated_production",);
+    }
+
+    // Exported energy is derived from kVAh (Scale 0x01)
+    this.registerExportedEnergy();
 
     this.registerCapabilityListener('button.reset_meter', async () => {
       let commandClassMeter = null;
@@ -44,18 +44,18 @@ class ZHAN2Device extends ZwaveDevice {
     });
     }
 
-    //listener for kVAh
-    registerAccumulatedProduction() {
-      this.registerCapability('accumulated_production', 'METER', {
+    // Map kVAh (Scale 0x01) to exported energy capability
+    registerExportedEnergy() {
+      this.registerCapability('meter_power.exported', 'METER', {
           getOpts: {
               getOnStart: true,
           },
           report: 'METER_REPORT',
           reportParser: (report) => {
               if (report && report.Properties2 && report.Properties2['Scale bits 10'] === 0x01) {
-                  let parsedValue = Number(report['Meter Value (Parsed)']);
-                  this.log('kVAh: ', parsedValue);
-                  return !isNaN(parsedValue) ? parsedValue : null;
+                  const parsedValue = Number(report['Meter Value (Parsed)']);
+                  this.log('exported (kVAh): ', parsedValue);
+                  return Number.isFinite(parsedValue) ? parsedValue : null;
               }
               return null;
           }

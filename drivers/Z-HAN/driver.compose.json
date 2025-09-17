@@ -11,9 +11,6 @@
     "measure_temperature",
     "button.reset_meter"
   ],
-  "energy": {
-    "cumulative": true
-  },
   "capabilitiesOptions": {
     "measure_power": {
       "approximated": true

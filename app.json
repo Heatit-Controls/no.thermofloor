@@ -4473,9 +4473,6 @@
         "measure_temperature",
         "button.reset_meter"
       ],
-      "energy": {
-        "cumulative": true
-      },
       "capabilitiesOptions": {
         "measure_power": {
           "approximated": true
@@ -4763,8 +4760,8 @@
       "class": "sensor",
       "capabilities": [
         "meter_power",
-        "accumulated_production",
         "measure_power",
+        "meter_power.exported",
         "measure_voltage",
         "measure_current",
         "measure_temperature",
@@ -4773,6 +4770,12 @@
       "capabilitiesOptions": {
         "measure_power": {
           "approximated": true
+        },
+        "meter_power.exported": {
+          "hidden": true,
+          "title": {
+            "en": "Exported Energy"
+          }
         },
         "button.reset_meter": {
           "maintenanceAction": true,
@@ -4790,7 +4793,6 @@
       },
       "energy": {
         "cumulative": true,
-        "cumulativeImportedCapability": "meter_power.imported",
         "cumulativeExportedCapability": "meter_power.exported"
       },
       "units": {
@@ -12442,7 +12444,7 @@
           ]
         },
         {
-          "id": "mtr_interval",
+          "id": "metr_interval",
           "type": "number",
           "label": {
             "en": "Meter report interval"
@@ -12461,7 +12463,7 @@
           }
         },
         {
-          "id": "mtr_delta",
+          "id": "metr_delta",
           "type": "number",
           "label": {
             "en": "Meter report delta value"
@@ -12855,7 +12857,7 @@
       "title": {
         "en": "kVAh"
       },
-      "decimals": 2,
+      "decimals": 3,
       "units": {
         "en": "kVAh"
       },
