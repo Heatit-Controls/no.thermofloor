@@ -4524,19 +4524,13 @@
       },
       "zwave": {
         "manufacturerId": 411,
-        "productTypeId": [
-          98,
-          4
-        ],
-        "productId": [
-          25089,
-          26113
-        ],
+        "productTypeId": 4,
+        "productId": 26113,
         "security": [
           "none"
         ],
         "zwaveAllianceProductId": 4744,
-        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4744",
+        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4745",
         "learnmode": {
           "image": "/drivers/Z-HAN/assets/learnmode.svg",
           "instruction": {
@@ -4763,7 +4757,6 @@
       ]
     },
     {
-      "id": "Z-HAN2",
       "name": {
         "en": "Z-HAN2"
       },
@@ -4859,6 +4852,7 @@
           }
         }
       },
+      "id": "Z-HAN2",
       "settings": [
         {
           "id": "meter_report_hyst_W",
