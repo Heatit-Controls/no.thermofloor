@@ -6,7 +6,7 @@
     "en": "Heatit Controls"
   },
   "brandColor": "#cc3333",
-  "version": "4.2.3",
+  "version": "4.2.4",
   "compatibility": ">=12.2.0",
   "platforms": [
     "local",
@@ -12442,7 +12442,7 @@
           ]
         },
         {
-          "id": "mtr_interval",
+          "id": "metr_interval",
           "type": "number",
           "label": {
             "en": "Meter report interval"
@@ -12461,7 +12461,7 @@
           }
         },
         {
-          "id": "mtr_delta",
+          "id": "metr_delta",
           "type": "number",
           "label": {
             "en": "Meter report delta value"
