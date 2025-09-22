@@ -1,5 +1,5 @@
 {
-  "name": {
+    "name": {
     "en": "Z-HAN/B"
   },
   "class": "sensor",
@@ -28,22 +28,18 @@
       }
     }
   },
-  
   "type": "number",
   "title": {
-		"en": "Power"
+    "en": "Power"
   },
-
-	"units": {
+  "units": {
     "en": "W"
   },
-
-	"insights": true,
-	"desc": {
-		"en": "Power in watt (W)"
+  "insights": true,
+  "desc": {
+    "en": "Power in watt (W)"
   },
-
-	"options": {
+  "options": {
     "isApproximated": {
       "type": "boolean",
       "default": false,
@@ -52,7 +48,6 @@
       }
     }
   },
-
   "platforms": [
     "local",
     "cloud"
@@ -67,18 +62,22 @@
   },
   "zwave": {
     "manufacturerId": 411,
-    "productTypeId": [98, 4],
-    "productId": [25089, 26113],
-    "security": ["none"],
+    "productTypeId": 4,
+    "productId": 26113,
+    "security": [
+      "none"
+    ],
     "zwaveAllianceProductId": 4744,
-    "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4744",
+    "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4745",
     "learnmode": {
       "image": "{{driverAssetsPath}}/learnmode.svg",
       "instruction": {
         "en": "Press the reset button on the device 3 times in a rapid sequence."
       }
     },
-    "associationGroups": [1],
+    "associationGroups": [
+      1
+    ],
     "associationGroupsOptions": {
       "1": {
         "hint": {

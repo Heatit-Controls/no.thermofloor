@@ -6,7 +6,9 @@
     "en": "Heatit Controls"
   },
   "brandColor": "#cc3333",
-  "version": "4.2.3",
+
+  "version": "4.2.4",
+
   "compatibility": ">=12.2.0",
   "platforms": [
     "local",
@@ -4524,19 +4526,13 @@
       },
       "zwave": {
         "manufacturerId": 411,
-        "productTypeId": [
-          98,
-          4
-        ],
-        "productId": [
-          25089,
-          26113
-        ],
+        "productTypeId": 4,
+        "productId": 26113,
         "security": [
           "none"
         ],
         "zwaveAllianceProductId": 4744,
-        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4744",
+        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4745",
         "learnmode": {
           "image": "/drivers/Z-HAN/assets/learnmode.svg",
           "instruction": {
@@ -4763,7 +4759,6 @@
       ]
     },
     {
-      "id": "Z-HAN2",
       "name": {
         "en": "Z-HAN2"
       },
@@ -4859,6 +4854,7 @@
           }
         }
       },
+      "id": "Z-HAN2",
       "settings": [
         {
           "id": "meter_report_hyst_W",
@@ -7802,8 +7798,9 @@
             "en": "1. press the Center (confirm) button for 10 seconds. The display will show OFF. \n2. Press Right(down) button 5 times till you see Con in the display.\n3. Now start add a device to Homey.\n4. Start inclusion mode by pressing Center(confirm) button for approximately 2 seconds. The inclusion / exclusion icon will appear in the display.\n5. Confirmation will show Inc in the display. \n If Err(error) is shown on the thermostat display, inclusion might still be successfull; check the functioning of the newly added device."
           }
         },
+        "associationGroups": [],
         "associationGroupsMultiChannel": [
-          1.1
+          1
         ],
         "associationGroupsOptions": {
           "1": {
@@ -12447,7 +12444,7 @@
           ]
         },
         {
-          "id": "mtr_interval",
+          "id": "metr_interval",
           "type": "number",
           "label": {
             "en": "Meter report interval"
@@ -12466,7 +12463,7 @@
           }
         },
         {
-          "id": "mtr_delta",
+          "id": "metr_delta",
           "type": "number",
           "label": {
             "en": "Meter report delta value"

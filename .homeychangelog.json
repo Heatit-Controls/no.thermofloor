@@ -112,5 +112,8 @@
   },
   "4.2.3": {
     "en": "Revert"
+  },
+  "4.2.4": {
+    "en": "Fixed Z-TRM3 Lifeline bug"
   }
 }

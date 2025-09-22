@@ -1,9 +1,6 @@
-{
-	"id": "heatit-z-han2",
-	"name": {
-    	"en": "Z-HAN2"
+{"name": {
+		"en": "Z-HAN2"
 	},
-  
 	"class": "sensor",
 	"capabilities": [
 		"meter_power",
@@ -14,7 +11,6 @@
 		"measure_temperature",
 		"button.reset_meter"
 	],
-
 	"capabilitiesOptions": {
 		"measure_power": {
 			"approximated": true
@@ -28,67 +24,69 @@
 				"en": "Reset the accumulated power usage (kWh), note that this can not be reversed."
 			}
 		}
-  	},
-
+	},
 	"type": "number",
 	"title": {
 		"en": "Power"
-  },
-
+	},
 	"energy": {
 		"cumulative": true,
 		"cumulativeImportedCapability": "meter_power.imported",
-    	"cumulativeExportedCapability": "meter_power.exported"
+		"cumulativeExportedCapability": "meter_power.exported"
 	},
-
 	"units": {
-    "en": "W"
-  },
-
+		"en": "W"
+	},
 	"insights": true,
 	"desc": {
 		"en": "Power in watt (W)"
-  },
-
+	},
 	"options": {
-    "isApproximated": {
-      "type": "boolean",
-      "default": false,
-      "desc": {
-        "en": "This flag is used to determine that the device itself has no power measurement functionality, but that the driver calculates the energy use."
-      }
-    }
-  },
-
-	"platforms": [ "local", "cloud" ],
-	"connectivity": [ "zwave" ],
-
+		"isApproximated": {
+			"type": "boolean",
+			"default": false,
+			"desc": {
+				"en": "This flag is used to determine that the device itself has no power measurement functionality, but that the driver calculates the energy use."
+			}
+		}
+	},
+	"platforms": [
+		"local",
+		"cloud"
+	],
+	"connectivity": [
+		"zwave"
+	],
 	"icon": "{{driverAssetsPath}}/icon.svg",
 	"images": {
-  		"small": "{{driverAssetsPath}}/images/small.png",
-  		"large": "{{driverAssetsPath}}/images/large.png"
-  	},
+		"small": "{{driverAssetsPath}}/images/small.png",
+		"large": "{{driverAssetsPath}}/images/large.png"
+	},
 	"zwave": {
 		"manufacturerId": 411,
-	  	"productTypeId": 98,
+		"productTypeId": 98,
 		"productId": 25089,
-		"security": ["none"],
+		"security": [
+			"none"
+		],
 		"zwaveAllianceProductId": 4899,
 		"zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4899",
-	  	"learnmode": {
-		  	"image": "{{driverAssetsPath}}/learnmode.svg",
-		  	"instruction": {
+		"learnmode": {
+			"image": "{{driverAssetsPath}}/learnmode.svg",
+			"instruction": {
 				"en": "Press the reset button on the device 3 times in a rapid sequence."
-		  	}
-	  	},
-	  	"associationGroups": [1],
-	  	"associationGroupsOptions": {
-		  	"1": {
-			  	"hint": {
-				  	"en": "Lifeline association group (do not change)"
-			  	}
+			}
+		},
+		"associationGroups": [
+			1
+		],
+		"associationGroupsOptions": {
+			"1": {
+				"hint": {
+					"en": "Lifeline association group (do not change)"
+				}
 			},
-		  	"2": {
+			"2": {
 				"hint": {
 					"en": "Meter report: Meter report kWh and W to be sent to other devices"
 				}
