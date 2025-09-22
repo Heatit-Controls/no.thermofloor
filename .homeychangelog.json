@@ -115,5 +115,8 @@
   },
   "4.2.4": {
     "en": "Fixed Z-TRM3 Lifeline bug"
+  },
+  "4.2.5": {
+    "en": "Minor bug fixes"
   }
 }
