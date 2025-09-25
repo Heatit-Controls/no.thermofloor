@@ -172,13 +172,16 @@ class ZTRM6Device extends ZwaveDevice {
 						this.error(`Failed to update power_reg_active_time setting: ${err.message}`);
 					});
 
-					this.configurationSet({
-						index: this.getParameterIndex('power_reg_active_time'),
-						size: 0x01,
-						signed: false
-					}, powerRegValue / 10); // /10 to convert 10-100 to 1-10 in parameter values
+					try {
+						this.configurationSet({
+							index: this.getParameterIndex('power_reg_active_time'),
+							size: 0x01,
+							signed: false
+						}, powerRegValue / 10); // /10 to convert 10-100 to 1-10 in parameter values
+					} catch (error) {	
+						this.error(`Failed to set power_reg_active_time configuration: ${error.message}`);
+					}
 					return null;
-				}
 
 				const setpointType = Mode2Setpoint[currentMode];
 
