@@ -1,6 +1,7 @@
 'use strict';
 
 const { ZwaveDevice } = require('homey-zwavedriver');
+const util = require('../../node_modules/homey-zwavedriver/lib/util');
 
 class ZMDimmerDevice extends ZwaveDevice
 {
@@ -10,7 +11,7 @@ class ZMDimmerDevice extends ZwaveDevice
   async onNodeInit() 
   {
     // enable debugging
-    this.enableDebug();
+    //this.enableDebug();
 
     //this.printNode();
 
