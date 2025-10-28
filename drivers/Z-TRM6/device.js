@@ -1,4 +1,5 @@
 'use strict';
+// Frank fix
 const { ZwaveDevice } = require('homey-zwavedriver');
 const Homey = require('homey');
 const { Mode2Setpoint, Setpoint2Setting } = require('../../lib/map/ZTEMP3_mappings.js');

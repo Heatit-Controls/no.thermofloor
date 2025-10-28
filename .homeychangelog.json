@@ -118,5 +118,8 @@
   },
   "4.2.5": {
     "en": "Minor bug fixes"
+  },
+  "4.2.6": {
+    "en": "Fixed ZM-dimmer dim duration flow"
   }
 }
