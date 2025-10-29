@@ -10,7 +10,7 @@
     "measure_temperature",
     "measure_battery",
     "measure_humidity",
-    "onoff"
+    "thermofloor_onoff"
   ],
   "capabilitiesOptions": {
     "measure_temperature": {
@@ -25,7 +25,7 @@
       "step": 0.5
     },
     "thermostat_mode": {
-      "values" :[
+      "values": [
         {
           "id": "off",
           "title": {
@@ -54,7 +54,10 @@
     }
   },
   "energy": {
-		"batteries": ["AAA", "AAA"]
+    "batteries": [
+      "AAA",
+      "AAA"
+    ]
   },
   "platforms": [
     "local",
@@ -87,7 +90,9 @@
         "en": "1. Hold the Center button for 5 seconds. The display will show “OFF”.\n2. Press the ”+” button once to see “CON” in the display.\n3 Start the configuration mode on the thermostat by holding the Center button for approximately 2 seconds.\n4. Configuration mode is indicated on the device by rotating LED segments on the display."
       }
     },
-    "associationGroups": [1],
+    "associationGroups": [
+      1
+    ],
     "associationGroupsOptions": {
       "1": {
         "hint": {

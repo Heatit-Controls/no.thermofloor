@@ -6419,7 +6419,7 @@
         "measure_temperature",
         "measure_battery",
         "measure_humidity",
-        "onoff"
+        "thermofloor_onoff"
       ],
       "capabilitiesOptions": {
         "measure_temperature": {

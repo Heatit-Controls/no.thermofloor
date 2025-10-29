@@ -20,13 +20,20 @@ const ThermostatModeToCapability = {
 class ZTEMP3Device extends ZwaveDevice {
     async onNodeInit() {
 
+        if (this.hasCapability('thermofloor_onoff') === false) {
+            await this.addCapability('thermofloor_onoff');
+        }
+
+        if (this.hasCapability('onoff')) {
+            await this.removeCapability('onoff');
+        }
+
         this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL');
         this.registerCapability('measure_battery', 'BATTERY');
         this.registerCapability('measure_humidity', 'SENSOR_MULTILEVEL');
 
         this.registerThermostatSetpointCapability();
         this.registerThermostatModeCapability();
-        this.registerCapabilityListener('onoff', this.onCapabilityOnoff.bind(this));
 
         this.registerCapability('thermostat_state_IdleHeatCool', 'THERMOSTAT_OPERATING_STATE', {
             getOpts: { getOnStart: true },
@@ -45,20 +52,26 @@ class ZTEMP3Device extends ZwaveDevice {
                 return null;
             },
         });
-    }
 
-    async onCapabilityOnoff(value, opts) {
+        this.registerCapability('thermofloor_onoff', 'THERMOSTAT_OPERATING_STATE', {
+            get: 'THERMOSTAT_OPERATING_STATE_GET',
+            getOpts: { getOnStart: true },
+            report: 'THERMOSTAT_OPERATING_STATE_REPORT',
+            reportParser: report => {
+                const state = report?.Level?.['Operating State'];
 
-        if (value === true) {
-            const previousMode = await this.getStoreValue('previousMode') || 'heat';
-            await this.executeCapabilitySetCommand('thermostat_mode', 'THERMOSTAT_MODE', previousMode).catch(this.error);
-            await this.setCapabilityValue('thermostat_mode', previousMode).catch(this.error);
-        } else {
-            const currentMode = this.getCapabilityValue('thermostat_mode');
-            if (currentMode !== 'off') await this.setStoreValue('previousMode', currentMode);
-            await this.executeCapabilitySetCommand('thermostat_mode', 'THERMOSTAT_MODE', 'off').catch(this.error);
-            await this.setCapabilityValue('thermostat_mode', 'off').catch(this.error);
-        }
+                const thermofloorOnoffState = state === 'Heating' || state === 'Cooling';
+                if (thermofloorOnoffState === 'Heating' || thermofloorOnoffState === 'Cooling') {
+                    this.setCapabilityValue('thermofloor_onoff', true).catch(this.error);
+                }
+                if (state === 'Idle') {
+                    this.setCapabilityValue('thermofloor_onoff', false).catch(this.error);
+                }
+                return thermofloorOnoffState !== this.getCapabilityValue('thermofloor_onoff')
+                    ? thermofloorOnoffState
+                    : null;
+            },
+        });
     }
 
     registerThermostatSetpointCapability() {
@@ -143,10 +156,11 @@ class ZTEMP3Device extends ZwaveDevice {
             reportParser: report => {
                 const mode = report?.Level?.Mode;
                 if (ThermostatModeToCapability[mode]) {
-                    const capMode = ThermostatModeToCapability[mode];
-                    return capMode;
+                    if (mode === 'Off') {
+                        this.setCapabilityValue('thermofloor_onoff', false).catch(this.error);
+                    }
+                    return ThermostatModeToCapability[mode];
                 }
-                this.error('Unknown mode report', report);
                 return null;
             },
         });
