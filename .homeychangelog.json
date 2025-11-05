@@ -121,5 +121,8 @@
   },
   "4.2.6": {
     "en": "Fixed ZM-dimmer dim duration flow"
+  },
+  "4.2.7": {
+    "en": "Fixed Z-Temp3 setpoint issue"
   }
 }
