@@ -1,0 +1,155 @@
+{
+  "name": {
+    "en": "DIN-Thermostat_Zwave"
+  },
+  "class": "thermostat",
+  "capabilities": [
+    "thermostat_mode",
+    "target_temperature",
+    "thermostat_state_IdleHeatCool",
+    "meter_power",
+    "measure_power",
+    "measure_temperature",
+    "button.reset_meter",
+
+    "measure_temperature.external",
+    "measure_temperature.floor"
+  ],
+  "capabilitiesOptions": {
+    "meter_power": {
+      "step": 0.1
+    },
+    "thermostat_mode": {
+      "values" :[
+        {
+          "id": "off",
+          "title": {
+            "en": "Off"
+          },
+          "insights": true
+        },
+        {
+          "id": "heat",
+          "title": {
+            "en": "Heat"
+          }
+        },
+        {
+          "id": "cool",
+          "title": {
+            "en": "Cool"
+          }
+        },
+        {
+          "id": "energy save heat",
+          "title": {
+            "en": "ECO"
+          }
+        },
+        {
+          "id": "Powerregulator",
+          "title": {
+            "en": "Power Regulator"
+          }
+        }
+      ]
+    },
+		"thermostat_state_IdleHeatCool": {
+			"greyout": true,
+			"titleTrue": {
+				"en": "Active",
+				"nl": "Actief"
+			},
+			"titleFalse": {
+				"en": "Idle",
+				"nl": "Uit"
+			}
+    },
+    "measure_power": {
+      "approximated": true
+    },
+    "button.reset_meter": {
+      "maintenanceAction": true,
+      "title": {
+        "en": "Reset power meter"
+      }, 
+      "desc": {
+        "en": "Reset the accumulated power usage (kWh), note that this can not be reversed."
+      }
+    },
+    "measure_temperature": {
+      "title": "temperature"
+    },
+    "measure_temperature.external": {
+      "title": "external temperature"
+    },
+    "measure_temperature.floor": {
+      "title": "floor temperature"
+    },
+    "target_temperature": {
+      "min": 5,
+      "max": 40,
+      "step": 0.5
+    }
+  },
+  "platforms": [
+    "local",
+    "cloud"
+  ],
+  "connectivity": [
+    "zwave"
+  ],
+  "images": {
+    "small": "{{driverAssetsPath}}/images/small.png",
+    "large": "{{driverAssetsPath}}/images/large.png",
+    "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
+  },
+  "zwave": {
+    "manufacturerId": 411,
+    "productTypeId": [
+      48
+    ],
+    "productId": [
+      12291
+    ],
+    "security": [
+      "none"
+    ],
+    "zwaveAllianceProductId": 5165,
+    "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/5165",
+    "learnmode": {
+      "image": "{{driverAssetsPath}}/learnmode.svg",
+      "instruction": {
+        "en": "1. Hold the Center button for 5 seconds. The display will show “OFF”.\n2. Press the ”+” button once to see “CON” in the display.\n3 Start the configuration mode on the thermostat by holding the Center button for approximately 2 seconds.\n4. Configuration mode is indicated on the device by rotating LED segments on the display."
+      }
+    },
+    "associationGroups": [],
+    "associationGroupsMultiChannel": [1],
+    "associationGroupsOptions": {
+      "1": {
+        "hint": {
+          "en": "Lifeline. All run-time reporting is addressed to this group. Only one node can be assigned to this association group. \nDefault: 1.1 (Homey's ID)",
+          "nl": "Lifeline: Association Groep 1 wordt gebruikt om alle rapportages door te geven. Slechts een node kan toegevoegd worden aan deze associatie groep. \nStandaard: 1.1 (Homey's ID)"
+        }
+      },
+      "2": {
+        "hint": {
+          "en": "On/off  control: This controls external heaters replicating the state of the internal relay. \nUses BASIC_SET command, values 0x00 (on) and 0xFF (on).",
+          "nl": "On/off  control: Deze groep schakelt externe verwarmings of koelings elementen. \nMaakt gebruik van het BASIC_SET command, values 0x00 (on) and 0xFF (on)."
+        }
+      },
+      "3": {
+        "hint": {
+          "en": "Sends Thermostat Setpoint Set commands based on own setpoint to allow for use as master thermostat.",
+          "nl": "Sends Thermostat Setpoint Set commands based on own setpoint to allow for use as master thermostat."
+        }
+      },
+      "4": {
+        "hint": {
+          "en": "Sends Thermostat Mode Set commands based on own setpoint to allow for use as master thermostat.",
+          "nl": "Sends Thermostat Mode Set commands based on own setpoint to allow for use as master thermostat."
+        }
+      }
+    }
+  }
+}

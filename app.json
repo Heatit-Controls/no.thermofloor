@@ -680,6 +680,49 @@
         ]
       },
       {
+        "id": "din_thermostat_state_IdleHeatCool",
+        "title": {
+          "en": "Thermostat state changed"
+        },
+        "titleFormatted": {
+          "en": "Thermostat state changed to [[thermostat_state]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=DIN-Thermostat_Zwave"
+          },
+          {
+            "name": "thermostat_state",
+            "type": "dropdown",
+            "title": {
+              "en": "Thermostat State"
+            },
+            "values": [
+              {
+                "id": "Idle",
+                "label": {
+                  "en": "Idle"
+                }
+              },
+              {
+                "id": "Heating",
+                "label": {
+                  "en": "Heating"
+                }
+              },
+              {
+                "id": "Cooling",
+                "label": {
+                  "en": "Cooling"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
         "id": "ztemp3_thermostat_state_IdleHeatCool",
         "title": {
           "en": "Thermostat state changed"
@@ -1477,6 +1520,780 @@
     ]
   },
   "drivers": [
+    {
+      "name": {
+        "en": "DIN-Thermostat_Zwave"
+      },
+      "class": "thermostat",
+      "capabilities": [
+        "thermostat_mode",
+        "target_temperature",
+        "thermostat_state_IdleHeatCool",
+        "meter_power",
+        "measure_power",
+        "measure_temperature",
+        "button.reset_meter",
+        "measure_temperature.external",
+        "measure_temperature.floor"
+      ],
+      "capabilitiesOptions": {
+        "meter_power": {
+          "step": 0.1
+        },
+        "thermostat_mode": {
+          "values": [
+            {
+              "id": "off",
+              "title": {
+                "en": "Off"
+              },
+              "insights": true
+            },
+            {
+              "id": "heat",
+              "title": {
+                "en": "Heat"
+              }
+            },
+            {
+              "id": "cool",
+              "title": {
+                "en": "Cool"
+              }
+            },
+            {
+              "id": "energy save heat",
+              "title": {
+                "en": "ECO"
+              }
+            },
+            {
+              "id": "Powerregulator",
+              "title": {
+                "en": "Power Regulator"
+              }
+            }
+          ]
+        },
+        "thermostat_state_IdleHeatCool": {
+          "greyout": true,
+          "titleTrue": {
+            "en": "Active",
+            "nl": "Actief"
+          },
+          "titleFalse": {
+            "en": "Idle",
+            "nl": "Uit"
+          }
+        },
+        "measure_power": {
+          "approximated": true
+        },
+        "button.reset_meter": {
+          "maintenanceAction": true,
+          "title": {
+            "en": "Reset power meter"
+          },
+          "desc": {
+            "en": "Reset the accumulated power usage (kWh), note that this can not be reversed."
+          }
+        },
+        "measure_temperature": {
+          "title": "temperature"
+        },
+        "measure_temperature.external": {
+          "title": "external temperature"
+        },
+        "measure_temperature.floor": {
+          "title": "floor temperature"
+        },
+        "target_temperature": {
+          "min": 5,
+          "max": 40,
+          "step": 0.5
+        }
+      },
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [
+        "zwave"
+      ],
+      "images": {
+        "small": "/drivers/DIN-Thermostat_Zwave/assets/images/small.png",
+        "large": "/drivers/DIN-Thermostat_Zwave/assets/images/large.png",
+        "xlarge": "/drivers/DIN-Thermostat_Zwave/assets/images/xlarge.png"
+      },
+      "zwave": {
+        "manufacturerId": 411,
+        "productTypeId": [
+          48
+        ],
+        "productId": [
+          12291
+        ],
+        "security": [
+          "none"
+        ],
+        "zwaveAllianceProductId": 5165,
+        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/5165",
+        "learnmode": {
+          "image": "/drivers/DIN-Thermostat_Zwave/assets/learnmode.svg",
+          "instruction": {
+            "en": "1. Hold the Center button for 5 seconds. The display will show “OFF”.\n2. Press the ”+” button once to see “CON” in the display.\n3 Start the configuration mode on the thermostat by holding the Center button for approximately 2 seconds.\n4. Configuration mode is indicated on the device by rotating LED segments on the display."
+          }
+        },
+        "associationGroups": [],
+        "associationGroupsMultiChannel": [
+          1
+        ],
+        "associationGroupsOptions": {
+          "1": {
+            "hint": {
+              "en": "Lifeline. All run-time reporting is addressed to this group. Only one node can be assigned to this association group. \nDefault: 1.1 (Homey's ID)",
+              "nl": "Lifeline: Association Groep 1 wordt gebruikt om alle rapportages door te geven. Slechts een node kan toegevoegd worden aan deze associatie groep. \nStandaard: 1.1 (Homey's ID)"
+            }
+          },
+          "2": {
+            "hint": {
+              "en": "On/off  control: This controls external heaters replicating the state of the internal relay. \nUses BASIC_SET command, values 0x00 (on) and 0xFF (on).",
+              "nl": "On/off  control: Deze groep schakelt externe verwarmings of koelings elementen. \nMaakt gebruik van het BASIC_SET command, values 0x00 (on) and 0xFF (on)."
+            }
+          },
+          "3": {
+            "hint": {
+              "en": "Sends Thermostat Setpoint Set commands based on own setpoint to allow for use as master thermostat.",
+              "nl": "Sends Thermostat Setpoint Set commands based on own setpoint to allow for use as master thermostat."
+            }
+          },
+          "4": {
+            "hint": {
+              "en": "Sends Thermostat Mode Set commands based on own setpoint to allow for use as master thermostat.",
+              "nl": "Sends Thermostat Mode Set commands based on own setpoint to allow for use as master thermostat."
+            }
+          }
+        }
+      },
+      "id": "DIN-Thermostat_Zwave",
+      "settings": [
+        {
+          "id": "disable_buttons",
+          "type": "checkbox",
+          "label": {
+            "en": "Disable buttons"
+          },
+          "hint": {
+            "en": "Disable buttons, must be enabled through the parameter, or turned back on locally by holding the center and right button for 30 seconds until the display shows “UNLK”."
+          },
+          "zwave": {
+            "index": 1,
+            "size": 1,
+            "signed": false
+          },
+          "value": false
+        },
+        {
+          "id": "sensor_mode",
+          "type": "dropdown",
+          "label": {
+            "en": "Sensor mode (OPER)"
+          },
+          "hint": {
+            "en": "Choose which sensors the thermostat should use for regulation."
+          },
+          "zwave": {
+            "index": 2,
+            "size": 1
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "F, Floor sensor"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "A2, External sensor"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "A2F, External sensor with floor sensor limitations"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "PWER, Power regulator mode"
+              }
+            }
+          ]
+        },
+        {
+          "id": "sensor_value",
+          "type": "dropdown",
+          "label": {
+            "en": "Sensor value (SEN)"
+          },
+          "hint": {
+            "en": "Select the resistance value of the connected NTC."
+          },
+          "zwave": {
+            "index": 3,
+            "size": 1
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "10KΩ (Default)"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "12KΩ"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "15KΩ"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "22KΩ"
+              }
+            },
+            {
+              "id": "4",
+              "label": {
+                "en": "33KΩ"
+              }
+            },
+            {
+              "id": "5",
+              "label": {
+                "en": "47KΩ"
+              }
+            },
+            {
+              "id": "6",
+              "label": {
+                "en": "6.8KΩ"
+              }
+            },
+            {
+              "id": "7",
+              "label": {
+                "en": "100KΩ"
+              }
+            }
+          ]
+        },
+        {
+          "id": "floor_sensor_min_temp_limit",
+          "type": "number",
+          "label": {
+            "en": "Floor sensor minimum temperature limit"
+          },
+          "hint": {
+            "en": "Devices the lowest temperature allowed by the thermostat when using sensor mode F, A2F."
+          },
+          "zwave": {
+            "index": 4,
+            "size": 2,
+            "signed": false
+          },
+          "value": 50,
+          "attr": {
+            "min": 20,
+            "max": 400
+          }
+        },
+        {
+          "id": "external_sensor_min_temp_limit",
+          "type": "number",
+          "label": {
+            "en": "External sensor minimum temperature limit"
+          },
+          "hint": {
+            "en": "Decides the lowest temperature allowed by the thermostat when using sensor mode A2, A2F."
+          },
+          "zwave": {
+            "index": 5,
+            "size": 2,
+            "signed": false
+          },
+          "value": 50,
+          "attr": {
+            "min": 20,
+            "max": 400
+          }
+        },
+        {
+          "id": "floor_sensor_max_temp_limit",
+          "type": "number",
+          "label": {
+            "en": "Floor sensor maximum temperature limit"
+          },
+          "hint": {
+            "en": "Decide the highest temperature allowed by the thermostat when using sensor mode F, A2F."
+          },
+          "zwave": {
+            "index": 6,
+            "size": 2,
+            "signed": false
+          },
+          "value": 270,
+          "attr": {
+            "min": 20,
+            "max": 400
+          }
+        },
+        {
+          "id": "external_sensor_max_temp_limit",
+          "type": "number",
+          "label": {
+            "en": "External sensor maximum temperature limit"
+          },
+          "hint": {
+            "en": "Decide the highest temperature allowed by the thermostat when using sensor mode A2F."
+          },
+          "zwave": {
+            "index": 7,
+            "size": 2,
+            "signed": false
+          },
+          "value": 400,
+          "attr": {
+            "min": 20,
+            "max": 400
+          }
+        },
+        {
+          "id": "floor_sensor_calibration",
+          "type": "number",
+          "label": {
+            "en": "Floor sensor calibration (CAF)"
+          },
+          "hint": {
+            "en": "Manually calibrate sensor F ±6°C."
+          },
+          "zwave": {
+            "index": 8,
+            "size": 1
+          },
+          "value": 0,
+          "attr": {
+            "min": -60,
+            "max": 60
+          }
+        },
+        {
+          "id": "external_sensor_calibration",
+          "type": "number",
+          "label": {
+            "en": "External sensor calibration (CAE)"
+          },
+          "hint": {
+            "en": "Manually calibrate sensor A2 ±6°C."
+          },
+          "zwave": {
+            "index": 9,
+            "size": 1
+          },
+          "value": 0,
+          "attr": {
+            "min": -60,
+            "max": 60
+          }
+        },
+        {
+          "id": "regulation_mode",
+          "type": "dropdown",
+          "label": {
+            "en": "Regulation mode (REG)"
+          },
+          "hint": {
+            "en": "Choose between regulation modes PWM and Hysteresis."
+          },
+          "zwave": {
+            "index": 10,
+            "size": 1
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Hysteresis"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "PWM"
+              }
+            }
+          ]
+        },
+        {
+          "id": "temperature_control_hysteresis",
+          "type": "number",
+          "label": {
+            "en": "Temperature control hysteresis (HYST)"
+          },
+          "hint": {
+            "en": "Choose the hysteresis used when regulation mode is set to HYST."
+          },
+          "zwave": {
+            "index": 11,
+            "size": 1,
+            "signed": false
+          },
+          "value": 5,
+          "attr": {
+            "min": 3,
+            "max": 30
+          }
+        },
+        {
+          "id": "temperature_display",
+          "type": "dropdown",
+          "label": {
+            "en": "Temperature display"
+          },
+          "hint": {
+            "en": "Select what is shown on the display during Standby state."
+          },
+          "zwave": {
+            "index": 12,
+            "size": 1
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Display setpoint temperature."
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "Display measured temperature"
+              }
+            }
+          ]
+        },
+        {
+          "id": "active_display_brightness",
+          "type": "number",
+          "label": {
+            "en": "Active display brightness (BR1)"
+          },
+          "hint": {
+            "en": "Configure the brightness of the display during active state."
+          },
+          "zwave": {
+            "index": 13,
+            "size": 1,
+            "signed": false
+          },
+          "value": 10,
+          "attr": {
+            "min": 1,
+            "max": 10
+          }
+        },
+        {
+          "id": "standby_display_brightness",
+          "type": "number",
+          "label": {
+            "en": "Standby display brightness (BR2)"
+          },
+          "hint": {
+            "en": "Configure the brightness of the display during standby state."
+          },
+          "zwave": {
+            "index": 14,
+            "size": 1,
+            "signed": false
+          },
+          "value": 10,
+          "attr": {
+            "min": 1,
+            "max": 10
+          }
+        },
+        {
+          "id": "temperature_report_interval",
+          "type": "number",
+          "label": {
+            "en": "Temperature report interval"
+          },
+          "hint": {
+            "en": "Set the time interval between consecutive temperature reports."
+          },
+          "zwave": {
+            "index": 15,
+            "size": 2,
+            "signed": false
+          },
+          "value": 845,
+          "attr": {
+            "min": 30,
+            "max": 65535
+          }
+        },
+        {
+          "id": "temperature_report_hysteresis",
+          "type": "number",
+          "label": {
+            "en": "Temperature report hysteresis"
+          },
+          "hint": {
+            "en": "Set the change in temperature required to send a temperature report based on change."
+          },
+          "zwave": {
+            "index": 16,
+            "size": 1,
+            "signed": false
+          },
+          "value": 10,
+          "attr": {
+            "min": 1,
+            "max": 100
+          }
+        },
+        {
+          "id": "meter_report_interval",
+          "type": "number",
+          "label": {
+            "en": "Meter report interval"
+          },
+          "hint": {
+            "en": "Set the time interval between consecutive meter reports."
+          },
+          "zwave": {
+            "index": 17,
+            "size": 2,
+            "signed": false
+          },
+          "value": 845,
+          "attr": {
+            "min": 30,
+            "max": 65535
+          }
+        },
+        {
+          "id": "action_after_error",
+          "type": "number",
+          "label": {
+            "en": "Action after error"
+          },
+          "hint": {
+            "en": "Decide how the device should react when the overload / overheating features has turned OFF relay."
+          },
+          "zwave": {
+            "index": 18,
+            "size": 2,
+            "signed": false
+          },
+          "value": 1200,
+          "attr": {
+            "min": 0,
+            "max": 65535
+          }
+        },
+        {
+          "id": "heating_setpoint",
+          "type": "number",
+          "label": {
+            "en": "Heating setpoint"
+          },
+          "hint": {
+            "en": "Set setpoint for Heating mode."
+          },
+          "zwave": {
+            "index": 19,
+            "size": 2,
+            "signed": false
+          },
+          "value": 210,
+          "attr": {
+            "min": 50,
+            "max": 400
+          }
+        },
+        {
+          "id": "cooling_setpoint",
+          "type": "number",
+          "label": {
+            "en": "Cooling setpoint"
+          },
+          "hint": {
+            "en": "Set setpoint for Cooling mode."
+          },
+          "zwave": {
+            "index": 20,
+            "size": 2,
+            "signed": false
+          },
+          "value": 180,
+          "attr": {
+            "min": 50,
+            "max": 400
+          }
+        },
+        {
+          "id": "eco_setpoint",
+          "type": "number",
+          "label": {
+            "en": "ECO setpoint"
+          },
+          "hint": {
+            "en": "Set setpoint for ECO mode."
+          },
+          "zwave": {
+            "index": 21,
+            "size": 2,
+            "signed": false
+          },
+          "value": 180,
+          "attr": {
+            "min": 50,
+            "max": 400
+          }
+        },
+        {
+          "id": "power_reg_active_time",
+          "type": "number",
+          "label": {
+            "en": "Power regulator active time"
+          },
+          "hint": {
+            "en": "Set the % of time the relay should be active when using PWER mode. (30-minute duty cycle)."
+          },
+          "zwave": {
+            "index": 22,
+            "size": 1,
+            "signed": false
+          },
+          "value": 2,
+          "attr": {
+            "min": 1,
+            "max": 10
+          }
+        },
+        {
+          "id": "thermostat_state_update_interval",
+          "type": "number",
+          "label": {
+            "en": "Thermostat state update interval"
+          },
+          "hint": {
+            "en": "Set the time interval of how often the device updates Thermostat Setpoint set, Thermostat Mode set and Binary set to associated devices."
+          },
+          "zwave": {
+            "index": 23,
+            "size": 2,
+            "signed": false
+          },
+          "value": 3600,
+          "attr": {
+            "min": 30,
+            "max": 65535
+          }
+        },
+        {
+          "id": "operating_mode",
+          "type": "dropdown",
+          "label": {
+            "en": "Operation mode (MODE)"
+          },
+          "hint": {
+            "en": "Set the thermostat mode."
+          },
+          "zwave": {
+            "index": 24,
+            "size": 1
+          },
+          "value": "1",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "OFF"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "Heating mode (Default)"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "Cooling mode"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "ECO mode"
+              }
+            }
+          ]
+        },
+        {
+          "id": "open_window_detection",
+          "type": "checkbox",
+          "label": {
+            "en": "Open window detection"
+          },
+          "hint": {
+            "en": "Choose to enable or disable the Open windows detection."
+          },
+          "zwave": {
+            "index": 25,
+            "size": 1,
+            "signed": false
+          },
+          "value": false
+        },
+        {
+          "id": "size_of_load",
+          "type": "number",
+          "label": {
+            "en": "Size of load"
+          },
+          "hint": {
+            "en": "Allows the user to decide the power consumption of the connected load in 100W increments."
+          },
+          "zwave": {
+            "index": 26,
+            "size": 1,
+            "signed": false
+          },
+          "value": 0,
+          "attr": {
+            "min": 0,
+            "max": 99
+          }
+        }
+      ]
+    },
     {
       "id": "Heatit-lekage-stopper",
       "name": {
@@ -9149,7 +9966,7 @@
             "en": "Cooling setpoint"
           },
           "hint": {
-            "en": "Set setpoint for Heating mode."
+            "en": "Set setpoint for Cooling mode."
           },
           "zwave": {
             "index": 23,

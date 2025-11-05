@@ -28,7 +28,7 @@
       "index": 2,
       "size": 1
     },
-    "value": "1",
+    "value": "0",
     "values": [
       {
         "id": "0",
@@ -39,29 +39,17 @@
       {
         "id": "1",
         "label": {
-          "en": "A, Internal sensor (Default)"
+          "en": "A2, External sensor"
         }
       },
       {
         "id": "2",
         "label": {
-          "en": "AF, Internal sensor with floor sensor limitations"
-        }
-      },
-      {
-        "id": "3",
-        "label": {
-          "en": "A2, External sensor"
-        }
-      },
-      {
-        "id": "4",
-        "label": {
           "en": "A2F, External sensor with floor sensor limitations"
         }
       },
       {
-        "id": "5",
+        "id": "3",
         "label": {
           "en": "PWER, Power regulator mode"
         }
@@ -134,13 +122,13 @@
     ]
   },
   {
-    "id": "internal_sensor_min_temp_limit",
+    "id": "floor_sensor_min_temp_limit",
     "type": "number",
     "label": {
-      "en": "Internal sensor minimum temperature limit"
+      "en": "Floor sensor minimum temperature limit"
     },
     "hint": {
-      "en": "Decides the lowest temperature allowed by the thermostat when using sensor mode A."
+      "en": "Devices the lowest temperature allowed by the thermostat when using sensor mode F, A2F."
     },
     "zwave": {
       "index": 4,
@@ -149,27 +137,7 @@
     },
     "value": 50,
     "attr": {
-      "min": 50,
-      "max": 400
-    }
-  },
-  {
-    "id": "floor_sensor_min_temp_limit",
-    "type": "number",
-    "label": {
-      "en": "Floor sensor minimum temperature limit"
-    },
-    "hint": {
-      "en": "Devices the lowest temperature allowed by the thermostat when using sensor mode AF, F, A2F."
-    },
-    "zwave": {
-      "index": 5,
-      "size": 2,
-	  "signed": false
-    },
-    "value": 50,
-    "attr": {
-      "min": 50,
+      "min": 20,
       "max": 400
     }
   },
@@ -183,33 +151,13 @@
       "en": "Decides the lowest temperature allowed by the thermostat when using sensor mode A2, A2F."
     },
     "zwave": {
-      "index": 6,
+      "index": 5,
       "size": 2,
 	  "signed": false
     },
     "value": 50,
     "attr": {
-      "min": 50,
-      "max": 400
-    }
-  },
-  {
-    "id": "internal_sensor_max_temp_limit",
-    "type": "number",
-    "label": {
-      "en": "Internal sensor maximum temperature limit"
-    },
-    "hint": {
-      "en": "Decide the highest temperature allowed by the thermostat when using sensor mode A."
-    },
-    "zwave": {
-      "index": 7,
-      "size": 2,
-	  "signed": false
-    },
-    "value": 400,
-    "attr": {
-      "min": 50,
+      "min": 20,
       "max": 400
     }
   },
@@ -220,16 +168,16 @@
       "en": "Floor sensor maximum temperature limit"
     },
     "hint": {
-      "en": "Decide the highest temperature allowed by the thermostat when using sensor mode AF, F, A2F."
+      "en": "Decide the highest temperature allowed by the thermostat when using sensor mode F, A2F."
     },
     "zwave": {
-      "index": 8,
+      "index": 6,
       "size": 2,
 	  "signed": false
     },
-    "value": 400,
+    "value": 270,
     "attr": {
-      "min": 50,
+      "min": 20,
       "max": 400
     }
   },
@@ -240,36 +188,17 @@
       "en": "External sensor maximum temperature limit"
     },
     "hint": {
-      "en": "Decide the highest temperature allowed by the thermostat when using sensor mode AF, A2F."
+      "en": "Decide the highest temperature allowed by the thermostat when using sensor mode A2F."
     },
     "zwave": {
-      "index": 9,
+      "index": 7,
       "size": 2,
 	  "signed": false
     },
     "value": 400,
     "attr": {
-      "min": 50,
+      "min": 20,
       "max": 400
-    }
-  },
-  {
-    "id": "internal_sensor_calibration",
-    "type": "number",
-    "label": {
-      "en": "Internal sensor calibration (CAR)"
-    },
-    "hint": {
-      "en": "Manually calibrate sensor A ±6°C."
-    },
-    "zwave": {
-      "index": 10,
-      "size": 1
-    },
-    "value": 0,
-    "attr": {
-      "min": -60,
-      "max": 60
     }
   },
   {
@@ -282,7 +211,7 @@
       "en": "Manually calibrate sensor F ±6°C."
     },
     "zwave": {
-      "index": 11,
+      "index": 8,
       "size": 1
     },
     "value": 0,
@@ -301,7 +230,7 @@
       "en": "Manually calibrate sensor A2 ±6°C."
     },
     "zwave": {
-      "index": 12,
+      "index": 9,
       "size": 1
     },
     "value": 0,
@@ -320,7 +249,7 @@
       "en": "Choose between regulation modes PWM and Hysteresis."
     },
     "zwave": {
-      "index": 13,
+      "index": 10,
       "size": 1
     },
     "value": "0",
@@ -349,7 +278,7 @@
       "en": "Choose the hysteresis used when regulation mode is set to HYST."
     },
     "zwave": {
-      "index": 14,
+      "index": 11,
       "size": 1,
 	  "signed": false
     },
@@ -369,7 +298,7 @@
       "en": "Select what is shown on the display during Standby state."
     },
     "zwave": {
-      "index": 15,
+      "index": 12,
       "size": 1
     },
     "value": "0",
@@ -398,7 +327,7 @@
       "en": "Configure the brightness of the display during active state."
     },
     "zwave": {
-      "index": 16,
+      "index": 13,
       "size": 1,
 	  "signed": false
     },
@@ -418,7 +347,7 @@
       "en": "Configure the brightness of the display during standby state."
     },
     "zwave": {
-      "index": 17,
+      "index": 14,
       "size": 1,
 	  "signed": false
     },
@@ -438,11 +367,11 @@
       "en": "Set the time interval between consecutive temperature reports."
     },
     "zwave": {
-      "index": 18,
+      "index": 15,
       "size": 2,
 	  "signed": false
     },
-    "value": 840,
+    "value": 845,
     "attr": {
       "min": 30,
       "max": 65535
@@ -458,7 +387,7 @@
       "en": "Set the change in temperature required to send a temperature report based on change."
     },
     "zwave": {
-      "index": 19,
+      "index": 16,
       "size": 1,
 	  "signed": false
     },
@@ -478,11 +407,11 @@
       "en": "Set the time interval between consecutive meter reports."
     },
     "zwave": {
-      "index": 20,
+      "index": 17,
       "size": 2,
 	  "signed": false
     },
-    "value": 840,
+    "value": 845,
     "attr": {
       "min": 30,
       "max": 65535
@@ -498,11 +427,11 @@
       "en": "Decide how the device should react when the overload / overheating features has turned OFF relay."
     },
     "zwave": {
-      "index": 21,
+      "index": 18,
       "size": 2,
 	  "signed": false
     },
-    "value": 0,
+    "value": 1200,
     "attr": {
       "min": 0,
       "max": 65535
@@ -518,7 +447,7 @@
       "en": "Set setpoint for Heating mode."
     },
     "zwave": {
-      "index": 22,
+      "index": 19,
       "size": 2,
 	  "signed": false
     },
@@ -538,7 +467,7 @@
       "en": "Set setpoint for Cooling mode."
     },
     "zwave": {
-      "index": 23,
+      "index": 20,
       "size": 2,
 	  "signed": false
     },
@@ -558,7 +487,7 @@
       "en": "Set setpoint for ECO mode."
     },
     "zwave": {
-      "index": 24,
+      "index": 21,
       "size": 2,
 	  "signed": false
     },
@@ -578,7 +507,7 @@
       "en": "Set the % of time the relay should be active when using PWER mode. (30-minute duty cycle)."
     },
     "zwave": {
-      "index": 25,
+      "index": 22,
       "size": 1,
 	  "signed": false
     },
@@ -598,11 +527,11 @@
       "en": "Set the time interval of how often the device updates Thermostat Setpoint set, Thermostat Mode set and Binary set to associated devices."
     },
     "zwave": {
-      "index": 26,
+      "index": 23,
       "size": 2,
 	  "signed": false
     },
-    "value": 43200,
+    "value": 3600,
     "attr": {
       "min": 30,
       "max": 65535
@@ -618,7 +547,7 @@
       "en": "Set the thermostat mode."
     },
     "zwave": {
-      "index": 27,
+      "index": 24,
       "size": 1
     },
     "value": "1",
@@ -658,7 +587,7 @@
       "en": "Choose to enable or disable the Open windows detection."
     },
     "zwave": {
-      "index": 28,
+      "index": 25,
       "size": 1,
 	  "signed": false
     },
@@ -674,7 +603,7 @@
       "en": "Allows the user to decide the power consumption of the connected load in 100W increments."
     },
     "zwave": {
-      "index": 29,
+      "index": 26,
       "size": 1,
 	  "signed": false
     },
