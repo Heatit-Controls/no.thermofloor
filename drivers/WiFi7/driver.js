@@ -1,6 +1,7 @@
 'use strict';
 const Homey = require('homey');
 const http = require('node:http');
+const net = require('node:net')
 
 module.exports = class MyDriver extends Homey.Driver {
 
@@ -40,6 +41,11 @@ module.exports = class MyDriver extends Homey.Driver {
             }
         }
 
+        let list = await this.scanNetwork();
+        list.forEach(device => {
+            this.log("Opp" + device);
+        });
+
         if (compatibleDevices.length == 0) {
             return [
                 {
@@ -55,8 +61,47 @@ module.exports = class MyDriver extends Homey.Driver {
         }
     }
 
+    async scanNetwork() {
+        const baseIp = '192.168.1.'; // Replace with your network's base IP
+        const out = [];
+        for (let i = 1; i <= 254; i++) {
+            const ip = baseIp + i;
+            const isOnline = await this.checkTcpConnection(ip, 80); // Check port 80
+            if (isOnline) {
+                this.log(`Device found at: ${ip}`);
+                if (this.isWiFiThermostat(ip)) {
+                    out.push(ip);
+                    this.log('Yes is WiFi Thermostat')
+                }
+            }
+        }
+        return out;
+    }
+
+    checkTcpConnection(hostname, port = 80, timeout = 50) {
+        return new Promise((resolve) => {
+            const socket = net.createConnection(port, hostname);
+            socket.setTimeout(timeout);
+
+            socket.on('connect', () => {
+                socket.end();
+                resolve(true); // Device is likely online
+            });
+
+            function handleError() {
+                socket.destroy();
+                resolve(false); // Device is offline or port is closed
+            }
+            socket.on('timeout', handleError);
+            socket.on('error', handleError);
+        });
+    }
 
     async isNotWiFiThermostat(ip) {
+        return await !this.isWiFiThermostat(ip);
+    }
+
+    async isWiFiThermostat(ip) {
 
         this.log('isNotWiFiThermostat IP ' + ip);
 
@@ -78,22 +123,21 @@ module.exports = class MyDriver extends Homey.Driver {
                 res.on('end', () => {
                     try {
                         const parsedData = JSON.parse(rawData);
-                        if (parsedData.parameters.operatingMode != null) {
-                            this.log('isWiFiThermostat true');
-                            resolve(false);
-                        } else {
+                        if (parsedData.model === "Heatit WiFi7") {
+                            this.log('IsWiFi7Thermostat true');
                             resolve(true);
+                        } else {
+                            resolve(false);
                         }
                     } catch (e) {
-                        resolve(true);
+                        resolve(false);
                     }
                 });
 
             }).on('error', (e) => {
                 this.log('isWiFiThermostat false');
-                resolve(true);
+                resolve(false);
             });
         });
     }
-
 };

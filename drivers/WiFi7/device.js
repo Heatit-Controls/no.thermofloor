@@ -1,7 +1,7 @@
 'use strict';
 const Homey = require('homey');
 const http = require('node:http');
-const os = require('os');
+const net = require('node:net')
 
 module.exports = class MyDevice extends Homey.Device {
 
@@ -9,8 +9,8 @@ module.exports = class MyDevice extends Homey.Device {
      * onInit is called when the device is initialized.
      */
     async onInit() {
-        this.log('WiFi device has been initialized'); 
-        this.isDebug = false;
+        this.log('WiFi device has been initialized');
+        this.isDebug = true;
         this.deviceIsDeleted = false;
         this.registerCapabilityListener('target_temperature', async (value) => {
             this.debug("Changed temp", value);
@@ -31,7 +31,6 @@ module.exports = class MyDevice extends Homey.Device {
 
         //Load settings
         await this.getIpAndMacAddressAndOtherSettings();
-        
 
         this.refreshStateLoop();
     }
@@ -40,7 +39,7 @@ module.exports = class MyDevice extends Homey.Device {
         if (this.getStore().address != null) {
             //From arp
             if (!this.isValidIpAddress(this.getSettings().IPaddress.trim())) {
-                await this.setSettings({IPaddress: this.getStore().address,});
+                await this.setSettings({ IPaddress: this.getStore().address, });
             }
 
             this.IPaddress = this.getStore().address;
@@ -129,13 +128,52 @@ module.exports = class MyDevice extends Homey.Device {
             this.setCapabilityValue('measure_power', 0).catch(this.error);
             this.setUnavailable('Cannot reach device on local WiFi').catch(this.error);
             this.debug('Cannot reach device on local WiFi');
+            this.getWiFiDeviceByMac();
         });
     }
 
+    getWiFiDeviceByMac() {
+        if (this.MACaddressIsValid) {
+            this.debug("Searching for device via mac address.")
+            this.scanNetwork().then(result => { this.debug("Async operation successful:", result); }).catch(error => { this.debug("Async operation failed:", error); });
+        }
+    }
+
+    checkTcpConnection(hostname, port = 80, timeout = 50) {
+        return new Promise((resolve) => {
+            const socket = net.createConnection(port, hostname);
+            socket.setTimeout(timeout);
+
+            socket.on('connect', () => {
+                socket.end();
+                resolve(true); // Device is likely online
+            });
+
+            function handleError() {
+                socket.destroy();
+                resolve(false); // Device is offline or port is closed
+            }
+            socket.on('timeout', handleError);
+            socket.on('error', handleError);
+        });
+    }
+
+    async scanNetwork() {
+        const baseIp = '192.168.1.'; // Replace with your network's base IP
+        for (let i = 1; i <= 254; i++) {
+            const ip = baseIp + i;
+            const isOnline = await this.checkTcpConnection(ip, 80); // Check port 80
+            if (isOnline) {
+                this.debug(`Device found at: ${ip}`);
+            }
+        }
+    }
+
+
     debug(msg) {
         if (this.isDebug) {
-           this.log(msg);
-        } 
+            this.log(msg);
+        }
     }
 
     setMeasureTemperature(thermostatData) {
@@ -145,9 +183,9 @@ module.exports = class MyDevice extends Homey.Device {
             settingSensorMode = thermostatData.parameters.sensorMode;
             //Save changes from thermostat
             this.debug("Sensor mode changed on thermostat");
-            this.setSettings({ sensorMode: settingSensorMode.toString()});
+            this.setSettings({ sensorMode: settingSensorMode.toString() });
         }
-        
+
         if (settingSensorMode == 0) {
             //0 = Floor sensor(F)
             this.setCapabilityValue('measure_temperature', thermostatData.floorTemperature).catch(this.error);
