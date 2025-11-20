@@ -69,7 +69,7 @@ module.exports = class MyDriver extends Homey.Driver {
             const isOnline = await this.checkTcpConnection(ip, 80); // Check port 80
             if (isOnline) {
                 this.log(`Device found at: ${ip}`);
-                if (this.isWiFiThermostat(ip)) {
+                if (await this.isWiFiThermostat(ip)) {
                     out.push(ip);
                     this.log('Yes is WiFi Thermostat')
                 }
