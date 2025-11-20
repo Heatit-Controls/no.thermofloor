@@ -30,23 +30,27 @@ module.exports = class MyDevice extends Homey.Device {
         this.setAvailable();
 
         //Load settings
-        this.IPaddress = await this.getIpAddressAndSetSetting();
-        this.ReportInterval = this.getSettings().interval;
+        await this.getIpAndMacAddressAndOtherSettings();
+        
 
         this.refreshStateLoop();
     }
 
-    async getIpAddressAndSetSetting() {
+    async getIpAndMacAddressAndOtherSettings() {
         if (this.getStore().address != null) {
-
+            //From arp
             if (!this.isValidIpAddress(this.getSettings().IPaddress.trim())) {
                 await this.setSettings({IPaddress: this.getStore().address,});
             }
 
-            return this.getStore().address;
+            this.IPaddress = this.getStore().address;
         } else {
-            return this.getSettings().IPaddress.trim();
+            this.IPaddress = this.getSettings().IPaddress.trim();
         }
+
+        this.MACaddress = this.getSettings().MACaddress.trim().toUpperCase();
+        this.MACaddressIsValid = this.isValidMACAddress(this.MACaddress);
+        this.ReportInterval = this.getSettings().interval;
     }
 
     ipIsValid() {
@@ -61,11 +65,14 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     isValidIpAddress(ip) {
-        const ipv4Pattern =
-            /^(\d{1,3}\.){3}\d{1,3}$/;
-        const ipv6Pattern =
-            /^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$/;
+        const ipv4Pattern = /^(\d{1,3}\.){3}\d{1,3}$/;
+        const ipv6Pattern = /^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$/;
         return ipv4Pattern.test(ip) || ipv6Pattern.test(ip);
+    }
+
+    isValidMACAddress(macAddress) {
+        const mac = /^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/i;
+        return mac.test(macAddress);
     }
 
     refreshStateLoop() {
@@ -109,6 +116,9 @@ module.exports = class MyDevice extends Homey.Device {
                     kWh = kWh + (parsedData.currentPower * (this.getSettings().interval / 3600)) / 1000;
                     this.setCapabilityValue('meter_power', kWh).catch(this.error);
                     this.setCapabilityValue('measure_power', parsedData.currentPower).catch(this.error);
+                    if (!this.MACaddressIsValid && this.MACaddress == "GET") {
+                        this.setSettings({ MACaddress: parsedData.network.mac });
+                    }
                     this.setAvailable();
                 } catch (e) {
                     // Handle error
@@ -282,6 +292,10 @@ module.exports = class MyDevice extends Homey.Device {
         this.log("My heatit WiFi device settings where changed");
         this.IPaddress = newSettings.IPaddress;
         this.ReportInterval = newSettings.interval;
+
+        this.MACaddress = newSettings.MACaddress.trim().toUpperCase();
+        this.MACaddressIsValid = this.isValidMACAddress(this.MACaddress);
+
         if (oldSettings.sensorMode != newSettings.sensorMode) {
             await this.setSensorMode(newSettings.sensorMode);
         }
