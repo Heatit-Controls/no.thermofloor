@@ -1,5 +1,12 @@
 [
 	{
+		"id": "MACaddress",
+		"type": "text",
+		"label": { "en": "MAC address" },
+		"value": "Get",
+		"hint": { "en": "The MAC address of the thermostat. The MAC address will be retrieved automatically from the thermostat when it is connected. Do not change." }
+	},
+	{
 		"id": "IPaddress",
 		"type": "text",
 		"label": { "en": "IP address" },
