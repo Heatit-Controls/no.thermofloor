@@ -42,8 +42,18 @@ module.exports = class MyDriver extends Homey.Driver {
         }
 
         let list = await this.scanNetwork();
-        list.forEach(device => {
-            this.log("Opp" + device);
+        await list.forEach(async ip => {
+            compatibleDevices.push(
+                [{
+                    name: "WiFi7 IP" + ip,
+                    data: {
+                        id: "WiFi7-Thermostat" + Math.floor(Math.random() * 1000000000000),
+                    },
+                    store: {
+                        address: ip
+                    }
+                }]
+            );
         });
 
         if (compatibleDevices.length == 0) {
@@ -78,7 +88,7 @@ module.exports = class MyDriver extends Homey.Driver {
         return out;
     }
 
-    checkTcpConnection(hostname, port = 80, timeout = 50) {
+    checkTcpConnection(hostname, port = 80, timeout = 80) {
         return new Promise((resolve) => {
             const socket = net.createConnection(port, hostname);
             socket.setTimeout(timeout);
