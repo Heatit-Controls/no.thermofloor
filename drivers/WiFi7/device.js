@@ -1,6 +1,7 @@
 'use strict';
 const Homey = require('homey');
 const http = require('node:http');
+const os = require('os');
 
 module.exports = class MyDevice extends Homey.Device {
 
