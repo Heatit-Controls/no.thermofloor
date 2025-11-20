@@ -3720,7 +3720,7 @@
           },
           "value": "Get",
           "hint": {
-            "en": "The MAC address of the thermostat. The MAC address will be retrieved automatically from the thermostat when it is connected. Do not change."
+            "en": "The MAC address of the thermostat. The MAC address will be retrieved automatically from the thermostat when it is connected when this value is set to Get. Default value is 'Get' do not change."
           }
         },
         {
