@@ -18,33 +18,13 @@ module.exports = class MyDriver extends Homey.Driver {
      */
     async onPairListDevices() {
 
-        let discoveryStrategy = this.homey.discovery.getStrategy("arp");
-        let discoveryResults = discoveryStrategy.getDiscoveryResults();
+        let discoveryResults = await this.scanNetwork();
 
-        let allDevices = Object.values(discoveryResults).map(discoveryResult => {
-            return {
-                name: discoveryResult.address,
-                data: {
-                    id: discoveryResult.id,
-                },
-                store: {
-                    address: discoveryResult.address
-                },
-            };
-        });
+        let compatibleDevices = [];
 
-        let compatibleDevices = allDevices;
-
-        for (const element of allDevices) {
-            if (await this.isNotWiFiThermostat(element.store.address)) {
-                compatibleDevices = compatibleDevices.filter(obj => obj.store.address !== element.store.address); //Remove
-            }
-        }
-
-        let list = await this.scanNetwork();
-        await list.forEach(async ip => {
+        await discoveryResults.forEach(async ip => {
             compatibleDevices.push(
-                [{
+                {
                     name: "WiFi7 IP" + ip,
                     data: {
                         id: "WiFi7-Thermostat" + Math.floor(Math.random() * 1000000000000),
@@ -52,7 +32,7 @@ module.exports = class MyDriver extends Homey.Driver {
                     store: {
                         address: ip
                     }
-                }]
+                }
             );
         });
 
