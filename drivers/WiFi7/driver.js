@@ -35,19 +35,17 @@ module.exports = class MyDriver extends Homey.Driver {
             );
         }
 
-        if (compatibleDevices.length == 0) {
-            return [
-                {
-                    name: "Add manually",
-                    data: {
-                        id: "WiFi-Thermostat" + Math.floor(Math.random() * 1000000000000),
-                    },
+        compatibleDevices.push(
+            {
+                name: "Add manually",
+                data: {
+                    id: "WiFi-Thermostat" + Math.floor(Math.random() * 1000000000000),
                 },
-            ];
-        }
-        else {
-            return compatibleDevices;
-        }
+            }
+        );
+
+        return compatibleDevices;
+       
     }
 
     async scanNetwork() {
