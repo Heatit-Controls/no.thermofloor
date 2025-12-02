@@ -172,7 +172,7 @@ module.exports = class MyDevice extends Homey.Device {
             const ip = baseIp + i;
             const isOnline =  await this.checkTcpConnection(ip, 80); // Check port 80
             if (isOnline) {
-                this.log(`Device found at: ${ip}`);
+                //this.log(`Device found at: ${ip}`);
                 let data = await this.getWiFiThermostatData(ip);
                 if (data.IsWiFi7Thermostat && data.Mac === this.MACaddress) {
                     this.IPaddress = ip;
