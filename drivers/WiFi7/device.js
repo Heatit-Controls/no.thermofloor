@@ -335,7 +335,7 @@ module.exports = class MyDevice extends Homey.Device {
 
     async getWiFiThermostatData(ip) {
 
-        this.log('isNotWiFiThermostat IP ' + ip);
+        this.debug('Check if is WiFi 7 Thermostat. IP ' + ip);
 
         return new Promise((resolve) => {
 
