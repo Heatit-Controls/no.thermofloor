@@ -122,7 +122,11 @@ module.exports = class MyDevice extends Homey.Device {
                     this.setAvailable();
                 } catch (e) {
                     // Handle error
-                    this.log('Error')
+                    this.log('Cannot connect to API.')
+                    this.setCapabilityValue('measure_power', 0).catch(this.error);
+                    this.setUnavailable('Cannot reach device on local WiFi').catch(this.error);
+                    this.debug('Cannot reach device on local WiFi');
+                    this.getWiFiDeviceByMac();
                 }
             });
 
