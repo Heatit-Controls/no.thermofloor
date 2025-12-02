@@ -2,6 +2,7 @@
 const Homey = require('homey');
 const http = require('node:http');
 const net = require('node:net')
+const os = require('node:os');
 
 module.exports = class MyDevice extends Homey.Device {
 
@@ -74,21 +75,21 @@ module.exports = class MyDevice extends Homey.Device {
         return mac.test(macAddress);
     }
 
-    refreshStateLoop() {
+    async refreshStateLoop() {
 
         if (this.deviceIsDeleted) {
             return; //Abort
         }
 
         if (this.ipIsValid()) {
-            this.refreshState();
+            await this.refreshState();
         }
         setTimeout(() => {
-            this.refreshStateLoop()
+           this.refreshStateLoop()
         }, this.ReportInterval * 1000);
     }
 
-    refreshState() {
+    async refreshState() {
         this.debug("refreshState")
         const client = http.get({
             hostname: this.IPaddress,
@@ -121,6 +122,7 @@ module.exports = class MyDevice extends Homey.Device {
                     this.setAvailable();
                 } catch (e) {
                     // Handle error
+                    this.log('Error')
                 }
             });
 
@@ -132,14 +134,20 @@ module.exports = class MyDevice extends Homey.Device {
         });
     }
 
-    getWiFiDeviceByMac() {
+   getWiFiDeviceByMac() {
         if (this.MACaddressIsValid) {
-            this.debug("Searching for device via mac address.")
-            this.scanNetwork().then(result => { this.debug("Async operation successful:", result); }).catch(error => { this.debug("Async operation failed:", error); });
+            //this.debug("Searching for device via mac address.")
+            (async () => {
+                try {
+                    this.scanNetwork();
+                } catch (error) {
+                    
+                }
+            })();
         }
     }
 
-    checkTcpConnection(hostname, port = 80, timeout = 50) {
+    async checkTcpConnection(hostname, port = 80, timeout = 50) {
         return new Promise((resolve) => {
             const socket = net.createConnection(port, hostname);
             socket.setTimeout(timeout);
@@ -159,12 +167,19 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     async scanNetwork() {
-        const baseIp = '192.168.1.'; // Replace with your network's base IP
+        const baseIp = this.getBaseIpAddress(); //'192.168.1.'; Replace with your network's base IP
         for (let i = 1; i <= 254; i++) {
             const ip = baseIp + i;
-            const isOnline = await this.checkTcpConnection(ip, 80); // Check port 80
+            const isOnline =  await this.checkTcpConnection(ip, 80); // Check port 80
             if (isOnline) {
-                this.debug(`Device found at: ${ip}`);
+                this.log(`Device found at: ${ip}`);
+                let data = await this.getWiFiThermostatData(ip);
+                if (data.IsWiFi7Thermostat && data.Mac === this.MACaddress) {
+                    this.IPaddress = ip;
+                    this.setSettings({ IPaddress: this.IPaddress, }); //await
+                    this.log('WiFi7 Thermostat found by Mac: ' + data.Mac)
+                    break; // Found a device, exit loop
+                }
             }
         }
     }
@@ -312,6 +327,75 @@ module.exports = class MyDevice extends Homey.Device {
      */
     async onAdded() {
         this.log('My heatit WiFi device has been added');
+    }
+
+    async getWiFiThermostatData(ip) {
+
+        this.log('isNotWiFiThermostat IP ' + ip);
+
+        return new Promise((resolve) => {
+
+            http.get({
+                hostname: ip,
+                port: 80,
+                path: '/api/status',
+                agent: false,
+            }, (res) => {
+
+                const { statusCode } = res;
+                const contentType = res.headers['content-type'];
+
+                res.setEncoding('utf8');
+                let rawData = '';
+                res.on('data', (chunk) => { rawData += chunk; });
+                res.on('end', () => {
+                    try {
+                        const parsedData = JSON.parse(rawData);
+                        if (parsedData.model === "Heatit WiFi7") {
+                            this.log('IsWiFi7Thermostat true');
+                            resolve({ "IsWiFi7Thermostat": true, "Mac": parsedData.network.mac });
+                        } else {
+                            resolve({ "IsWiFi7Thermostat": false });
+                        }
+                    } catch (e) {
+                        resolve({ "IsWiFi7Thermostat": false });
+                    }
+                });
+
+            }).on('error', (e) => {
+                this.log('isWiFiThermostat false');
+                resolve({ "IsWiFi7Thermostat": false });
+            });
+        });
+    }
+
+    getBaseIpAddress() {
+        const networkInterfaces = os.networkInterfaces();
+        let localIp = '192.168.1.1';
+
+        for (const devName in networkInterfaces) {
+            const iface = networkInterfaces[devName];
+            for (let i = 0; i < iface.length; i++) {
+                const alias = iface[i];
+                if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
+                    localIp = alias.address;
+                    break; // Found a suitable IPv4 address, exit inner loop
+                }
+            }
+            if (localIp !== '192.168.1.1') {
+                break; // Found a suitable IPv4 address, exit outer loop
+            }
+        }
+
+        const octets = localIp.split('.');
+
+        if (octets.length === 4) {
+            return octets[0] + '.' + octets[1] + '.' + octets[2] + '.';
+        } else {
+            return '192.168.1.';
+        }
+
+
     }
 
     /**
