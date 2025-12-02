@@ -24,7 +24,7 @@ module.exports = class MyDriver extends Homey.Driver {
         for (const item of discoveryResults) {
             compatibleDevices.push(
                 {
-                    name: "WiFi7 IP" + item.Ip,
+                    name: "WiFi7 IP " + item.Ip,
                     data: {
                         id: "WiFi7-Thermostat" + item.Mac,
                     },
