@@ -65,27 +65,7 @@ module.exports = class MyDriver extends Homey.Driver {
         return out;
     }
 
-    //async checkTcpConnection(hostname, port = 80, timeout = 80) {
-    //    return new Promise((resolve) => {
-    //        const socket = net.createConnection(port, hostname);
-    //        socket.setTimeout(timeout);
-
-    //        socket.on('connect', () => {
-    //            socket.end();
-    //            resolve(true); // Device is likely online
-    //        });
-
-    //        function handleError() {
-    //            socket.destroy();
-    //            resolve(false); // Device is offline or port is closed
-    //        }
-    //        socket.on('timeout', handleError);
-    //        socket.on('error', handleError);
-    //    });
-    //}
-
     async getWiFiThermostatData(ip) {
-
         this.log('isNotWiFiThermostat IP ' + ip);
 
         return new Promise((resolve) => {
