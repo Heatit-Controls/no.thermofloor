@@ -1,8 +1,7 @@
 'use strict';
 const Homey = require('homey');
 const http = require('node:http');
-const net = require('node:net');
-const os = require('node:os');
+const util = require('../../lib/util');
 
 module.exports = class MyDriver extends Homey.Driver {
     /**
@@ -49,11 +48,11 @@ module.exports = class MyDriver extends Homey.Driver {
     }
 
     async scanNetwork() {
-        const baseIp = this.getBaseIpAddress(); //'192.168.1.'; Replace with your network's base IP
+        const baseIp = util.getBaseIpAddress(); //'192.168.1.'; Replace with your network's base IP this.
         const out = [];
         for (let i = 1; i <= 254; i++) {
             const ip = baseIp + i;
-            const isOnline = await this.checkTcpConnection(ip, 80); // Check port 80
+            const isOnline = await util.checkTcpConnection(ip, 80); // Check port 80
             if (isOnline) {
                 this.log(`Device found at: ${ip}`);
                 let data = await this.getWiFiThermostatData(ip);
@@ -66,24 +65,24 @@ module.exports = class MyDriver extends Homey.Driver {
         return out;
     }
 
-    async checkTcpConnection(hostname, port = 80, timeout = 80) {
-        return new Promise((resolve) => {
-            const socket = net.createConnection(port, hostname);
-            socket.setTimeout(timeout);
+    //async checkTcpConnection(hostname, port = 80, timeout = 80) {
+    //    return new Promise((resolve) => {
+    //        const socket = net.createConnection(port, hostname);
+    //        socket.setTimeout(timeout);
 
-            socket.on('connect', () => {
-                socket.end();
-                resolve(true); // Device is likely online
-            });
+    //        socket.on('connect', () => {
+    //            socket.end();
+    //            resolve(true); // Device is likely online
+    //        });
 
-            function handleError() {
-                socket.destroy();
-                resolve(false); // Device is offline or port is closed
-            }
-            socket.on('timeout', handleError);
-            socket.on('error', handleError);
-        });
-    }
+    //        function handleError() {
+    //            socket.destroy();
+    //            resolve(false); // Device is offline or port is closed
+    //        }
+    //        socket.on('timeout', handleError);
+    //        socket.on('error', handleError);
+    //    });
+    //}
 
     async getWiFiThermostatData(ip) {
 
@@ -125,32 +124,4 @@ module.exports = class MyDriver extends Homey.Driver {
         });
     }
 
-    getBaseIpAddress() {
-        const networkInterfaces = os.networkInterfaces();
-        let localIp = '192.168.1.1';
-
-        for (const devName in networkInterfaces) {
-            const iface = networkInterfaces[devName];
-            for (let i = 0; i < iface.length; i++) {
-                const alias = iface[i];
-                if (alias.family === 'IPv4' && alias.address !== '127.0.0.1' && !alias.internal) {
-                    localIp = alias.address; 
-                    break; // Found a suitable IPv4 address, exit inner loop
-                }
-            }
-            if (localIp !== '192.168.1.1') {
-                break; // Found a suitable IPv4 address, exit outer loop
-            }
-        }
-
-        const octets = localIp.split('.');
-
-        if (octets.length === 4) {
-            return octets[0] + '.' + octets[1] + '.' + octets[2] + '.';
-        } else {
-            return '192.168.1.';
-        }
-
-        
-    }
 };
