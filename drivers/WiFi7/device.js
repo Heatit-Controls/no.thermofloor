@@ -32,12 +32,12 @@ module.exports = class MyDevice extends Homey.Device {
         this.setAvailable();
 
         //Load settings
-        await this.getIpAndMacAddressAndOtherSettings();
+        await this.loadSettings();
 
         this.refreshStateLoop();
     }
 
-    async getIpAndMacAddressAndOtherSettings() {
+    async loadSettings() {
         if (this.getStore().address != null) {
             //From arp
             if (!util.isValidIpAddress(this.getSettings().IPaddress.trim())) {
