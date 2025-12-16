@@ -38,7 +38,7 @@ module.exports = class MyDriver extends Homey.Driver {
             {
                 name: "Add manually",
                 data: {
-                    id: "WiFi-Thermostat" + Math.floor(Math.random() * 1000000000000),
+                    id: "WiFi7-Thermostat" + Math.floor(Math.random() * 1000000000000),
                 },
             }
         );
