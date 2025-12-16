@@ -48,7 +48,8 @@ module.exports = class MyDevice extends Homey.Device {
         } else {
             this.IPaddress = this.getSettings().IPaddress.trim();
         }
-
+        this.MaxReconnactionTries = 5;
+        this.ReconnactionTrie = 0;
         this.MACaddress = this.getSettings().MACaddress.trim().toUpperCase();
         this.MACaddressIsValid = util.isValidMACAddress(this.MACaddress);
         this.ReportInterval = this.getSettings().interval;
@@ -129,7 +130,7 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     getWiFiDeviceByMac() {
-        if (this.MACaddressIsValid) {
+        if (this.MACaddressIsValid && this.ReconnactionTrie <= this.MaxReconnactionTries) {
             this.log("Searching for WiFi7 Thermostat by MAC address: " + this.MACaddress);
             (async () => {
                 try {
@@ -142,6 +143,7 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     async scanNetwork() {
+        this.ReconnactionTrie++;
         const baseIp = util.getBaseIpAddress(); //'192.168.1.'; Replace with your network's base IP
         for (let i = 1; i <= 254; i++) {
             const ip = baseIp + i;
@@ -157,7 +159,8 @@ module.exports = class MyDevice extends Homey.Device {
                 if (data.IsWiFi7Thermostat && data.Mac === this.MACaddress) {
                     this.IPaddress = ip;
                     this.setSettings({ IPaddress: this.IPaddress, }); //await
-                    this.log('WiFi7 Thermostat found by Mac: ' + data.Mac)
+                    this.log('WiFi7 Thermostat found by Mac: ' + data.Mac);
+                    this.ReconnactionTrie = 0;
                     break; // Found a device, exit loop
                 }
             }
