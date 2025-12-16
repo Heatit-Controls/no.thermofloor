@@ -1,6 +1,7 @@
 'use strict';
 const Homey = require('homey');
 const http = require('node:http');
+const util = require('../../lib/util');
 
 module.exports = class MyDriver extends Homey.Driver {
 
@@ -17,47 +18,55 @@ module.exports = class MyDriver extends Homey.Driver {
      */
     async onPairListDevices() {
 
-        let discoveryStrategy = this.homey.discovery.getStrategy("arp");
-        let discoveryResults = discoveryStrategy.getDiscoveryResults();
 
-        let allDevices = Object.values(discoveryResults).map(discoveryResult => {
-            return {
-                name: discoveryResult.address,
-                data: {
-                    id: discoveryResult.id,
-                },
-                store: {
-                    address: discoveryResult.address
-                },
-            };
-        });
+        let discoveryResults = await this.scanNetwork();
+        let compatibleDevices = [];
 
-        let compatibleDevices = allDevices;
-
-        for (const element of allDevices) {
-            if (await this.isNotWiFiPanelHeater(element.store.address)) {
-                compatibleDevices = compatibleDevices.filter(obj => obj.store.address !== element.store.address); //Remove
-            }
-        }
-
-        if (compatibleDevices.length == 0) {
-            return [
+        for (const item of discoveryResults) {
+            compatibleDevices.push(
                 {
-                    name: "Add manually",
+                    name: "WiFi-Panel IP " + item.Ip,
                     data: {
-                        id: "WiFi-Panel" + Math.floor(Math.random() * 1000000000000),
+                        id: "WiFi-Panel" + item.Mac,
                     },
+                    store: {
+                        address: item.Ip
+                    }
+                }
+            );
+        }
+
+        compatibleDevices.push(
+            {
+                name: "Add manually",
+                data: {
+                    id: "WiFi-Panel" + Math.floor(Math.random() * 1000000000000),
                 },
-            ];
-        }
-        else {
-            return compatibleDevices;
-        }
+            }
+        );
 
         return compatibleDevices;
     }
 
-    async isNotWiFiPanelHeater(ip) {
+    async scanNetwork() {
+        const baseIp = util.getBaseIpAddress(); //'192.168.1.'; Replace with your network's base IP this.
+        const out = [];
+        for (let i = 1; i <= 254; i++) {
+            const ip = baseIp + i;
+            const isOnline = await util.checkTcpConnection(ip, 80); // Check port 80
+            if (isOnline) {
+                this.log(`Device found at: ${ip}`);
+                let data = await this.isWiFiPanelHeater(ip);
+                if (data.isWiFiPanelHeater) {
+                    out.push({ "Ip": ip, "Mac": data.Mac });
+                    this.log('Yes is WiFi-Panel. Mac: ' + data.Mac)
+                }
+            }
+        }
+        return out;
+    }
+
+    async isWiFiPanelHeater(ip) {
         this.log('isWiFiPanelHeater IP ' + ip);
 
         return new Promise((resolve) => {
@@ -79,19 +88,18 @@ module.exports = class MyDriver extends Homey.Driver {
                         const parsedData = JSON.parse(rawData);
                         if (parsedData.parameters.panelMode != null) {
                             this.log('isWiFiPanelHeater true');
-                            resolve(false);
+                            resolve({ "isWiFiPanelHeater": true, "Mac": parsedData.network.mac });
                         } else {
-                            resolve(true);
+                            resolve({ "isWiFiPanelHeater": false });
                         }
                     } catch (e) {
-                        //this.log(e.message);
-                        resolve(true);
+                        resolve({ "isWiFiPanelHeater": false });
                     }
                 });
 
             }).on('error', (e) => {
                 this.log('isWiFiPanelHeater false');
-                resolve(true);
+                resolve({"isWiFiPanelHeater": false});
             });
         });
     }
