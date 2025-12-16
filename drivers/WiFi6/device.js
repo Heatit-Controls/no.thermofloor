@@ -273,6 +273,11 @@ module.exports = class MyDevice extends Homey.Device {
         changedKeys,
     }) {
         this.log("My heatit WiFi device settings where changed");
+
+        if (!util.isValidIpAddress(newSettings.IPaddress)) {
+            throw new Error('Invalid IP address!')
+        }
+
         this.IPaddress = newSettings.IPaddress;
         this.ReportInterval = newSettings.interval;
         if (oldSettings.sensorMode != newSettings.sensorMode) {
