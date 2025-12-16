@@ -27,13 +27,12 @@ module.exports = class MyDevice extends Homey.Device {
         this.setAvailable();
 
         //Load settings
-        this.IPaddress = await this.getIpAddressAndSetSetting();
-        this.ReportInterval = this.getSettings().interval;
-
+        await this.loadSettings();
+        
         this.refreshStateLoop();
     }
 
-    async getIpAddressAndSetSetting() {
+    async loadSettings() {
         if (this.getStore().address != null) {
 
             if (!util.isValidIpAddress(this.getSettings().IPaddress.trim())) {
@@ -42,10 +41,14 @@ module.exports = class MyDevice extends Homey.Device {
                 });
             }
 
-            return this.getStore().address;
+            this.IPaddress = this.getStore().address;
         } else {
-            return this.getSettings().IPaddress.trim();
+            this.IPaddress = this.getSettings().IPaddress.trim();
         }
+
+        this.MACaddress = this.getSettings().MACaddress.trim().toUpperCase();
+        this.MACaddressIsValid = util.isValidMACAddress(this.MACaddress);
+        this.ReportInterval = this.getSettings().interval;
     }
 
     ipIsValid() {
