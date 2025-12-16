@@ -55,11 +55,11 @@ module.exports = class MyDriver extends Homey.Driver {
             const ip = baseIp + i;
             const isOnline = await util.checkTcpConnection(ip, 80); // Check port 80
             if (isOnline) {
-                this.log(`Device found at: ${ip}`);
+                //this.log(`Device found at: ${ip}`);
                 let data = await this.isWiFiPanelHeater(ip);
                 if (data.isWiFiPanelHeater) {
                     out.push({ "Ip": ip, "Mac": data.Mac });
-                    this.log('Yes is WiFi-Panel. Mac: ' + data.Mac)
+                    this.log('Yes is WiFi-Panel. IP: ' + ip + ' Mac: ' + data.Mac)
                 }
             }
         }
@@ -67,7 +67,7 @@ module.exports = class MyDriver extends Homey.Driver {
     }
 
     async isWiFiPanelHeater(ip) {
-        this.log('isWiFiPanelHeater IP ' + ip);
+        //this.log('isWiFiPanelHeater IP ' + ip);
 
         return new Promise((resolve) => {
             http.get({
@@ -87,7 +87,6 @@ module.exports = class MyDriver extends Homey.Driver {
                     try {
                         const parsedData = JSON.parse(rawData);
                         if (parsedData.parameters.panelMode != null) {
-                            this.log('isWiFiPanelHeater true');
                             resolve({ "isWiFiPanelHeater": true, "Mac": parsedData.Network.mac });
                         } else {
                             resolve({ "isWiFiPanelHeater": false });
