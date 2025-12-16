@@ -153,7 +153,7 @@ module.exports = class MyDevice extends Homey.Device {
             const isOnline = await util.checkTcpConnection(ip, 80); // Check port 80
             if (isOnline) {
                 //this.log(`Device found at: ${ip}`);
-                let data = await this.getWiFiThermostatData(ip);
+                let data = await this.getWiFi7ThermostatData(ip);
                 if (data.IsWiFi7Thermostat && data.Mac === this.MACaddress) {
                     this.IPaddress = ip;
                     this.setSettings({ IPaddress: this.IPaddress, }); //await
@@ -309,7 +309,7 @@ module.exports = class MyDevice extends Homey.Device {
         this.log('My heatit WiFi device has been added');
     }
 
-    async getWiFiThermostatData(ip) {
+    async getWiFi7ThermostatData(ip) {
 
         this.debug('Check if is WiFi 7 Thermostat. IP ' + ip);
 
