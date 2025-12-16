@@ -10,7 +10,7 @@ module.exports = class MyDevice extends Homey.Device {
      */
     async onInit() {
         this.log('WiFi device has been initialized'); 
-        this.isDebug = false;
+        this.isDebug = true;
         this.deviceIsDeleted = false;
         this.registerCapabilityListener('target_temperature', async (value) => {
             this.debug("Changed temp", value);
@@ -311,9 +311,7 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     async getWiFi6ThermostatData(ip) {
-
         this.debug('Check if is WiFi6 Thermostat. IP ' + ip);
-
         return new Promise((resolve) => {
 
             http.get({
