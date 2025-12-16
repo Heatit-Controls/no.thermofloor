@@ -101,6 +101,9 @@ module.exports = class MyDevice extends Homey.Device {
                     kWh = kWh + (parsedData.currentPower * (this.getSettings().interval / 3600)) / 1000;
                     this.setCapabilityValue('meter_power', kWh).catch(this.error);
                     this.setCapabilityValue('measure_power', parsedData.currentPower).catch(this.error);
+                    if (!this.MACaddressIsValid && this.MACaddress == "GET") {
+                        this.setSettings({ MACaddress: parsedData.Network.mac });
+                    }
                     this.setAvailable();
                 } catch (e) {
                 }
