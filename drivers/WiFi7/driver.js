@@ -54,11 +54,11 @@ module.exports = class MyDriver extends Homey.Driver {
             const ip = baseIp + i;
             const isOnline = await util.checkTcpConnection(ip, 80); // Check port 80
             if (isOnline) {
-                this.log(`Device found at: ${ip}`);
+                //this.log(`Device found at: ${ip}`);
                 let data = await this.getWiFiThermostatData(ip);
                 if (data.IsWiFi7Thermostat) {
                     out.push({ "Ip": ip, "Mac": data.Mac });
-                    this.log('Yes is WiFi7 Thermostat. Mac: ' + data.Mac)
+                    this.log('Yes is WiFi7 Thermostat. IP: ' + ip +' Mac: ' + data.Mac)
                 }
             }
         }
@@ -66,8 +66,7 @@ module.exports = class MyDriver extends Homey.Driver {
     }
 
     async getWiFiThermostatData(ip) {
-        this.log('isNotWiFiThermostat IP ' + ip);
-
+        //this.log('isNotWiFiThermostat IP ' + ip);
         return new Promise((resolve) => {
 
             http.get({
