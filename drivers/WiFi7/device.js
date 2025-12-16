@@ -12,7 +12,7 @@ module.exports = class MyDevice extends Homey.Device {
      */
     async onInit() {
         this.log('WiFi7 Thermostat device has been initialized');
-        this.isDebug = fasle;
+        this.isDebug = false;
         this.deviceIsDeleted = false;
         this.registerCapabilityListener('target_temperature', async (value) => {
             this.debug("Changed temp", value);
