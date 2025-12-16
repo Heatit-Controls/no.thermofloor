@@ -48,7 +48,7 @@ module.exports = class MyDevice extends Homey.Device {
         } else {
             this.IPaddress = this.getSettings().IPaddress.trim();
         }
-        this.MaxReconnactionTrys = 6;
+        this.MaxReconnactionTrys = 5;
         this.ReconnactionTry = 1;
         this.MACaddress = this.getSettings().MACaddress.trim().toUpperCase();
         this.MACaddressIsValid = util.isValidMACAddress(this.MACaddress);
