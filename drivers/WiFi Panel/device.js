@@ -125,7 +125,7 @@ module.exports = class MyDevice extends Homey.Device {
 
     getWiFiDeviceByMac() {
         if (this.MACaddressIsValid) {
-            this.log("Searching for WIFi Panel device by MAC address: " + this.MACaddress);
+            this.log("Searching for WIFi Panel by MAC address: " + this.MACaddress);
             (async () => {
                 try {
                     this.scanNetwork();
