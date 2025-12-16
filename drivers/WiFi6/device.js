@@ -30,23 +30,26 @@ module.exports = class MyDevice extends Homey.Device {
         this.setAvailable();
 
         //Load settings
-        this.IPaddress = await this.getIpAddressAndSetSetting();
-        this.ReportInterval = this.getSettings().interval;
+        await this.loadSettings();
 
         this.refreshStateLoop();
     }
 
-    async getIpAddressAndSetSetting() {
+    async loadSettings() {
         if (this.getStore().address != null) {
 
             if (!util.isValidIpAddress(this.getSettings().IPaddress.trim())) {
                 await this.setSettings({IPaddress: this.getStore().address,});
             }
 
-            return this.getStore().address;
+            this.IPaddress = this.getStore().address;
         } else {
-            return this.getSettings().IPaddress.trim();
+            this.IPaddress = this.getSettings().IPaddress.trim();
         }
+
+        this.MACaddress = this.getSettings().MACaddress.trim().toUpperCase();
+        this.MACaddressIsValid = util.isValidMACAddress(this.MACaddress);
+        this.ReportInterval = this.getSettings().interval;
     }
 
     ipIsValid() {
@@ -101,6 +104,9 @@ module.exports = class MyDevice extends Homey.Device {
                     kWh = kWh + (parsedData.currentPower * (this.getSettings().interval / 3600)) / 1000;
                     this.setCapabilityValue('meter_power', kWh).catch(this.error);
                     this.setCapabilityValue('measure_power', parsedData.currentPower).catch(this.error);
+                    if (!this.MACaddressIsValid && this.MACaddress == "GET") {
+                        this.setSettings({ MACaddress: parsedData.network.mac });
+                    }
                     this.setAvailable();
                 } catch (e) {
                     // Handle error
@@ -280,6 +286,10 @@ module.exports = class MyDevice extends Homey.Device {
 
         this.IPaddress = newSettings.IPaddress;
         this.ReportInterval = newSettings.interval;
+
+        this.MACaddress = newSettings.MACaddress.trim().toUpperCase();
+        this.MACaddressIsValid = util.isValidMACAddress(this.MACaddress);
+
         if (oldSettings.sensorMode != newSettings.sensorMode) {
             await this.setSensorMode(newSettings.sensorMode);
         }
