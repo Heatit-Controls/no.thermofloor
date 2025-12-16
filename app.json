@@ -3596,6 +3596,17 @@
       "id": "WiFi6",
       "settings": [
         {
+          "id": "MACaddress",
+          "type": "text",
+          "label": {
+            "en": "MAC address"
+          },
+          "value": "Get",
+          "hint": {
+            "en": "The MAC address of the WiFi6 thermostat. The MAC address will be retrieved automatically from the thermostat when it is connected when and this value is set to Get. Default value is 'Get' do not change."
+          }
+        },
+        {
           "id": "IPaddress",
           "type": "text",
           "label": {
@@ -3731,7 +3742,7 @@
           },
           "value": "Get",
           "hint": {
-            "en": "The MAC address of the thermostat. The MAC address will be retrieved automatically from the thermostat when it is connected when and this value is set to Get. Default value is 'Get' do not change."
+            "en": "The MAC address of the WiFi7 thermostat. The MAC address will be retrieved automatically from the thermostat when it is connected when and this value is set to Get. Default value is 'Get' do not change."
           }
         },
         {
