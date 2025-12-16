@@ -110,6 +110,11 @@ module.exports = class MyDevice extends Homey.Device {
                     this.setAvailable();
                 } catch (e) {
                     // Handle error
+                    this.log('Cannot connect to API.')
+                    this.setCapabilityValue('measure_power', 0).catch(this.error);
+                    this.setUnavailable('Cannot reach device on local WiFi').catch(this.error);
+                    this.debug('Cannot reach device on local WiFi');
+                    this.getWiFiDeviceByMac();
                 }
             });
 
@@ -117,7 +122,44 @@ module.exports = class MyDevice extends Homey.Device {
             this.setCapabilityValue('measure_power', 0).catch(this.error);
             this.setUnavailable('Cannot reach device on local WiFi').catch(this.error);
             this.debug('Cannot reach device on local WiFi');
+            this.getWiFiDeviceByMac();
         });
+    }
+
+    getWiFiDeviceByMac() {
+        if (this.MACaddressIsValid) {
+            //this.debug("Searching for device via mac address.")
+            (async () => {
+                try {
+                    this.scanNetwork();
+                } catch (error) {
+
+                }
+            })();
+        }
+    }
+
+    async scanNetwork() {
+        const baseIp = util.getBaseIpAddress(); //'192.168.1.'; Replace with your network's base IP
+        for (let i = 1; i <= 254; i++) {
+            const ip = baseIp + i;
+
+            if (this.deviceIsDeleted) {
+                break; //Device deleted, exit loop
+            }
+
+            const isOnline = await util.checkTcpConnection(ip, 80); // Check port 80
+            if (isOnline) {
+                //this.log(`Device found at: ${ip}`);
+                let data = await this.getWiFi6ThermostatData(ip);
+                if (data.IsWiFi6Thermostat && data.Mac === this.MACaddress) {
+                    this.IPaddress = ip;
+                    this.setSettings({ IPaddress: this.IPaddress, }); //await
+                    this.log('WiFi6 Thermostat found by Mac: ' + data.Mac)
+                    break; // Found a device, exit loop
+                }
+            }
+        }
     }
 
     debug(msg) {
@@ -263,6 +305,46 @@ module.exports = class MyDevice extends Homey.Device {
      */
     async onAdded() {
         this.log('My heatit WiFi device has been added');
+    }
+
+    async getWiFi6ThermostatData(ip) {
+
+        this.debug('Check if is WiFi6 Thermostat. IP ' + ip);
+
+        return new Promise((resolve) => {
+
+            http.get({
+                hostname: ip,
+                port: 80,
+                path: '/api/status',
+                agent: false,
+            }, (res) => {
+
+                const { statusCode } = res;
+                const contentType = res.headers['content-type'];
+
+                res.setEncoding('utf8');
+                let rawData = '';
+                res.on('data', (chunk) => { rawData += chunk; });
+                res.on('end', () => {
+                    try {
+                        const parsedData = JSON.parse(rawData);
+                        if (parsedData.parameters.operatingMode != null && parsedData.model == null) {
+                            this.log('IsWiFi6Thermostat true');
+                            resolve({ "IsWiFi6Thermostat": true, "Mac": parsedData.network.mac });
+                        } else {
+                            resolve({ "IsWiFi6Thermostat": false });
+                        }
+                    } catch (e) {
+                        resolve({ "IsWiFi6Thermostat": false });
+                    }
+                });
+
+            }).on('error', (e) => {
+                this.log('isWiFiThermostat false');
+                resolve({ "IsWiFi7Thermostat": false });
+            });
+        });
     }
 
     /**
