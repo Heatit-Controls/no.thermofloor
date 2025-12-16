@@ -6,8 +6,8 @@ const util = require('../../lib/util');
 module.exports = class MyDevice extends Homey.Device {
 
     async onInit() {
-        this.log('Device has been initialized');
-        this.isDebug = true;
+        this.log('WiFi Panel heater has been initialized');
+        this.isDebug = false;
         this.deviceIsDeleted = false;
         this.registerCapabilityListener('target_temperature', async (value) => {
             this.debug("Changed temp", value);
@@ -126,7 +126,7 @@ module.exports = class MyDevice extends Homey.Device {
 
     getWiFiDeviceByMac() {
         if (this.MACaddressIsValid && this.ReconnactionTrie <= this.MaxReconnactionTries) {
-            this.log("Searching for WIFi Panel by MAC address: " + this.MACaddress);
+            this.log("Trie: " + this.ReconnactionTrie + ". Searching for WIFi Panel by MAC address: " + this.MACaddress);
             (async () => {
                 try {
                     this.scanNetwork();

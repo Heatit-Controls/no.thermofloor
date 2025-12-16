@@ -11,8 +11,8 @@ module.exports = class MyDevice extends Homey.Device {
      * onInit is called when the device is initialized.
      */
     async onInit() {
-        this.log('WiFi device has been initialized');
-        this.isDebug = true;
+        this.log('WiFi7 Thermostat device has been initialized');
+        this.isDebug = fasle;
         this.deviceIsDeleted = false;
         this.registerCapabilityListener('target_temperature', async (value) => {
             this.debug("Changed temp", value);
@@ -131,7 +131,7 @@ module.exports = class MyDevice extends Homey.Device {
 
     getWiFiDeviceByMac() {
         if (this.MACaddressIsValid && this.ReconnactionTrie <= this.MaxReconnactionTries) {
-            this.log("Searching for WiFi7 Thermostat by MAC address: " + this.MACaddress);
+            this.log("Trie: " + this.ReconnactionTrie + ". Searching for WiFi7 Thermostat by MAC address: " + this.MACaddress);
             (async () => {
                 try {
                     this.scanNetwork();
