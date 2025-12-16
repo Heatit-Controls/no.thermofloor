@@ -88,7 +88,7 @@ module.exports = class MyDriver extends Homey.Driver {
                         const parsedData = JSON.parse(rawData);
                         if (parsedData.parameters.panelMode != null) {
                             this.log('isWiFiPanelHeater true');
-                            resolve({ "isWiFiPanelHeater": true, "Mac": parsedData.network.mac });
+                            resolve({ "isWiFiPanelHeater": true, "Mac": parsedData.Network.mac });
                         } else {
                             resolve({ "isWiFiPanelHeater": false });
                         }
