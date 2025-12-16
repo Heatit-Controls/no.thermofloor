@@ -45,8 +45,8 @@ module.exports = class MyDevice extends Homey.Device {
         } else {
             this.IPaddress = this.getSettings().IPaddress.trim();
         }
-        this.MaxReconnactionTries = 5;
-        this.ReconnactionTrie = 0;
+        this.MaxReconnactionTrys = 6;
+        this.ReconnactionTry = 1;
         this.MACaddress = this.getSettings().MACaddress.trim().toUpperCase();
         this.MACaddressIsValid = util.isValidMACAddress(this.MACaddress);
         this.ReportInterval = this.getSettings().interval;
@@ -125,8 +125,8 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     getWiFiDeviceByMac() {
-        if (this.MACaddressIsValid && this.ReconnactionTrie <= this.MaxReconnactionTries) {
-            this.log("Trie: " + this.ReconnactionTrie + ". Searching for WIFi Panel by MAC address: " + this.MACaddress);
+        if (this.MACaddressIsValid && this.ReconnactionTry <= this.MaxReconnactionTrys) {
+            this.log("Try:" + this.ReconnactionTry + ". Searching for WIFi Panel by MAC address: " + this.MACaddress);
             (async () => {
                 try {
                     this.scanNetwork();
@@ -138,7 +138,7 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     async scanNetwork() {
-        this.ReconnactionTrie++;
+        this.ReconnactionTry++;
         const baseIp = util.getBaseIpAddress(); //'192.168.1.'; Replace with your network's base IP
         for (let i = 1; i <= 254; i++) {
             const ip = baseIp + i;
@@ -155,7 +155,7 @@ module.exports = class MyDevice extends Homey.Device {
                     this.IPaddress = ip;
                     this.setSettings({ IPaddress: this.IPaddress, }); //await
                     this.log('WiFi Panel found by Mac: ' + data.Mac);
-                    this.ReconnactionTrie = 0;
+                    this.ReconnactionTry = 0;
                     break; // Found a device, exit loop
                 }
             }
