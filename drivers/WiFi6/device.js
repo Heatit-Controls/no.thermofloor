@@ -1,6 +1,7 @@
 'use strict';
 const Homey = require('homey');
 const http = require('node:http');
+const util = require('../../lib/util');
 
 module.exports = class MyDevice extends Homey.Device {
 
@@ -38,7 +39,7 @@ module.exports = class MyDevice extends Homey.Device {
     async getIpAddressAndSetSetting() {
         if (this.getStore().address != null) {
 
-            if (!this.isValidIpAddress(this.getSettings().IPaddress.trim())) {
+            if (!util.isValidIpAddress(this.getSettings().IPaddress.trim())) {
                 await this.setSettings({IPaddress: this.getStore().address,});
             }
 
@@ -51,20 +52,12 @@ module.exports = class MyDevice extends Homey.Device {
     ipIsValid() {
         if (this.getStore().address != null) {
             return true
-        } else if (this.isValidIpAddress(this.getSettings().IPaddress.trim())) {
+        } else if (util.isValidIpAddress(this.getSettings().IPaddress.trim())) {
             return true
         } else {
             this.setUnavailable('Please check that you have entered a valid IP address in advanced settings and that the device is turned on.').catch(this.error);
             return false
         }
-    }
-
-    isValidIpAddress(ip) {
-        const ipv4Pattern =
-            /^(\d{1,3}\.){3}\d{1,3}$/;
-        const ipv6Pattern =
-            /^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$/;
-        return ipv4Pattern.test(ip) || ipv6Pattern.test(ip);
     }
 
     refreshStateLoop() {
