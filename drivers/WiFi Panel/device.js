@@ -95,6 +95,7 @@ module.exports = class MyDevice extends Homey.Device {
             res.on('end', () => {
                 try {
                     const parsedData = JSON.parse(rawData);
+                    this.ReconnactionTry = 1;
                     this.setCapabilityValue('measure_temperature', parsedData.roomTemperature).catch(this.error);
                     this.setOpenWindowDetectionFromThermostat(parsedData);
                     this.setCapabilityValue('target_temperature', parsedData.parameters.heatingSetpoint).catch(this.error);

@@ -97,6 +97,7 @@ module.exports = class MyDevice extends Homey.Device {
             res.on('end', () => {
                 try {
                     const parsedData = JSON.parse(rawData);
+                    this.ReconnactionTry = 1;
                     this.setMeasureTemperature(parsedData);
                     this.setOpenWindowDetectionFromThermostat(parsedData);
                     this.setDisableButtonsFromThermostat(parsedData);
