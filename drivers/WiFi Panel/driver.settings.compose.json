@@ -1,5 +1,12 @@
 [
   {
+    "id": "MACaddress",
+    "type": "text",
+    "label": { "en": "MAC address" },
+    "value": "Get",
+    "hint": { "en": "The MAC address of the WIFI Panel. The MAC address will be retrieved automatically from the panel heater when it is connected and this value is set to Get. Default value is 'Get' do not change." }
+  },
+  {
     "id": "IPaddress",
     "type": "text",
     "label": { "en": "IP address" },

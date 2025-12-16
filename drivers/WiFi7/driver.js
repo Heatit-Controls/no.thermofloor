@@ -4,12 +4,11 @@ const http = require('node:http');
 const util = require('../../lib/util');
 
 module.exports = class MyDriver extends Homey.Driver {
-
     /**
      * onInit is called when the driver is initialized.
      */
     async onInit() {
-        this.log('Diver has been initialized');
+        this.log('Driver has been initialized');
     }
 
     /**
@@ -18,16 +17,15 @@ module.exports = class MyDriver extends Homey.Driver {
      */
     async onPairListDevices() {
 
-
         let discoveryResults = await this.scanNetwork();
         let compatibleDevices = [];
 
         for (const item of discoveryResults) {
             compatibleDevices.push(
                 {
-                    name: "WiFi-Panel IP " + item.Ip,
+                    name: "WiFi7 IP " + item.Ip,
                     data: {
-                        id: "WiFi-Panel" + item.Mac,
+                        id: "WiFi7-Thermostat" + item.Mac,
                     },
                     store: {
                         address: item.Ip
@@ -40,12 +38,13 @@ module.exports = class MyDriver extends Homey.Driver {
             {
                 name: "Add manually",
                 data: {
-                    id: "WiFi-Panel" + Math.floor(Math.random() * 1000000000000),
+                    id: "WiFi7-Thermostat" + Math.floor(Math.random() * 1000000000000),
                 },
             }
         );
 
         return compatibleDevices;
+       
     }
 
     async scanNetwork() {
@@ -56,25 +55,25 @@ module.exports = class MyDriver extends Homey.Driver {
             const isOnline = await util.checkTcpConnection(ip, 80); // Check port 80
             if (isOnline) {
                 //this.log(`Device found at: ${ip}`);
-                let data = await this.isWiFiPanelHeater(ip);
-                if (data.isWiFiPanelHeater) {
+                let data = await this.getWiFi7ThermostatData(ip);
+                if (data.IsWiFi7Thermostat) {
                     out.push({ "Ip": ip, "Mac": data.Mac });
-                    this.log('Yes is WiFi-Panel. IP: ' + ip + ' Mac: ' + data.Mac)
+                    this.log('Yes is WiFi7 Thermostat. IP: ' + ip +' Mac: ' + data.Mac)
                 }
             }
         }
         return out;
     }
 
-    async isWiFiPanelHeater(ip) {
-        //this.log('isWiFiPanelHeater IP ' + ip);
-
+    async getWiFi7ThermostatData(ip) {
+        //this.log('isNotWiFiThermostat IP ' + ip);
         return new Promise((resolve) => {
+
             http.get({
-                hostname: ip, //'192.168.1.71'
+                hostname: ip,
                 port: 80,
                 path: '/api/status',
-                agent: false,  // Create a new agent just for this one request
+                agent: false,
             }, (res) => {
 
                 const { statusCode } = res;
@@ -86,20 +85,22 @@ module.exports = class MyDriver extends Homey.Driver {
                 res.on('end', () => {
                     try {
                         const parsedData = JSON.parse(rawData);
-                        if (parsedData.parameters.panelMode != null) {
-                            resolve({ "isWiFiPanelHeater": true, "Mac": parsedData.Network.mac });
+                        if (parsedData.model === "Heatit WiFi7") {
+                            this.log('IsWiFi7Thermostat true');
+                            resolve({"IsWiFi7Thermostat": true, "Mac": parsedData.network.mac });
                         } else {
-                            resolve({ "isWiFiPanelHeater": false });
+                            resolve({"IsWiFi7Thermostat": false});
                         }
                     } catch (e) {
-                        resolve({ "isWiFiPanelHeater": false });
+                        resolve({"IsWiFi7Thermostat": false});
                     }
                 });
 
             }).on('error', (e) => {
-                this.log('isWiFiPanelHeater false');
-                resolve({"isWiFiPanelHeater": false});
+                this.log('isWiFiThermostat false');
+                resolve({"IsWiFi7Thermostat": false});
             });
         });
     }
-}
+
+};

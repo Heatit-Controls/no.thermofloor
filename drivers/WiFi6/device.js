@@ -1,6 +1,7 @@
 'use strict';
 const Homey = require('homey');
 const http = require('node:http');
+const util = require('../../lib/util');
 
 module.exports = class MyDevice extends Homey.Device {
 
@@ -8,24 +9,19 @@ module.exports = class MyDevice extends Homey.Device {
      * onInit is called when the device is initialized.
      */
     async onInit() {
-        this.log('WiFi device has been initialized'); 
+        this.log('WiFi6 Thermostat has been initialized'); 
         this.isDebug = false;
         this.deviceIsDeleted = false;
         this.registerCapabilityListener('target_temperature', async (value) => {
-            this.debug("Changed temp", value);
-            this.setHeatingSetpoint(value);
             this.debug("Changed temp", value);
             this.setHeatingSetpoint(value);
         });
 
         this.registerCapabilityListener('onoff', async (value) => {
             this.debug("Changed On/Off", value);
-            this.debug("Changed On/Off", value);
             if (value) {
                 this.setOperatingModeOn()
-                this.setOperatingModeOn()
             } else {
-                this.setOperatingModeOff()
                 this.setOperatingModeOff()
             }
         });
@@ -34,43 +30,38 @@ module.exports = class MyDevice extends Homey.Device {
         this.setAvailable();
 
         //Load settings
-        this.IPaddress = await this.getIpAddressAndSetSetting();
-        this.ReportInterval = this.getSettings().interval;
+        await this.loadSettings();
 
         this.refreshStateLoop();
     }
 
-    async getIpAddressAndSetSetting() {
+    async loadSettings() {
         if (this.getStore().address != null) {
 
-            if (!this.isValidIpAddress(this.getSettings().IPaddress.trim())) {
-                await this.setSettings({IPaddress: this.getStore().address,});
+            if (!util.isValidIpAddress(this.getSettings().IPaddress.trim())) {
                 await this.setSettings({IPaddress: this.getStore().address,});
             }
 
-            return this.getStore().address;
+            this.IPaddress = this.getStore().address;
         } else {
-            return this.getSettings().IPaddress.trim();
+            this.IPaddress = this.getSettings().IPaddress.trim();
         }
+        this.MaxReconnactionTrys = 5;
+        this.ReconnactionTry = 1;
+        this.MACaddress = this.getSettings().MACaddress.trim().toUpperCase();
+        this.MACaddressIsValid = util.isValidMACAddress(this.MACaddress);
+        this.ReportInterval = this.getSettings().interval;
     }
 
     ipIsValid() {
         if (this.getStore().address != null) {
             return true
-        } else if (this.isValidIpAddress(this.getSettings().IPaddress.trim())) {
+        } else if (util.isValidIpAddress(this.getSettings().IPaddress.trim())) {
             return true
         } else {
             this.setUnavailable('Please check that you have entered a valid IP address in advanced settings and that the device is turned on.').catch(this.error);
             return false
         }
-    }
-
-    isValidIpAddress(ip) {
-        const ipv4Pattern =
-            /^(\d{1,3}\.){3}\d{1,3}$/;
-        const ipv6Pattern =
-            /^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$/;
-        return ipv4Pattern.test(ip) || ipv6Pattern.test(ip);
     }
 
     refreshStateLoop() {
@@ -89,7 +80,6 @@ module.exports = class MyDevice extends Homey.Device {
 
     refreshState() {
         this.debug("refreshState")
-        this.debug("refreshState")
         const client = http.get({
             hostname: this.IPaddress,
             port: 80,
@@ -105,6 +95,7 @@ module.exports = class MyDevice extends Homey.Device {
             res.on('end', () => {
                 try {
                     const parsedData = JSON.parse(rawData);
+                    this.ReconnactionTry = 1;
                     this.setMeasureTemperature(parsedData);
                     this.setOpenWindowDetectionFromThermostat(parsedData);
                     this.setDisableButtonsFromThermostat(parsedData);
@@ -115,9 +106,17 @@ module.exports = class MyDevice extends Homey.Device {
                     kWh = kWh + (parsedData.currentPower * (this.getSettings().interval / 3600)) / 1000;
                     this.setCapabilityValue('meter_power', kWh).catch(this.error);
                     this.setCapabilityValue('measure_power', parsedData.currentPower).catch(this.error);
+                    if (!this.MACaddressIsValid && this.MACaddress == "GET") {
+                        this.setSettings({ MACaddress: parsedData.network.mac });
+                    }
                     this.setAvailable();
                 } catch (e) {
                     // Handle error
+                    this.log('Cannot connect to API.')
+                    this.setCapabilityValue('measure_power', 0).catch(this.error);
+                    this.setUnavailable('Cannot reach device on local WiFi').catch(this.error);
+                    this.debug('Cannot reach device on local WiFi');
+                    this.getWiFiDeviceByMac();
                 }
             });
 
@@ -125,7 +124,46 @@ module.exports = class MyDevice extends Homey.Device {
             this.setCapabilityValue('measure_power', 0).catch(this.error);
             this.setUnavailable('Cannot reach device on local WiFi').catch(this.error);
             this.debug('Cannot reach device on local WiFi');
+            this.getWiFiDeviceByMac();
         });
+    }
+
+    getWiFiDeviceByMac() {
+        if (this.MACaddressIsValid && this.ReconnactionTry <= this.MaxReconnactionTrys) {
+            this.log("Try:" + this.ReconnactionTry + ". Searching for WiFi6 Thermostat by MAC address: " + this.MACaddress);
+            (async () => {
+                try {
+                    this.scanNetwork();
+                } catch (error) {
+
+                }
+            })();
+        }
+    }
+
+    async scanNetwork() {
+        this.ReconnactionTry++;
+        const baseIp = util.getBaseIpAddress(); //'192.168.1.'; Replace with your network's base IP
+        for (let i = 1; i <= 254; i++) {
+            const ip = baseIp + i;
+
+            if (this.deviceIsDeleted) {
+                break; //Device deleted, exit loop
+            }
+
+            const isOnline = await util.checkTcpConnection(ip, 80); // Check port 80
+            if (isOnline) {
+                //this.log(`Device found at: ${ip}`);
+                let data = await this.getWiFi6ThermostatData(ip);
+                if (data.IsWiFi6Thermostat && data.Mac === this.MACaddress) {
+                    this.IPaddress = ip;
+                    this.setSettings({ IPaddress: this.IPaddress, }); //await
+                    this.log('WiFi6 Thermostat found by Mac: ' + data.Mac);
+                    this.ReconnactionTry = 0;
+                    break; // Found a device, exit loop
+                }
+            }
+        }
     }
 
     debug(msg) {
@@ -232,7 +270,6 @@ module.exports = class MyDevice extends Homey.Device {
 
     async setParameters(postData) {
         this.debug('setParameters');
-        this.debug('setParameters');
 
         const options = {
             hostname: this.IPaddress,
@@ -274,6 +311,44 @@ module.exports = class MyDevice extends Homey.Device {
         this.log('My heatit WiFi device has been added');
     }
 
+    async getWiFi6ThermostatData(ip) {
+        this.debug('Check if is WiFi6 Thermostat. IP ' + ip);
+        return new Promise((resolve) => {
+
+            http.get({
+                hostname: ip,
+                port: 80,
+                path: '/api/status',
+                agent: false,
+            }, (res) => {
+
+                const { statusCode } = res;
+                const contentType = res.headers['content-type'];
+
+                res.setEncoding('utf8');
+                let rawData = '';
+                res.on('data', (chunk) => { rawData += chunk; });
+                res.on('end', () => {
+                    try {
+                        const parsedData = JSON.parse(rawData);
+                        if (parsedData.parameters.operatingMode != null && parsedData.model == null) {
+                            this.log('IsWiFi6Thermostat true');
+                            resolve({ "IsWiFi6Thermostat": true, "Mac": parsedData.network.mac });
+                        } else {
+                            resolve({ "IsWiFi6Thermostat": false });
+                        }
+                    } catch (e) {
+                        resolve({ "IsWiFi6Thermostat": false });
+                    }
+                });
+
+            }).on('error', (e) => {
+                this.log('isWiFiThermostat false');
+                resolve({ "IsWiFi7Thermostat": false });
+            });
+        });
+    }
+
     /**
      * onSettings is called when the user updates the device's settings.
      * @param {object} event the onSettings event data
@@ -288,8 +363,17 @@ module.exports = class MyDevice extends Homey.Device {
         changedKeys,
     }) {
         this.log("My heatit WiFi device settings where changed");
+
+        if (!util.isValidIpAddress(newSettings.IPaddress)) {
+            throw new Error('Invalid IP address!')
+        }
+
         this.IPaddress = newSettings.IPaddress;
         this.ReportInterval = newSettings.interval;
+
+        this.MACaddress = newSettings.MACaddress.trim().toUpperCase();
+        this.MACaddressIsValid = util.isValidMACAddress(this.MACaddress);
+
         if (oldSettings.sensorMode != newSettings.sensorMode) {
             await this.setSensorMode(newSettings.sensorMode);
         }
