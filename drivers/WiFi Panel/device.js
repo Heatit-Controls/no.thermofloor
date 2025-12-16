@@ -254,9 +254,7 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     async getWiFiPanelData(ip) {
-
         //this.debug('Check if is WiFi Panel. IP ' + ip);
-
         return new Promise((resolve) => {
 
             http.get({
