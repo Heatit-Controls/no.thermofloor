@@ -156,6 +156,11 @@ module.exports = class MyDevice extends Homey.Device {
         const baseIp = util.getBaseIpAddress(); //'192.168.1.'; Replace with your network's base IP
         for (let i = 1; i <= 254; i++) {
             const ip = baseIp + i;
+
+            if (this.deviceIsDeleted) {
+                break; //Device deleted, exit loop
+            }
+
             const isOnline = await util.checkTcpConnection(ip, 80); // Check port 80
             if (isOnline) {
                 //this.log(`Device found at: ${ip}`);
