@@ -131,6 +131,10 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     getWiFiDeviceByMac() {
+        if (this.deviceIsDeleted) {
+            return; //exit 
+        }
+
         if (this.MACaddressIsValid && this.ReconnactionTry <= this.MaxReconnactionTrys) {
             this.log("Try:" + this.ReconnactionTry + ". Searching for WiFi7 Thermostat by MAC address: " + this.MACaddress);
             (async () => {
