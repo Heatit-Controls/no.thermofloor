@@ -274,7 +274,7 @@ module.exports = class MyDevice extends Homey.Device {
                     try {
                         const parsedData = JSON.parse(rawData);
                         if (parsedData.parameters.panelMode != null) {
-                            this.log('IsWiFiPanel true');
+                            this.log('IsWiFiPanel true. IP: ' + ip + " Mac: " + parsedData.Network.mac);
                             resolve({ "IsWiFiPanel": true, "Mac": parsedData.Network.mac });
                         } else {
                             resolve({ "IsWiFiPanel": false });
