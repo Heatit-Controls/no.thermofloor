@@ -37,8 +37,8 @@ class DINThermostatZwaveDevice extends ZwaveDevice {
 
 
 	async onNodeInit() {
-		this.enableDebug();
-		this.printNode();
+		//this.enableDebug();
+		//this.printNode();
 
 		this.registerReportListener('CONFIGURATION', 'CONFIGURATION_REPORT', async report => {
 			try {
@@ -141,14 +141,17 @@ class DINThermostatZwaveDevice extends ZwaveDevice {
 						this.error(`Failed to update power_reg_active_time setting: ${err.message}`);
 					});
 
-					this.configurationSet({
-						index: this.getParameterIndex('power_reg_active_time'),
-						size: 0x01,
-						signed: false
-					}, powerRegValue / 10); // /10 to convert 10-100 to 1-10 in parameter values
-					return null;
+					try {
+						this.configurationSet({
+							index: this.getParameterIndex('power_reg_active_time'),
+							size: 0x01,
+							signed: false
+						}, powerRegValue / 10); // /10 to convert 10-100 to 1-10 in parameter values
+						return null;
+					} catch (error) {
+						this.error(`Error in target_temperature setParser: ${error.message}`);
+					}
 				}
-
 				const setpointType = Mode2Setpoint[currentMode];
 
 				if (setpointType !== 'not supported' && setpointType) {
