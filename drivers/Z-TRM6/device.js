@@ -173,12 +173,16 @@ class ZTRM6Device extends ZwaveDevice {
 						this.error(`Failed to update power_reg_active_time setting: ${err.message}`);
 					});
 
-					this.configurationSet({
-						index: this.getParameterIndex('power_reg_active_time'),
-						size: 0x01,
-						signed: false
-					}, powerRegValue / 10); // /10 to convert 10-100 to 1-10 in parameter values
-					return null;
+					try {
+						this.configurationSet({
+							index: this.getParameterIndex('power_reg_active_time'),
+							size: 0x01,
+							signed: false
+						}, powerRegValue / 10); // /10 to convert 10-100 to 1-10 in parameter values
+						return null;
+					} catch (error) {
+						this.error(`Error in target_temperature setParser: ${error.message}`);
+					}
 				}
 
 				const setpointType = Mode2Setpoint[currentMode];
@@ -499,6 +503,14 @@ class ZTRM6Device extends ZwaveDevice {
 
 	async handleThermostatModeForSensorMode(sensorMode) {
 		if (sensorMode === 5) {
+			try {
+				const thermostatModeResult = await this.node.CommandClass['COMMAND_CLASS_THERMOSTAT_MODE'].THERMOSTAT_MODE_GET();
+				if (thermostatModeResult && thermostatModeResult.Level && thermostatModeResult.Level.Mode === 'Off') {
+					return;
+				}
+			} catch (err) {
+				this.error(`Failed to get thermostat mode: ${err.message}`);
+			}
 			await this.handleEnterPowerRegulatorMode();
 			await this.setCapabilityValue('thermostat_mode', 'Powerregulator');
 		} else if (this.getCapabilityValue('thermostat_mode') === 'Powerregulator') {
