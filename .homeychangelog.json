@@ -124,5 +124,8 @@
   },
   "4.2.7": {
     "en": "Fixed Z-Temp3 setpoint issue"
+  },
+  "4.2.8": {
+    "en": "Improved error handling on TRM6 and DIN Z-Wave. Fixed Util missing issue on Z-Dim2"
   }
 }
