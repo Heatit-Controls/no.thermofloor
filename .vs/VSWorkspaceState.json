@@ -1,7 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\drivers",
+    "\\drivers\\WiFi7",
+    "\\drivers\\WiFi7\\assets",
+    "\\drivers\\WiFi7\\assets\\images",
+    "\\lib"
   ],
-  "SelectedNode": "\\README.txt",
   "PreviewInSolutionExplorer": false
 }
