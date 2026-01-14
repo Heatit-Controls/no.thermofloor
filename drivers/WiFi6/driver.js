@@ -17,14 +17,13 @@ module.exports = class MyDriver extends Homey.Driver {
      * This should return an array with the data of devices that are available for pairing.
      */
     async onPairListDevices() {
-
         let discoveryResults = await this.scanNetwork();
         let compatibleDevices = [];
 
         for (const item of discoveryResults) {
             compatibleDevices.push(
                 {
-                    name: "WiFi6 IP " + item.Ip,
+                    name: "WiFi6 " + (item.Name || item.Ip),
                     data: {
                         id: "WiFi6-Thermostat" + item.Mac,
                     },
@@ -49,25 +48,35 @@ module.exports = class MyDriver extends Homey.Driver {
 
 
     async scanNetwork() {
-        const baseIp = util.getBaseIpAddress(); //'192.168.1.'; Replace with your network's base IP this.
+        const baseIp = util.getBaseIpAddress();
         const out = [];
-        for (let i = 1; i <= 254; i++) {
+        const range = Array.from({ length: 254 }, (_, i) => i + 1);
+
+        const scanPromises = range.map(async (i) => {
             const ip = baseIp + i;
-            const isOnline = await util.checkTcpConnection(ip, 80); // Check port 80
-            if (isOnline) {
-                //this.log(`Device found at: ${ip}`);
-                let data = await this.getWiFi6ThermostatData(ip);
-                if (data.IsWiFi6Thermostat) {
-                    out.push({ "Ip": ip, "Mac": data.Mac });
-                    this.log('Yes is WiFi6 Thermostat. IP: ' + ip + ' Mac: ' + data.Mac)
+            try {
+                const isOnline = await util.checkTcpConnection(ip, 80, 2000); 
+                if (isOnline) {
+                    // this.log(`TCP Port 80 open at: ${ip}`);
+                    let data = await this.getWiFi6ThermostatData(ip);
+                    if (data.IsWiFi6Thermostat) {
+                        // this.log(`SUCCESS: Found WiFi6 Thermostat at ${ip} (Mac: ${data.Mac}, Name: ${data.Name})`);
+                        return { "Ip": ip, "Mac": data.Mac, "Name": data.Name };
+                    } else {
+                        // this.log(`Device at ${ip} is NOT a WiFi6 Thermostat (Data: ${JSON.stringify(data)})`);
+                    }
                 }
+            } catch (e) {
+                // Ignore connection errors
             }
-        }
-        return out;
+            return null;
+        });
+
+        const results = await Promise.all(scanPromises);
+        return results.filter(device => device !== null);
     }
 
     async getWiFi6ThermostatData(ip) {
-        //this.log('isNotWiFiThermostat IP ' + ip);
         return new Promise((resolve) => {
 
             http.get({
@@ -87,8 +96,7 @@ module.exports = class MyDriver extends Homey.Driver {
                     try {
                         const parsedData = JSON.parse(rawData);
                         if (parsedData.parameters.operatingMode != null && parsedData.model == null) {
-                            this.log('IsWiFi6Thermostat true');
-                            resolve({ "IsWiFi6Thermostat": true, "Mac": parsedData.network.mac });
+                            resolve({ "IsWiFi6Thermostat": true, "Mac": parsedData.network.mac, "Name": parsedData.name });
                         } else {
                             resolve({ "IsWiFi6Thermostat": false });
                         }
@@ -98,7 +106,7 @@ module.exports = class MyDriver extends Homey.Driver {
                 });
 
             }).on('error', (e) => {
-                this.log('isWiFiThermostat false');
+                // this.log(`HTTP Error for ${ip}: ${e.message}`);
                 resolve({ "IsWiFi6Thermostat": false });
             });
         });

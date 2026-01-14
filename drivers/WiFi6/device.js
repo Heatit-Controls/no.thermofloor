@@ -12,6 +12,12 @@ module.exports = class MyDevice extends Homey.Device {
         this.log('WiFi6 Thermostat has been initialized'); 
         this.isDebug = false;
         this.deviceIsDeleted = false;
+
+        // Ensure new capability is added if missing
+        if (!this.hasCapability('measure_temperature.internal')) {
+            await this.addCapability('measure_temperature.internal').catch(this.error);
+        }
+
         this.registerCapabilityListener('target_temperature', async (value) => {
             this.debug("Changed temp", value);
             this.setHeatingSetpoint(value);
@@ -99,6 +105,7 @@ module.exports = class MyDevice extends Homey.Device {
                     this.setMeasureTemperature(parsedData);
                     this.setOpenWindowDetectionFromThermostat(parsedData);
                     this.setDisableButtonsFromThermostat(parsedData);
+                    this.setCapabilityValue('measure_temperature.internal', parsedData.internalTemperature).catch(this.error);
                     this.setCapabilityValue('measure_temperature.external', parsedData.externalTemperature).catch(this.error);
                     this.setCapabilityValue('measure_temperature.floor', parsedData.floorTemperature).catch(this.error);
                     this.setCapabilityValue('target_temperature', parsedData.parameters.heatingSetpoint).catch(this.error);
