@@ -2,7 +2,7 @@
 const Homey = require('homey');
 const http = require('node:http');
 const util = require('../../lib/util');
-const { discoverThermostats } = require('../../lib/util/discovery');
+const { discoverDevices } = require('../../lib/util/discovery');
 
 module.exports = class MyDriver extends Homey.Driver {
 
@@ -10,7 +10,6 @@ module.exports = class MyDriver extends Homey.Driver {
      * onInit is called when the driver is initialized.
      */
     async onInit() {
-        this.log('Driver has been initialized');
     }
 
     /**
@@ -18,9 +17,13 @@ module.exports = class MyDriver extends Homey.Driver {
      * This should return an array with the data of devices that are available for pairing.
      */
     async onPairListDevices() {
-        const discoveryResults = await discoverThermostats({
+        const discoveryResults = await discoverDevices({
             driverName: 'WiFi6',
-            isModelMatch: (data) => data.parameters && data.parameters.operatingMode != null && data.model == null,
+            isModelMatch: (data) => {
+                const isThermostat = data.parameters && data.parameters.operatingMode !== undefined;
+                const isWiFi6 = !data.model || data.model === "Heatit WiFi6";
+                return isThermostat && isWiFi6;
+            },
             log: this.log.bind(this),
         });
 
