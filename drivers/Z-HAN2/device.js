@@ -16,19 +16,6 @@ class ZHAN2Device extends ZwaveDevice {
     this.registerCapability('measure_voltage', 'METER');
     this.registerCapability('measure_current', 'METER');
     this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL');
-
-    if (this.hasCapability('meter_power.exported')) {
-      await this.removeCapability('meter_power.exported');
-    }
-
-    if (this.hasCapability("meter_power.imported")) {
-      await this.removeCapability("meter_power.imported",);
-    }
-
-    if (this.hasCapability('accumulated_production') === false ) {
-      await this.addCapability('accumulated_production');
-    }
-
     this.registerAccumulatedProduction();
 
     this.registerCapabilityListener('button.reset_meter', async () => {
@@ -54,7 +41,7 @@ class ZHAN2Device extends ZwaveDevice {
           reportParser: (report) => {
               if (report && report.Properties2 && report.Properties2['Scale bits 10'] === 0x01) {
                   let parsedValue = Number(report['Meter Value (Parsed)']);
-                  this.log('kVAh: ', parsedValue);
+                  //this.log('kVAh: ', parsedValue);
                   return !isNaN(parsedValue) ? parsedValue : null;
               }
               return null;

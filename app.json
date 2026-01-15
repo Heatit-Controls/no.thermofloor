@@ -5291,11 +5291,12 @@
         "button.reset_meter"
       ],
       "energy": {
-        "cumulative": true
+        "cumulative": true,
+        "cumulativeImportedCapability": "meter_power"
       },
       "capabilitiesOptions": {
         "measure_power": {
-          "approximated": true
+          "approximated": false
         },
         "button.reset_meter": {
           "maintenanceAction": true,
@@ -5589,7 +5590,7 @@
       ],
       "capabilitiesOptions": {
         "measure_power": {
-          "approximated": true
+          "approximated": false
         },
         "button.reset_meter": {
           "maintenanceAction": true,
@@ -5607,8 +5608,8 @@
       },
       "energy": {
         "cumulative": true,
-        "cumulativeImportedCapability": "meter_power.imported",
-        "cumulativeExportedCapability": "meter_power.exported"
+        "cumulativeImportedCapability": "meter_power",
+        "cumulativeExportedCapability": "accumulated_production"
       },
       "units": {
         "en": "W"

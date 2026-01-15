@@ -13,7 +13,7 @@
 	],
 	"capabilitiesOptions": {
 		"measure_power": {
-			"approximated": true
+			"approximated": false
 		},
 		"button.reset_meter": {
 			"maintenanceAction": true,
@@ -31,8 +31,8 @@
 	},
 	"energy": {
 		"cumulative": true,
-		"cumulativeImportedCapability": "meter_power.imported",
-		"cumulativeExportedCapability": "meter_power.exported"
+		"cumulativeImportedCapability": "meter_power",
+		"cumulativeExportedCapability": "accumulated_production"
 	},
 	"units": {
 		"en": "W"
@@ -64,8 +64,8 @@
 	},
 	"zwave": {
 		"manufacturerId": 411,
-		"productTypeId": 4,
-		"productId": 26113,
+		"productTypeId": 98,
+		"productId": 25089,
 		"security": [
 			"none"
 		],
