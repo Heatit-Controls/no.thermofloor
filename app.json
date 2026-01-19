@@ -5581,7 +5581,7 @@
       "class": "sensor",
       "capabilities": [
         "meter_power",
-        "accumulated_production",
+        "meter_power.export",
         "measure_power",
         "measure_voltage",
         "measure_current",
@@ -5609,7 +5609,7 @@
       "energy": {
         "cumulative": true,
         "cumulativeImportedCapability": "meter_power",
-        "cumulativeExportedCapability": "accumulated_production"
+        "cumulativeExportedCapability": "meter_power.export"
       },
       "units": {
         "en": "W"
