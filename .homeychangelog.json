@@ -127,5 +127,8 @@
   },
   "4.2.8": {
     "en": "Improved error handling on TRM6 and DIN Z-Wave. Fixed Util missing issue on Z-Dim2"
+  },
+  "4.2.9": {
+    "en": "Improved WiFi discovery"
   }
 }
