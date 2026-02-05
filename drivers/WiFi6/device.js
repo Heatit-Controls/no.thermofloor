@@ -355,7 +355,7 @@ module.exports = class MyDevice extends Homey.Device {
 
             }).on('error', (e) => {
                 this.log('isWiFiThermostat false');
-                resolve({ "IsWiFi7Thermostat": false });
+                resolve({ "IsWiFi6Thermostat": false });
             });
         });
     }
