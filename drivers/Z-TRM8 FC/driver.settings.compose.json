@@ -2,7 +2,7 @@
   {
     "id": "disable_buttons",
     "type": "dropdown",
-    "label": { "en": "Disable buttons" },
+    "label": { "en": "Disable touchscreen" },
     "hint": { "en": "Disable or enable local control" },
     "zwave": { "index": 1, "size": 1, "signed": false },
     "value": "0",

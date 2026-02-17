@@ -4,7 +4,7 @@ const Homey = require('homey');
 const { Mode2Setpoint } = require('../../lib/map/ZTEMP3_mappings.js');
 const { Setpoint2Setting } = require("../../lib/map/ZTEMP3_mappings");
 
-class ZTRM6FCDevice extends ZwaveDevice {
+class ZTRM8FCDevice extends ZwaveDevice {
 	constructor(...args) {
 		super(...args);
 		
@@ -467,4 +467,4 @@ class ZTRM6FCDevice extends ZwaveDevice {
 	}
 }
 
-module.exports = ZTRM6FCDevice;
+module.exports = ZTRM8FCDevice;

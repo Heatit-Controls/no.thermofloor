@@ -1,6 +1,6 @@
 {
   "name": {
-    "en": "Z-TRM6 FC"
+    "en": "Z-TRM8 FC"
   },
   "class": "thermostat",
   "capabilities": [
@@ -146,7 +146,7 @@
       48
     ],
     "productId": [
-      12293
+      12296
     ],
     "security": [
       "none"
