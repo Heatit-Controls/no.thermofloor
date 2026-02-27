@@ -2,7 +2,6 @@
 const { ZwaveDevice } = require('homey-zwavedriver');
 const Homey = require('homey');
 const { Mode2Setpoint } = require('../../lib/map/ZTEMP3_mappings.js');
-const { Setpoint2Setting } = require("../../lib/map/ZTEMP3_mappings");
 
 class ZTRM8FCDevice extends ZwaveDevice {
 	constructor(...args) {
@@ -14,6 +13,7 @@ class ZTRM8FCDevice extends ZwaveDevice {
 			'heat': 'Heat',
 			'cool': 'Cool',
 			'energy save heat': 'Energy Save Heat',
+			'energy save cool': 'Energy Save Cool',
 			'auto changeover': 'Auto Changeover',
 			'fan': 'Fan Only',
 		};
@@ -23,6 +23,7 @@ class ZTRM8FCDevice extends ZwaveDevice {
 			'Heat': 'heat',
 			'Cool': 'cool',
 			'Energy Save Heat': 'energy save heat',
+			'Energy Save Cool': 'energy save cool',
 			'Auto Changeover': 'auto changeover',
 			'Fan Only': 'fan',
 		};
@@ -204,7 +205,7 @@ class ZTRM8FCDevice extends ZwaveDevice {
 					// Store thermostat setpoint based on thermostat type
 					this.setStoreValue(`thermostatsetpointValue.${setpointType}`, setpointValue).catch(this.error);
 
-					// Update device settings setpoint value
+					// TODO: Fix setting IDs don't match compose file
 					const setpointSetting = Setpoint2Setting[setpointType];
 					if (!setpointSetting) {
 						this.error(`No matching setting found for setpoint type: ${setpointType}`);
@@ -278,6 +279,7 @@ class ZTRM8FCDevice extends ZwaveDevice {
 								.catch(err => this.error(`Error storing setpoint value: ${err.message}`));
 						}
 						
+						// TODO: Fix Setpoint2Setting - setting IDs don't match compose file
 						const setpointSetting = Setpoint2Setting[setpointType];
 						if (!setpointSetting) {
 							this.error(`No matching setting found for setpoint type: ${setpointType}`);

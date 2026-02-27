@@ -44,7 +44,13 @@
         {
           "id": "energy save heat",
           "title": {
-            "en": "ECO"
+            "en": "ECO Heat"
+          }
+        },
+        {
+          "id": "energy save cool",
+          "title": {
+            "en": "ECO Cool"
           }
         },
         {
