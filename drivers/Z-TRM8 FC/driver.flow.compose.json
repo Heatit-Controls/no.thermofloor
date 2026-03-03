@@ -1,0 +1,40 @@
+{
+  "triggers": [
+    {
+      "id": "ztrm8fc-scene",
+      "title": {
+        "en": "Button is pressed"
+      },
+      "titleFormatted": {
+        "en": "Button [[button]] is pressed"
+      },
+      "args": [
+        {
+          "name": "button",
+          "type": "dropdown",
+          "title": { "en": "Button" },
+          "values": [
+            {
+              "id": "1",
+              "label": { "en": "Button 1" }
+            },
+            {
+              "id": "2",
+              "label": { "en": "Button 2" }
+            },
+            {
+              "id": "3",
+              "label": { "en": "Button 3" }
+            },
+            {
+              "id": "4",
+              "label": { "en": "Button 4" }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "conditions": [],
+  "actions": []
+}

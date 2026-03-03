@@ -178,49 +178,30 @@
         ]
       },
       {
-        "id": "heating_setpoint",
-        "type": "number",
-        "label": { "en": "Heating setpoint" },
-        "hint": { "en": "Set the setpoint for heating mode (5°C to 40°C)" },
-        "zwave": { "index": 16, "size": 2, "signed": false },
-        "value": 210,
-        "attr": { "min": 50, "max": 400 }
+        "$extends": "HEAT_setpoint",
+        "id": "HEAT_setpoint",
+        "zwave": { "index": 16, "size": 2, "signed": false }
       },
       {
-        "id": "cooling_setpoint",
-        "type": "number",
-        "label": { "en": "Cooling setpoint" },
-        "hint": { "en": "Set the setpoint for cooling mode (5°C to 40°C)" },
+        "$extends": "COOL_setpoint",
+        "id": "COOL_setpoint",
         "zwave": { "index": 17, "size": 2, "signed": false },
-        "value": 180,
-        "attr": { "min": 50, "max": 400 }
+        "value": 180
       },
       {
-        "id": "energy_save_heating_setpoint",
-        "type": "number",
-        "label": { "en": "Energy Save Heating setpoint" },
-        "hint": { "en": "Set the setpoint for Energy Save Heating mode (5°C to 40°C)" },
-        "zwave": { "index": 18, "size": 2, "signed": false },
-        "value": 180,
-        "attr": { "min": 50, "max": 400 }
+        "$extends": "ECO_setpoint",
+        "id": "ECO_setpoint",
+        "zwave": { "index": 18, "size": 2, "signed": false }
       },
       {
-        "id": "energy_save_cooling_setpoint",
-        "type": "number",
-        "label": { "en": "Energy Save Cooling setpoint" },
-        "hint": { "en": "Set the setpoint for Energy Save Cooling mode (5°C to 40°C)" },
-        "zwave": { "index": 19, "size": 2, "signed": false },
-        "value": 240,
-        "attr": { "min": 50, "max": 400 }
+        "$extends": "ESC_setpoint",
+        "id": "ESC_setpoint",
+        "zwave": { "index": 19, "size": 2, "signed": false }
       },
       {
-        "id": "auto_changeover_setpoint",
-        "type": "number",
-        "label": { "en": "AUTO Changeover setpoint" },
-        "hint": { "en": "Set the setpoint for AUTO Changeover mode (5°C to 40°C)" },
-        "zwave": { "index": 20, "size": 2, "signed": false },
-        "value": 210,
-        "attr": { "min": 50, "max": 400 }
+        "$extends": "AUTO_setpoint",
+        "id": "AUTO_setpoint",
+        "zwave": { "index": 20, "size": 2, "signed": false }
       }
     ]
   },
@@ -318,7 +299,7 @@
         "type": "number",
         "label": { "en": "Size of load" },
         "hint": { "en": "Set the size of load (0 = No load reporting, 1-99 = 100-9900 Watt)" },
-        "zwave": { "index": 27, "size": 2, "signed": false },
+        "zwave": { "index": 27, "size": 1, "signed": false },
         "value": 0,
         "attr": { "min": 0, "max": 99 }
       },

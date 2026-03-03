@@ -14,7 +14,8 @@
     "button.reset_meter",
 
     "fan_mode",
-    "thermostat_fan_state"
+    "thermostat_fan_state",
+    "measure_humidity"
   ],
   "capabilitiesOptions": {
     "meter_power": {
@@ -99,6 +100,9 @@
     "measure_temperature": {
       "title": "temperature"
     },
+    "measure_humidity": {
+      "title": "humidity"
+    },
     "fan_mode": {
       "values": [
         {
@@ -162,7 +166,7 @@
     "learnmode": {
       "image": "{{driverAssetsPath}}/learnmode.svg",
       "instruction": {
-        "en": "1. Hold the Center button for 5 seconds. The display will show \"OFF\".\n2. Press the \"+\" button once to see \"CON\" in the display.\n3 Start the configuration mode on the thermostat by holding the Center button for approximately 2 seconds.\n4. Configuration mode is indicated on the device by rotating LED segments on the display."
+        "en": "1. Open the menu on the display.\n2. Navigate to \"Connection\".\n3. Tap \"Start add/remove mode\".\n4. The thermostat will search for a Z-Wave network and confirm when inclusion is complete."
       }
     },
     "associationGroups": [],

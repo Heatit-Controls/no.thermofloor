@@ -1,7 +1,7 @@
 'use strict';
 const { ZwaveDevice } = require('homey-zwavedriver');
 const Homey = require('homey');
-const { Mode2Setpoint } = require('../../lib/map/ZTEMP3_mappings.js');
+const { Mode2Setpoint, Setpoint2Setting } = require('../../lib/map/ZTEMP3_mappings.js');
 
 class ZTRM8FCDevice extends ZwaveDevice {
 	constructor(...args) {
@@ -49,15 +49,21 @@ class ZTRM8FCDevice extends ZwaveDevice {
 	
 	async onNodeInit() {
 		// enable debug logging
-		//this.enableDebug();
+		this.enableDebug();
 		
 
 		// print the node's info to the console
-		// this.printNode();
+		this.printNode();
 		
 		// register capabilities for this device
 
 		this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL', {
+			getOpts: {
+				getOnStart: true,
+			},
+		});
+
+		this.registerCapability('measure_humidity', 'SENSOR_MULTILEVEL', {
 			getOpts: {
 				getOnStart: true,
 			},
@@ -82,7 +88,6 @@ class ZTRM8FCDevice extends ZwaveDevice {
 			setParser: fanMode => {
 				this.log('Setting fan mode to:', fanMode);
 				
-				// Get the Z-Wave fan mode value from the capability value
 				const zwaveFanMode = this.CapabilityToFanMode[fanMode];
 				if (!zwaveFanMode) {
 					this.log('Invalid fan mode:', fanMode);
@@ -205,7 +210,6 @@ class ZTRM8FCDevice extends ZwaveDevice {
 					// Store thermostat setpoint based on thermostat type
 					this.setStoreValue(`thermostatsetpointValue.${setpointType}`, setpointValue).catch(this.error);
 
-					// TODO: Fix setting IDs don't match compose file
 					const setpointSetting = Setpoint2Setting[setpointType];
 					if (!setpointSetting) {
 						this.error(`No matching setting found for setpoint type: ${setpointType}`);
@@ -279,7 +283,6 @@ class ZTRM8FCDevice extends ZwaveDevice {
 								.catch(err => this.error(`Error storing setpoint value: ${err.message}`));
 						}
 						
-						// TODO: Fix Setpoint2Setting - setting IDs don't match compose file
 						const setpointSetting = Setpoint2Setting[setpointType];
 						if (!setpointSetting) {
 							this.error(`No matching setting found for setpoint type: ${setpointType}`);
@@ -464,8 +467,27 @@ class ZTRM8FCDevice extends ZwaveDevice {
 			},
 		});
 
+		this.registerReportListener('CENTRAL_SCENE', 'CENTRAL_SCENE_NOTIFICATION', report => {
+			if (report && report['Scene Number'] && report.Properties1) {
+				const data = {
+					button: report['Scene Number'].toString(),
+				};
+				this.driver.sceneFlowTrigger.trigger(this, null, data)
+					.catch(err => this.error('Error triggering scene flow card:', err));
+			}
+		});
+
 		this.setAvailable().catch(err => this.error(`Error setting device available: ${err.message}`));
 
+	}
+
+	sceneRunListener(args, state) {
+		return (
+			state &&
+			args.hasOwnProperty('button') &&
+			state.hasOwnProperty('button') &&
+			state.button === args.button
+		);
 	}
 }
 

@@ -1,8 +1,0 @@
-{
-  "devDependencies": {
-    "@types/homey": "npm:homey-apps-sdk-v3-types@^0.3.10"
-  },
-  "dependencies": {
-    "homey-zwavedriver": "^2.2.1"
-  }
-}

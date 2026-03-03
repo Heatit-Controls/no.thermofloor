@@ -1,0 +1,17 @@
+{
+	"id": "AUTO_setpoint",
+	"type": "number",
+	"attr": {
+		"min": 50,
+		"max": 400
+	},
+	"value": 210,
+	"label": {
+		"en": "Auto changeover mode temperature",
+		"nl": "Auto omschakel modus temperatuur"
+	},
+	"hint": {
+		"en": "Temperature setpoint used when in Auto Changeover mode. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 50 - 400 (5.0 - 40.0°C) \nDefault: 210 (21.0) °C",
+		"nl": "Temperatuur setpoint gebruikt in Auto omschakel modus. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 50 - 400 (5.0 - 40.0°C)\nStandaard: 210 (21.0) °C"
+	}
+}

@@ -680,6 +680,55 @@
         ]
       },
       {
+        "id": "ztrm8fc-scene",
+        "title": {
+          "en": "Button is pressed"
+        },
+        "titleFormatted": {
+          "en": "Button [[button]] is pressed"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Z-TRM8 FC"
+          },
+          {
+            "name": "button",
+            "type": "dropdown",
+            "title": {
+              "en": "Button"
+            },
+            "values": [
+              {
+                "id": "1",
+                "label": {
+                  "en": "Button 1"
+                }
+              },
+              {
+                "id": "2",
+                "label": {
+                  "en": "Button 2"
+                }
+              },
+              {
+                "id": "3",
+                "label": {
+                  "en": "Button 3"
+                }
+              },
+              {
+                "id": "4",
+                "label": {
+                  "en": "Button 4"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
         "id": "z-push-wc-scene",
         "title": {
           "en": "Button is pressed"
@@ -1644,7 +1693,7 @@
           "value": 210,
           "label": {
             "en": "Cooling mode temperature",
-            "nl": "Koelen mode temperatuur"
+            "nl": "Koel modus temperatuur"
           },
           "hint": {
             "en": "Temperature setpoint used when in Cooling (COOL) mode (only if enabled). \nZ-wave parameter 13 \nRange: 50 - 400 (5.0 - 40.0°C) \nDefault: 210 (21.0) °C",
@@ -2194,7 +2243,7 @@
           "value": 210,
           "label": {
             "en": "Cooling mode temperature",
-            "nl": "Koelen mode temperatuur"
+            "nl": "Koel modus temperatuur"
           },
           "hint": {
             "en": "Temperature setpoint used when in Cooling (COOL) mode (only if enabled). \nZ-wave parameter 13 \nRange: 50 - 400 (5.0 - 40.0°C) \nDefault: 210 (21.0) °C",
@@ -6949,7 +6998,7 @@
           "value": 210,
           "label": {
             "en": "Cooling mode temperature",
-            "nl": "Koelen mode temperatuur"
+            "nl": "Koel modus temperatuur"
           },
           "hint": {
             "en": "Temperature setpoint used when in Cooling (COOL) mode (only if enabled). \nZ-wave parameter 11 \nRange: 50 - 400 (5.0 - 40.0°C) \nDefault: 210 (21.0) °C",
@@ -9941,7 +9990,8 @@
         "measure_power",
         "button.reset_meter",
         "fan_mode",
-        "thermostat_fan_state"
+        "thermostat_fan_state",
+        "measure_humidity"
       ],
       "capabilitiesOptions": {
         "meter_power": {
@@ -9971,7 +10021,13 @@
             {
               "id": "energy save heat",
               "title": {
-                "en": "ECO"
+                "en": "ECO Heat"
+              }
+            },
+            {
+              "id": "energy save cool",
+              "title": {
+                "en": "ECO Cool"
               }
             },
             {
@@ -10018,6 +10074,9 @@
         },
         "measure_temperature": {
           "title": "temperature"
+        },
+        "measure_humidity": {
+          "title": "humidity"
         },
         "fan_mode": {
           "values": [
@@ -10082,7 +10141,7 @@
         "learnmode": {
           "image": "/drivers/Z-TRM8 FC/assets/learnmode.svg",
           "instruction": {
-            "en": "1. Hold the Center button for 5 seconds. The display will show \"OFF\".\n2. Press the \"+\" button once to see \"CON\" in the display.\n3 Start the configuration mode on the thermostat by holding the Center button for approximately 2 seconds.\n4. Configuration mode is indicated on the device by rotating LED segments on the display."
+            "en": "1. Open the menu on the display.\n2. Navigate to \"Connection\".\n3. Tap \"Start add/remove mode\".\n4. The thermostat will search for a Z-Wave network and confirm when inclusion is complete."
           }
         },
         "associationGroups": [],
@@ -10125,762 +10184,1028 @@
       "id": "Z-TRM8 FC",
       "settings": [
         {
-          "id": "disable_buttons",
-          "type": "dropdown",
+          "type": "group",
           "label": {
-            "en": "Disable touchscreen"
+            "en": "Display settings"
           },
-          "hint": {
-            "en": "Disable or enable local control"
-          },
-          "zwave": {
-            "index": 1,
-            "size": 1,
-            "signed": false
-          },
-          "value": "0",
-          "values": [
+          "children": [
             {
-              "id": "0",
+              "id": "disable_touchscreen",
+              "type": "dropdown",
               "label": {
-                "en": "Enabled, buttons on the front of the device work (Default)"
+                "en": "Disable touchscreen"
+              },
+              "hint": {
+                "en": "Disable or enable the touch screen"
+              },
+              "zwave": {
+                "index": 1,
+                "size": 1,
+                "signed": false
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Enabled, touchscreen of the device is enabled and works like normal. (Default)"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Disabled, touchscreen is disabled."
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "Lock menu, touchscreen is enabled, but settings cannot be changed accessed."
+                  }
+                }
+              ]
+            },
+            {
+              "id": "active_display_information",
+              "type": "number",
+              "label": {
+                "en": "Active display information"
+              },
+              "hint": {
+                "en": "Decide what is shown in the display during active state. Bitmap: Bit 0 = Measured temperature, Bit 1 = Humidity, Bit 2 = Fan speed, Bit 3 = Setpoint. Add values together (e.g. 15 = all enabled)"
+              },
+              "zwave": {
+                "index": 6,
+                "size": 1,
+                "signed": false
+              },
+              "value": 15,
+              "attr": {
+                "min": 0,
+                "max": 15
               }
             },
             {
-              "id": "1",
+              "id": "standby_display_information",
+              "type": "number",
               "label": {
-                "en": "Disabled, buttons on the front of the device are disabled"
+                "en": "Standby display information"
+              },
+              "hint": {
+                "en": "Decide what is shown during standby. Bitmap: Bit 0 = Measured temperature, Bit 1 = Humidity, Bit 2 = Fan speed, Bit 3 = Setpoint. Add values together (e.g. 15 = all enabled)"
+              },
+              "zwave": {
+                "index": 7,
+                "size": 1,
+                "signed": false
+              },
+              "value": 15,
+              "attr": {
+                "min": 0,
+                "max": 15
               }
             },
             {
-              "id": "2",
+              "id": "main_screen",
+              "type": "dropdown",
               "label": {
-                "en": "Lock menu, buttons function normally but menu cannot be accessed"
+                "en": "Main screen"
+              },
+              "hint": {
+                "en": "Decide which screen is the main screen on the device"
+              },
+              "zwave": {
+                "index": 8,
+                "size": 1,
+                "signed": false
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Thermostat screen (Default) - displays temperature control interface"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Device control screen - displays controls for associated devices"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "Scene control screen - displays scene activation controls"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "proximity_sensor_function",
+              "type": "dropdown",
+              "label": {
+                "en": "Proximity sensor function"
+              },
+              "hint": {
+                "en": "Choose if the proximity sensor is enabled or disabled and should wake the display"
+              },
+              "zwave": {
+                "index": 9,
+                "size": 1,
+                "signed": false
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Proximity sensor disabled (Default) - display only wakes by touch"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Proximity sensor enabled - display automatically wakes when motion/presence is detected near the device"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "active_display_brightness",
+              "type": "number",
+              "label": {
+                "en": "Active display brightness"
+              },
+              "hint": {
+                "en": "Set brightness during active state (10% to 100%)"
+              },
+              "zwave": {
+                "index": 10,
+                "size": 1,
+                "signed": false
+              },
+              "value": 10,
+              "attr": {
+                "min": 1,
+                "max": 10
+              }
+            },
+            {
+              "id": "active_state_duration",
+              "type": "number",
+              "label": {
+                "en": "Active state duration"
+              },
+              "hint": {
+                "en": "Choose how long the display should be active after use (1 to 60 seconds)"
+              },
+              "zwave": {
+                "index": 11,
+                "size": 1,
+                "signed": false
+              },
+              "value": 10,
+              "attr": {
+                "min": 1,
+                "max": 60
+              }
+            },
+            {
+              "id": "standby_display_brightness",
+              "type": "number",
+              "label": {
+                "en": "Standby display brightness"
+              },
+              "hint": {
+                "en": "Set brightness during standby state (0% to 100%)"
+              },
+              "zwave": {
+                "index": 12,
+                "size": 1,
+                "signed": false
+              },
+              "value": 1,
+              "attr": {
+                "min": 0,
+                "max": 10
+              }
+            },
+            {
+              "id": "temperature_scale",
+              "type": "dropdown",
+              "label": {
+                "en": "Temperature scale"
+              },
+              "hint": {
+                "en": "Choose to use Celsius or Fahrenheit"
+              },
+              "zwave": {
+                "index": 38,
+                "size": 1,
+                "signed": false
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Celsius (Default)"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Fahrenheit"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "group",
+          "label": {
+            "en": "Limits and calibration"
+          },
+          "children": [
+            {
+              "id": "sensor_min_temp_limit",
+              "type": "number",
+              "label": {
+                "en": "Sensor min temp limit"
+              },
+              "hint": {
+                "en": "Set minimum setpoint for the sensor (5°C to 40°C)"
+              },
+              "zwave": {
+                "index": 2,
+                "size": 2,
+                "signed": false
+              },
+              "value": 50,
+              "attr": {
+                "min": 50,
+                "max": 400
+              }
+            },
+            {
+              "id": "sensor_max_temp_limit",
+              "type": "number",
+              "label": {
+                "en": "Sensor max temp limit"
+              },
+              "hint": {
+                "en": "Set maximum setpoint for the sensor (5°C to 40°C)"
+              },
+              "zwave": {
+                "index": 3,
+                "size": 2,
+                "signed": false
+              },
+              "value": 400,
+              "attr": {
+                "min": 50,
+                "max": 400
+              }
+            },
+            {
+              "id": "sensor_calibration",
+              "type": "number",
+              "label": {
+                "en": "Sensor calibration"
+              },
+              "hint": {
+                "en": "Manually calibrate the sensor by ±6°C. To set a negative value, use 256 and subtract the desired value."
+              },
+              "zwave": {
+                "index": 4,
+                "size": 1
+              },
+              "value": 0,
+              "attr": {
+                "min": -60,
+                "max": 60
+              }
+            },
+            {
+              "id": "temperature_control_hysteresis",
+              "type": "number",
+              "label": {
+                "en": "Temperature control hysteresis"
+              },
+              "hint": {
+                "en": "Select degrees for regulation hysteresis (0.3°C to 3.0°C)"
+              },
+              "zwave": {
+                "index": 5,
+                "size": 1,
+                "signed": false
+              },
+              "value": 10,
+              "attr": {
+                "min": 3,
+                "max": 30
               }
             }
           ]
         },
         {
-          "id": "sensor_min_temp_limit",
-          "type": "number",
+          "type": "group",
           "label": {
-            "en": "Sensor min temp limit"
+            "en": "Modes and setpoints"
           },
-          "hint": {
-            "en": "Set minimum setpoint for the sensor (5°C to 40°C)"
-          },
-          "zwave": {
-            "index": 2,
-            "size": 2,
-            "signed": false
-          },
-          "value": 50,
-          "attr": {
-            "min": 50,
-            "max": 400
-          }
-        },
-        {
-          "id": "sensor_max_temp_limit",
-          "type": "number",
-          "label": {
-            "en": "Sensor max temp limit"
-          },
-          "hint": {
-            "en": "Set maximum setpoint for the sensor (5°C to 40°C)"
-          },
-          "zwave": {
-            "index": 3,
-            "size": 2,
-            "signed": false
-          },
-          "value": 400,
-          "attr": {
-            "min": 50,
-            "max": 400
-          }
-        },
-        {
-          "id": "sensor_calibration",
-          "type": "number",
-          "label": {
-            "en": "Sensor calibration (CAR)"
-          },
-          "hint": {
-            "en": "Manually calibrate the sensor by ±6°C. To set a negative value, use 256 and subtract the desired value."
-          },
-          "zwave": {
-            "index": 4,
-            "size": 1
-          },
-          "value": 0,
-          "attr": {
-            "min": -60,
-            "max": 60
-          }
-        },
-        {
-          "id": "regulation_mode",
-          "type": "dropdown",
-          "label": {
-            "en": "Regulation mode (REG)"
-          },
-          "hint": {
-            "en": "Select regulation mode"
-          },
-          "zwave": {
-            "index": 5,
-            "size": 1
-          },
-          "value": "0",
-          "values": [
+          "children": [
             {
-              "id": "0",
+              "id": "operating_mode",
+              "type": "dropdown",
               "label": {
-                "en": "Hysteresis (Default)"
+                "en": "Operating Mode"
+              },
+              "hint": {
+                "en": "Changes operating mode"
+              },
+              "zwave": {
+                "index": 22,
+                "size": 1
+              },
+              "value": "1",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "OFF (Thermostat display is off. Thermostat does not regulate temperature)"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Heating mode (Default)"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "Cooling mode"
+                  }
+                },
+                {
+                  "id": "3",
+                  "label": {
+                    "en": "Energy save heating mode"
+                  }
+                },
+                {
+                  "id": "4",
+                  "label": {
+                    "en": "Energy save cooling mode"
+                  }
+                },
+                {
+                  "id": "5",
+                  "label": {
+                    "en": "VENT mode"
+                  }
+                },
+                {
+                  "id": "6",
+                  "label": {
+                    "en": "AUTO Changeover mode"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "fan_speed_mode",
+              "type": "dropdown",
+              "label": {
+                "en": "Fan speed mode"
+              },
+              "hint": {
+                "en": "Choose Fan speed"
+              },
+              "zwave": {
+                "index": 31,
+                "size": 1
+              },
+              "value": "2",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "LOW"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "HIGH"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "AUTO MEDIUM (functions as just AUTO mode, but AUTO medium is set since AUTO is not supported in Z-Wave) (Default)"
+                  }
+                },
+                {
+                  "id": "3",
+                  "label": {
+                    "en": "MEDIUM"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "HEAT_setpoint",
+              "zwave": {
+                "index": 16,
+                "size": 2,
+                "signed": false
+              },
+              "type": "number",
+              "attr": {
+                "min": 50,
+                "max": 400
+              },
+              "value": 210,
+              "label": {
+                "en": "Heating mode temperature",
+                "nl": "Verwarmings modus temperatuur"
+              },
+              "hint": {
+                "en": "Temperature setpoint used when in Heating mode. \nZ-wave parameter 16 \nRange: 50 - 400 (5.0 - 40.0°C) \nDefault: 210 (21.0) °C",
+                "nl": "Temperatuur setpoint gebruikt in Verwarmings mode. \nZ-wave parameter 16 \nBereik: 50 - 400 (5.0 - 40.0°C)\nStandaard: 210 (21.0) °C"
               }
             },
             {
-              "id": "1",
+              "id": "COOL_setpoint",
+              "zwave": {
+                "index": 17,
+                "size": 2,
+                "signed": false
+              },
+              "value": 180,
+              "type": "number",
+              "attr": {
+                "min": 50,
+                "max": 400
+              },
               "label": {
-                "en": "PWM regulation"
+                "en": "Cooling mode temperature",
+                "nl": "Koel modus temperatuur"
+              },
+              "hint": {
+                "en": "Temperature setpoint used when in Cooling (COOL) mode (only if enabled). \nZ-wave parameter 17 \nRange: 50 - 400 (5.0 - 40.0°C) \nDefault: 210 (21.0) °C",
+                "nl": "Temperatuur setpoint gebruikt in Koelen (COOL) modus (indien beschikbaar). \nZ-wave parameter 17 \nBereik: 50 - 400 (5.0 - 40.0°C)\nStandaard: 210 (21.0) °C"
+              }
+            },
+            {
+              "id": "ECO_setpoint",
+              "zwave": {
+                "index": 18,
+                "size": 2,
+                "signed": false
+              },
+              "type": "number",
+              "attr": {
+                "min": 50,
+                "max": 400
+              },
+              "value": 180,
+              "label": {
+                "en": "Energy saving mode temperature",
+                "nl": "Energiebesparings modus temperatuur"
+              },
+              "hint": {
+                "en": "Temperature setpoint used when in Energy saving (ECO) mode. \nZ-wave parameter 18 \nRange: 50 - 400 (5.0C - 40.0 °C) \nDefault: 180 (18.0) °C",
+                "nl": "Temperatuur setpoint gebruikt in Energiebesparings (ECO) mode. \nZ-wave parameter 18 \nBereik: 50 - 400 (5.0C - 40.0 °C)\nStandaard: 180 (18.0) °C"
+              }
+            },
+            {
+              "id": "ESC_setpoint",
+              "zwave": {
+                "index": 19,
+                "size": 2,
+                "signed": false
+              },
+              "type": "number",
+              "attr": {
+                "min": 50,
+                "max": 400
+              },
+              "value": 240,
+              "label": {
+                "en": "Energy save cooling mode temperature",
+                "nl": "Energiebesparings koelen modus temperatuur"
+              },
+              "hint": {
+                "en": "Temperature setpoint used when in Energy Save Cooling mode. \nZ-wave parameter 19 \nRange: 50 - 400 (5.0 - 40.0°C) \nDefault: 240 (24.0) °C",
+                "nl": "Temperatuur setpoint gebruikt in Energiebesparings koelen modus. \nZ-wave parameter 19 \nBereik: 50 - 400 (5.0 - 40.0°C)\nStandaard: 240 (24.0) °C"
+              }
+            },
+            {
+              "id": "AUTO_setpoint",
+              "zwave": {
+                "index": 20,
+                "size": 2,
+                "signed": false
+              },
+              "type": "number",
+              "attr": {
+                "min": 50,
+                "max": 400
+              },
+              "value": 210,
+              "label": {
+                "en": "Auto changeover mode temperature",
+                "nl": "Auto omschakel modus temperatuur"
+              },
+              "hint": {
+                "en": "Temperature setpoint used when in Auto Changeover mode. \nZ-wave parameter 20 \nRange: 50 - 400 (5.0 - 40.0°C) \nDefault: 210 (21.0) °C",
+                "nl": "Temperatuur setpoint gebruikt in Auto omschakel modus. \nZ-wave parameter 20 \nBereik: 50 - 400 (5.0 - 40.0°C)\nStandaard: 210 (21.0) °C"
               }
             }
           ]
         },
         {
-          "id": "temperature_control_hysteresis",
-          "type": "number",
+          "type": "group",
           "label": {
-            "en": "Temperature control hysteresis (HYST)"
+            "en": "Reporting"
           },
-          "hint": {
-            "en": "Select degrees for regulation hysteresis (0.3°C to 3.0°C)"
-          },
-          "zwave": {
-            "index": 6,
-            "size": 1,
-            "signed": false
-          },
-          "value": 10,
-          "attr": {
-            "min": 3,
-            "max": 30
-          }
-        },
-        {
-          "id": "temperature_display",
-          "type": "dropdown",
-          "label": {
-            "en": "Temperature display"
-          },
-          "hint": {
-            "en": "Decide what is shown during standby"
-          },
-          "zwave": {
-            "index": 7,
-            "size": 1
-          },
-          "value": "0",
-          "values": [
+          "children": [
             {
-              "id": "0",
+              "id": "temperature_report_interval",
+              "type": "number",
               "label": {
-                "en": "Display setpoint temperature (Default)"
+                "en": "Temperature report interval"
+              },
+              "hint": {
+                "en": "Set temperature report interval (30 to 65535 seconds)"
+              },
+              "zwave": {
+                "index": 13,
+                "size": 2,
+                "signed": false
+              },
+              "value": 840,
+              "attr": {
+                "min": 30,
+                "max": 65535
               }
             },
             {
-              "id": "1",
+              "id": "temperature_report_hysteresis",
+              "type": "number",
               "label": {
-                "en": "Display measured temperature"
+                "en": "Temperature report hysteresis"
+              },
+              "hint": {
+                "en": "Set temperature report hysteresis in °C (0.1°C to 10°C)"
+              },
+              "zwave": {
+                "index": 14,
+                "size": 1,
+                "signed": false
+              },
+              "value": 10,
+              "attr": {
+                "min": 1,
+                "max": 100
+              }
+            },
+            {
+              "id": "thermostat_state_update_interval",
+              "type": "number",
+              "label": {
+                "en": "Thermostat state update interval"
+              },
+              "hint": {
+                "en": "Set thermostat state update interval (0 = only when changed, 30-65535 seconds)"
+              },
+              "zwave": {
+                "index": 21,
+                "size": 2,
+                "signed": false
+              },
+              "value": 3600,
+              "attr": {
+                "min": 0,
+                "max": 65535
               }
             }
           ]
         },
         {
-          "id": "active_display_brightness",
-          "type": "number",
+          "type": "group",
           "label": {
-            "en": "Active display brightness (BR1)"
+            "en": "Advanced settings"
           },
-          "hint": {
-            "en": "Set brightness during active state (10% to 100%)"
-          },
-          "zwave": {
-            "index": 8,
-            "size": 1,
-            "signed": false
-          },
-          "value": 10,
-          "attr": {
-            "min": 1,
-            "max": 10
-          }
-        },
-        {
-          "id": "standby_display_brightness",
-          "type": "number",
-          "label": {
-            "en": "Standby display brightness (BR2)"
-          },
-          "hint": {
-            "en": "Set brightness during standby state (10% to 100%)"
-          },
-          "zwave": {
-            "index": 9,
-            "size": 1,
-            "signed": false
-          },
-          "value": 5,
-          "attr": {
-            "min": 1,
-            "max": 10
-          }
-        },
-        {
-          "id": "temperature_report_interval",
-          "type": "number",
-          "label": {
-            "en": "Temperature report interval"
-          },
-          "hint": {
-            "en": "Set temperature report interval (30 to 65535 seconds)"
-          },
-          "zwave": {
-            "index": 10,
-            "size": 2,
-            "signed": false
-          },
-          "value": 840,
-          "attr": {
-            "min": 30,
-            "max": 65535
-          }
-        },
-        {
-          "id": "temperature_report_hysteresis",
-          "type": "number",
-          "label": {
-            "en": "Temperature report hysteresis"
-          },
-          "hint": {
-            "en": "Set temperature report hysteresis in °C (0.1°C to 10°C)"
-          },
-          "zwave": {
-            "index": 11,
-            "size": 1,
-            "signed": false
-          },
-          "value": 10,
-          "attr": {
-            "min": 1,
-            "max": 100
-          }
-        },
-        {
-          "id": "action_after_error",
-          "type": "number",
-          "label": {
-            "en": "Action after error"
-          },
-          "hint": {
-            "en": "Time delay to turn on regulation after error (0 disables retry)"
-          },
-          "zwave": {
-            "index": 12,
-            "size": 2,
-            "signed": false
-          },
-          "value": 0,
-          "attr": {
-            "min": 0,
-            "max": 65535
-          }
-        },
-        {
-          "id": "heating_setpoint",
-          "type": "number",
-          "label": {
-            "en": "Heating setpoint"
-          },
-          "hint": {
-            "en": "Set the setpoint for heating mode (5°C to 40°C)"
-          },
-          "zwave": {
-            "index": 13,
-            "size": 2,
-            "signed": false
-          },
-          "value": 210,
-          "attr": {
-            "min": 50,
-            "max": 400
-          }
-        },
-        {
-          "id": "cooling_setpoint",
-          "type": "number",
-          "label": {
-            "en": "Cooling setpoint"
-          },
-          "hint": {
-            "en": "Set the setpoint for cooling mode (5°C to 40°C)"
-          },
-          "zwave": {
-            "index": 14,
-            "size": 2,
-            "signed": false
-          },
-          "value": 180,
-          "attr": {
-            "min": 50,
-            "max": 400
-          }
-        },
-        {
-          "id": "eco_setpoint",
-          "type": "number",
-          "label": {
-            "en": "ECO setpoint"
-          },
-          "hint": {
-            "en": "Set the setpoint for ECO mode (5°C to 40°C)"
-          },
-          "zwave": {
-            "index": 15,
-            "size": 2,
-            "signed": false
-          },
-          "value": 180,
-          "attr": {
-            "min": 50,
-            "max": 400
-          }
-        },
-        {
-          "id": "auto_changeover_setpoint",
-          "type": "number",
-          "label": {
-            "en": "AUTO setpoint"
-          },
-          "hint": {
-            "en": "Set the setpoint for AUTO mode (5°C to 40°C)"
-          },
-          "zwave": {
-            "index": 16,
-            "size": 2,
-            "signed": false
-          },
-          "value": 210,
-          "attr": {
-            "min": 50,
-            "max": 400
-          }
-        },
-        {
-          "id": "thermostat_state_update_interval",
-          "type": "number",
-          "label": {
-            "en": "Thermostat state update interval"
-          },
-          "hint": {
-            "en": "Set thermostat state update interval (30 to 65535 seconds)"
-          },
-          "zwave": {
-            "index": 17,
-            "size": 2,
-            "signed": false
-          },
-          "value": 3600,
-          "attr": {
-            "min": 30,
-            "max": 65535
-          }
-        },
-        {
-          "id": "operating_mode",
-          "type": "dropdown",
-          "label": {
-            "en": "Operating Mode (MODE)"
-          },
-          "hint": {
-            "en": "Changes operating mode"
-          },
-          "zwave": {
-            "index": 18,
-            "size": 1
-          },
-          "value": "1",
-          "values": [
+          "children": [
             {
-              "id": "0",
+              "id": "action_after_error",
+              "type": "number",
               "label": {
-                "en": "OFF"
+                "en": "Action after error"
+              },
+              "hint": {
+                "en": "Time to turn on regulation after error (0 = off after error, 10-65535 seconds = retry delay)"
+              },
+              "zwave": {
+                "index": 15,
+                "size": 2,
+                "signed": false
+              },
+              "value": 0,
+              "attr": {
+                "min": 0,
+                "max": 65535
               }
             },
             {
-              "id": "1",
+              "id": "relay_configuration",
+              "type": "dropdown",
               "label": {
-                "en": "Heating mode (Default)"
+                "en": "Relay configuration"
+              },
+              "hint": {
+                "en": "Choose if both outputs are to be used for cooling or heating"
+              },
+              "zwave": {
+                "index": 23,
+                "size": 1
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Heating and Cooling (Default)"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Both outputs for Cooling"
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "Both outputs for Heating"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "secondary_cooling_source_hysteresis",
+              "type": "number",
+              "label": {
+                "en": "Secondary cooling source hysteresis"
+              },
+              "hint": {
+                "en": "Set hysteresis for secondary cooling source (0-10°C from setpoint, 11 = Disabled)"
+              },
+              "zwave": {
+                "index": 24,
+                "size": 1,
+                "signed": false
+              },
+              "value": 3,
+              "attr": {
+                "min": 0,
+                "max": 11
               }
             },
             {
-              "id": "2",
+              "id": "secondary_heating_source_hysteresis",
+              "type": "number",
               "label": {
-                "en": "Cooling mode"
+                "en": "Secondary heating source hysteresis"
+              },
+              "hint": {
+                "en": "Set hysteresis for secondary heating source (0-10°C from setpoint, 11 = Disabled)"
+              },
+              "zwave": {
+                "index": 25,
+                "size": 1,
+                "signed": false
+              },
+              "value": 3,
+              "attr": {
+                "min": 0,
+                "max": 11
               }
             },
             {
-              "id": "3",
+              "id": "open_window_detection",
+              "type": "dropdown",
               "label": {
-                "en": "ECO mode"
+                "en": "Open window detection"
+              },
+              "hint": {
+                "en": "Enable or disable open window detection"
+              },
+              "zwave": {
+                "index": 26,
+                "size": 1,
+                "signed": false
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Open window detection disabled (Default)"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Open windows detection enabled"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "size_of_load",
+              "type": "number",
+              "label": {
+                "en": "Size of load"
+              },
+              "hint": {
+                "en": "Set the size of load (0 = No load reporting, 1-99 = 100-9900 Watt)"
+              },
+              "zwave": {
+                "index": 27,
+                "size": 1,
+                "signed": false
+              },
+              "value": 0,
+              "attr": {
+                "min": 0,
+                "max": 99
               }
             },
             {
-              "id": "4",
-              "label": {
-                "en": "VENT mode"
-              }
-            },
-            {
-              "id": "5",
-              "label": {
-                "en": "AUTO mode"
-              }
-            }
-          ]
-        },
-        {
-          "id": "relay_configuration",
-          "type": "dropdown",
-          "label": {
-            "en": "Relay configuration"
-          },
-          "hint": {
-            "en": "Choose if both outputs are to be used for cooling"
-          },
-          "zwave": {
-            "index": 19,
-            "size": 1
-          },
-          "value": "0",
-          "values": [
-            {
-              "id": "0",
-              "label": {
-                "en": "Heating and Cooling (Default)"
-              }
-            },
-            {
-              "id": "1",
-              "label": {
-                "en": "Both outputs for Cooling"
-              }
-            }
-          ]
-        },
-        {
-          "id": "secondary_cooling_source_hysteresis",
-          "type": "number",
-          "label": {
-            "en": "Secondary cooling source hysteresis"
-          },
-          "hint": {
-            "en": "Set hysteresis for secondary cooling source (0 = Disabled; 1-10: delay in °C, Default is 3)"
-          },
-          "zwave": {
-            "index": 20,
-            "size": 1,
-            "signed": false
-          },
-          "value": 3,
-          "attr": {
-            "min": 0,
-            "max": 10
-          }
-        },
-        {
-          "id": "open_window_detection",
-          "type": "checkbox",
-          "label": {
-            "en": "Open window detection"
-          },
-          "hint": {
-            "en": "Enable or disable open window detection"
-          },
-          "zwave": {
-            "index": 21,
-            "size": 1,
-            "signed": false
-          },
-          "value": false
-        },
-        {
-          "id": "size_of_load",
-          "type": "number",
-          "label": {
-            "en": "Size of load"
-          },
-          "hint": {
-            "en": "Set the size of load (0 = No load reporting; 1-99 corresponds to 100-9900 Watt)"
-          },
-          "zwave": {
-            "index": 22,
-            "size": 2,
-            "signed": false
-          },
-          "value": 0,
-          "attr": {
-            "min": 0,
-            "max": 99
-          }
-        },
-        {
-          "id": "inverted_output",
-          "type": "dropdown",
-          "label": {
-            "en": "Inverted output"
-          },
-          "hint": {
-            "en": "Decide if output should be inverted"
-          },
-          "zwave": {
-            "index": 23,
-            "size": 1
-          },
-          "value": "0",
-          "values": [
-            {
-              "id": "0",
-              "label": {
-                "en": "Standard operation (Default)"
-              }
-            },
-            {
-              "id": "1",
+              "id": "inverted_output",
+              "type": "dropdown",
               "label": {
                 "en": "Inverted output"
-              }
-            }
-          ]
-        },
-        {
-          "id": "valve_inactivity_exercise",
-          "type": "number",
-          "label": {
-            "en": "Valve inactivity exercise"
-          },
-          "hint": {
-            "en": "Valve exercise period in minutes (0 = Disabled; 5-30 minutes enabled, Default is 5)"
-          },
-          "zwave": {
-            "index": 24,
-            "size": 1
-          },
-          "value": 5,
-          "attr": {
-            "min": 0,
-            "max": 30
-          }
-        },
-        {
-          "id": "coil_preheating",
-          "type": "number",
-          "label": {
-            "en": "Coil preheating"
-          },
-          "hint": {
-            "en": "Preheat coils to avoid cold start (0 = Disabled; 1-15 minutes enabled)"
-          },
-          "zwave": {
-            "index": 25,
-            "size": 1
-          },
-          "value": 0,
-          "attr": {
-            "min": 0,
-            "max": 15
-          }
-        },
-        {
-          "id": "fan_speed_mode",
-          "type": "dropdown",
-          "label": {
-            "en": "Fan speed mode"
-          },
-          "hint": {
-            "en": "Choose fan speed"
-          },
-          "zwave": {
-            "index": 26,
-            "size": 1
-          },
-          "value": "3",
-          "values": [
+              },
+              "hint": {
+                "en": "Decide if output should be inverted"
+              },
+              "zwave": {
+                "index": 28,
+                "size": 1
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Standard operation (Default)"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Inverted output"
+                  }
+                }
+              ]
+            },
             {
-              "id": "0",
+              "id": "valve_inactivity_exercise",
+              "type": "number",
               "label": {
-                "en": "LOW"
+                "en": "Valve inactivity exercise"
+              },
+              "hint": {
+                "en": "Valve exercise period in minutes after 15 days of inactivity (0 = Disabled, 5-30 minutes)"
+              },
+              "zwave": {
+                "index": 29,
+                "size": 1,
+                "signed": false
+              },
+              "value": 10,
+              "attr": {
+                "min": 0,
+                "max": 30
               }
             },
             {
-              "id": "1",
+              "id": "coil_preheating",
+              "type": "number",
               "label": {
-                "en": "HIGH"
+                "en": "Coil preheating"
+              },
+              "hint": {
+                "en": "Preheat coils to avoid cold start (0 = Disabled, 1-15 minutes)"
+              },
+              "zwave": {
+                "index": 30,
+                "size": 1,
+                "signed": false
+              },
+              "value": 0,
+              "attr": {
+                "min": 0,
+                "max": 15
               }
             },
             {
-              "id": "2",
+              "id": "always_on_fan",
+              "type": "dropdown",
               "label": {
-                "en": "AUTO MEDIUM"
+                "en": "Always on fan"
+              },
+              "hint": {
+                "en": "Decide if fan should run continuously"
+              },
+              "zwave": {
+                "index": 32,
+                "size": 1,
+                "signed": false
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Disabled (Default)"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Enabled"
+                  }
+                }
+              ]
+            },
+            {
+              "id": "minimum_hourly_fan_run_time",
+              "type": "number",
+              "label": {
+                "en": "Minimum hourly fan run time"
+              },
+              "hint": {
+                "en": "Set minimum fan run time per hour (0 = Disabled, 5-30 minutes)"
+              },
+              "zwave": {
+                "index": 33,
+                "size": 1,
+                "signed": false
+              },
+              "value": 0,
+              "attr": {
+                "min": 0,
+                "max": 30
               }
             },
             {
-              "id": "3",
+              "id": "mode_deadband",
+              "type": "number",
               "label": {
-                "en": "MEDIUM (Default)"
-              }
-            }
-          ]
-        },
-        {
-          "id": "always_on_fan",
-          "type": "checkbox",
-          "label": {
-            "en": "Always on fan"
-          },
-          "hint": {
-            "en": "Decide if fan should run continuously"
-          },
-          "zwave": {
-            "index": 27,
-            "size": 1
-          },
-          "value": false
-        },
-        {
-          "id": "minimum_hourly_fan_run_time",
-          "type": "number",
-          "label": {
-            "en": "Minimum hourly fan run time"
-          },
-          "hint": {
-            "en": "Set minimum fan run time per hour (0 = Disabled; 5-30 minutes enabled)"
-          },
-          "zwave": {
-            "index": 28,
-            "size": 1
-          },
-          "value": 0,
-          "attr": {
-            "min": 0,
-            "max": 30
-          }
-        },
-        {
-          "id": "mode_deadband",
-          "type": "number",
-          "label": {
-            "en": "Mode deadband"
-          },
-          "hint": {
-            "en": "Range (in tenths of °C) for thermostat mode to remain unchanged (4.0°C to 10.0°C, Default is 5.0°C)"
-          },
-          "zwave": {
-            "index": 29,
-            "size": 1
-          },
-          "value": 50,
-          "attr": {
-            "min": 40,
-            "max": 100
-          }
-        },
-        {
-          "id": "2/4 pipe system",
-          "type": "dropdown",
-          "label": {
-            "en": "2/4 pipe system"
-          },
-          "hint": {
-            "en": "Select if the system is a 2, or 4 pipe system (0 = 2 pipe system ; 1 = 4 pipe system)"
-          },
-          "zwave": {
-            "index": 30,
-            "size": 1
-          },
-          "value": "0",
-          "values": [
-            {
-              "id": "0",
-              "label": {
-                "en": "2 Pipe system (Default)"
+                "en": "Mode deadband"
+              },
+              "hint": {
+                "en": "Choose Mode deadband (4.0°C to 10.0°C)"
+              },
+              "zwave": {
+                "index": 34,
+                "size": 1,
+                "signed": false
+              },
+              "value": 50,
+              "attr": {
+                "min": 40,
+                "max": 100
               }
             },
             {
-              "id": "1",
+              "id": "pipe_system",
+              "type": "dropdown",
               "label": {
-                "en": "4 Pipe system"
-              }
-            }
-          ]
-        },
-        {
-          "id": "low_temperature_protection",
-          "type": "dropdown",
-          "label": {
-            "en": "Low temperature protection"
-          },
-          "hint": {
-            "en": "Set low temperature protection, will turn on if the temperature is below the setpoint (0 = Disabled; 5-10:°C, Default is 0"
-          },
-          "zwave": {
-            "index": 31,
-            "size": 1
-          },
-          "value": "0",
-          "values": [
+                "en": "2/4 pipe system"
+              },
+              "hint": {
+                "en": "Select if the system is a 2, or 4 pipe system"
+              },
+              "zwave": {
+                "index": 35,
+                "size": 1
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "2 pipe system (Default)"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "4 pipe system"
+                  }
+                }
+              ]
+            },
             {
-              "id": "0",
+              "id": "low_temperature_protection",
+              "type": "number",
               "label": {
-                "en": "Disabled"
+                "en": "Low temperature protection"
+              },
+              "hint": {
+                "en": "Choose if low temperature protection should be enabled (0 = Disabled, 5-10°C)"
+              },
+              "zwave": {
+                "index": 36,
+                "size": 1,
+                "signed": false
+              },
+              "value": 5,
+              "attr": {
+                "min": 0,
+                "max": 10
               }
             },
             {
-              "id": "5",
+              "id": "dew_point_protection",
+              "type": "dropdown",
               "label": {
-                "en": "5°C"
-              }
+                "en": "Dew point protection"
+              },
+              "hint": {
+                "en": "Choose if dew point protection should be enabled"
+              },
+              "zwave": {
+                "index": 37,
+                "size": 1,
+                "signed": false
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "Dew point protection disabled (Default)"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Dew point protection enabled"
+                  }
+                }
+              ]
             },
             {
-              "id": "6",
+              "id": "enable_relays",
+              "type": "dropdown",
               "label": {
-                "en": "6°C"
-              }
-            },
-            {
-              "id": "7",
-              "label": {
-                "en": "7°C"
-              }
-            },
-            {
-              "id": "8",
-              "label": {
-                "en": "8°C"
-              }
-            },
-            {
-              "id": "9",
-              "label": {
-                "en": "9°C"
-              }
-            },
-            {
-              "id": "10",
-              "label": {
-                "en": "10°C"
-              }
+                "en": "Enable relays"
+              },
+              "hint": {
+                "en": "Choose whether relays should be controlled by the device"
+              },
+              "zwave": {
+                "index": 39,
+                "size": 1,
+                "signed": false
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "All relays controlled by thermostat (default) - Load and fan relays operate based on thermostat states"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Load relays only - Load relays controlled by thermostat. Fan relays disabled."
+                  }
+                },
+                {
+                  "id": "2",
+                  "label": {
+                    "en": "Fan relays only - Fan relays controlled by thermostat. Load relays disabled."
+                  }
+                },
+                {
+                  "id": "3",
+                  "label": {
+                    "en": "No relay control - All relays disabled."
+                  }
+                }
+              ]
             }
           ]
         }

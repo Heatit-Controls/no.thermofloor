@@ -1,4 +1,5 @@
 {
+	"id": "COOL_setpoint",
 	"type": "number",
 	"attr": {
 		"min": 50,
@@ -7,7 +8,7 @@
 	"value": 210,
 	"label": {
 		"en": "Cooling mode temperature",
-		"nl": "Koelen mode temperatuur"
+		"nl": "Koel modus temperatuur"
 	},
 	"hint": {
 		"en": "Temperature setpoint used when in Cooling (COOL) mode (only if enabled). \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 50 - 400 (5.0 - 40.0°C) \nDefault: 210 (21.0) °C",
