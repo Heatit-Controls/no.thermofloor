@@ -2,20 +2,24 @@
   "type": "boolean",
   "title": {
     "en": "Power supply alarm",
-    "nl": "Voeding alarm"
+    "nl": "Voeding alarm",
+    "no": "Strømbruddsalarm"
   },
   "desc": {
     "en": "Power supply alarm",
-    "nl": "Voeding alarm"
+    "nl": "Voeding alarm",
+    "no": "Strømbruddsalarm"
   },
   "insights": true,
   "insightsTitleTrue": {
     "en": "Power supply alarm turned on",
-    "nl": "Voeding alarm ging af"
+    "nl": "Voeding alarm ging af",
+    "no": "Strømbruddsalarm aktivert"
   },
   "insightsTitleFalse": {
     "en": "Power supply alarm turned off",
-    "nl": "Voeding alarm ging uit"
+    "nl": "Voeding alarm ging uit",
+    "no": "Strømbruddsalarm deaktivert"
   },
   "getable": true,
   "setable": false,

@@ -34,6 +34,9 @@ class ZmThermostat16A extends ZwaveDevice {
     if (this.hasCapability('onoff') === false) {
       await this.addCapability('onoff');
     }
+    if (this.hasCapability('button.reset_meter') === false) {
+      await this.addCapability('button.reset_meter');
+    }
 
     this.registerCapabilityListener('onoff', this.onCapabilityOnoff.bind(this));
 

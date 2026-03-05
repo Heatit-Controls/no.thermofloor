@@ -5,19 +5,20 @@ const http = require('node:http');
 module.exports = class MyDevice extends Homey.Device {
 
     async onInit() {
-
         this.log('Device has been initialized');
+        this.isDebug = false;
+        this.deviceIsDeleted = false;
         this.registerCapabilityListener('target_temperature', async (value) => {
-            this.log("Changed temp", value);
-            this.heatingSetpoint(value);
+            this.debug("Changed temp", value);
+            this.setHeatingSetpoint(value);
         });
 
         this.registerCapabilityListener('onoff', async (value) => {
-            this.log("Changed On/Off", value);
+            this.debug("Changed On/Off", value);
             if (value) {
-                this.panelModeOn();
+                this.setPanelModeOn();
             } else {
-                this.panelModeOff();
+                this.setPanelModeOff();
             }
         });
 
@@ -29,7 +30,6 @@ module.exports = class MyDevice extends Homey.Device {
         this.ReportInterval = this.getSettings().interval;
 
         this.refreshStateLoop();
-      
     }
 
     async getIpAddressAndSetSetting() {
@@ -67,6 +67,11 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     refreshStateLoop() {
+
+        if (this.deviceIsDeleted) {
+            return; //Abort
+        }
+
         if (this.ipIsValid()) {
             this.refreshState()
         }
@@ -94,6 +99,7 @@ module.exports = class MyDevice extends Homey.Device {
                 try {
                     const parsedData = JSON.parse(rawData);
                     this.setCapabilityValue('measure_temperature', parsedData.roomTemperature).catch(this.error);
+                    this.setOpenWindowDetectionFromThermostat(parsedData);
                     this.setCapabilityValue('target_temperature', parsedData.parameters.heatingSetpoint).catch(this.error);
                     let kWh = this.getCapabilityValue('meter_power');
                     kWh = kWh + (parsedData.currentPower * (this.getSettings().interval / 3600)) / 1000;
@@ -107,26 +113,62 @@ module.exports = class MyDevice extends Homey.Device {
         }).on('error', (e) => {
             this.setCapabilityValue('measure_power', 0).catch(this.error);
             this.setUnavailable('Cannot reach device on local WiFi').catch(this.error);
-            this.log('Cannot reach device on local WiFi');
+            this.debug('Cannot reach device on local WiFi');
         });
 
     }
 
-    async panelModeOn() {
+    debug(msg) {
+        if (this.isDebug) {
+            this.log(msg);
+        }
+    }
+
+    async setPanelModeOn() {
         const postData = JSON.stringify({
             'panelMode': 1,
         });
         await this.setParameters(postData);
     }
 
-    async panelModeOff() {
+    async setPanelModeOff() {
         const postData = JSON.stringify({
             'panelMode': 0,
         });
         await this.setParameters(postData);
     }
 
-    async heatingSetpoint(value) {
+    async setOpenWindowDetection(value) {
+        const postData = JSON.stringify({
+            'openWindowDetection': value
+        });
+        this.debug(postData)
+        await this.setParameters(postData);
+    }
+
+    setOpenWindowDetectionFromThermostat(data) {
+        let openWindowDetectionSetting = this.getSettings().openWindowDetection;
+        this.debug("openWindowDetectionSetting: " + openWindowDetectionSetting.toString() + " WiFi Panel openWindowDetection: " + data.parameters.OWD.openWindowDetection.toString())
+        if (openWindowDetectionSetting != data.parameters.OWD.openWindowDetection) {
+            //Save changes from thermostat
+            this.debug("Open Window Detection changed on WiFi Panel");
+            this.setSettings({ openWindowDetection: data.parameters.OWD.openWindowDetection });
+        }
+    }
+
+    async setDisableButtons(value) {
+        let disableButtons = 0;
+        if (value) {
+            disableButtons = 1;
+        }
+        const postData = JSON.stringify({
+            'disableButtons': disableButtons
+        });
+        this.debug(postData)
+        await this.setParameters(postData);
+    }
+
+    async setHeatingSetpoint(value) {
         const postData = JSON.stringify({
             'heatingSetpoint': value,
         });
@@ -134,7 +176,7 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     async setParameters(postData) {
-        this.log('setParameters');
+        this.debug('setParameters');
 
         const options = {
             hostname: this.IPaddress,
@@ -148,11 +190,11 @@ module.exports = class MyDevice extends Homey.Device {
         };
 
         const req = http.request(options, (res) => {
-            this.log(`STATUS: ${res.statusCode}`);
-            this.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+            this.debug(`STATUS: ${res.statusCode}`);
+            this.debug(`HEADERS: ${JSON.stringify(res.headers)}`);
             res.setEncoding('utf8');
             res.on('data', (chunk) => {
-                this.log(`BODY: ${chunk}`);
+                this.debug(`BODY: ${chunk}`);
             });
             res.on('end', () => {
             });
@@ -178,6 +220,12 @@ module.exports = class MyDevice extends Homey.Device {
         this.log("My heatit WiFi device settings where changed");
         this.IPaddress = newSettings.IPaddress;
         this.ReportInterval = newSettings.interval;
+        if (oldSettings.openWindowDetection != newSettings.openWindowDetection) {
+            await this.setOpenWindowDetection(newSettings.openWindowDetection);
+        }
+        if (oldSettings.disableButtons != newSettings.disableButtons) {
+            await this.setDisableButtons(newSettings.disableButtons);
+        }
     }
 
     async onRenamed(name) {
@@ -185,6 +233,7 @@ module.exports = class MyDevice extends Homey.Device {
     }
 
     async onDeleted() {
+        this.deviceIsDeleted = true;
         this.log('My heatit WiFi device has been deleted');
     }
 

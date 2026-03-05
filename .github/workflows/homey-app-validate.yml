@@ -1,4 +1,6 @@
 name: Validate Homey App
+permissions:
+  contents: read
 on:
   workflow_dispatch:
   push:

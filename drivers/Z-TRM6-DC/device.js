@@ -347,16 +347,14 @@ class ZTRM6DCDevice extends ThermostatFourModeDevice {
 			get: 'THERMOSTAT_OPERATING_STATE_GET',
 			report: 'THERMOSTAT_OPERATING_STATE_REPORT',
 			reportParser: report => {
-				this.log('THERMOSTAT_OPERATING_STATE report:', report);
-				if (report && report.Level && report.Level['Operating State']) {
+				if (report?.Level?.['Operating State']) {
 					const state = report.Level['Operating State'];
 					if (typeof state === 'string') {
-						const thermostatStateObj = {
-							state: state,
-							state_name: this.homey.__(`state.${state}`),
-						};
-						this.homey.app.triggerThermostatStateChangedTo.trigger(this, null, thermostatStateObj);
-						this.setCapabilityValue('thermostat_state_13570', state).catch(this.error);
+						const lastThermostatState = this.getStoreValue('lastThermostatState');
+						if (lastThermostatState !== state || lastThermostatState === null) {
+							this.driver.triggerThermostatState(this, { state }, { state });
+							this.setStoreValue('lastThermostatState', state).catch(this.error);
+						}
 						return state;
 					}
 				}
@@ -365,7 +363,7 @@ class ZTRM6DCDevice extends ThermostatFourModeDevice {
 			multiChannelNodeId: 1,
 		});
 
-		this.setAvailable().catch(this.error);
+			this.setAvailable().catch(this.error);
 	}
 }
 

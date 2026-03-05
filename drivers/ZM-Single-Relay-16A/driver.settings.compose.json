@@ -239,7 +239,7 @@
     ]
   },
   {
-    "id": "mtr_interval",
+    "id": "metr_interval",
     "type": "number",
     "label": {
       "en": "Meter report interval"
@@ -258,7 +258,7 @@
     }
   },
   {
-    "id": "mtr_delta",
+    "id": "metr_delta",
     "type": "number",
     "label": {
       "en": "Meter report delta value"

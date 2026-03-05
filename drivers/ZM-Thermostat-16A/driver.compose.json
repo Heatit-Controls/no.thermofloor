@@ -11,7 +11,8 @@
 		"thermostat_state_13570",
 		"measure_power",
 		"meter_power",
-		"onoff"
+		"onoff",
+		"button.reset_meter"
 	],
 	"capabilitiesOptions": {
 		"target_temperature": {

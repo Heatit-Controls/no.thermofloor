@@ -12,6 +12,10 @@ class Z_RelayDevice extends ZwaveDevice {
     // print the node's info to the console
     // this.printNode();
 
+    if (this.getClass() !== 'socket') {
+      await this.setClass('socket').catch(this.error)
+    }
+    
     this.registerCapability('onoff', 'SWITCH_BINARY', {
       getOpts: {
         getOnStart: true,

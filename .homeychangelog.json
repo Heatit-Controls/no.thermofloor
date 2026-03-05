@@ -64,5 +64,65 @@
   },
   "4.0.0": {
     "en": "Added support Heatit WiFi6 and WiFi Panel"
+  },
+  "4.0.1": {
+    "en": "Updated TRM6 driver, added Powerregulator. Updated WiFi integrations."
+  },
+  "4.0.2": {
+    "en": "Add Cumulative for HAN/HAN B"
+  },
+  "4.0.3": {
+    "en": "Fixed meter reset for some devices."
+  },
+  "4.0.4": {
+    "en": "Fixed meter reset for some devices."
+  },
+  "4.0.5": {
+    "en": "Minor fixes"
+  },
+  "4.0.6": {
+    "en": "Hotfix for TRM6"
+  },
+  "4.0.7": {
+    "en": "Update to 4.0.7"
+  },
+  "4.0.8": {
+    "en": "Fixed TRM6 issues"
+  },
+  "4.0.9": {
+    "en": "Fixed TRM6 issues"
+  },
+  "4.0.10": {
+    "en": "Added Z-Smoke2"
+  },
+  "4.0.11": {
+    "en": "Added Z-Smoke2"
+  },
+  "4.1.0": {
+    "en": "Added Z-Smoke2"
+  },
+  "4.2.0": {
+    "en": "Added Z-Smoke2"
+  },
+  "4.2.1": {
+    "en": "Fixed setpoint not updating"
+  },
+  "4.2.2": {
+    "en": "Update Z-Smoke2 background"
+  },
+  "4.2.3": {
+    "en": "Revert"
+  },
+  "4.2.4": {
+    "en": "Fixed Z-TRM3 Lifeline bug"
+  },
+  "4.2.5": {
+    "en": "Minor bug fixes"
+  },
+  "4.2.6": {
+    "en": "Fixed ZM-dimmer dim duration flow"
+  },
+  "4.2.7": {
+    "en": "Fixed Z-Temp3 setpoint issue"
   }
 }

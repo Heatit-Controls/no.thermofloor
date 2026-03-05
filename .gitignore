@@ -7,5 +7,10 @@ drivers/.DS_Store
 .DS_Store
 build/
 
+
 # Added by Homey CLI
 /.homeybuild/
+
+# Claude
+.claude/
+CLAUDE.md
