@@ -173,16 +173,13 @@ class ZTRM6Device extends ZwaveDevice {
 						this.error(`Failed to update power_reg_active_time setting: ${err.message}`);
 					});
 
-					try {
-						this.configurationSet({
-							index: this.getParameterIndex('power_reg_active_time'),
-							size: 0x01,
-							signed: false
-						}, powerRegValue / 10); // /10 to convert 10-100 to 1-10 in parameter values
-						return null;
-					} catch (error) {
-						this.error(`Error in target_temperature setParser: ${error.message}`);
-					}
+					this.configurationSet({
+						index: this.getParameterIndex('power_reg_active_time'),
+						size: 0x01,
+						signed: false,
+					}, powerRegValue / 10).catch(err => {
+						this.error('configurationSet failed', err);
+					});
 				}
 
 				const setpointType = Mode2Setpoint[currentMode];
@@ -294,6 +291,18 @@ class ZTRM6Device extends ZwaveDevice {
 					}
 				}
 				if (!this.CapabilityToThermostatMode[value]) return null;
+				try {
+					const currentSettings = this.getSettings();
+					if (value === 'heat') {
+						this.setCapabilityValue('target_temperature', currentSettings.heating_setpoint / 10)
+					} else if (value === 'cool') {
+						this.setCapabilityValue('target_temperature', currentSettings.cooling_setpoint / 10)
+					} else if (value === 'energy save heat') {
+						this.setCapabilityValue('target_temperature', currentSettings.eco_setpoint / 10)
+					}
+				} catch (e) {
+					this.error(`Failed to apply mode setpoint: ${e.message}`);
+				}
 				return {
 					Level: {
 						'No of Manufacturer Data fields': 0,
@@ -378,6 +387,18 @@ class ZTRM6Device extends ZwaveDevice {
 					.catch(err => this.error(`Failed to update sensor_mode setting: ${err.message}`));
 				await this.updateSelectedTemperatureCapability(sensorModeValue);
 			}
+		}
+		try {
+			const currentSettings = this.getSettings();
+			if (newMode == 'heat') {
+				await this.setCapabilityValue('target_temperature', currentSettings.heating_setpoint / 10);
+			} else if (newMode == 'cool') {
+				await this.setCapabilityValue('target_temperature', currentSettings.cooling_setpoint / 10);
+			} else if (newMode == 'energy save heat') {
+				await this.setCapabilityValue('target_temperature', currentSettings.eco_setpoint / 10);
+			} 
+		} catch (error) {
+			this.error(`Error setting target temperature: ${error.message}`);
 		}
 	}
 

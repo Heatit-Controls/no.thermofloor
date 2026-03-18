@@ -2,6 +2,8 @@
 
 const { ZwaveDevice } = require('homey-zwavedriver');
 
+const util = require('../../node_modules/homey-zwavedriver/lib/util');
+
 class ZDim2Device extends ZwaveDevice 
 {
   /**

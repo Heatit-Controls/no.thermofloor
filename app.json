@@ -6,7 +6,7 @@
     "en": "Heatit Controls"
   },
   "brandColor": "#cc3333",
-  "version": "4.2.7",
+  "version": "4.2.9",
   "compatibility": ">=12.2.0",
   "platforms": [
     "local",
@@ -3497,6 +3497,17 @@
       "id": "WiFi Panel",
       "settings": [
         {
+          "id": "MACaddress",
+          "type": "text",
+          "label": {
+            "en": "MAC address"
+          },
+          "value": "Get",
+          "hint": {
+            "en": "The MAC address of the WIFI Panel. The MAC address will be retrieved automatically from the panel heater when it is connected and this value is set to Get. Default value is 'Get' do not change."
+          }
+        },
+        {
           "id": "IPaddress",
           "type": "text",
           "label": {
@@ -3548,11 +3559,15 @@
         "measure_power",
         "target_temperature",
         "measure_temperature",
+        "measure_temperature.internal",
         "measure_temperature.external",
         "measure_temperature.floor",
         "onoff"
       ],
       "capabilitiesOptions": {
+        "measure_temperature.internal": {
+          "title": "Internal temperature"
+        },
         "measure_temperature.external": {
           "title": "External temperature"
         },
@@ -3584,6 +3599,17 @@
       ],
       "id": "WiFi6",
       "settings": [
+        {
+          "id": "MACaddress",
+          "type": "text",
+          "label": {
+            "en": "MAC address"
+          },
+          "value": "Get",
+          "hint": {
+            "en": "The MAC address of the WiFi6 thermostat. The MAC address will be retrieved automatically from the thermostat when it is connected when and this value is set to Get. Default value is 'Get' do not change."
+          }
+        },
         {
           "id": "IPaddress",
           "type": "text",
