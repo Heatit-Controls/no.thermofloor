@@ -1,36 +1,36 @@
 [
   {
-    “id”: “disable_buttons”,
-    “type”: “dropdown”,
-    “label”: {
-      “en”: “Disable buttons”
+    "id": "disable_buttons",
+    "type": "dropdown",
+    "label": {
+      "en": "Disable buttons"
     },
-    “hint”: {
-      “en”: “Disable buttons, must be enabled through the parameter, or turned back on locally by holding the center and right button for 30 seconds until the display shows “UNLK”.”
+    "hint": {
+      "en": "Disable buttons, must be enabled through the parameter, or turned back on locally by holding the center and right button for 30 seconds until the display shows \"UNLK\"."
     },
-    “zwave”: {
-      “index”: 1,
-      “size”: 1,
-	  “signed”: false
+    "zwave": {
+      "index": 1,
+      "size": 1,
+	  "signed": false
     },
-    “value”: “0”,
-    “values”: [
+    "value": "0",
+    "values": [
       {
-        “id”: “0”,
-        “label”: {
-          “en”: “Enabled (Default)”
+        "id": "0",
+        "label": {
+          "en": "Enabled (Default)"
         }
       },
       {
-        “id”: “1”,
-        “label”: {
-          “en”: “Disabled”
+        "id": "1",
+        "label": {
+          "en": "Disabled"
         }
       },
       {
-        “id”: “2”,
-        “label”: {
-          “en”: “Lock menu”
+        "id": "2",
+        "label": {
+          "en": "Lock menu"
         }
       }
     ]
