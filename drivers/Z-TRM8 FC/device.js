@@ -1,7 +1,7 @@
 'use strict';
 const { ZwaveDevice } = require('homey-zwavedriver');
-const Homey = require('homey');
-const { Mode2Setpoint, Setpoint2Setting } = require('../../lib/map/ZTEMP3_mappings.js');
+const { buildMappings } = require('../../lib/map/thermostat_mappings.js');
+const { Mode2Setpoint, Setpoint2Setting } = buildMappings(['off', 'heat', 'cool', 'energy save heat', 'energy save cool', 'auto changeover', 'fan']);
 
 class ZTRM8FCDevice extends ZwaveDevice {
 	constructor(...args) {
@@ -79,6 +79,16 @@ class ZTRM8FCDevice extends ZwaveDevice {
 				getOnStart: true,
 			},
 		});
+		this.registerCapabilityListener('button.reset_meter', async () => {
+			const commandClassMeter = this.getCommandClass('METER');
+			if (commandClassMeter && commandClassMeter.hasOwnProperty('METER_RESET')) {
+				const result = await commandClassMeter.METER_RESET({});
+				if (result !== 'TRANSMIT_COMPLETE_OK') throw result;
+			} else {
+				throw new Error('Reset meter not supported');
+			}
+		});
+
 		this.registerCapability('fan_mode', 'THERMOSTAT_FAN_MODE', {
 			getOpts: {
 				getOnStart: true,
@@ -256,7 +266,7 @@ class ZTRM8FCDevice extends ZwaveDevice {
 					report.hasOwnProperty('Level2') &&
 					report.Level2.hasOwnProperty('Scale') &&
 					report.Level2.hasOwnProperty('Precision') &&
-					report.Level2.Scale === 0 &&
+					(report.Level2.Scale === 0 || report.Level2.Scale === 1) &&
 					typeof report.Level2.Size !== 'undefined' &&
 					report.Value && Buffer.isBuffer(report.Value) &&
 					report.Value.length >= report.Level2.Size
@@ -269,20 +279,21 @@ class ZTRM8FCDevice extends ZwaveDevice {
 						return null;
 					}
 					if (typeof readValue !== 'undefined') {
-						const setpointValue = readValue / 10 ** report.Level2.Precision;
+						let setpointValue = readValue / 10 ** report.Level2.Precision;
+						if (report.Level2.Scale === 1) setpointValue = (setpointValue - 32) / 1.8;
 						const setpointType = report.Level && report.Level['Setpoint Type'];
 						if (!setpointType) {
 							this.error('Missing Setpoint Type in report');
 							return null;
 						}
-						
+
 						this.log('Received setpoint report:', setpointType, setpointValue);
 
 						if (setpointType !== 'not supported') {
 							this.setStoreValue(`thermostatsetpointValue.${setpointType}`, setpointValue)
 								.catch(err => this.error(`Error storing setpoint value: ${err.message}`));
 						}
-						
+
 						const setpointSetting = Setpoint2Setting[setpointType];
 						if (!setpointSetting) {
 							this.error(`No matching setting found for setpoint type: ${setpointType}`);
@@ -436,34 +447,8 @@ class ZTRM8FCDevice extends ZwaveDevice {
 			report: 'THERMOSTAT_OPERATING_STATE_REPORT',
 			reportParser: report => {
 				this.log('THERMOSTAT_OPERATING_STATE report:', report);
-				if (report && report.Level && report.Level['Operating State']) {
-					let state = report.Level['Operating State'];
-					
-					// Map the Z-Wave state to the capability ID
-					if (state === 'Vent/Economizer') {
-						state = 'Vent_Economizer';
-					}
-					
-					if (typeof state === 'string') {
-						try {
-							const thermostatStateObj = {
-								state: state,
-								state_name: typeof this.homey.__ === 'function' ? 
-									this.homey.__(`state.${state}`) : 
-									state,
-							};
-							if (this.homey.app && this.homey.app.triggerThermostatStateChangedTo) {
-								this.homey.app.triggerThermostatStateChangedTo.trigger(this, null, thermostatStateObj)
-									.catch(err => this.error('Error triggering flow card:', err));
-							}
-							return state;
-						} catch (err) {
-							this.error(`Error processing thermostat state: ${err.message}`);
-							return state; // Still return the state even if trigger fails
-						}
-					}
-				}
-				return null;
+				const state = report && report.Level && report.Level['Operating State'];
+				return typeof state === 'string' ? state : null;
 			},
 		});
 

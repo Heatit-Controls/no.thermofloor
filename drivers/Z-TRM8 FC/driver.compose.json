@@ -70,15 +70,7 @@
     },
 
 		"thermostat_state_IdleHeatCoolFan": {
-			"greyout": true,
-			"titleTrue": {
-				"en": "Active",
-				"nl": "Actief"
-			},
-			"titleFalse": {
-				"en": "Idle",
-				"nl": "Uit"
-			}
+			"greyout": true
     },
     "measure_power": {
       "approximated": true
@@ -95,10 +87,12 @@
     "target_temperature": {
       "min": 5,
       "max": 40,
-      "step": 0.5
+      "step": 0.5,
+      "units": { "en": "°C" }
     },
     "measure_temperature": {
-      "title": "temperature"
+      "title": "temperature",
+      "units": { "en": "°C" }
     },
     "measure_humidity": {
       "title": "humidity"

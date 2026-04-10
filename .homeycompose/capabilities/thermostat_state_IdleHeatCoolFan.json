@@ -34,9 +34,9 @@
 			}
 		},
 		{
-			"id": "Vent_Economizer",
+			"id": "Fan Only",
 			"title": {
-				"en": "Vent/Economizer"
+				"en": "Fan Only"
 			}
 		}
 	]
