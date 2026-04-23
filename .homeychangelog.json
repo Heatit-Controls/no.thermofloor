@@ -130,5 +130,8 @@
   },
   "4.2.9": {
     "en": "Improved WiFi discovery"
+  },
+  "4.3.0": {
+    "en": "Added WiFi7 thermostat support"
   }
 }
