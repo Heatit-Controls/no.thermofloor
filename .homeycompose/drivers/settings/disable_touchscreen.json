@@ -1,0 +1,13 @@
+{
+	"id": "disable_touchscreen",
+	"type": "dropdown",
+	"label": { "en": "Disable touchscreen" },
+	"hint": { "en": "Disable or enable the touch screen" },
+	"zwave": { "index": 1, "size": 1, "signed": false },
+	"value": "0",
+	"values": [
+		{ "id": "0", "label": { "en": "Enabled, touchscreen of the device is enabled and works like normal. (Default)" } },
+		{ "id": "1", "label": { "en": "Disabled, touchscreen is disabled." } },
+		{ "id": "2", "label": { "en": "Lock menu, touchscreen is enabled, but settings cannot be changed accessed." } }
+	]
+}

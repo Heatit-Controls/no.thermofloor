@@ -1,0 +1,9 @@
+{
+	"id": "size_of_load",
+	"type": "number",
+	"label": { "en": "Size of load" },
+	"hint": { "en": "Set the size of load (0 = No load reporting, 1-99 = 100-9900 Watt)" },
+	"zwave": { "index": 27, "size": 1, "signed": false },
+	"value": 0,
+	"attr": { "min": 0, "max": 99 }
+}

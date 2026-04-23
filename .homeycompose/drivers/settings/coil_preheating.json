@@ -1,0 +1,9 @@
+{
+	"id": "coil_preheating",
+	"type": "number",
+	"label": { "en": "Coil preheating" },
+	"hint": { "en": "Preheat coils to avoid cold start (0 = Disabled, 1-15 minutes)" },
+	"zwave": { "index": 30, "size": 1, "signed": false },
+	"value": 0,
+	"attr": { "min": 0, "max": 15 }
+}

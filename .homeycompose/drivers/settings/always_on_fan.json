@@ -1,0 +1,12 @@
+{
+	"id": "always_on_fan",
+	"type": "dropdown",
+	"label": { "en": "Always on fan" },
+	"hint": { "en": "Decide if fan should run continuously" },
+	"zwave": { "index": 32, "size": 1, "signed": false },
+	"value": "0",
+	"values": [
+		{ "id": "0", "label": { "en": "Disabled (Default)" } },
+		{ "id": "1", "label": { "en": "Enabled" } }
+	]
+}

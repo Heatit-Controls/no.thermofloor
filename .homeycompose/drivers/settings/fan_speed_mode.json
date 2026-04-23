@@ -1,0 +1,14 @@
+{
+	"id": "fan_speed_mode",
+	"type": "dropdown",
+	"label": { "en": "Fan speed mode" },
+	"hint": { "en": "Choose Fan speed" },
+	"zwave": { "index": 31, "size": 1 },
+	"value": "2",
+	"values": [
+		{ "id": "0", "label": { "en": "LOW" } },
+		{ "id": "1", "label": { "en": "HIGH" } },
+		{ "id": "2", "label": { "en": "AUTO MEDIUM (functions as just AUTO mode, but AUTO medium is set since AUTO is not supported in Z-Wave) (Default)" } },
+		{ "id": "3", "label": { "en": "MEDIUM" } }
+	]
+}

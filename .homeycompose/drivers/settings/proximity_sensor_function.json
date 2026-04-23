@@ -1,0 +1,12 @@
+{
+	"id": "proximity_sensor_function",
+	"type": "dropdown",
+	"label": { "en": "Proximity sensor function" },
+	"hint": { "en": "Choose if the proximity sensor is enabled or disabled and should wake the display" },
+	"zwave": { "index": 9, "size": 1, "signed": false },
+	"value": "0",
+	"values": [
+		{ "id": "0", "label": { "en": "Proximity sensor disabled (Default) - display only wakes by touch" } },
+		{ "id": "1", "label": { "en": "Proximity sensor enabled - display automatically wakes when motion/presence is detected near the device" } }
+	]
+}

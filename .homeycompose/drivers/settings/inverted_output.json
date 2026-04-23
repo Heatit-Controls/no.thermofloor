@@ -1,0 +1,12 @@
+{
+	"id": "inverted_output",
+	"type": "dropdown",
+	"label": { "en": "Inverted output" },
+	"hint": { "en": "Decide if output should be inverted" },
+	"zwave": { "index": 28, "size": 1 },
+	"value": "0",
+	"values": [
+		{ "id": "0", "label": { "en": "Standard operation (Default)" } },
+		{ "id": "1", "label": { "en": "Inverted output" } }
+	]
+}

@@ -1,0 +1,9 @@
+{
+	"id": "action_after_error",
+	"type": "number",
+	"label": { "en": "Action after error" },
+	"hint": { "en": "Time to turn on regulation after error (0 = off after error, 10-65535 seconds = retry delay)" },
+	"zwave": { "index": 15, "size": 2, "signed": false },
+	"value": 0,
+	"attr": { "min": 0, "max": 65535 }
+}

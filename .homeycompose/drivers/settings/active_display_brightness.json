@@ -1,0 +1,9 @@
+{
+	"id": "active_display_brightness",
+	"type": "number",
+	"label": { "en": "Active display brightness" },
+	"hint": { "en": "Set brightness during active state (10% to 100%)" },
+	"zwave": { "index": 10, "size": 1, "signed": false },
+	"value": 10,
+	"attr": { "min": 1, "max": 10 }
+}

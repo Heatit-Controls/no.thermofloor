@@ -1,0 +1,13 @@
+{
+	"id": "main_screen",
+	"type": "dropdown",
+	"label": { "en": "Main screen" },
+	"hint": { "en": "Decide which screen is the main screen on the device" },
+	"zwave": { "index": 8, "size": 1, "signed": false },
+	"value": "0",
+	"values": [
+		{ "id": "0", "label": { "en": "Thermostat screen (Default) - displays temperature control interface" } },
+		{ "id": "1", "label": { "en": "Device control screen - displays controls for associated devices" } },
+		{ "id": "2", "label": { "en": "Scene control screen - displays scene activation controls" } }
+	]
+}

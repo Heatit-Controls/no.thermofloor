@@ -1,0 +1,9 @@
+{
+	"id": "secondary_heating_source_hysteresis",
+	"type": "number",
+	"label": { "en": "Secondary heating source hysteresis" },
+	"hint": { "en": "Set hysteresis for secondary heating source (0-10°C from setpoint, 11 = Disabled)" },
+	"zwave": { "index": 25, "size": 1, "signed": false },
+	"value": 3,
+	"attr": { "min": 0, "max": 11 }
+}

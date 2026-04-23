@@ -7,11 +7,9 @@
 	},
 	"value": 240,
 	"label": {
-		"en": "Energy save cooling mode temperature",
-		"nl": "Energiebesparings koelen modus temperatuur"
+		"en": "Energy Save Cooling setpoint"
 	},
 	"hint": {
-		"en": "Temperature setpoint used when in Energy Save Cooling mode. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 50 - 400 (5.0 - 40.0°C) \nDefault: 240 (24.0) °C",
-		"nl": "Temperatuur setpoint gebruikt in Energiebesparings koelen modus. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 50 - 400 (5.0 - 40.0°C)\nStandaard: 240 (24.0) °C"
+		"en": "Set the setpoint for Energy Save Cooling mode (50–400 = 5.0–40.0°C, default: 240 = 24.0°C)"
 	}
 }

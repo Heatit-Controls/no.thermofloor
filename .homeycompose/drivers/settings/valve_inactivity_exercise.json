@@ -1,0 +1,9 @@
+{
+	"id": "valve_inactivity_exercise",
+	"type": "number",
+	"label": { "en": "Valve inactivity exercise" },
+	"hint": { "en": "Valve exercise period in minutes after 15 days of inactivity (0 = Disabled, 5-30 minutes)" },
+	"zwave": { "index": 29, "size": 1, "signed": false },
+	"value": 10,
+	"attr": { "min": 0, "max": 30 }
+}

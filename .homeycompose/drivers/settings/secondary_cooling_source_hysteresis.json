@@ -1,0 +1,9 @@
+{
+	"id": "secondary_cooling_source_hysteresis",
+	"type": "number",
+	"label": { "en": "Secondary cooling source hysteresis" },
+	"hint": { "en": "Set hysteresis for secondary cooling source (0-10°C from setpoint, 11 = Disabled)" },
+	"zwave": { "index": 24, "size": 1, "signed": false },
+	"value": 3,
+	"attr": { "min": 0, "max": 11 }
+}

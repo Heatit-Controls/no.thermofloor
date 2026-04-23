@@ -1,0 +1,9 @@
+{
+	"id": "active_state_duration",
+	"type": "number",
+	"label": { "en": "Active state duration" },
+	"hint": { "en": "Choose how long the display should be active after use (1 to 60 seconds)" },
+	"zwave": { "index": 11, "size": 1, "signed": false },
+	"value": 10,
+	"attr": { "min": 1, "max": 60 }
+}

@@ -1,0 +1,13 @@
+{
+	"id": "relay_configuration",
+	"type": "dropdown",
+	"label": { "en": "Relay configuration" },
+	"hint": { "en": "Choose if both outputs are to be used for cooling or heating" },
+	"zwave": { "index": 23, "size": 1 },
+	"value": "0",
+	"values": [
+		{ "id": "0", "label": { "en": "Heating and Cooling (Default)" } },
+		{ "id": "1", "label": { "en": "Both outputs for Cooling" } },
+		{ "id": "2", "label": { "en": "Both outputs for Heating" } }
+	]
+}

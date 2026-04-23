@@ -1,0 +1,9 @@
+{
+	"id": "minimum_hourly_fan_run_time",
+	"type": "number",
+	"label": { "en": "Minimum hourly fan run time" },
+	"hint": { "en": "Set minimum fan run time per hour (0 = Disabled, 5-30 minutes)" },
+	"zwave": { "index": 33, "size": 1, "signed": false },
+	"value": 0,
+	"attr": { "min": 0, "max": 30 }
+}

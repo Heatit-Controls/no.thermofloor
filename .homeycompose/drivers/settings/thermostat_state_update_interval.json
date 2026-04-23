@@ -1,0 +1,9 @@
+{
+	"id": "thermostat_state_update_interval",
+	"type": "number",
+	"label": { "en": "Thermostat state update interval" },
+	"hint": { "en": "Set thermostat state update interval (0 = only when changed, 30-65535 seconds)" },
+	"zwave": { "index": 21, "size": 2, "signed": false },
+	"value": 3600,
+	"attr": { "min": 0, "max": 65535 }
+}

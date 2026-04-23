@@ -1,0 +1,9 @@
+{
+	"id": "low_temperature_protection",
+	"type": "number",
+	"label": { "en": "Low temperature protection" },
+	"hint": { "en": "Choose if low temperature protection should be enabled (0 = Disabled, 5-10°C)" },
+	"zwave": { "index": 36, "size": 1, "signed": false },
+	"value": 5,
+	"attr": { "min": 0, "max": 10 }
+}

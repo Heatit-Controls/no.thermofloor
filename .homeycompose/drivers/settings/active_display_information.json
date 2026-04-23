@@ -1,0 +1,9 @@
+{
+	"id": "active_display_information",
+	"type": "number",
+	"label": { "en": "Active display information" },
+	"hint": { "en": "Decide what is shown in the display during active state. Bitmap: Bit 0 = Measured temperature, Bit 1 = Humidity, Bit 2 = Fan speed, Bit 3 = Setpoint. Add values together (e.g. 15 = all enabled)" },
+	"zwave": { "index": 6, "size": 1, "signed": false },
+	"value": 15,
+	"attr": { "min": 0, "max": 15 }
+}

@@ -1,0 +1,9 @@
+{
+	"id": "standby_display_brightness",
+	"type": "number",
+	"label": { "en": "Standby display brightness" },
+	"hint": { "en": "Set brightness during standby state (0% to 100%)" },
+	"zwave": { "index": 12, "size": 1, "signed": false },
+	"value": 1,
+	"attr": { "min": 0, "max": 10 }
+}

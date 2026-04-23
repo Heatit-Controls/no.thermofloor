@@ -1,7 +1,7 @@
 'use strict';
 const { ZwaveDevice } = require('homey-zwavedriver');
 const { buildMappings } = require('../../lib/map/thermostat_mappings.js');
-const { Mode2Setpoint, Setpoint2Setting } = buildMappings(['off', 'heat', 'cool', 'energy save heat', 'energy save cool', 'auto changeover', 'fan']);
+const { Mode2Setpoint, Setpoint2Setting } = buildMappings(['off', 'heat', 'cool', 'energy save heat', 'energy save cool', 'auto changeover', 'fan only']);
 
 class ZTRM8FCDevice extends ZwaveDevice {
 	constructor(...args) {
@@ -15,7 +15,7 @@ class ZTRM8FCDevice extends ZwaveDevice {
 			'energy save heat': 'Energy Save Heat',
 			'energy save cool': 'Energy Save Cool',
 			'auto changeover': 'Auto Changeover',
-			'fan': 'Fan Only',
+			'fan only': 'Fan Only',
 		};
 
 		this.ThermostatModeToCapability = {
@@ -25,26 +25,9 @@ class ZTRM8FCDevice extends ZwaveDevice {
 			'Energy Save Heat': 'energy save heat',
 			'Energy Save Cool': 'energy save cool',
 			'Auto Changeover': 'auto changeover',
-			'Fan Only': 'fan',
+			'Fan Only': 'fan only',
 		};
 		
-		// Fan mode mappings
-		this.CapabilityToFanMode = {
-			// Only keep the capitalized versions that match the driver.compose.json
-			'Low': "Low",
-			'Medium': "Medium", 
-			'High': "High",
-			'Auto Medium': "Auto Medium",
-			'Circulation': "Circulation"
-		};
-		
-		this.FanModeToCapability = {
-			'Auto Medium': "Auto Medium",
-			'Medium': "Medium",
-			'Low': "Low",
-			'High': "High",
-			'Circulation': "Circulation"
-		};
 	}
 	
 	async onNodeInit() {
@@ -97,49 +80,22 @@ class ZTRM8FCDevice extends ZwaveDevice {
 			set: 'THERMOSTAT_FAN_MODE_SET',
 			setParser: fanMode => {
 				this.log('Setting fan mode to:', fanMode);
-				
-				const zwaveFanMode = this.CapabilityToFanMode[fanMode];
-				if (!zwaveFanMode) {
-					this.log('Invalid fan mode:', fanMode);
-					return null;
-				}
-			
-				try {
-					return {
-						Properties1: {
-							Off: false,
-							'Fan Mode': zwaveFanMode,
-						},
-						'Manufacturer Data': Buffer.from([0]),
-					};
-				} catch (err) {
-					this.error(`Error creating fan mode command: ${err.message}`);
-					return null;
-				}
+				if (!fanMode) return null;
+				return {
+					Properties1: {
+						Off: false,
+						'Fan Mode': fanMode,
+					},
+					'Manufacturer Data': Buffer.from([0]),
+				};
 			},
 			report: 'THERMOSTAT_FAN_MODE_REPORT',
 			reportParser: report => {
 				this.log('THERMOSTAT_FAN_MODE report:', report);
-				if (!report) return null;
-				
-				try {
-					if (report.hasOwnProperty('Properties1') && report.Properties1.hasOwnProperty('Fan Mode')) {
-						const zwaveFanMode = report.Properties1['Fan Mode'];
-						this.log('Received fan mode report:', zwaveFanMode);
-						
-						// Convert Z-Wave fan mode to capability value
-						const fanMode = this.FanModeToCapability[zwaveFanMode];
-						if (!fanMode) {
-							this.log('Unknown fan mode received:', zwaveFanMode);
-							return null;
-						}
-											
-						return fanMode;
-					}
-				} catch (err) {
-					this.error(`Error processing fan mode report: ${err.message}`);
-				}
-				return null;
+				if (!report || !report.Properties1) return null;
+				const fanMode = report.Properties1['Fan Mode'];
+				this.log('Received fan mode report:', fanMode);
+				return fanMode || null;
 			},
 		});
 
@@ -151,27 +107,9 @@ class ZTRM8FCDevice extends ZwaveDevice {
 			report: 'THERMOSTAT_FAN_STATE_REPORT',
 			reportParser: report => {
 				this.log('THERMOSTAT_FAN_STATE report:', report);
-				try {
-					if (report && report.Properties1 && report.Properties1['Fan Operating State']) {
-						const state = report.Properties1['Fan Operating State'];
-						
-						if (typeof state === 'string') {
-							this.log('Fan state:', state);
-							return state;
-						}
-					} else if (report && report.Level && report.Level['Fan Operating State']) {
-						// Handle the new format where the state is in Level instead of Properties1
-						const state = report.Level['Fan Operating State'];
-						
-						if (typeof state === 'string') {
-							this.log('Fan state (from Level):', state);
-							return state;
-						}
-					}
-				} catch (err) {
-					this.error(`Error processing fan state report: ${err.message}`);
-				}
-				return null;
+				if (!report || !report.Level) return null;
+				const state = report.Level['Fan Operating State'];
+				return typeof state === 'string' ? state : null;
 			},
 		});
 		
@@ -181,34 +119,13 @@ class ZTRM8FCDevice extends ZwaveDevice {
 				getOnStart: true,
 			},
 			getParser: () => {
-				try {
-					// Retrieve the setpointType based on the current thermostat_mode
-					const currentMode = this.getCapabilityValue('thermostat_mode') || 'Heat';
-					const setpointType = Mode2Setpoint[currentMode] || 'Heating 1'; // fallback
-					
-					if (!setpointType) {
-						this.error(`No setpoint type found for mode: ${currentMode}`);
-						return {
-							Level: {
-								'Setpoint Type': 'Heating 1', // Default fallback
-							},
-						};
-					}
-					
-					return {
-						Level: {
-							'Setpoint Type': setpointType !== 'not supported' ? setpointType : 'Heating 1',
-						},
-					};
-				} catch (err) {
-					this.error(`Error in target_temperature getParser: ${err.message}`);
-					// Return a safe default
-					return {
-						Level: {
-							'Setpoint Type': 'Heating 1',
-						},
-					};
-				}
+				const currentMode = this.getCapabilityValue('thermostat_mode') || 'Heat';
+				const setpointType = Mode2Setpoint[currentMode] || 'Heating 1';
+				return {
+					Level: {
+						'Setpoint Type': setpointType !== 'not supported' ? setpointType : 'Heating 1',
+					},
+				};
 			},
 			set: 'THERMOSTAT_SETPOINT_SET',
 			setParserV3: setpointValue => {
@@ -217,7 +134,6 @@ class ZTRM8FCDevice extends ZwaveDevice {
 				this.log('Mode2Setpoint ->', setpointValue, currentMode, setpointType);
 
 				if (setpointType !== 'not supported' && setpointType) {
-					// Store thermostat setpoint based on thermostat type
 					this.setStoreValue(`thermostatsetpointValue.${setpointType}`, setpointValue).catch(this.error);
 
 					const setpointSetting = Setpoint2Setting[setpointType];
@@ -230,7 +146,6 @@ class ZTRM8FCDevice extends ZwaveDevice {
 						[setpointSetting]: setpointValue * 10,
 					}).catch(this.error);
 
-					// Prepare the buffer
 					const bufferValue = Buffer.alloc(2);
 					try {
 						const scaled = (Math.round(setpointValue * 2) / 2 * 10).toFixed(0);
@@ -303,7 +218,6 @@ class ZTRM8FCDevice extends ZwaveDevice {
 							}).catch(err => this.error(`Error updating settings: ${err.message}`));
 						}
 
-						// Only update the UI if the current mode matches the type
 						const currentMode = this.getCapabilityValue('thermostat_mode') || 'Heat';
 						if (setpointType === Mode2Setpoint[currentMode]) {
 							this.log('Updated thermostat setpoint on UI to', setpointValue);
@@ -327,25 +241,13 @@ class ZTRM8FCDevice extends ZwaveDevice {
 				}
 				const mode = this.CapabilityToThermostatMode[value];
 				this.log('thermostat_mode setParser - mapped to mode:', mode);
-				if (typeof mode !== 'string') {
-					this.log('thermostat_mode setParser - invalid mode type');
-					return null;
-				}
-				
-				try {
-					const result = {
-						Level: {
-							'No of Manufacturer Data fields': 0,
-							'Mode': mode,
-						},
-						'Manufacturer Data': Buffer.from([]),
-					};
-					this.log('thermostat_mode setParser - sending:', JSON.stringify(result));
-					return result;
-				} catch (err) {
-					this.error(`Error creating thermostat mode command: ${err.message}`);
-					return null;
-				}
+				return {
+					Level: {
+						'No of Manufacturer Data fields': 0,
+						'Mode': mode,
+					},
+					'Manufacturer Data': Buffer.from([]),
+				};
 			},
 			report: 'THERMOSTAT_MODE_REPORT',
 			reportParser: report => {

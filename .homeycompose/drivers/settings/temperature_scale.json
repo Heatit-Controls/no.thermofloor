@@ -1,0 +1,12 @@
+{
+	"id": "temperature_scale",
+	"type": "dropdown",
+	"label": { "en": "Temperature scale" },
+	"hint": { "en": "Choose to use Celsius or Fahrenheit" },
+	"zwave": { "index": 38, "size": 1, "signed": false },
+	"value": "0",
+	"values": [
+		{ "id": "0", "label": { "en": "Celsius (Default)" } },
+		{ "id": "1", "label": { "en": "Fahrenheit" } }
+	]
+}

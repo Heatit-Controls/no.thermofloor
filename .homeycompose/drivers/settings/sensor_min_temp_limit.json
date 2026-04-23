@@ -1,0 +1,9 @@
+{
+	"id": "sensor_min_temp_limit",
+	"type": "number",
+	"label": { "en": "Sensor min temp limit" },
+	"hint": { "en": "Set minimum setpoint for the sensor (5°C to 40°C)" },
+	"zwave": { "index": 2, "size": 2, "signed": false },
+	"value": 50,
+	"attr": { "min": 50, "max": 400 }
+}

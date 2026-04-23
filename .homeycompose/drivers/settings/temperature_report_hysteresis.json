@@ -1,0 +1,9 @@
+{
+	"id": "temperature_report_hysteresis",
+	"type": "number",
+	"label": { "en": "Temperature report hysteresis" },
+	"hint": { "en": "Set temperature report hysteresis in °C (0.1°C to 10°C)" },
+	"zwave": { "index": 14, "size": 1, "signed": false },
+	"value": 10,
+	"attr": { "min": 1, "max": 100 }
+}

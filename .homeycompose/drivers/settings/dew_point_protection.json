@@ -1,0 +1,12 @@
+{
+	"id": "dew_point_protection",
+	"type": "dropdown",
+	"label": { "en": "Dew point protection" },
+	"hint": { "en": "Choose if dew point protection should be enabled" },
+	"zwave": { "index": 37, "size": 1, "signed": false },
+	"value": "0",
+	"values": [
+		{ "id": "0", "label": { "en": "Dew point protection disabled (Default)" } },
+		{ "id": "1", "label": { "en": "Dew point protection enabled" } }
+	]
+}

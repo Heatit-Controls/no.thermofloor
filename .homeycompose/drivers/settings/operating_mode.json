@@ -1,0 +1,17 @@
+{
+	"id": "operating_mode",
+	"type": "dropdown",
+	"label": { "en": "Operating Mode" },
+	"hint": { "en": "Changes operating mode" },
+	"zwave": { "index": 22, "size": 1 },
+	"value": "1",
+	"values": [
+		{ "id": "0", "label": { "en": "OFF (Thermostat display is off. Thermostat does not regulate temperature)" } },
+		{ "id": "1", "label": { "en": "Heating mode (Default)" } },
+		{ "id": "2", "label": { "en": "Cooling mode" } },
+		{ "id": "3", "label": { "en": "Energy save heating mode" } },
+		{ "id": "4", "label": { "en": "Energy save cooling mode" } },
+		{ "id": "5", "label": { "en": "VENT mode" } },
+		{ "id": "6", "label": { "en": "AUTO Changeover mode" } }
+	]
+}

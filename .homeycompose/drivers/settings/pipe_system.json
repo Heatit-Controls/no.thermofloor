@@ -1,0 +1,12 @@
+{
+	"id": "pipe_system",
+	"type": "dropdown",
+	"label": { "en": "2/4 pipe system" },
+	"hint": { "en": "Select if the system is a 2, or 4 pipe system" },
+	"zwave": { "index": 35, "size": 1 },
+	"value": "0",
+	"values": [
+		{ "id": "0", "label": { "en": "2 pipe system (Default)" } },
+		{ "id": "1", "label": { "en": "4 pipe system" } }
+	]
+}

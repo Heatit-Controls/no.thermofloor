@@ -1,0 +1,9 @@
+{
+	"id": "temperature_control_hysteresis",
+	"type": "number",
+	"label": { "en": "Temperature control hysteresis" },
+	"hint": { "en": "Select degrees for regulation hysteresis (0.3°C to 3.0°C)" },
+	"zwave": { "index": 5, "size": 1, "signed": false },
+	"value": 10,
+	"attr": { "min": 3, "max": 30 }
+}

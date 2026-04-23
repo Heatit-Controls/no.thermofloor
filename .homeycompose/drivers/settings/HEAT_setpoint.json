@@ -11,11 +11,9 @@
 	},
 	"value": 210,
 	"label": {
-		"en": "Heating mode temperature",
-		"nl": "Verwarmings modus temperatuur"
+		"en": "Heating setpoint"
 	},
 	"hint": {
-		"en": "Temperature setpoint used when in Heating mode. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 50 - 400 (5.0 - 40.0°C) \nDefault: 210 (21.0) °C",
-		"nl": "Temperatuur setpoint gebruikt in Verwarmings mode. \nZ-wave parameter {{zwaveParameterIndex}} \nBereik: 50 - 400 (5.0 - 40.0°C)\nStandaard: 210 (21.0) °C"
+		"en": "Set the setpoint for heating mode (50–400 = 5.0–40.0°C, default: 210 = 21.0°C)"
 	}
 }

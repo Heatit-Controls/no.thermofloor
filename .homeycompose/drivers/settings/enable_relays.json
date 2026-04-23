@@ -1,0 +1,14 @@
+{
+	"id": "enable_relays",
+	"type": "dropdown",
+	"label": { "en": "Enable relays" },
+	"hint": { "en": "Choose whether relays should be controlled by the device" },
+	"zwave": { "index": 39, "size": 1, "signed": false },
+	"value": "0",
+	"values": [
+		{ "id": "0", "label": { "en": "All relays controlled by thermostat (default) - Load and fan relays operate based on thermostat states" } },
+		{ "id": "1", "label": { "en": "Load relays only - Load relays controlled by thermostat. Fan relays disabled." } },
+		{ "id": "2", "label": { "en": "Fan relays only - Fan relays controlled by thermostat. Load relays disabled." } },
+		{ "id": "3", "label": { "en": "No relay control - All relays disabled." } }
+	]
+}

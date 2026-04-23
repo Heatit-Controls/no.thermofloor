@@ -1,0 +1,9 @@
+{
+	"id": "mode_deadband",
+	"type": "number",
+	"label": { "en": "Mode deadband" },
+	"hint": { "en": "Choose Mode deadband (4.0°C to 10.0°C)" },
+	"zwave": { "index": 34, "size": 1, "signed": false },
+	"value": 50,
+	"attr": { "min": 40, "max": 100 }
+}

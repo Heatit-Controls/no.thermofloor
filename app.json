@@ -2574,12 +2574,10 @@
           },
           "value": 180,
           "label": {
-            "en": "Energy saving mode temperature",
-            "nl": "Energiebesparings modus temperatuur"
+            "en": "Energy Save Heating setpoint"
           },
           "hint": {
-            "en": "Temperature setpoint used when in Energy saving (ECO) mode. \nZ-wave parameter 11 \nRange: 50 - 400 (5.0C - 40.0 °C) \nDefault: 180 (18.0) °C",
-            "nl": "Temperatuur setpoint gebruikt in Energiebesparings (ECO) mode. \nZ-wave parameter 11 \nBereik: 50 - 400 (5.0C - 40.0 °C)\nStandaard: 180 (18.0) °C"
+            "en": "Set the setpoint for Energy Save Heating mode (50–400 = 5.0–40.0°C, default: 180 = 18.0°C)"
           }
         },
         {
@@ -2593,14 +2591,12 @@
             "min": 50,
             "max": 400
           },
-          "value": 210,
+          "value": 180,
           "label": {
-            "en": "Cooling mode temperature",
-            "nl": "Koel modus temperatuur"
+            "en": "Cooling setpoint"
           },
           "hint": {
-            "en": "Temperature setpoint used when in Cooling (COOL) mode (only if enabled). \nZ-wave parameter 13 \nRange: 50 - 400 (5.0 - 40.0°C) \nDefault: 210 (21.0) °C",
-            "nl": "Temperatuur setpoint gebruikt in Koelen (COOL) modus (indien beschikbaar). \nZ-wave parameter 13 \nBereik: 50 - 400 (5.0 - 40.0°C)\nStandaard: 210 (21.0) °C"
+            "en": "Set the setpoint for cooling mode (50–400 = 5.0–40.0°C, default: 180 = 18.0°C)"
           }
         },
         {
@@ -3124,12 +3120,10 @@
           },
           "value": 180,
           "label": {
-            "en": "Energy saving mode temperature",
-            "nl": "Energiebesparings modus temperatuur"
+            "en": "Energy Save Heating setpoint"
           },
           "hint": {
-            "en": "Temperature setpoint used when in Energy saving (ECO) mode. \nZ-wave parameter 11 \nRange: 50 - 400 (5.0C - 40.0 °C) \nDefault: 180 (18.0) °C",
-            "nl": "Temperatuur setpoint gebruikt in Energiebesparings (ECO) mode. \nZ-wave parameter 11 \nBereik: 50 - 400 (5.0C - 40.0 °C)\nStandaard: 180 (18.0) °C"
+            "en": "Set the setpoint for Energy Save Heating mode (50–400 = 5.0–40.0°C, default: 180 = 18.0°C)"
           }
         },
         {
@@ -3143,14 +3137,12 @@
             "min": 50,
             "max": 400
           },
-          "value": 210,
+          "value": 180,
           "label": {
-            "en": "Cooling mode temperature",
-            "nl": "Koel modus temperatuur"
+            "en": "Cooling setpoint"
           },
           "hint": {
-            "en": "Temperature setpoint used when in Cooling (COOL) mode (only if enabled). \nZ-wave parameter 13 \nRange: 50 - 400 (5.0 - 40.0°C) \nDefault: 210 (21.0) °C",
-            "nl": "Temperatuur setpoint gebruikt in Koelen (COOL) modus (indien beschikbaar). \nZ-wave parameter 13 \nBereik: 50 - 400 (5.0 - 40.0°C)\nStandaard: 210 (21.0) °C"
+            "en": "Set the setpoint for cooling mode (50–400 = 5.0–40.0°C, default: 180 = 18.0°C)"
           }
         },
         {
@@ -8008,12 +8000,10 @@
           },
           "value": 180,
           "label": {
-            "en": "Energy saving mode temperature",
-            "nl": "Energiebesparings modus temperatuur"
+            "en": "Energy Save Heating setpoint"
           },
           "hint": {
-            "en": "Temperature setpoint used when in Energy saving (ECO) mode. \nZ-wave parameter 10 \nRange: 50 - 400 (5.0C - 40.0 °C) \nDefault: 180 (18.0) °C",
-            "nl": "Temperatuur setpoint gebruikt in Energiebesparings (ECO) mode. \nZ-wave parameter 10 \nBereik: 50 - 400 (5.0C - 40.0 °C)\nStandaard: 180 (18.0) °C"
+            "en": "Set the setpoint for Energy Save Heating mode (50–400 = 5.0–40.0°C, default: 180 = 18.0°C)"
           }
         },
         {
@@ -8027,14 +8017,12 @@
             "min": 50,
             "max": 400
           },
-          "value": 210,
+          "value": 180,
           "label": {
-            "en": "Cooling mode temperature",
-            "nl": "Koel modus temperatuur"
+            "en": "Cooling setpoint"
           },
           "hint": {
-            "en": "Temperature setpoint used when in Cooling (COOL) mode (only if enabled). \nZ-wave parameter 11 \nRange: 50 - 400 (5.0 - 40.0°C) \nDefault: 210 (21.0) °C",
-            "nl": "Temperatuur setpoint gebruikt in Koelen (COOL) modus (indien beschikbaar). \nZ-wave parameter 11 \nBereik: 50 - 400 (5.0 - 40.0°C)\nStandaard: 210 (21.0) °C"
+            "en": "Set the setpoint for cooling mode (50–400 = 5.0–40.0°C, default: 180 = 18.0°C)"
           }
         },
         {
@@ -8753,12 +8741,10 @@
           },
           "value": 210,
           "label": {
-            "en": "Heating mode temperature",
-            "nl": "Verwarmings modus temperatuur"
+            "en": "Heating setpoint"
           },
           "hint": {
-            "en": "Temperature setpoint used when in Heating mode. \nZ-wave parameter 9 \nRange: 50 - 400 (5.0 - 40.0°C) \nDefault: 210 (21.0) °C",
-            "nl": "Temperatuur setpoint gebruikt in Verwarmings mode. \nZ-wave parameter 9 \nBereik: 50 - 400 (5.0 - 40.0°C)\nStandaard: 210 (21.0) °C"
+            "en": "Set the setpoint for heating mode (50–400 = 5.0–40.0°C, default: 210 = 21.0°C)"
           }
         },
         {
@@ -11069,9 +11055,9 @@
               }
             },
             {
-              "id": "fan",
+              "id": "fan only",
               "title": {
-                "en": "Fan"
+                "en": "Fan only"
               }
             },
             {
@@ -11507,21 +11493,23 @@
             },
             {
               "id": "sensor_calibration",
-              "type": "number",
-              "label": {
-                "en": "Sensor calibration"
-              },
-              "hint": {
-                "en": "Manually calibrate the sensor by ±6°C. To set a negative value, use 256 and subtract the desired value."
-              },
               "zwave": {
                 "index": 4,
                 "size": 1
               },
-              "value": 0,
+              "type": "number",
               "attr": {
-                "min": -60,
-                "max": 60
+                "min": -40,
+                "max": 40
+              },
+              "value": 0,
+              "label": {
+                "en": "Sensor calibration (°C)",
+                "nl": "Sensor calibratie (°C)"
+              },
+              "hint": {
+                "en": "Sensor temperature calibration. \nZ-wave parameter 4 \nRange: -40 - 40 (-4.0 - 4.0°C)\nDefault: 0",
+                "nl": "Sensor temperatuur calibratie. \nZ-wave parameter 4 \nBereik: -40 - 40 (-4.0 - 4.0°C)\nStandaard: 0"
               }
             },
             {
@@ -11653,12 +11641,12 @@
               ]
             },
             {
-              "id": "HEAT_setpoint",
               "zwave": {
                 "index": 16,
                 "size": 2,
                 "signed": false
               },
+              "id": "HEAT_setpoint",
               "type": "number",
               "attr": {
                 "min": 50,
@@ -11666,43 +11654,39 @@
               },
               "value": 210,
               "label": {
-                "en": "Heating mode temperature",
-                "nl": "Verwarmings modus temperatuur"
+                "en": "Heating setpoint"
               },
               "hint": {
-                "en": "Temperature setpoint used when in Heating mode. \nZ-wave parameter 16 \nRange: 50 - 400 (5.0 - 40.0°C) \nDefault: 210 (21.0) °C",
-                "nl": "Temperatuur setpoint gebruikt in Verwarmings mode. \nZ-wave parameter 16 \nBereik: 50 - 400 (5.0 - 40.0°C)\nStandaard: 210 (21.0) °C"
+                "en": "Set the setpoint for heating mode (50–400 = 5.0–40.0°C, default: 210 = 21.0°C)"
               }
             },
             {
-              "id": "COOL_setpoint",
               "zwave": {
                 "index": 17,
                 "size": 2,
                 "signed": false
               },
-              "value": 180,
+              "id": "COOL_setpoint",
               "type": "number",
               "attr": {
                 "min": 50,
                 "max": 400
               },
+              "value": 180,
               "label": {
-                "en": "Cooling mode temperature",
-                "nl": "Koel modus temperatuur"
+                "en": "Cooling setpoint"
               },
               "hint": {
-                "en": "Temperature setpoint used when in Cooling (COOL) mode (only if enabled). \nZ-wave parameter 17 \nRange: 50 - 400 (5.0 - 40.0°C) \nDefault: 210 (21.0) °C",
-                "nl": "Temperatuur setpoint gebruikt in Koelen (COOL) modus (indien beschikbaar). \nZ-wave parameter 17 \nBereik: 50 - 400 (5.0 - 40.0°C)\nStandaard: 210 (21.0) °C"
+                "en": "Set the setpoint for cooling mode (50–400 = 5.0–40.0°C, default: 180 = 18.0°C)"
               }
             },
             {
-              "id": "ECO_setpoint",
               "zwave": {
                 "index": 18,
                 "size": 2,
                 "signed": false
               },
+              "id": "ECO_setpoint",
               "type": "number",
               "attr": {
                 "min": 50,
@@ -11710,21 +11694,19 @@
               },
               "value": 180,
               "label": {
-                "en": "Energy saving mode temperature",
-                "nl": "Energiebesparings modus temperatuur"
+                "en": "Energy Save Heating setpoint"
               },
               "hint": {
-                "en": "Temperature setpoint used when in Energy saving (ECO) mode. \nZ-wave parameter 18 \nRange: 50 - 400 (5.0C - 40.0 °C) \nDefault: 180 (18.0) °C",
-                "nl": "Temperatuur setpoint gebruikt in Energiebesparings (ECO) mode. \nZ-wave parameter 18 \nBereik: 50 - 400 (5.0C - 40.0 °C)\nStandaard: 180 (18.0) °C"
+                "en": "Set the setpoint for Energy Save Heating mode (50–400 = 5.0–40.0°C, default: 180 = 18.0°C)"
               }
             },
             {
-              "id": "ESC_setpoint",
               "zwave": {
                 "index": 19,
                 "size": 2,
                 "signed": false
               },
+              "id": "ESC_setpoint",
               "type": "number",
               "attr": {
                 "min": 50,
@@ -11732,21 +11714,19 @@
               },
               "value": 240,
               "label": {
-                "en": "Energy save cooling mode temperature",
-                "nl": "Energiebesparings koelen modus temperatuur"
+                "en": "Energy Save Cooling setpoint"
               },
               "hint": {
-                "en": "Temperature setpoint used when in Energy Save Cooling mode. \nZ-wave parameter 19 \nRange: 50 - 400 (5.0 - 40.0°C) \nDefault: 240 (24.0) °C",
-                "nl": "Temperatuur setpoint gebruikt in Energiebesparings koelen modus. \nZ-wave parameter 19 \nBereik: 50 - 400 (5.0 - 40.0°C)\nStandaard: 240 (24.0) °C"
+                "en": "Set the setpoint for Energy Save Cooling mode (50–400 = 5.0–40.0°C, default: 240 = 24.0°C)"
               }
             },
             {
-              "id": "AUTO_setpoint",
               "zwave": {
                 "index": 20,
                 "size": 2,
                 "signed": false
               },
+              "id": "AUTO_setpoint",
               "type": "number",
               "attr": {
                 "min": 50,
@@ -11754,12 +11734,10 @@
               },
               "value": 210,
               "label": {
-                "en": "Auto changeover mode temperature",
-                "nl": "Auto omschakel modus temperatuur"
+                "en": "AUTO Changeover setpoint"
               },
               "hint": {
-                "en": "Temperature setpoint used when in Auto Changeover mode. \nZ-wave parameter 20 \nRange: 50 - 400 (5.0 - 40.0°C) \nDefault: 210 (21.0) °C",
-                "nl": "Temperatuur setpoint gebruikt in Auto omschakel modus. \nZ-wave parameter 20 \nBereik: 50 - 400 (5.0 - 40.0°C)\nStandaard: 210 (21.0) °C"
+                "en": "Set the setpoint for AUTO Changeover mode (50–400 = 5.0–40.0°C, default: 210 = 21.0°C)"
               }
             }
           ]
@@ -11772,22 +11750,24 @@
           "children": [
             {
               "id": "temperature_report_interval",
-              "type": "number",
-              "label": {
-                "en": "Temperature report interval"
-              },
-              "hint": {
-                "en": "Set temperature report interval (30 to 65535 seconds)"
-              },
               "zwave": {
                 "index": 13,
                 "size": 2,
                 "signed": false
               },
-              "value": 840,
+              "type": "number",
               "attr": {
-                "min": 30,
-                "max": 65535
+                "min": 0,
+                "max": 32767
+              },
+              "value": 60,
+              "label": {
+                "en": "Temperature report interval (s)",
+                "nl": "Temperatuur rapportage interval (s)"
+              },
+              "hint": {
+                "en": "Time interval between consecutive temperature reports. \nZ-wave parameter 13 \nRange: 0, 30 - 32767 (s)\nDefault: 60 (s)",
+                "nl": "Tijdsinterval tussen opeenvolgende temperatuur rapportages. \nZ-wave parameter 13 \nBereik: 0, 30 - 32767 (s)\nStandaard: 60 (s)"
               }
             },
             {
@@ -11829,6 +11809,36 @@
                 "min": 0,
                 "max": 65535
               }
+            },
+            {
+              "id": "reduce_reports",
+              "type": "dropdown",
+              "label": {
+                "en": "Reduce reports"
+              },
+              "hint": {
+                "en": "Define if the device should send unsolicited reports"
+              },
+              "zwave": {
+                "index": 40,
+                "size": 1,
+                "signed": false
+              },
+              "value": "0",
+              "values": [
+                {
+                  "id": "0",
+                  "label": {
+                    "en": "All reports enabled (Default)"
+                  }
+                },
+                {
+                  "id": "1",
+                  "label": {
+                    "en": "Reduce reports"
+                  }
+                }
+              ]
             }
           ]
         },
