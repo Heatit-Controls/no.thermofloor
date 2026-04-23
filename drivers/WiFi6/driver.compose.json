@@ -8,11 +8,15 @@
     "measure_power",
     "target_temperature",
     "measure_temperature",
+    "measure_temperature.internal",
     "measure_temperature.external",
     "measure_temperature.floor",
     "onoff"
   ],
   "capabilitiesOptions": {
+    "measure_temperature.internal": {
+      "title": "Internal temperature"
+    },
     "measure_temperature.external": {
       "title": "External temperature"
     },

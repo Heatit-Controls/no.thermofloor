@@ -2,6 +2,7 @@
 const Homey = require('homey');
 const http = require('node:http');
 const util = require('../../lib/util');
+const { discoverDevices } = require('../../lib/util/discovery');
 
 module.exports = class MyDriver extends Homey.Driver {
 
@@ -17,15 +18,22 @@ module.exports = class MyDriver extends Homey.Driver {
      * This should return an array with the data of devices that are available for pairing.
      */
     async onPairListDevices() {
+        const discoveryResults = await discoverDevices({
+            driverName: 'WiFi Panel',
+            isModelMatch: (data) => {
+                const isPanel = data.parameters && data.parameters.panelMode !== undefined;
+                const isCorrectModel = !data.model || data.model === "Heatit WiFi Panel" || data.model === "Heatit WiFi Panel Heater";
+                return isPanel && isCorrectModel;
+            },
+            log: this.log.bind(this),
+        });
 
-
-        let discoveryResults = await this.scanNetwork();
         let compatibleDevices = [];
 
         for (const item of discoveryResults) {
             compatibleDevices.push(
                 {
-                    name: "WiFi-Panel IP " + item.Ip,
+                    name: "WiFi Panel " + (item.Name || item.Ip),
                     data: {
                         id: "WiFi-Panel" + item.Mac,
                     },
@@ -48,58 +56,4 @@ module.exports = class MyDriver extends Homey.Driver {
         return compatibleDevices;
     }
 
-    async scanNetwork() {
-        const baseIp = util.getBaseIpAddress(); //'192.168.1.'; Replace with your network's base IP this.
-        const out = [];
-        for (let i = 1; i <= 254; i++) {
-            const ip = baseIp + i;
-            const isOnline = await util.checkTcpConnection(ip, 80); // Check port 80
-            if (isOnline) {
-                //this.log(`Device found at: ${ip}`);
-                let data = await this.isWiFiPanelHeater(ip);
-                if (data.isWiFiPanelHeater) {
-                    out.push({ "Ip": ip, "Mac": data.Mac });
-                    this.log('Yes is WiFi-Panel. IP: ' + ip + ' Mac: ' + data.Mac)
-                }
-            }
-        }
-        return out;
-    }
-
-    async isWiFiPanelHeater(ip) {
-        //this.log('isWiFiPanelHeater IP ' + ip);
-
-        return new Promise((resolve) => {
-            http.get({
-                hostname: ip, //'192.168.1.71'
-                port: 80,
-                path: '/api/status',
-                agent: false,  // Create a new agent just for this one request
-            }, (res) => {
-
-                const { statusCode } = res;
-                const contentType = res.headers['content-type'];
-
-                res.setEncoding('utf8');
-                let rawData = '';
-                res.on('data', (chunk) => { rawData += chunk; });
-                res.on('end', () => {
-                    try {
-                        const parsedData = JSON.parse(rawData);
-                        if (parsedData.parameters.panelMode != null) {
-                            resolve({ "isWiFiPanelHeater": true, "Mac": parsedData.Network.mac });
-                        } else {
-                            resolve({ "isWiFiPanelHeater": false });
-                        }
-                    } catch (e) {
-                        resolve({ "isWiFiPanelHeater": false });
-                    }
-                });
-
-            }).on('error', (e) => {
-                this.log('isWiFiPanelHeater false');
-                resolve({"isWiFiPanelHeater": false});
-            });
-        });
-    }
-}
+};
