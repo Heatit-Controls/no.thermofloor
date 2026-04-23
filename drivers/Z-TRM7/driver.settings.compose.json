@@ -1,19 +1,39 @@
 [
   {
     "id": "disable_buttons",
-    "type": "checkbox",
+    "type": "dropdown",
     "label": {
       "en": "Disable buttons"
     },
     "hint": {
-      "en": "Disable buttons, must be enabled through the parameter, or turned back on locally by holding the center and right button for 30 seconds until the display shows “UNLK”."
+      "en": "Disable buttons, must be enabled through the parameter, or turned back on locally by holding the center and right button for 30 seconds until the display shows \"UNLK\"."
     },
     "zwave": {
       "index": 1,
       "size": 1,
 	  "signed": false
     },
-    "value": false
+    "value": "0",
+    "values": [
+      {
+        "id": "0",
+        "label": {
+          "en": "Enabled (Default)"
+        }
+      },
+      {
+        "id": "1",
+        "label": {
+          "en": "Disabled"
+        }
+      },
+      {
+        "id": "2",
+        "label": {
+          "en": "Lock menu"
+        }
+      }
+    ]
   },
   {
     "id": "sensor_mode",
@@ -442,7 +462,7 @@
       "size": 2,
 	  "signed": false
     },
-    "value": 840,
+    "value": 850,
     "attr": {
       "min": 30,
       "max": 65535
@@ -482,7 +502,7 @@
       "size": 2,
 	  "signed": false
     },
-    "value": 840,
+    "value": 850,
     "attr": {
       "min": 30,
       "max": 65535
@@ -595,16 +615,16 @@
       "en": "Thermostat state update interval"
     },
     "hint": {
-      "en": "Set the time interval of how often the device updates Thermostat Setpoint set, Thermostat Mode set and Binary set to associated devices."
+      "en": "Set the time interval of how often the device updates Thermostat Setpoint set, Thermostat Mode set and Binary set to associated devices. 0 = send only on change."
     },
     "zwave": {
       "index": 26,
       "size": 2,
 	  "signed": false
     },
-    "value": 43200,
+    "value": 3600,
     "attr": {
-      "min": 30,
+      "min": 0,
       "max": 65535
     }
   },
