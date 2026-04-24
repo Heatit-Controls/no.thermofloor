@@ -133,5 +133,8 @@
   },
   "4.3.0": {
     "en": "Added WiFi7 thermostat support"
+  },
+  "4.3.1": {
+    "en": "Add PWER modes to WiFi6 and WiFi7"
   }
 }
