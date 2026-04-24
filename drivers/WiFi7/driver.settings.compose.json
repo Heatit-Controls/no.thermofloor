@@ -47,6 +47,10 @@
 			{
 				"id": "4",
 				"label": { "en": "External sensor & floor sensor limitation (A2F)" }
+			},
+			{
+				"id": "5",
+				"label": { "en": "Power regulator mode (PWER)" }
 			}
 		]
 	},

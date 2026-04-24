@@ -4,6 +4,7 @@
 	"description": "This app adds support for devices made by [ThermoFloor](http://www.thermo-floor.no).",
 	"main": "app.js",
 	"dependencies": {
+		"homey": "^4.2.0",
 		"homey-zigbeedriver": "^2.0.1",
 		"homey-zwavedriver": "^2.1.10",
 		"requirements": "^2.0.2"

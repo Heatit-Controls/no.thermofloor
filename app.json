@@ -3671,6 +3671,12 @@
               "label": {
                 "en": "External sensor & floor sensor limitation (A2F)"
               }
+            },
+            {
+              "id": "5",
+              "label": {
+                "en": "Power regulator mode (PWER)"
+              }
             }
           ]
         },
@@ -3722,6 +3728,16 @@
         "small": "/drivers/WiFi7/assets/images/small.png",
         "large": "/drivers/WiFi7/assets/images/large.png",
         "xlarge": "/drivers/WiFi7/assets/images/xlarge.png"
+      },
+      "flow": {
+        "conditions": [
+          {
+            "id": "wifi7_is_reachable",
+            "title": {
+              "en": "Is !{reachable|not reachable}"
+            }
+          }
+        ]
       },
       "pair": [
         {
@@ -3809,6 +3825,12 @@
               "id": "4",
               "label": {
                 "en": "External sensor & floor sensor limitation (A2F)"
+              }
+            },
+            {
+              "id": "5",
+              "label": {
+                "en": "Power regulator mode (PWER)"
               }
             }
           ]

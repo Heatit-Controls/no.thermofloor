@@ -14,9 +14,19 @@ module.exports = class MyDevice extends Homey.Device {
         this.log('WiFi7 Thermostat device has been initialized');
         this.isDebug = false;
         this.deviceIsDeleted = false;
+
+        this._originalTempOptions = { min: 5, max: 40, step: 0.5 };
+        this._powerRegulatorTempOptions = { min: 10, max: 100, step: 10 };
+
         this.registerCapabilityListener('target_temperature', async (value) => {
             this.debug("Changed temp", value);
-            this.setHeatingSetpoint(value);
+            const sensorMode = parseInt(this.getSettings().sensorMode);
+            if (sensorMode === 5) {
+                const powerReg = Math.max(1, Math.min(10, Math.round(value / 10)));
+                await this.setPowerRegulatorActiveTime(powerReg);
+            } else {
+                await this.setHeatingSetpoint(value);
+            }
         });
 
         this.registerCapabilityListener('onoff', async (value) => {
@@ -34,7 +44,21 @@ module.exports = class MyDevice extends Homey.Device {
         //Load settings
         await this.loadSettings();
 
+        await this.applyTargetTemperatureOptions(parseInt(this.getSettings().sensorMode));
+
         this.refreshStateLoop();
+
+        this.homey.flow.getConditionCard('wifi7_is_reachable')
+            .registerRunListener(() => this.testConnection());
+    }
+
+    async applyTargetTemperatureOptions(sensorMode) {
+        const options = sensorMode === 5 ? this._powerRegulatorTempOptions : this._originalTempOptions;
+        try {
+            await this.setCapabilityOptions('target_temperature', options);
+        } catch (err) {
+            this.error('Failed to set target_temperature options:', err);
+        }
     }
 
     async loadSettings() {
@@ -103,7 +127,12 @@ module.exports = class MyDevice extends Homey.Device {
                     this.setDisableButtonsFromThermostat(parsedData);
                     this.setCapabilityValue('measure_temperature.external', parsedData.externalTemperature).catch(this.error);
                     this.setCapabilityValue('measure_temperature.floor', parsedData.floorTemperature).catch(this.error);
-                    this.setCapabilityValue('target_temperature', parsedData.parameters.heatingSetpoint).catch(this.error);
+                    if (parsedData.parameters.sensorMode === 5) {
+                        const powerRegValue = (parsedData.parameters.powerRegulatorActiveTime || 2) * 10;
+                        this.setCapabilityValue('target_temperature', powerRegValue).catch(this.error);
+                    } else {
+                        this.setCapabilityValue('target_temperature', parsedData.parameters.heatingSetpoint).catch(this.error);
+                    }
                     let kWh = this.getCapabilityValue('meter_power');
                     kWh = kWh + (parsedData.currentPower * (this.getSettings().interval / 3600)) / 1000;
                     this.setCapabilityValue('meter_power', kWh).catch(this.error);
@@ -186,7 +215,8 @@ module.exports = class MyDevice extends Homey.Device {
             settingSensorMode = thermostatData.parameters.sensorMode;
             //Save changes from thermostat
             this.debug("Sensor mode changed on thermostat");
-            this.setSettings({ sensorMode: settingSensorMode.toString() });
+            this.setSettings({ sensorMode: settingSensorMode.toString() }).catch(this.error);
+            this.applyTargetTemperatureOptions(settingSensorMode).catch(this.error);
         }
 
         if (settingSensorMode == 0) {
@@ -217,7 +247,7 @@ module.exports = class MyDevice extends Homey.Device {
         if (openWindowDetectionSetting != thermostatData.parameters.OWD.openWindowDetection) {
             //Save changes from thermostat
             this.debug("Open Window Detection changed on thermostat");
-            this.setSettings({ openWindowDetection: thermostatData.parameters.OWD.openWindowDetection });
+            this.setSettings({ openWindowDetection: thermostatData.parameters.OWD.openWindowDetection }).catch(this.error);
         }
     }
 
@@ -227,7 +257,7 @@ module.exports = class MyDevice extends Homey.Device {
         if (disableButtonsSetting != thermostatData.parameters.disableButtons) {
             //Save changes from thermostat
             this.debug("Disable Buttons changed on thermostat");
-            this.setSettings({ disableButtons: thermostatData.parameters.disableButtons });
+            this.setSettings({ disableButtons: thermostatData.parameters.disableButtons }).catch(this.error);
         }
     }
 
@@ -242,6 +272,14 @@ module.exports = class MyDevice extends Homey.Device {
         const postData = JSON.stringify({
             'sensorMode': parseInt(mode),
         });
+        await this.setParameters(postData);
+    }
+
+    async setPowerRegulatorActiveTime(value) {
+        const postData = JSON.stringify({
+            'powerRegulatorActiveTime': parseInt(value),
+        });
+        this.debug(postData);
         await this.setParameters(postData);
     }
 
@@ -308,6 +346,24 @@ module.exports = class MyDevice extends Homey.Device {
 
         req.write(postData);
         req.end();
+    }
+
+    async testConnection() {
+        if (!this.ipIsValid()) return false;
+        return new Promise((resolve) => {
+            const req = http.get({
+                hostname: this.IPaddress,
+                port: 80,
+                path: '/api/status',
+                agent: false,
+                timeout: 5000,
+            }, (res) => {
+                res.resume();
+                resolve(res.statusCode === 200);
+            });
+            req.on('error', () => resolve(false));
+            req.on('timeout', () => { req.destroy(); resolve(false); });
+        });
     }
 
     /**
@@ -382,6 +438,7 @@ module.exports = class MyDevice extends Homey.Device {
 
         if (oldSettings.sensorMode != newSettings.sensorMode) {
             await this.setSensorMode(newSettings.sensorMode);
+            await this.applyTargetTemperatureOptions(parseInt(newSettings.sensorMode));
         }
         if (oldSettings.openWindowDetection != newSettings.openWindowDetection) {
             await this.setOpenWindowDetection(newSettings.openWindowDetection);
