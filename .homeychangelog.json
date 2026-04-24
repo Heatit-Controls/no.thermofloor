@@ -136,5 +136,8 @@
   },
   "4.3.1": {
     "en": "Add PWER modes to WiFi6 and WiFi7"
+  },
+  "4.3.2": {
+    "en": "Fixed size issue"
   }
 }
