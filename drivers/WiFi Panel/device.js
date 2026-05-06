@@ -1,11 +1,12 @@
 'use strict';
 const Homey = require('homey');
 const http = require('node:http');
+const util = require('../../lib/util');
 
 module.exports = class MyDevice extends Homey.Device {
 
     async onInit() {
-        this.log('Device has been initialized');
+        this.log('WiFi Panel heater has been initialized');
         this.isDebug = false;
         this.deviceIsDeleted = false;
         this.registerCapabilityListener('target_temperature', async (value) => {
@@ -26,44 +27,40 @@ module.exports = class MyDevice extends Homey.Device {
         this.setAvailable();
 
         //Load settings
-        this.IPaddress = await this.getIpAddressAndSetSetting();
-        this.ReportInterval = this.getSettings().interval;
-
+        await this.loadSettings();
+        
         this.refreshStateLoop();
     }
 
-    async getIpAddressAndSetSetting() {
+    async loadSettings() {
         if (this.getStore().address != null) {
 
-            if (!this.isValidIpAddress(this.getSettings().IPaddress.trim())) {
+            if (!util.isValidIpAddress(this.getSettings().IPaddress.trim())) {
                 await this.setSettings({
                     IPaddress: this.getStore().address,
                 });
             }
 
-            return this.getStore().address;
+            this.IPaddress = this.getStore().address;
         } else {
-            return this.getSettings().IPaddress.trim();
+            this.IPaddress = this.getSettings().IPaddress.trim();
         }
+        this.MaxReconnactionTrys = 5;
+        this.ReconnactionTry = 1;
+        this.MACaddress = this.getSettings().MACaddress.trim().toUpperCase();
+        this.MACaddressIsValid = util.isValidMACAddress(this.MACaddress);
+        this.ReportInterval = this.getSettings().interval;
     }
 
     ipIsValid() {
         if (this.getStore().address != null) {
             return true
-        } else if (this.isValidIpAddress(this.getSettings().IPaddress.trim())) {
+        } else if (util.isValidIpAddress(this.getSettings().IPaddress.trim())) {
             return true
         } else {
             this.setUnavailable('Please check that you have entered a valid IP address in advanced settings and that the device is turned on.').catch(this.error);
             return false
         }
-    }
-
-    isValidIpAddress(ip) {
-        const ipv4Pattern =
-            /^(\d{1,3}\.){3}\d{1,3}$/;
-        const ipv6Pattern =
-            /^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$/;
-        return ipv4Pattern.test(ip) || ipv6Pattern.test(ip);
     }
 
     refreshStateLoop() {
@@ -98,6 +95,7 @@ module.exports = class MyDevice extends Homey.Device {
             res.on('end', () => {
                 try {
                     const parsedData = JSON.parse(rawData);
+                    this.ReconnactionTry = 1;
                     this.setCapabilityValue('measure_temperature', parsedData.roomTemperature).catch(this.error);
                     this.setOpenWindowDetectionFromThermostat(parsedData);
                     this.setCapabilityValue('target_temperature', parsedData.parameters.heatingSetpoint).catch(this.error);
@@ -105,8 +103,16 @@ module.exports = class MyDevice extends Homey.Device {
                     kWh = kWh + (parsedData.currentPower * (this.getSettings().interval / 3600)) / 1000;
                     this.setCapabilityValue('meter_power', kWh).catch(this.error);
                     this.setCapabilityValue('measure_power', parsedData.currentPower).catch(this.error);
+                    if (!this.MACaddressIsValid && this.MACaddress == "GET") {
+                        this.setSettings({ MACaddress: parsedData.Network.mac });
+                    }
                     this.setAvailable();
                 } catch (e) {
+                    this.log('Cannot connect to API.')
+                    this.setCapabilityValue('measure_power', 0).catch(this.error);
+                    this.setUnavailable('Cannot reach device on local WiFi').catch(this.error);
+                    this.debug('Cannot reach device on local WiFi');
+                    this.getWiFiDeviceByMac();
                 }
             });
 
@@ -114,8 +120,51 @@ module.exports = class MyDevice extends Homey.Device {
             this.setCapabilityValue('measure_power', 0).catch(this.error);
             this.setUnavailable('Cannot reach device on local WiFi').catch(this.error);
             this.debug('Cannot reach device on local WiFi');
+            this.getWiFiDeviceByMac();
         });
 
+    }
+
+    getWiFiDeviceByMac() {
+        if (this.deviceIsDeleted) {
+            return; //exit 
+        }
+
+        if (this.MACaddressIsValid && this.ReconnactionTry <= this.MaxReconnactionTrys) {
+            this.log("Try:" + this.ReconnactionTry + ". Searching for WIFi Panel by MAC address: " + this.MACaddress);
+            (async () => {
+                try {
+                    this.scanNetwork();
+                } catch (error) {
+
+                }
+            })();
+        }
+    }
+
+    async scanNetwork() {
+        this.ReconnactionTry++;
+        const baseIp = util.getBaseIpAddress(); //'192.168.1.'; Replace with your network's base IP
+        for (let i = 1; i <= 254; i++) {
+            const ip = baseIp + i;
+
+            if (this.deviceIsDeleted) {
+                break; //Device deleted, exit loop
+            }
+
+            const isOnline = await util.checkTcpConnection(ip, 80); // Check port 80
+            if (isOnline) {
+                //this.log(`Device found at: ${ip}`);
+                let data = await this.getWiFiPanelData(ip);
+                if (data.IsWiFiPanel && data.Mac === this.MACaddress) {
+                    this.IPaddress = ip;
+                    this.setSettings({ IPaddress: this.IPaddress, }); //await
+                    this.log('WiFi Panel found by Mac: ' + data.Mac);
+                    this.ReconnactionTry = 0;
+                    break; // Found a device, exit loop
+                }
+            }
+        }
     }
 
     debug(msg) {
@@ -212,12 +261,55 @@ module.exports = class MyDevice extends Homey.Device {
         this.log('My heatit WiFi device has been added');
     }
 
+    async getWiFiPanelData(ip) {
+        this.debug('Check if is WiFi Panel. IP ' + ip);
+        return new Promise((resolve) => {
+
+            http.get({
+                hostname: ip,
+                port: 80,
+                path: '/api/status',
+                agent: false,
+            }, (res) => {
+
+                const { statusCode } = res;
+                const contentType = res.headers['content-type'];
+
+                res.setEncoding('utf8');
+                let rawData = '';
+                res.on('data', (chunk) => { rawData += chunk; });
+                res.on('end', () => {
+                    try {
+                        const parsedData = JSON.parse(rawData);
+                        if (parsedData.parameters.panelMode != null) {
+                            this.log('IsWiFiPanel true. IP: ' + ip + " Mac: " + parsedData.Network.mac);
+                            resolve({ "IsWiFiPanel": true, "Mac": parsedData.Network.mac });
+                        } else {
+                            resolve({ "IsWiFiPanel": false });
+                        }
+                    } catch (e) {
+                        resolve({ "IsWiFiPanel": false });
+                    }
+                });
+
+            }).on('error', (e) => {
+                this.log('IsWiFiPanel false');
+                resolve({ "IsWiFiPanel": false });
+            });
+        });
+    }
+
     async onSettings({
         oldSettings,
         newSettings,
         changedKeys,
     }) {
         this.log("My heatit WiFi device settings where changed");
+
+        if (!util.isValidIpAddress(newSettings.IPaddress)) {
+            throw new Error('Invalid IP address!')
+        }
+
         this.IPaddress = newSettings.IPaddress;
         this.ReportInterval = newSettings.interval;
         if (oldSettings.openWindowDetection != newSettings.openWindowDetection) {

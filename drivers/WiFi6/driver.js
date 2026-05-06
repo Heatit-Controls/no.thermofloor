@@ -1,6 +1,8 @@
 'use strict';
 const Homey = require('homey');
 const http = require('node:http');
+const util = require('../../lib/util');
+const { discoverDevices } = require('../../lib/util/discovery');
 
 module.exports = class MyDriver extends Homey.Driver {
 
@@ -8,7 +10,6 @@ module.exports = class MyDriver extends Homey.Driver {
      * onInit is called when the driver is initialized.
      */
     async onInit() {
-        this.log('Driver has been initialized');
     }
 
     /**
@@ -16,84 +17,42 @@ module.exports = class MyDriver extends Homey.Driver {
      * This should return an array with the data of devices that are available for pairing.
      */
     async onPairListDevices() {
-
-        let discoveryStrategy = this.homey.discovery.getStrategy("arp");
-        let discoveryResults = discoveryStrategy.getDiscoveryResults();
-
-        let allDevices = Object.values(discoveryResults).map(discoveryResult => {
-            return {
-                name: discoveryResult.address,
-                data: {
-                    id: discoveryResult.id,
-                },
-                store: {
-                    address: discoveryResult.address
-                },
-            };
+        const discoveryResults = await discoverDevices({
+            driverName: 'WiFi6',
+            isModelMatch: (data) => {
+                const isThermostat = data.parameters && data.parameters.operatingMode !== undefined;
+                const isWiFi6 = !data.model || data.model === "Heatit WiFi6";
+                return isThermostat && isWiFi6;
+            },
+            log: this.log.bind(this),
         });
 
-        let compatibleDevices = allDevices;
+        let compatibleDevices = [];
 
-        for (const element of allDevices) {
-            if (await this.isNotWiFiThermostat(element.store.address)) {
-                compatibleDevices = compatibleDevices.filter(obj => obj.store.address !== element.store.address); //Remove
-            }
-        }
-
-        if (compatibleDevices.length == 0) {
-            return [
+        for (const item of discoveryResults) {
+            compatibleDevices.push(
                 {
-                    name: "Add manually",
+                    name: "WiFi6 " + (item.Name || item.Ip),
                     data: {
-                        id: "WiFi-Thermostat" + Math.floor(Math.random() * 1000000000000),
+                        id: "WiFi6-Thermostat" + item.Mac,
                     },
-                },
-            ];
-        }
-        else {
-            return compatibleDevices;
-        }
-    }
-
-
-    async isNotWiFiThermostat(ip) {
-
-        this.log('isNotWiFiThermostat IP ' + ip);
-
-        return new Promise((resolve) => {
-
-            http.get({
-                hostname: ip,
-                port: 80,
-                path: '/api/status',
-                agent: false,
-            }, (res) => {
-
-                const { statusCode } = res;
-                const contentType = res.headers['content-type'];
-
-                res.setEncoding('utf8');
-                let rawData = '';
-                res.on('data', (chunk) => { rawData += chunk; });
-                res.on('end', () => {
-                    try {
-                        const parsedData = JSON.parse(rawData);
-                        if (parsedData.parameters.operatingMode != null) {
-                            this.log('isWiFiThermostat true');
-                            resolve(false);
-                        } else {
-                            resolve(true);
-                        }
-                    } catch (e) {
-                        resolve(true);
+                    store: {
+                        address: item.Ip
                     }
-                });
+                }
+            );
+        }
 
-            }).on('error', (e) => {
-                this.log('isWiFiThermostat false');
-                resolve(true);
-            });
-        });
+        compatibleDevices.push(
+            {
+                name: "Add manually",
+                data: {
+                    id: "WiFi6-Thermostat" + Math.floor(Math.random() * 1000000000000),
+                },
+            }
+        );
+
+        return compatibleDevices;
     }
 
 };

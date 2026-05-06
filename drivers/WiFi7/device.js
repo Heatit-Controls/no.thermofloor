@@ -1,6 +1,8 @@
 'use strict';
 const Homey = require('homey');
 const http = require('node:http');
+const net = require('node:net')
+const os = require('node:os');
 const util = require('../../lib/util');
 
 module.exports = class MyDevice extends Homey.Device {
@@ -9,16 +11,12 @@ module.exports = class MyDevice extends Homey.Device {
      * onInit is called when the device is initialized.
      */
     async onInit() {
-        this.log('WiFi6 Thermostat has been initialized'); 
+        this.log('WiFi7 Thermostat device has been initialized');
         this.isDebug = false;
         this.deviceIsDeleted = false;
 
         this._originalTempOptions = { min: 5, max: 40, step: 0.5 };
         this._powerRegulatorTempOptions = { min: 10, max: 100, step: 10 };
-
-        if (!this.hasCapability('measure_temperature.internal')) {
-            await this.addCapability('measure_temperature.internal').catch(this.error);
-        }
 
         this.registerCapabilityListener('target_temperature', async (value) => {
             this.debug("Changed temp", value);
@@ -49,6 +47,9 @@ module.exports = class MyDevice extends Homey.Device {
         await this.applyTargetTemperatureOptions(parseInt(this.getSettings().sensorMode));
 
         this.refreshStateLoop();
+
+        this.homey.flow.getConditionCard('wifi7_is_reachable')
+            .registerRunListener(() => this.testConnection());
     }
 
     async applyTargetTemperatureOptions(sensorMode) {
@@ -62,9 +63,9 @@ module.exports = class MyDevice extends Homey.Device {
 
     async loadSettings() {
         if (this.getStore().address != null) {
-
+            //From arp
             if (!util.isValidIpAddress(this.getSettings().IPaddress.trim())) {
-                await this.setSettings({IPaddress: this.getStore().address,});
+                await this.setSettings({ IPaddress: this.getStore().address, });
             }
 
             this.IPaddress = this.getStore().address;
@@ -89,21 +90,21 @@ module.exports = class MyDevice extends Homey.Device {
         }
     }
 
-    refreshStateLoop() {
+    async refreshStateLoop() {
 
         if (this.deviceIsDeleted) {
             return; //Abort
         }
 
         if (this.ipIsValid()) {
-            this.refreshState();
+            await this.refreshState();
         }
         setTimeout(() => {
-            this.refreshStateLoop()
+           this.refreshStateLoop()
         }, this.ReportInterval * 1000);
     }
 
-    refreshState() {
+    async refreshState() {
         this.debug("refreshState")
         const client = http.get({
             hostname: this.IPaddress,
@@ -124,7 +125,6 @@ module.exports = class MyDevice extends Homey.Device {
                     this.setMeasureTemperature(parsedData);
                     this.setOpenWindowDetectionFromThermostat(parsedData);
                     this.setDisableButtonsFromThermostat(parsedData);
-                    this.setCapabilityValue('measure_temperature.internal', parsedData.internalTemperature).catch(this.error);
                     this.setCapabilityValue('measure_temperature.external', parsedData.externalTemperature).catch(this.error);
                     this.setCapabilityValue('measure_temperature.floor', parsedData.floorTemperature).catch(this.error);
                     if (parsedData.parameters.sensorMode === 5) {
@@ -165,12 +165,12 @@ module.exports = class MyDevice extends Homey.Device {
         }
 
         if (this.MACaddressIsValid && this.ReconnactionTry <= this.MaxReconnactionTrys) {
-            this.log("Try:" + this.ReconnactionTry + ". Searching for WiFi6 Thermostat by MAC address: " + this.MACaddress);
+            this.log("Try:" + this.ReconnactionTry + ". Searching for WiFi7 Thermostat by MAC address: " + this.MACaddress);
             (async () => {
                 try {
                     this.scanNetwork();
                 } catch (error) {
-
+                    
                 }
             })();
         }
@@ -189,11 +189,11 @@ module.exports = class MyDevice extends Homey.Device {
             const isOnline = await util.checkTcpConnection(ip, 80); // Check port 80
             if (isOnline) {
                 //this.log(`Device found at: ${ip}`);
-                let data = await this.getWiFi6ThermostatData(ip);
-                if (data.IsWiFi6Thermostat && data.Mac === this.MACaddress) {
+                let data = await this.getWiFi7ThermostatData(ip);
+                if (data.IsWiFi7Thermostat && data.Mac === this.MACaddress) {
                     this.IPaddress = ip;
                     this.setSettings({ IPaddress: this.IPaddress, }); //await
-                    this.log('WiFi6 Thermostat found by Mac: ' + data.Mac);
+                    this.log('WiFi7 Thermostat found by Mac: ' + data.Mac);
                     this.ReconnactionTry = 0;
                     break; // Found a device, exit loop
                 }
@@ -201,10 +201,11 @@ module.exports = class MyDevice extends Homey.Device {
         }
     }
 
+
     debug(msg) {
         if (this.isDebug) {
-           this.log(msg);
-        } 
+            this.log(msg);
+        }
     }
 
     setMeasureTemperature(thermostatData) {
@@ -217,7 +218,7 @@ module.exports = class MyDevice extends Homey.Device {
             this.setSettings({ sensorMode: settingSensorMode.toString() }).catch(this.error);
             this.applyTargetTemperatureOptions(settingSensorMode).catch(this.error);
         }
-        
+
         if (settingSensorMode == 0) {
             //0 = Floor sensor(F)
             this.setCapabilityValue('measure_temperature', thermostatData.floorTemperature).catch(this.error);
@@ -274,6 +275,14 @@ module.exports = class MyDevice extends Homey.Device {
         await this.setParameters(postData);
     }
 
+    async setPowerRegulatorActiveTime(value) {
+        const postData = JSON.stringify({
+            'powerRegulatorActiveTime': parseInt(value),
+        });
+        this.debug(postData);
+        await this.setParameters(postData);
+    }
+
     async setOpenWindowDetection(value) {
         const postData = JSON.stringify({
             'openWindowDetection': value
@@ -304,17 +313,8 @@ module.exports = class MyDevice extends Homey.Device {
         await this.setParameters(postData);
     }
 
-    async setPowerRegulatorActiveTime(value) {
-        const postData = JSON.stringify({
-            'powerRegulatorActiveTime': parseInt(value),
-        });
-        this.debug(postData);
-        await this.setParameters(postData);
-    }
-
     async setParameters(postData) {
         this.debug('setParameters');
-
         const options = {
             hostname: this.IPaddress,
             port: 80,
@@ -348,6 +348,24 @@ module.exports = class MyDevice extends Homey.Device {
         req.end();
     }
 
+    async testConnection() {
+        if (!this.ipIsValid()) return false;
+        return new Promise((resolve) => {
+            const req = http.get({
+                hostname: this.IPaddress,
+                port: 80,
+                path: '/api/status',
+                agent: false,
+                timeout: 5000,
+            }, (res) => {
+                res.resume();
+                resolve(res.statusCode === 200);
+            });
+            req.on('error', () => resolve(false));
+            req.on('timeout', () => { req.destroy(); resolve(false); });
+        });
+    }
+
     /**
      * onAdded is called when the user adds the device, called just after pairing.
      */
@@ -355,8 +373,8 @@ module.exports = class MyDevice extends Homey.Device {
         this.log('My heatit WiFi device has been added');
     }
 
-    async getWiFi6ThermostatData(ip) {
-        this.debug('Check if is WiFi6 Thermostat. IP ' + ip);
+    async getWiFi7ThermostatData(ip) {
+        this.debug('Check if is WiFi7 Thermostat. IP ' + ip);
         return new Promise((resolve) => {
 
             http.get({
@@ -375,20 +393,20 @@ module.exports = class MyDevice extends Homey.Device {
                 res.on('end', () => {
                     try {
                         const parsedData = JSON.parse(rawData);
-                        if (parsedData.parameters.operatingMode != null && parsedData.model == null) {
-                            this.log('IsWiFi6Thermostat true');
-                            resolve({ "IsWiFi6Thermostat": true, "Mac": parsedData.network.mac });
+                        if (parsedData.model === "Heatit WiFi7") {
+                            this.log('IsWiFi7Thermostat true');
+                            resolve({ "IsWiFi7Thermostat": true, "Mac": parsedData.network.mac });
                         } else {
-                            resolve({ "IsWiFi6Thermostat": false });
+                            resolve({ "IsWiFi7Thermostat": false });
                         }
                     } catch (e) {
-                        resolve({ "IsWiFi6Thermostat": false });
+                        resolve({ "IsWiFi7Thermostat": false });
                     }
                 });
 
             }).on('error', (e) => {
                 this.log('isWiFiThermostat false');
-                resolve({ "IsWiFi6Thermostat": false });
+                resolve({ "IsWiFi7Thermostat": false });
             });
         });
     }

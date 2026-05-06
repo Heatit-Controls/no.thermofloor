@@ -1,16 +1,13 @@
 'use strict';
 const Homey = require('homey');
-const http = require('node:http');
-const util = require('../../lib/util');
 const { discoverDevices } = require('../../lib/util/discovery');
 
 module.exports = class MyDriver extends Homey.Driver {
-
     /**
      * onInit is called when the driver is initialized.
      */
     async onInit() {
-        this.log('Diver has been initialized');
+        this.log('Driver has been initialized');
     }
 
     /**
@@ -19,12 +16,8 @@ module.exports = class MyDriver extends Homey.Driver {
      */
     async onPairListDevices() {
         const discoveryResults = await discoverDevices({
-            driverName: 'WiFi Panel',
-            isModelMatch: (data) => {
-                const isPanel = data.parameters && data.parameters.panelMode !== undefined;
-                const isCorrectModel = !data.model || data.model === "Heatit WiFi Panel" || data.model === "Heatit WiFi Panel Heater";
-                return isPanel && isCorrectModel;
-            },
+            driverName: 'WiFi7',
+            isModelMatch: (data) => data.model === "Heatit WiFi7",
             log: this.log.bind(this),
         });
 
@@ -33,9 +26,9 @@ module.exports = class MyDriver extends Homey.Driver {
         for (const item of discoveryResults) {
             compatibleDevices.push(
                 {
-                    name: "WiFi Panel " + (item.Name || item.Ip),
+                    name: "WiFi7 " + (item.Name || item.Ip),
                     data: {
-                        id: "WiFi-Panel" + item.Mac,
+                        id: "WiFi7-Thermostat" + item.Mac,
                     },
                     store: {
                         address: item.Ip
@@ -48,7 +41,7 @@ module.exports = class MyDriver extends Homey.Driver {
             {
                 name: "Add manually",
                 data: {
-                    id: "WiFi-Panel" + Math.floor(Math.random() * 1000000000000),
+                    id: "WiFi7-Thermostat" + Math.floor(Math.random() * 1000000000000),
                 },
             }
         );
