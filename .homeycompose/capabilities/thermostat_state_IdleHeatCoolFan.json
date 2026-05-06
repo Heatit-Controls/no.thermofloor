@@ -39,6 +39,56 @@
 				"en": "Fan Only"
 			}
 		}
-	]
+	],
+	"$flow": {
+		"triggers": [
+			{
+				"id": "thermostat_state_IdleHeatCoolFan_changed",
+				"title": {
+					"en": "Thermostat state changed"
+				},
+				"titleFormatted": {
+					"en": "Thermostat state changed to [[thermostat_state_IdleHeatCoolFan]]"
+				},
+				"args": [
+					{
+						"name": "thermostat_state_IdleHeatCoolFan",
+						"type": "dropdown",
+						"values": [
+							{ "id": "Idle", "title": { "en": "Idle" } },
+							{ "id": "Heating", "title": { "en": "Heating" } },
+							{ "id": "Cooling", "title": { "en": "Cooling" } },
+							{ "id": "Fan Only", "title": { "en": "Fan Only" } }
+						],
+						"meta": { "$values": true }
+					}
+				]
+			}
+		],
+		"conditions": [
+			{
+				"id": "thermostat_state_IdleHeatCoolFan_is",
+				"title": {
+					"en": "Thermostat state !{{is|is not}}"
+				},
+				"titleFormatted": {
+					"en": "Thermostat state !{{is|is not}} [[thermostat_state_IdleHeatCoolFan]]"
+				},
+				"args": [
+					{
+						"name": "thermostat_state_IdleHeatCoolFan",
+						"type": "dropdown",
+						"values": [
+							{ "id": "Idle", "title": { "en": "Idle" } },
+							{ "id": "Heating", "title": { "en": "Heating" } },
+							{ "id": "Cooling", "title": { "en": "Cooling" } },
+							{ "id": "Fan Only", "title": { "en": "Fan Only" } }
+						],
+						"meta": { "$values": true }
+					}
+				]
+			}
+		]
+	}
 
 }

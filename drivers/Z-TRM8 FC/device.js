@@ -276,15 +276,12 @@ class ZTRM8FCDevice extends ZwaveDevice {
 				const confValRaw = report['Configuration Value (Raw)'];
 				const paramNum = report?.['Parameter Number'];
 				
-				// Find the matching setting in the manifest
 				const manifestSettings = this.getManifestSettings();
 				const matchingSetting = manifestSettings.find(setting => 
 					setting.zwave && setting.zwave.index === paramNum
 				);
 				
-				// Get parameter size and signed status from the manifest
 				const paramSize = matchingSetting?.zwave?.size || 1;
-				// Parameters are signed by default unless explicitly set to false
 				const isSigned = !(matchingSetting?.zwave?.signed === false);
 				
 				let parsedValue;
@@ -299,7 +296,6 @@ class ZTRM8FCDevice extends ZwaveDevice {
 					return;
 				}
 				
-				// Read the appropriate number of bytes based on manifest settings
 				if (paramSize === 1) {
 					parsedValue = isSigned 
 						? valueBuffer.readInt8(0) 

@@ -91,13 +91,14 @@
       "units": { "en": "°C" }
     },
     "measure_temperature": {
-      "title": "temperature",
+      "title": "Temperature",
       "units": { "en": "°C" }
     },
     "measure_humidity": {
-      "title": "humidity"
+      "title": "Humidity"
     },
     "fan_mode": {
+      "insights": true,
       "values": [
         {
           "id": "Low",
@@ -160,7 +161,7 @@
     "learnmode": {
       "image": "{{driverAssetsPath}}/learnmode.svg",
       "instruction": {
-        "en": "1. Open the menu on the display.\n2. Navigate to \"Connection\".\n3. Tap \"Start add/remove mode\".\n4. The thermostat will search for a Z-Wave network and confirm when inclusion is complete."
+        "en": "1. Swipe up \n2. Press \"Settings\" 3. Navigate to \"Connection\".\n4. Tap \"Start add/remove mode\".\n5. The thermostat will search for a Z-Wave network and confirm when inclusion/exclusion is complete."
       }
     },
     "associationGroups": [],
@@ -194,6 +195,61 @@
       "6": {
         "hint": {
           "en": "Sends Thermostat Fan Mode Set commands based on own Fan mode to allow for use as master thermostat."
+        }
+      },
+      "7": {
+        "hint": {
+          "en": "Binary Switch Set Fan speed Low: Sends BASIC_SET when the fan is running at low speed."
+        }
+      },
+      "8": {
+        "hint": {
+          "en": "Binary Switch Set Fan speed Medium: Sends BASIC_SET when the fan is running at medium speed."
+        }
+      },
+      "9": {
+        "hint": {
+          "en": "Binary Switch Set Fan speed High: Sends BASIC_SET when the fan is running at high speed."
+        }
+      },
+      "10": {
+        "hint": {
+          "en": "External dimmer/shutter control 1: Sends Multilevel Switch Set and Start/Stop Level Change to control dimmers or roller shutters."
+        }
+      },
+      "11": {
+        "hint": {
+          "en": "External dimmer/shutter control 2: Sends Multilevel Switch Set and Start/Stop Level Change to control dimmers or roller shutters."
+        }
+      },
+      "12": {
+        "hint": {
+          "en": "External dimmer/shutter control 3: Sends Multilevel Switch Set and Start/Stop Level Change to control dimmers or roller shutters."
+        }
+      },
+      "13": {
+        "hint": {
+          "en": "External dimmer/shutter control 4: Sends Multilevel Switch Set and Start/Stop Level Change to control dimmers or roller shutters."
+        }
+      },
+      "14": {
+        "hint": {
+          "en": "External relay control 1: Sends Binary Switch Set (ON/OFF) to control an external relay."
+        }
+      },
+      "15": {
+        "hint": {
+          "en": "External relay control 2: Sends Binary Switch Set (ON/OFF) to control an external relay."
+        }
+      },
+      "16": {
+        "hint": {
+          "en": "External relay control 3: Sends Binary Switch Set (ON/OFF) to control an external relay."
+        }
+      },
+      "17": {
+        "hint": {
+          "en": "External relay control 4: Sends Binary Switch Set (ON/OFF) to control an external relay."
         }
       }
     }
