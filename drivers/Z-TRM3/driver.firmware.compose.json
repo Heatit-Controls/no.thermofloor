@@ -1,0 +1,24 @@
+{
+  "updates": [
+    {
+      "version": "4.0.35",
+      "changelog": {
+        "en": "- Fixes meter reset"
+      },
+      "device": {
+        "manufacturerId": 411,
+        "productTypeId": [3],
+        "productId": [515]
+      },
+      "files": [
+        {
+          "targetId": 0,
+          "size": 267593,
+          "name": "Therm3_slave_enhanced_232_OTA_ZW050x_EU_v4.0.35_meter-reset-fix.otz",
+          "integrity": "sha256:6bbd26a286082e8a51f560a37d0b11cc9321a2553f6fbd2fb51c68cdd50b94ff",
+          "region": "EU"
+        }
+      ]
+    }
+  ]
+}
