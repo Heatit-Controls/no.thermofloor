@@ -38,6 +38,11 @@ class ZTRM8FCDevice extends ZwaveDevice {
 		// print the node's info to the console
 		this.printNode();
 		
+		// add capabilities that may be missing on previously paired devices
+		if (!this.hasCapability('thermostat_active')) {
+			await this.addCapability('thermostat_active');
+		}
+
 		// register capabilities for this device
 
 		this.registerCapability('measure_temperature', 'SENSOR_MULTILEVEL', {
@@ -346,7 +351,11 @@ class ZTRM8FCDevice extends ZwaveDevice {
 			reportParser: report => {
 				this.log('THERMOSTAT_OPERATING_STATE report:', report);
 				const state = report && report.Level && report.Level['Operating State'];
-				return typeof state === 'string' ? state : null;
+				if (typeof state === 'string') {
+					this.setCapabilityValue('thermostat_active', state !== 'Idle').catch(this.error);
+					return state;
+				}
+				return null;
 			},
 		});
 

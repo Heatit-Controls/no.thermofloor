@@ -1,0 +1,26 @@
+{
+	"type": "boolean",
+	"uiComponent": "sensor",
+	"icon": "/assets/thermofloor_onoff.svg",
+	"noblink": false,
+	"greyout": true,
+	"getable": true,
+	"setable": false,
+	"insights": true,
+	"title": {
+		"en": "Active"
+	},
+	"desc": {
+		"en": "Whether the thermostat is currently active (heating, cooling or fan)"
+	},
+	"label": {
+		"true": { "en": "Active" },
+		"false": { "en": "Idle" }
+	},
+	"insightsTitleTrue": {
+		"en": "Heating/Cooling active"
+	},
+	"insightsTitleFalse": {
+		"en": "Heating/Cooling idle"
+	}
+}

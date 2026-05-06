@@ -7,7 +7,6 @@
 	"getable": true,
 	"setable": false,
 	"insights": true,
-	
 	"title": {
 		"en": "State"
 	},
