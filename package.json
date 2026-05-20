@@ -9,9 +9,9 @@
 		"requirements": "^2.0.2"
 	},
 	"devDependencies": {
-		"homey": "^4.2.0",
 		"eslint": "^9.39.1",
-		"eslint-config-athom": "^2.1.0"
+		"eslint-config-athom": "^2.1.0",
+		"homey": "^3.9.6"
 	},
 	"scripts": {
 		"run": "homey app run",
