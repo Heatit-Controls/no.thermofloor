@@ -28,13 +28,6 @@ ZwaveDevice.setMaxListeners(20);
 class ZTRM6DCDevice extends ThermostatFourModeDevice {
 	async onNodeInit() {
 
-		// Mapping of parameter 2 values to sensor capabilities:
-		//  0 => measure_temperature.floor
-		//  1 => measure_temperature.internal
-		//  2 => measure_temperature.internal
-		//  3 => measure_temperature.external
-		//  4 => measure_temperature.external
-		//  5 => measure_temperature.internal
 		this.PARAM2_SENSOR_MAP = {
 			0: 'measure_temperature.floor',
 			1: 'measure_temperature.internal',
@@ -60,46 +53,18 @@ class ZTRM6DCDevice extends ThermostatFourModeDevice {
 			'measure_temperature.floor': 4,
 		};
 
-		// this.registerCapability('measure_power', 'METER', {
-		//     report: 'METER_REPORT',
-		//     reportParserV5: report => {
-		//         const bool = report && report.hasOwnProperty('Properties2')
-		//             && report.Properties2['Scale bits 10'] === 2
-		//         this.log("measure_power" , bool)
-		//         if (bool) {
-		//             this.log("measure_power" , report['Meter Value (Parsed)'])
-		//             return report['Meter Value (Parsed)'];
-		//         }
-		//         return 0
-		//     },
-		//     multiChannelNodeId: 1,
-		// });
-		// this.registerCapability('meter_power', 'METER', {
-		//     report: 'METER_REPORT',
-		//     reportParserV5: report => {
-		//         const bool = report && report.hasOwnProperty('Properties2')
-		//             && report.Properties2['Scale bits 10'] === 0
-		//         this.log("meter_power" , bool)
-		//         if (bool) {
-		//             this.log("meter_power" , report['Meter Value (Parsed)'])
-		//             return report['Meter Value (Parsed)'];
-		//         }
-		//         return 0
-		//     },
-		//     multiChannelNodeId: 1,
-		// });
+		this.registerCapability('meter_power', 'METER', {
+			getOpts: {
+				getOnStart: true,
+			},
+			multiChannelNodeId: 1,
+		});
 
-		// Listen for multi-channel meter reports
-		this.registerMultiChannelReportListener(1, "METER", "METER_REPORT", report => {
-			const bool = report && report.hasOwnProperty('Properties2');
-			this.log("METER_REPORT", report);
-			if (bool && report.Properties2['Scale bits 10'] === 0) {
-				this.log("meter_power", report['Meter Value (Parsed)']);
-				this.setCapabilityValue('meter_power', report['Meter Value (Parsed)']).catch(this.error);
-			} else if (bool && report.Properties2['Scale bits 10'] === 2) {
-				this.log("measure_power", report['Meter Value (Parsed)']);
-				this.setCapabilityValue('measure_power', report['Meter Value (Parsed)']).catch(this.error);
-			}
+		this.registerCapability('measure_power', 'METER', {
+			getOpts: {
+				getOnStart: true,
+			},
+			multiChannelNodeId: 1,
 		});
 
 		// Register the main measure_temperature capability (for backwards compatibility)
