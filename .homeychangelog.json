@@ -142,5 +142,8 @@
   },
   "4.3.3": {
     "en": "Add Scene triggers for Thermostat state on TRM6-DC"
+  },
+  "4.3.4": {
+    "en": "Add Scene triggers for Thermostat state on TRM6-DC and refactored Thermostat State"
   }
 }

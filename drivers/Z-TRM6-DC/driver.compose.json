@@ -49,7 +49,7 @@
         }
       ]
     },
-		"thermostat_state_13570": {
+		"thermostat_state_IdleHeatCool": {
 			"greyout": true,
 			"titleTrue": {
 				"en": "Active",
@@ -113,8 +113,8 @@
     "security": [
       "none"
     ],
-    "zwaveAllianceProductId": 4908,
-    "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4908",
+    "zwaveAllianceProductId": 4994,
+    "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4994",
     "learnmode": {
       "image": "{{driverAssetsPath}}/learnmode.svg",
       "instruction": {

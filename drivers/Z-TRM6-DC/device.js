@@ -44,6 +44,13 @@ class ZTRM6DCDevice extends ThermostatFourModeDevice {
 			5: 'measure_temperature.internal',
 		};
 
+		if (this.hasCapability('thermostat_state_IdleHeatCool') === false) {
+			await this.addCapability('thermostat_state_IdleHeatCool');
+		}
+		if (this.hasCapability('thermostat_state_13570') === true) {
+			await this.removeCapability('thermostat_state_13570');
+		}
+
 		// Default selected sensor (internal sensor)
 		this.selectedTemperatureCapability = 'measure_temperature.internal';
 
@@ -340,7 +347,7 @@ class ZTRM6DCDevice extends ThermostatFourModeDevice {
 			},
 			multiChannelNodeId: 1,
 		});
-		this.registerCapability('thermostat_state_13570', 'THERMOSTAT_OPERATING_STATE', {
+		this.registerCapability('thermostat_state_IdleHeatCool', 'THERMOSTAT_OPERATING_STATE', {
 			getOpts: {
 				getOnStart: true,
 			},
