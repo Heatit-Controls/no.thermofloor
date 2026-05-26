@@ -6,7 +6,7 @@
     "en": "Heatit Controls"
   },
   "brandColor": "#cc3333",
-  "version": "4.3.2",
+  "version": "4.3.3",
   "compatibility": ">=12.2.0",
   "platforms": [
     "local",
@@ -778,6 +778,49 @@
             "type": "device",
             "name": "device",
             "filter": "driver_id=Z-TRM6"
+          },
+          {
+            "name": "thermostat_state",
+            "type": "dropdown",
+            "title": {
+              "en": "Thermostat State"
+            },
+            "values": [
+              {
+                "id": "Idle",
+                "label": {
+                  "en": "Idle"
+                }
+              },
+              {
+                "id": "Heating",
+                "label": {
+                  "en": "Heating"
+                }
+              },
+              {
+                "id": "Cooling",
+                "label": {
+                  "en": "Cooling"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ztrm6dc_thermostat_state_IdleHeatCool",
+        "title": {
+          "en": "Thermostat state changed"
+        },
+        "titleFormatted": {
+          "en": "Thermostat state changed to [[thermostat_state]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Z-TRM6-DC"
           },
           {
             "name": "thermostat_state",
@@ -10346,7 +10389,7 @@
       "capabilities": [
         "thermostat_mode",
         "target_temperature",
-        "thermostat_state_13570",
+        "thermostat_state_IdleHeatCool",
         "meter_power",
         "measure_power",
         "measure_temperature",
