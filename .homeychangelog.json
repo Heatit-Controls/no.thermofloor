@@ -139,5 +139,8 @@
   },
   "4.3.2": {
     "en": "Fixed size issue"
+  },
+  "4.3.3": {
+    "en": "Added Z-Smoke2-AC to siren on/off flow action cards; fixed crash on WiFi6, WiFi7, and WiFi Panel when device is removed while polling is active"
   }
 }

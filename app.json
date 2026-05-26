@@ -6,7 +6,7 @@
     "en": "Heatit Controls"
   },
   "brandColor": "#cc3333",
-  "version": "4.3.2",
+  "version": "4.3.3",
   "compatibility": ">=12.2.0",
   "platforms": [
     "local",
@@ -1464,7 +1464,7 @@
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=Z-Smoke-AC|Z-Smoke-battery"
+            "filter": "driver_id=Z-Smoke-AC|Z-Smoke-battery|Z-Smoke2-AC"
           }
         ],
         "id": "turnOffSiren"
@@ -1482,7 +1482,7 @@
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=Z-Smoke-AC|Z-Smoke-battery"
+            "filter": "driver_id=Z-Smoke-AC|Z-Smoke-battery|Z-Smoke2-AC"
           }
         ],
         "id": "turnOnSiren"
