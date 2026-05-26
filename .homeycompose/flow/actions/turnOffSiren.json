@@ -11,6 +11,6 @@
   "args": [{
 		"name": "device",
 		"type": "device",
-		"filter": "driver_id=Z-Smoke-AC|Z-Smoke-battery"
+		"filter": "driver_id=Z-Smoke-AC|Z-Smoke-battery|Z-Smoke2-AC"
 }]
 }
