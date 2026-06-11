@@ -27,7 +27,7 @@
         "zwave": {
             "index": 2,
             "size": 1,
-            "signed": false
+            "signed": true
         },
         "value": 0,
         "attr": {
