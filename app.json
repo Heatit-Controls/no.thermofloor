@@ -3580,7 +3580,44 @@
           "template": "add_devices"
         }
       ],
-      "id": "WM_Dimmer"
+      "id": "WM_Dimmer",
+      "settings": [
+        {
+          "id": "MACaddress",
+          "type": "text",
+          "label": {
+            "en": "MAC address"
+          },
+          "value": "Get",
+          "hint": {
+            "en": "The MAC address of the WM Dimmer. The MAC address will be retrieved automatically from the WM Dimmer when it is connected and this value is set to Get. Default value is 'Get' do not change."
+          }
+        },
+        {
+          "id": "IPaddress",
+          "type": "text",
+          "label": {
+            "en": "IP address"
+          },
+          "value": "192.168.1.xxx",
+          "hint": {
+            "en": "The IP address of the WM Dimmer. You find it in the MyHeatit app."
+          }
+        },
+        {
+          "id": "interval",
+          "type": "number",
+          "label": {
+            "en": "Report interval (s)"
+          },
+          "value": 30,
+          "min": 30,
+          "max": 500000,
+          "units": {
+            "en": "Seconds"
+          }
+        }
+      ]
     },
     {
       "name": {
