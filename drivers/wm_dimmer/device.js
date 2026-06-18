@@ -22,6 +22,13 @@ module.exports = class MyDevice extends Homey.Device {
           }
       });
 
+      this.registerCapabilityListener('dim', async (value) => {
+          this.debug("Changed dim level", value);
+          if (value) {
+              this.setDimLevel(value);
+          }
+      });
+
       await this.loadSettings();
   }
 
@@ -56,6 +63,14 @@ module.exports = class MyDevice extends Homey.Device {
         if (this.isDebug) {
             this.log(msg);
         }
+    }
+
+    async setDimLevel(value) {
+        const dimLevel = Math.round(value * 100); /* 0.0 - 1.0 Homey value to 0 - 100*/
+        const postData = JSON.stringify({
+            'dimLevel': dimLevel,
+        });
+        await this.setParameters(postData);
     }
 
     async setDimmerOn() {
