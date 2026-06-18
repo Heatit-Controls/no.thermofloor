@@ -3567,6 +3567,19 @@
         "large": "/drivers/WM_Dimmer/assets/images/large.png",
         "xlarge": "/drivers/WM_Dimmer/assets/images/xlarge.png"
       },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
       "id": "WM_Dimmer"
     },
     {
