@@ -138,9 +138,9 @@ module.exports = class MyDevice extends Homey.Device {
                     this.setCapabilityValue('meter_power', kWh).catch(this.error);
                     this.setCapabilityValue('measure_power', parsedData.currentPower).catch(this.error);
                     if (!this.MACaddressIsValid && this.MACaddress == "GET") {
-                        this.setSettings({ MACaddress: parsedData.network.mac });
+                        this.setSettings({ MACaddress: parsedData.network.mac }).catch(this.error);
                     }
-                    this.setAvailable();
+                    if (!this.deviceIsDeleted) this.setAvailable().catch(this.error);
                 } catch (e) {
                     // Handle error
                     this.log('Cannot connect to API.')

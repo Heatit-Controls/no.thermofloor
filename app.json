@@ -6,7 +6,7 @@
     "en": "Heatit Controls"
   },
   "brandColor": "#cc3333",
-  "version": "4.3.2",
+  "version": "4.3.6",
   "compatibility": ">=12.2.0",
   "platforms": [
     "local",
@@ -809,6 +809,49 @@
         ]
       },
       {
+        "id": "ztrm6dc_thermostat_state_IdleHeatCool",
+        "title": {
+          "en": "Thermostat state changed"
+        },
+        "titleFormatted": {
+          "en": "Thermostat state changed to [[thermostat_state]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=Z-TRM6-DC"
+          },
+          {
+            "name": "thermostat_state",
+            "type": "dropdown",
+            "title": {
+              "en": "Thermostat State"
+            },
+            "values": [
+              {
+                "id": "Idle",
+                "label": {
+                  "en": "Idle"
+                }
+              },
+              {
+                "id": "Heating",
+                "label": {
+                  "en": "Heating"
+                }
+              },
+              {
+                "id": "Cooling",
+                "label": {
+                  "en": "Cooling"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
         "id": "ztrm7_thermostat_state_IdleHeatCool",
         "title": {
           "en": "Thermostat state changed"
@@ -1464,7 +1507,7 @@
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=Z-Smoke-AC|Z-Smoke-battery"
+            "filter": "driver_id=Z-Smoke-AC|Z-Smoke-battery|Z-Smoke2-AC"
           }
         ],
         "id": "turnOffSiren"
@@ -1482,7 +1525,7 @@
           {
             "name": "device",
             "type": "device",
-            "filter": "driver_id=Z-Smoke-AC|Z-Smoke-battery"
+            "filter": "driver_id=Z-Smoke-AC|Z-Smoke-battery|Z-Smoke2-AC"
           }
         ],
         "id": "turnOnSiren"
@@ -6996,7 +7039,7 @@
           "zwave": {
             "index": 2,
             "size": 1,
-            "signed": false
+            "signed": true
           },
           "value": 0,
           "attr": {
@@ -10346,7 +10389,7 @@
       "capabilities": [
         "thermostat_mode",
         "target_temperature",
-        "thermostat_state_13570",
+        "thermostat_state_IdleHeatCool",
         "meter_power",
         "measure_power",
         "measure_temperature",
@@ -10388,7 +10431,7 @@
             }
           ]
         },
-        "thermostat_state_13570": {
+        "thermostat_state_IdleHeatCool": {
           "greyout": true,
           "titleTrue": {
             "en": "Active",
@@ -10452,8 +10495,8 @@
         "security": [
           "none"
         ],
-        "zwaveAllianceProductId": 4908,
-        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4908",
+        "zwaveAllianceProductId": 4994,
+        "zwaveAllianceProductDocumentation": "https://products.z-wavealliance.org/products/4994",
         "learnmode": {
           "image": "/drivers/Z-TRM6-DC/assets/learnmode.svg",
           "instruction": {

@@ -58,7 +58,7 @@ class ZTRM6Device extends ZwaveDevice {
 		if (this.hasCapability('thermostat_state_13570') === true) {
 			await this.removeCapability('thermostat_state_13570');
 		}
-
+		
 		if (this.hasCapability('powerregulator_mode') === true) {
 			await this.removeCapability('powerregulator_mode');
 		}
@@ -358,7 +358,7 @@ class ZTRM6Device extends ZwaveDevice {
 				throw new Error('Reset meter not supported');
 			}
 		});
-		
+
 		await this.initializeDeviceState();
 	}
 
@@ -396,7 +396,7 @@ class ZTRM6Device extends ZwaveDevice {
 				await this.setCapabilityValue('target_temperature', currentSettings.cooling_setpoint / 10);
 			} else if (newMode == 'energy save heat') {
 				await this.setCapabilityValue('target_temperature', currentSettings.eco_setpoint / 10);
-			} 
+			}
 		} catch (error) {
 			this.error(`Error setting target temperature: ${error.message}`);
 		}
