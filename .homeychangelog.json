@@ -151,5 +151,8 @@
   },
   "4.3.6": {
     "en": "Fixed Z-Smoke2 calibration negative values"
+  },
+  "4.4.0": {
+    "en": "Add Firmware update support"
   }
 }

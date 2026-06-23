@@ -6,7 +6,7 @@
     "en": "Heatit Controls"
   },
   "brandColor": "#cc3333",
-  "version": "4.3.6",
+  "version": "4.4.0",
   "compatibility": ">=12.2.0",
   "platforms": [
     "local",
@@ -6153,7 +6153,35 @@
             "max": 1000
           }
         }
-      ]
+      ],
+      "firmwareUpdates": {
+        "updates": [
+          {
+            "version": "1.0.4",
+            "changelog": {
+              "en": "- Adds Embriq support"
+            },
+            "device": {
+              "manufacturerId": 411,
+              "productTypeId": [
+                98
+              ],
+              "productId": [
+                25089
+              ]
+            },
+            "files": [
+              {
+                "targetId": 0,
+                "size": 156964,
+                "name": "Z-HAN2_1.0.4_20240603.gbl",
+                "integrity": "sha256:f842f77eceede5098449c50002504a132339dc7cb7c898fdc1af45fe4d49c2d3",
+                "region": "EU"
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "Z-Relay",
@@ -7485,7 +7513,35 @@
             }
           ]
         }
-      ]
+      ],
+      "firmwareUpdates": {
+        "updates": [
+          {
+            "version": "1.2.4",
+            "changelog": {
+              "en": "- SDK Update\n- Bug fixes"
+            },
+            "device": {
+              "manufacturerId": 411,
+              "productTypeId": [
+                4
+              ],
+              "productId": [
+                516
+              ]
+            },
+            "files": [
+              {
+                "targetId": 0,
+                "size": 180112,
+                "name": "TAC11-1_B0_2V0_01_EU_1.24_20241026.gbl",
+                "integrity": "sha256:6412dcbf142b1d644148eca42006516f93bf6ea9f35d9192dc4a6d6e35cec065",
+                "region": "EU"
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "name": {
@@ -9530,7 +9586,35 @@
             }
           ]
         }
-      ]
+      ],
+      "firmwareUpdates": {
+        "updates": [
+          {
+            "version": "4.0.35",
+            "changelog": {
+              "en": "- Fixes meter reset"
+            },
+            "device": {
+              "manufacturerId": 411,
+              "productTypeId": [
+                3
+              ],
+              "productId": [
+                515
+              ]
+            },
+            "files": [
+              {
+                "targetId": 0,
+                "size": 267593,
+                "name": "Therm3_slave_enhanced_232_OTA_ZW050x_EU_v4.0.35_meter-reset-fix.otz",
+                "integrity": "sha256:6bbd26a286082e8a51f560a37d0b11cc9321a2553f6fbd2fb51c68cdd50b94ff",
+                "region": "EU"
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "name": {
