@@ -10,7 +10,7 @@ module.exports = class MyDevice extends Homey.Device {
    */
   async onInit() {
       this.log('WM Dimmer has been initialized');
-      this.isDebug = true;
+      this.isDebug = false;
       this.deviceIsDeleted = false;
 
       this.registerCapabilityListener('onoff', async (value) => {
