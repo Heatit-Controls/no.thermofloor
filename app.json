@@ -3548,6 +3548,79 @@
     },
     {
       "name": {
+        "en": "WM Dimmer"
+      },
+      "class": "light",
+      "capabilities": [
+        "dim",
+        "meter_power",
+        "measure_power",
+        "onoff"
+      ],
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [],
+      "images": {
+        "small": "/drivers/WM_Dimmer/assets/images/small.png",
+        "large": "/drivers/WM_Dimmer/assets/images/large.png",
+        "xlarge": "/drivers/WM_Dimmer/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "WM_Dimmer",
+      "settings": [
+        {
+          "id": "MACaddress",
+          "type": "text",
+          "label": {
+            "en": "MAC address"
+          },
+          "value": "Get",
+          "hint": {
+            "en": "The MAC address of the WM Dimmer. The MAC address will be retrieved automatically from the WM Dimmer when it is connected and this value is set to Get. Default value is 'Get' do not change."
+          }
+        },
+        {
+          "id": "IPaddress",
+          "type": "text",
+          "label": {
+            "en": "IP address"
+          },
+          "value": "192.168.1.xxx",
+          "hint": {
+            "en": "The IP address of the WM Dimmer. You find it in the MyHeatit app."
+          }
+        },
+        {
+          "id": "interval",
+          "type": "number",
+          "label": {
+            "en": "Report interval (s)"
+          },
+          "value": 30,
+          "min": 30,
+          "max": 500000,
+          "units": {
+            "en": "Seconds"
+          }
+        }
+      ]
+    },
+    {
+      "name": {
         "en": "WiFi Panel"
       },
       "class": "heater",
