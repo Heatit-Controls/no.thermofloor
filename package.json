@@ -11,7 +11,7 @@
 	"devDependencies": {
 		"eslint": "^9.39.1",
 		"eslint-config-athom": "^2.1.0",
-		"homey": "^3.9.6"
+		"homey": "^4.3.0"
 	},
 	"scripts": {
 		"run": "homey app run",
