@@ -154,5 +154,8 @@
   },
   "4.4.0": {
     "en": "Add Firmware update support"
+  },
+  "4.4.1": {
+    "en": "Change devDependency from v3.9.6 to v4.3.0"
   }
 }
