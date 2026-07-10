@@ -13,9 +13,9 @@
       "files": [
         {
           "targetId": 0,
-          "size": 267593,
-          "name": "Therm3_slave_enhanced_232_OTA_ZW050x_EU_v4.0.35_meter-reset-fix.otz",
-          "integrity": "sha256:6bbd26a286082e8a51f560a37d0b11cc9321a2553f6fbd2fb51c68cdd50b94ff",
+          "size": 95124,
+          "name": "Therm3_slave_enhanced_232_OTA_ZW050x_EU_v4.0.35_meter-reset-fix.bin",
+          "integrity": "sha256:781e738fa5041126a7ab0d3d2e116cc333923e62ed09926ec3e91fcbf56391ca",
           "region": "EU"
         }
       ]
