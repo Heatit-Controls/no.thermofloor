@@ -156,6 +156,6 @@
     "en": "Add Firmware update support"
   },
   "4.4.1": {
-    "en": "Fix OTA file, update homey devDependency from v3.9.6 to v4.3.0"
+    "en": "Change devDependency from v3.9.6 to v4.3.0"
   }
 }
