@@ -160,5 +160,8 @@
   },
   "4.4.2": {
     "en": "Fix OTA file type"
+  },
+  "4.4.3": {
+    "en": "Fixed DIN-616 parameter issue"
   }
 }
