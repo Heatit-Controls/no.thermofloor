@@ -1,0 +1,24 @@
+{
+  "updates": [
+    {
+      "version": "1.0.4",
+      "changelog": {
+        "en": "- Adds Embriq support"
+      },
+      "device": {
+        "manufacturerId": 411,
+        "productTypeId": [98],
+        "productId": [25089]
+      },
+      "files": [
+        {
+          "targetId": 0,
+          "size": 156964,
+          "name": "Z-HAN2_1.0.4_20240603.gbl",
+          "integrity": "sha256:f842f77eceede5098449c50002504a132339dc7cb7c898fdc1af45fe4d49c2d3",
+          "region": "EU"
+        }
+      ]
+    }
+  ]
+}

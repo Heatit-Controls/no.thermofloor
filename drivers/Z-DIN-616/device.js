@@ -35,42 +35,42 @@ class Z_DIN616Device extends ZwaveDevice {
       // Register ReportListener for all remaining relays
       this.registerMultiChannelReportListener(7, 'BASIC', 'BASIC_SET', report => {
         if (report && report.hasOwnProperty('Value') && this.getSetting('Output_function_relay1') === '1') {
-          return this.multiChannelNodeDevices[1].setCapabilityValue('onoff', report.Value === 255).catch(this.error);
+          if (this.multiChannelNodeDevices[1]) return this.multiChannelNodeDevices[1].setCapabilityValue('onoff', report.Value === 255).catch(this.error);
         }
         return null;
       });
 
       this.registerMultiChannelReportListener(8, 'BASIC', 'BASIC_SET', report => {
         if (report && report.hasOwnProperty('Value') && this.getSetting('Output_function_relay2') === '1') {
-          return this.multiChannelNodeDevices[2].setCapabilityValue('onoff', report.Value === 255).catch(this.error);
+          if (this.multiChannelNodeDevices[2]) return this.multiChannelNodeDevices[2].setCapabilityValue('onoff', report.Value === 255).catch(this.error);
         }
         return null;
       });
 
       this.registerMultiChannelReportListener(9, 'BASIC', 'BASIC_SET', report => {
         if (report && report.hasOwnProperty('Value') && this.getSetting('Output_function_relay3') === '1') {
-          return this.multiChannelNodeDevices[3].setCapabilityValue('onoff', report.Value === 255).catch(this.error);
+          if (this.multiChannelNodeDevices[3]) return this.multiChannelNodeDevices[3].setCapabilityValue('onoff', report.Value === 255).catch(this.error);
         }
         return null;
       });
 
       this.registerMultiChannelReportListener(10, 'BASIC', 'BASIC_SET', report => {
         if (report && report.hasOwnProperty('Value') && this.getSetting('Output_function_relay4') === '1') {
-          return this.multiChannelNodeDevices[4].setCapabilityValue('onoff', report.Value === 255).catch(this.error);
+          if (this.multiChannelNodeDevices[4]) return this.multiChannelNodeDevices[4].setCapabilityValue('onoff', report.Value === 255).catch(this.error);
         }
         return null;
       });
 
       this.registerMultiChannelReportListener(11, 'BASIC', 'BASIC_SET', report => {
         if (report && report.hasOwnProperty('Value') && this.getSetting('Output_function_relay5') === '1') {
-          return this.multiChannelNodeDevices[5].setCapabilityValue('onoff', report.Value === 255).catch(this.error);
+          if (this.multiChannelNodeDevices[5]) return this.multiChannelNodeDevices[5].setCapabilityValue('onoff', report.Value === 255).catch(this.error);
         }
         return null;
       });
 
       this.registerMultiChannelReportListener(12, 'BASIC', 'BASIC_SET', report => {
         if (report && report.hasOwnProperty('Value') && this.getSetting('Output_function_relay6') === '1') {
-          return this.multiChannelNodeDevices[6].setCapabilityValue('onoff', report.Value === 255).catch(this.error);
+          if (this.multiChannelNodeDevices[6]) return this.multiChannelNodeDevices[6].setCapabilityValue('onoff', report.Value === 255).catch(this.error);
         }
         return null;
       });
@@ -83,6 +83,34 @@ class Z_DIN616Device extends ZwaveDevice {
     if (this.hasCapability('onoff') && !this.hasCapability('scene_notification_custom_capability')) {
       this.registerCapability('onoff', 'BASIC');
     }
+  }
+
+  async onSettings({ oldSettings, newSettings, changedKeys }) {
+    if (!this.hasCapability('scene_notification_custom_capability')) {
+      const rootDevice = this.driver.getDevices().find(
+        d => d.hasCapability('scene_notification_custom_capability')
+      );
+      if (rootDevice) {
+        await rootDevice.onSettings({ oldSettings, newSettings, changedKeys });
+        this._deferSyncSettings(newSettings, changedKeys);
+      }
+      return;
+    }
+    await super.onSettings({ oldSettings, newSettings, changedKeys });
+    this._deferSyncSettings(newSettings, changedKeys);
+  }
+
+  _deferSyncSettings(newSettings, changedKeys) {
+    process.nextTick(async () => {
+      const settingsToSync = {};
+      for (const key of changedKeys) {
+        settingsToSync[key] = newSettings[key];
+      }
+      const allDevices = this.driver.getDevices().filter(d => d !== this);
+      for (const device of allDevices) {
+        await device.setSettings(settingsToSync).catch(this.error);
+      }
+    });
   }
 
 }

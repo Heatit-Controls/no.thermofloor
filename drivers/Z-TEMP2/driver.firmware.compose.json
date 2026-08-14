@@ -1,0 +1,24 @@
+{
+  "updates": [
+    {
+      "version": "1.2.4",
+      "changelog": {
+        "en": "- SDK Update\n- Bug fixes"
+      },
+      "device": {
+        "manufacturerId": 411,
+        "productTypeId": [4],
+        "productId": [516]
+      },
+      "files": [
+        {
+          "targetId": 0,
+          "size": 180112,
+          "name": "TAC11-1_B0_2V0_01_EU_1.24_20241026.gbl",
+          "integrity": "sha256:6412dcbf142b1d644148eca42006516f93bf6ea9f35d9192dc4a6d6e35cec065",
+          "region": "EU"
+        }
+      ]
+    }
+  ]
+}

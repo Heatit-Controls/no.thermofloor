@@ -1,0 +1,3 @@
+drivers/**/assets/firmware/** -text binary
+*.otz binary
+*.gbl binary
