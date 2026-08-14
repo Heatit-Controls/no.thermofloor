@@ -3557,6 +3557,16 @@
         "measure_power",
         "onoff"
       ],
+      "capabilitiesOptions": {
+        "dim": {
+          "min": 0.01,
+          "max": 1,
+          "step": 0.01,
+          "label": "%",
+          "labelMultiplier": 100,
+          "labelDecimals": 0
+        }
+      },
       "platforms": [
         "local",
         "cloud"
