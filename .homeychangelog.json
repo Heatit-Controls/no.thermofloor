@@ -163,5 +163,8 @@
   },
   "4.4.3": {
     "en": "Fixed DIN-616 parameter issue"
+  },
+  "4.5.0": {
+    "en": "Add WM Dimmer"
   }
 }
