@@ -1,0 +1,24 @@
+{
+  "updates": [
+    {
+      "version": "1.0.30",
+      "changelog": {
+        "en": "- Fixed an issue where the device could become unresponsive"
+      },
+      "device": {
+        "manufacturerId": 411,
+        "productTypeId": [4],
+        "productId": [13570]
+      },
+      "files": [
+        {
+          "targetId": 0,
+          "size": 183572,
+          "name": "ZM-Thermostat16A_1.0.30.gbl",
+          "integrity": "sha256:7f47b28ee0d74a112c8fa43f297b5f83bb7d36830019a92336e0179a4b17bf84",
+          "region": "EU"
+        }
+      ]
+    }
+  ]
+}
