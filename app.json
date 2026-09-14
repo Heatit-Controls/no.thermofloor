@@ -4849,7 +4849,31 @@
             }
           ]
         }
-      ]
+      ],
+      "firmwareUpdates": {
+        "updates": [
+          {
+            "changelog": {
+              "en": "Minor fixes"
+            },
+            "device": {
+              "manufacturerId": 564,
+              "productTypeId": 3,
+              "productId": 274
+            },
+            "files": [
+              {
+                "name": "ZIF5028_OTA_0_15_01_EU.bin",
+                "integrity": "sha256:065364600a6a4efdbc336ecf28a5ec81d6d933d9e414ae29e0d2274a1afb0a91",
+                "size": 90256,
+                "targetId": 0,
+                "region": "EU"
+              }
+            ],
+            "version": "0.15.1"
+          }
+        ]
+      }
     },
     {
       "id": "Z-Dim",
@@ -6236,7 +6260,35 @@
             "max": 1000
           }
         }
-      ]
+      ],
+      "firmwareUpdates": {
+        "updates": [
+          {
+            "version": "1.0.4",
+            "changelog": {
+              "en": "- Adds Embriq support"
+            },
+            "device": {
+              "manufacturerId": 411,
+              "productTypeId": [
+                98
+              ],
+              "productId": [
+                25089
+              ]
+            },
+            "files": [
+              {
+                "targetId": 0,
+                "size": 156964,
+                "name": "Z-HAN2_1.0.4_20240603.gbl",
+                "integrity": "sha256:f842f77eceede5098449c50002504a132339dc7cb7c898fdc1af45fe4d49c2d3",
+                "region": "EU"
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "Z-Relay",
@@ -7568,7 +7620,35 @@
             }
           ]
         }
-      ]
+      ],
+      "firmwareUpdates": {
+        "updates": [
+          {
+            "version": "1.2.4",
+            "changelog": {
+              "en": "- SDK Update\n- Bug fixes"
+            },
+            "device": {
+              "manufacturerId": 411,
+              "productTypeId": [
+                4
+              ],
+              "productId": [
+                516
+              ]
+            },
+            "files": [
+              {
+                "targetId": 0,
+                "size": 180112,
+                "name": "TAC11-1_B0_2V0_01_EU_1.24_20241026.gbl",
+                "integrity": "sha256:6412dcbf142b1d644148eca42006516f93bf6ea9f35d9192dc4a6d6e35cec065",
+                "region": "EU"
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "name": {
@@ -9613,7 +9693,35 @@
             }
           ]
         }
-      ]
+      ],
+      "firmwareUpdates": {
+        "updates": [
+          {
+            "version": "4.0.35",
+            "changelog": {
+              "en": "- Fixes meter reset"
+            },
+            "device": {
+              "manufacturerId": 411,
+              "productTypeId": [
+                3
+              ],
+              "productId": [
+                515
+              ]
+            },
+            "files": [
+              {
+                "targetId": 0,
+                "size": 95124,
+                "name": "Therm3_slave_enhanced_232_OTA_ZW050x_EU_v4.0.35_meter-reset-fix.bin",
+                "integrity": "sha256:781e738fa5041126a7ab0d3d2e116cc333923e62ed09926ec3e91fcbf56391ca",
+                "region": "EU"
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "name": {
@@ -14832,7 +14940,35 @@
             "max": 65535
           }
         }
-      ]
+      ],
+      "firmwareUpdates": {
+        "updates": [
+          {
+            "version": "1.0.30",
+            "changelog": {
+              "en": "- Fixed an issue where the device could become unresponsive"
+            },
+            "device": {
+              "manufacturerId": 411,
+              "productTypeId": [
+                4
+              ],
+              "productId": [
+                13570
+              ]
+            },
+            "files": [
+              {
+                "targetId": 0,
+                "size": 183572,
+                "name": "ZM-Thermostat16A_1.0.30.gbl",
+                "integrity": "sha256:7f47b28ee0d74a112c8fa43f297b5f83bb7d36830019a92336e0179a4b17bf84",
+                "region": "EU"
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "name": {
