@@ -169,5 +169,8 @@
   },
   "4.5.0": {
     "en": "Add WM Dimmer"
+  },
+  "4.6.0": {
+    "en": "Add update for Z-DIN-616"
   }
 }
