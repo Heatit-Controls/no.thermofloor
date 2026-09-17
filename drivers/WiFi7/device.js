@@ -47,9 +47,6 @@ module.exports = class MyDevice extends Homey.Device {
         await this.applyTargetTemperatureOptions(parseInt(this.getSettings().sensorMode));
 
         this.refreshStateLoop();
-
-        this.homey.flow.getConditionCard('wifi7_is_reachable')
-            .registerRunListener(() => this.testConnection());
     }
 
     async applyTargetTemperatureOptions(sensorMode) {
