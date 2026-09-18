@@ -5,6 +5,7 @@ const { ZwaveDevice } = require('homey-zwavedriver');
 const {
   Mode2Setting, Mode2Setpoint, Setpoint2Setting, Mode2Number,
 } = require('../../lib/map/TF_mappings.js');
+const util = require('../../lib/util');
 
 class TF_ThermostatDevice extends ZwaveDevice {
   async onNodeInit() {
@@ -65,12 +66,9 @@ class TF_ThermostatDevice extends ZwaveDevice {
 
         // 3. Trigger mode trigger cards if the mode is actually changed
         if (this.getCapabilityValue('thermofloor_mode') != thermostatMode) {
-          const thermostatModeObj = {
-            mode: thermostatMode,
-            mode_name: this.homey.__(`mode.${thermostatMode}`),
-          };
-          this.homey.app.triggerThermofloorModeChanged.trigger(this, thermostatModeObj, null);
-          this.homey.app.triggerThermofloorModeChangedTo.trigger(this, null, thermostatModeObj);
+          const thermostatModeObj = util.getModeTokens(this.homey, thermostatMode);
+          this.homey.app.triggerThermofloorModeChanged.trigger(this, thermostatModeObj, null).catch(this.error);
+          this.homey.app.triggerThermofloorModeChangedTo.trigger(this, null, thermostatModeObj).catch(this.error);
 
           // 4. Update onoff state when the thermostat mode is off
           if (thermostatMode === 'Off') {
@@ -109,12 +107,9 @@ class TF_ThermostatDevice extends ZwaveDevice {
 
           // 3. Trigger mode trigger cards if the mode is actually changed
           if (this.getCapabilityValue('thermofloor_mode') != thermostatMode) {
-            const thermostatModeObj = {
-              mode: thermostatMode,
-              mode_name: this.homey.__(`mode.${thermostatMode}`),
-            };
-            this.homey.app.triggerThermofloorModeChanged.trigger(this, thermostatModeObj, null);
-            this.homey.app.triggerThermofloorModeChangedTo.trigger(this, null, thermostatModeObj);
+            const thermostatModeObj = util.getModeTokens(this.homey, thermostatMode);
+            this.homey.app.triggerThermofloorModeChanged.trigger(this, thermostatModeObj, null).catch(this.error);
+            this.homey.app.triggerThermofloorModeChangedTo.trigger(this, null, thermostatModeObj).catch(this.error);
 
             // 4. Update onoff state when the thermostat mode is off
             if (thermostatMode === 'Off') {
