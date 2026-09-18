@@ -6,7 +6,7 @@
     "en": "Heatit Controls"
   },
   "brandColor": "#cc3333",
-  "version": "4.5.1",
+  "version": "4.5.2",
   "compatibility": ">=12.2.0",
   "platforms": [
     "local",
@@ -4849,7 +4849,31 @@
             }
           ]
         }
-      ]
+      ],
+      "firmwareUpdates": {
+        "updates": [
+          {
+            "changelog": {
+              "en": "Minor fixes"
+            },
+            "device": {
+              "manufacturerId": 564,
+              "productTypeId": 3,
+              "productId": 274
+            },
+            "files": [
+              {
+                "name": "ZIF5028_OTA_0_15_01_EU.bin",
+                "integrity": "sha256:065364600a6a4efdbc336ecf28a5ec81d6d933d9e414ae29e0d2274a1afb0a91",
+                "size": 90256,
+                "targetId": 0,
+                "region": "EU"
+              }
+            ],
+            "version": "0.15.0"
+          }
+        ]
+      }
     },
     {
       "id": "Z-Dim",
