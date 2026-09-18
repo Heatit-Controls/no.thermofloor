@@ -175,5 +175,8 @@
   },
   "4.5.2": {
     "en": "Add update for Z-DIN-616"
+  },
+  "4.5.3": {
+    "en": "Fixed a crash affecting flow trigger cards for thermostat mode changes. Security updates to dependencies"
   }
 }
