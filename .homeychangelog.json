@@ -178,5 +178,8 @@
   },
   "4.5.3": {
     "en": "Fixed a crash affecting flow trigger cards for thermostat mode changes. Security updates to dependencies"
+  },
+  "4.5.4": {
+    "en": "Added firmware version 1.0.7 to Z-TEMP3"
   }
 }
