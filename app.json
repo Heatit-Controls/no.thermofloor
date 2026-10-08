@@ -8164,7 +8164,34 @@
           },
           "value": false
         }
-      ]
+      ],
+      "firmwareUpdates": {
+        "updates": [
+          {
+            "version": "1.0.7",
+            "changelog": {
+              "en": "Fixed issue where the device randomly shows ERR1"
+            },
+            "device": {
+              "manufacturerId": 411,
+              "productTypeId": [
+                49
+              ],
+              "productId": [
+                12545
+              ]
+            },
+            "files": [
+              {
+                "targetId": 0,
+                "size": 154360,
+                "name": "Z-TEMP3_1.07.gbl",
+                "integrity": "sha256:3687A670903DB1339BAB0F040EF8D6ED883F506D1B9CCFC7F452C1609CACF394"
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "id": "Z-TRM2fx",
