@@ -310,6 +310,7 @@ module.exports = class MyDevice extends Homey.Device {
    * onDeleted is called when the user deleted the device.
    */
   async onDeleted() {
+    this.deviceIsDeleted = true;
     this.log('MyDevice has been deleted');
   }
 
