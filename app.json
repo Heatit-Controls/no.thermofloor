@@ -3548,6 +3548,115 @@
     },
     {
       "name": {
+        "en": "WiFi ICE2"
+      },
+      "class": "socket",
+      "capabilities": [
+        "meter_power",
+        "measure_power",
+        "measure_temperature.external",
+        "onoff"
+      ],
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [],
+      "images": {
+        "small": "/drivers/WIFI-ICE2/assets/images/small.png",
+        "large": "/drivers/WIFI-ICE2/assets/images/large.png",
+        "xlarge": "/drivers/WIFI-ICE2/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "WIFI-ICE2",
+      "settings": [
+        {
+          "id": "MACaddress",
+          "type": "text",
+          "label": {
+            "en": "MAC address"
+          },
+          "value": "Get",
+          "hint": {
+            "en": "The MAC address of the WiFi ICE2. The MAC address will be retrieved automatically from the WiFi ICE2 when it is connected and this value is set to Get. Default value is 'Get' do not change."
+          }
+        },
+        {
+          "id": "IPaddress",
+          "type": "text",
+          "label": {
+            "en": "IP address"
+          },
+          "value": "192.168.1.xxx",
+          "hint": {
+            "en": "The IP address of the WiFi ICE2. You find it in the MyHeatit app."
+          }
+        },
+        {
+          "id": "interval",
+          "type": "number",
+          "label": {
+            "en": "Report interval (s)"
+          },
+          "value": 30,
+          "min": 30,
+          "max": 500000,
+          "units": {
+            "en": "Seconds"
+          }
+        },
+        {
+          "id": "operatingMode",
+          "type": "dropdown",
+          "label": {
+            "en": "Operating Mode"
+          },
+          "hint": {
+            "en": "Choose which operating mode for regulation."
+          },
+          "value": "0",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Snow (Default)"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "Out 1"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "Out 2"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "Roof"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": {
         "en": "WM Dimmer"
       },
       "class": "light",
