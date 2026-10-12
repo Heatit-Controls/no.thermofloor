@@ -129,7 +129,7 @@ module.exports = class MyDevice extends Homey.Device {
         }
 
         if (this.MACaddressIsValid && this.ReconnactionTry <= this.MaxReconnactionTrys) {
-            this.log("Try:" + this.ReconnactionTry + ". Searching for WM Dimmer by MAC address: " + this.MACaddress);
+            this.log("Try:" + this.ReconnactionTry + ". Searching for WiFi-Dim3 by MAC address: " + this.MACaddress);
             (async () => {
                 try {
                     this.scanNetwork();
