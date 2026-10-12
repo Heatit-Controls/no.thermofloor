@@ -1,0 +1,45 @@
+{
+  "name": {
+    "en": "WiFi-Dim3"
+  },
+  "class": "light",
+  "capabilities": [
+    "dim",
+    "meter_power",
+    "measure_power",
+    "onoff"
+  ],
+  "capabilitiesOptions": {
+    "dim": {
+      "min": 0.01,
+      "max": 1,
+      "step": 0.01,
+      "label": "%",
+      "labelMultiplier": 100,
+      "labelDecimals": 0
+    }
+  },
+  "platforms": [
+    "local",
+    "cloud"
+  ],
+  "connectivity": [],
+  "images": {
+    "small": "{{driverAssetsPath}}/images/small.png",
+    "large": "{{driverAssetsPath}}/images/large.png",
+    "xlarge": "{{driverAssetsPath}}/images/xlarge.png"
+  },
+  "pair": [
+    {
+      "id": "list_devices",
+      "template": "list_devices",
+      "navigation": {
+        "next": "add_devices"
+      }
+    },
+    {
+      "id": "add_devices",
+      "template": "add_devices"
+    }
+  ]
+}

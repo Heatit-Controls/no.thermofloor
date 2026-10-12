@@ -3720,6 +3720,89 @@
     },
     {
       "name": {
+        "en": "WiFi-Dim3"
+      },
+      "class": "light",
+      "capabilities": [
+        "dim",
+        "meter_power",
+        "measure_power",
+        "onoff"
+      ],
+      "capabilitiesOptions": {
+        "dim": {
+          "min": 0.01,
+          "max": 1,
+          "step": 0.01,
+          "label": "%",
+          "labelMultiplier": 100,
+          "labelDecimals": 0
+        }
+      },
+      "platforms": [
+        "local",
+        "cloud"
+      ],
+      "connectivity": [],
+      "images": {
+        "small": "/drivers/WiFi-Dim3/assets/images/small.png",
+        "large": "/drivers/WiFi-Dim3/assets/images/large.png",
+        "xlarge": "/drivers/WiFi-Dim3/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ],
+      "id": "WiFi-Dim3",
+      "settings": [
+        {
+          "id": "MACaddress",
+          "type": "text",
+          "label": {
+            "en": "MAC address"
+          },
+          "value": "Get",
+          "hint": {
+            "en": "The MAC address of the WiFi-Dim3. The MAC address will be retrieved automatically from the WiFi-Dim3 when it is connected and this value is set to Get. Default value is 'Get' do not change."
+          }
+        },
+        {
+          "id": "IPaddress",
+          "type": "text",
+          "label": {
+            "en": "IP address"
+          },
+          "value": "192.168.1.xxx",
+          "hint": {
+            "en": "The IP address of the WiFi-Dim3. You find it in the MyHeatit app."
+          }
+        },
+        {
+          "id": "interval",
+          "type": "number",
+          "label": {
+            "en": "Report interval (s)"
+          },
+          "value": 30,
+          "min": 30,
+          "max": 500000,
+          "units": {
+            "en": "Seconds"
+          }
+        }
+      ]
+    },
+    {
+      "name": {
         "en": "WiFi6"
       },
       "class": "thermostat",
