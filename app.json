@@ -3637,7 +3637,7 @@
     },
     {
       "name": {
-        "en": "WiFi-Plug"
+        "en": "WiFi Smart Plug"
       },
       "class": "button",
       "capabilities": [
@@ -3651,9 +3651,9 @@
       ],
       "connectivity": [],
       "images": {
-        "small": "/drivers/WiFi-Plug/assets/images/small.png",
-        "large": "/drivers/WiFi-Plug/assets/images/large.png",
-        "xlarge": "/drivers/WiFi-Plug/assets/images/xlarge.png"
+        "small": "/drivers/WiFi Smart Plug/assets/images/small.png",
+        "large": "/drivers/WiFi Smart Plug/assets/images/large.png",
+        "xlarge": "/drivers/WiFi Smart Plug/assets/images/xlarge.png"
       },
       "pair": [
         {
@@ -3668,7 +3668,7 @@
           "template": "add_devices"
         }
       ],
-      "id": "WiFi-Plug",
+      "id": "WiFi Smart Plug",
       "settings": [
         {
           "id": "MACaddress",

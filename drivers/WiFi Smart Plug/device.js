@@ -278,7 +278,7 @@ module.exports = class MyDevice extends Homey.Device {
 
     scanNetworkAndReconnectWebSocektByMac() {
         if (this.ReconnactionTry <= this.MaxReconnactionTrys) {
-            this.debug("Try:" + this.ReconnactionTry + ". Searching for WiFi Wall Plug by MAC address: " + this.MACaddress);
+            this.debug("Try:" + this.ReconnactionTry + ". Searching for WiFi Smart Plug by MAC address: " + this.MACaddress);
             (async () => {
                 try {
                     this.scanNetworkAndReconnectWebSocektByMacAsync();
@@ -374,7 +374,7 @@ module.exports = class MyDevice extends Homey.Device {
    * onAdded is called when the user adds the device, called just after pairing.
    */
   async onAdded() {
-      this.log('WiFi Wall Plug has been added');
+      this.log('WiFi Smart Plug has been added');
   }
 
   /**
@@ -411,7 +411,7 @@ module.exports = class MyDevice extends Homey.Device {
    * @param {string} name The new name
    */
   async onRenamed(name) {
-    this.log('WiFi Wall Plug was renamed');
+    this.log('WiFi Smart Plug was renamed');
   }
 
   /**
@@ -420,7 +420,7 @@ module.exports = class MyDevice extends Homey.Device {
   async onDeleted() {
     this.deviceIsDeleted = true;
     this.closeWebSocket();
-    this.log('WiFi Wall Plug has been deleted');
+    this.log('WiFi Smart Plug has been deleted');
   }
 
 };
