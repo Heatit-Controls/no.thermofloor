@@ -250,7 +250,7 @@ module.exports = class MyDevice extends Homey.Device {
                 res.on('end', () => {
                     try {
                         const parsedData = JSON.parse(rawData);
-                        if (parsedData.parameters !== null && parsedData.parameters.dimLevel !== null) {
+                        if (parsedData.parameters !== null && parsedData.parameters.dimLevel !== null && parsedData.model === "Heatit WiFi Dim 250W") {
                             this.log('IsWiFiDim3 true. IP: ' + ip + " Mac: " + parsedData.network.mac);
                             resolve({ "IsWiFiDim3": true, "Mac": parsedData.network.mac });
                         } else {
