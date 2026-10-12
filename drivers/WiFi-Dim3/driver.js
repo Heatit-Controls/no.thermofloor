@@ -22,8 +22,7 @@ module.exports = class MyDriver extends Homey.Driver {
         const discoveryResults = await discoverDevices({
             driverName: 'WiFi-Dim3',
             isModelMatch: (data) => {
-                const isCorrectModel = data.model === "Heatit WiFi Dim 250W";
-                return isCorrectModel;
+                return data.model !== null && data.model === "Heatit WiFi Dim 250W";
             },
             log: this.log.bind(this),
         });
