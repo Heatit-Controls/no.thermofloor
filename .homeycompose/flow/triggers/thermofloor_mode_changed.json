@@ -2,11 +2,11 @@
 	"id": "thermofloor_mode_changed",
 	"title": {
 		"en": "Thermostat mode has changed",
-		"nl": "Thermostaat modus is veranderd"
+		"nl": "Thermostaatmodus is veranderd"
 	},
 	"titleFormatted": {
 		"en": "Thermostat mode has changed",
-		"nl": "Thermostaat modus is veranderd"
+		"nl": "Thermostaatmodus is veranderd"
 	},
 	"args": [{
 		"name": "device",

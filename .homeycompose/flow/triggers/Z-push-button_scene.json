@@ -1,13 +1,16 @@
 		{
 			"id": "Z-push-button_scene",
 			"title": {
-				"en": "Button is pressed"
+				"en": "Button is pressed",
+                "nl": "Knop is ingedrukt"
 			},
 			"titleFormatted": {
-				"en": "[[button]] button is [[scene]]"
+				"en": "[[button]] button is [[scene]]",
+                "nl": "[[button]] knop is [[scene]]"
 			},
 			"hint": {
-				"en": "This card will only get triggered if the scene matches the state of the dropdown fields."
+				"en": "This card will only get triggered if the scene matches the state of the dropdown fields.",
+                "nl": "Deze kaart wordt alleen geactiveerd als de scène overeenkomt met de staat van de dropdownvelden."
 			},
 			"args": [
 				{
@@ -17,12 +20,12 @@
   				},
 				{
 					"name": "button",
-					"title": { "en": "Button" },
+					"title": { "en": "Button", "nl": "Knop" },
 					"type": "autocomplete"
   				},
 				{
 					"name": "scene",
-					"title": { "en": "Scene" },
+					"title": { "en": "Scene", "nl": "Scène" },
 					"type": "autocomplete"
   				}
   			]

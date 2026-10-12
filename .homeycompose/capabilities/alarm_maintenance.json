@@ -2,19 +2,23 @@
   "type": "boolean",
   "title": {
     "en": "Dust force maintenance alarm",
+    "nl": "Stofonderhoudsalarm",
     "no": "Vedlikeholdsalarm"
   },
   "desc": {
     "en": "Dust force maintenance alarm",
+    "nl": "Stofonderhoudsalarm",
     "no": "Vedlikeholdsalarm"
   },
   "insights": true,
   "insightsTitleTrue": {
     "en": "Dust alarm turned on",
+    "nl": "Stofonderhoudsalarm ging aan",
     "no": "Støvalarm aktivert"
   },
   "insightsTitleFalse": {
     "en": "Dust alarm turned off",
+    "nl": "Stofonderhoudsalarm ging uit",
     "no": "Støvalarm deaktivert"
   },
   "getable": true,

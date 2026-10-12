@@ -8,40 +8,47 @@
 	"setable": false,
 	"insights": true,
 	"title": {
-		"en": "Fan State"
+		"en": "Fan State",
+        "nl": "Ventilatorstatus"
 	},
 	"desc": {
-		"en": "Fan State of the thermostat"
+		"en": "Fan State of the thermostat",
+        "nl": "Ventilatorstatus van de thermostaat"
 	},
 	"values": [
 		{
 			"id": "Idle",
 			"title": {
-				"en": "Idle"
+				"en": "Idle",
+                "nl": "Inactief"
 			}
 		},
 		{
 			"id": "Running",
 			"title": {
-				"en": "Running low"
+				"en": "Running low",
+                "nl": "Draait laagzaam"
 			}
 		},
 		{
 			"id": "Running Medium",
 			"title": {
-				"en": "Running medium"
+				"en": "Running medium",
+                "nl": "Draait normaal"
 			}
 		},
 		{
 			"id": "Running High",
 			"title": {
-				"en": "Running high"
+				"en": "Running high",
+                "nl": "Draait hard"
 			}
 		},
 		{
 			"id": "Circulation mode",
 			"title": {
-				"en": "Circulation mode"
+				"en": "Circulation mode",
+                "nl": "Circulatiemodus"
 			}
 		}
 	]

@@ -8,7 +8,8 @@
       "en": "kVAh"
     },
     "desc": {
-      "en": "volt amper usage in an hour (kVAh)"
+      "en": "volt amper usage in an hour (kVAh)",
+      "nl": "volt ampère gebruik in een uur (kVAh)"
     },
     "chartType": "spline",
     "options": {
@@ -16,7 +17,8 @@
         "type": "boolean",
         "default": false,
         "desc": {
-          "en": "This flag is used to determine that the device itself has no power measurement functionality, but that the driver calculates the kVAh use."
+          "en": "This flag is used to determine that the device itself has no power measurement functionality, but that the driver calculates the kVAh use.",
+          "nl": "Deze vlag wordt gebruikt om te bepalen dat het apparaat zelf geen vermogensmeetfunctionaliteit heeft, maar dat de driver het kVAh-gebruik berekent."
         }
       }
     },

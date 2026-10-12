@@ -1,9 +1,8 @@
 {
 	"type": "enum",
-	"uiComponent": "picker",
 	"title": {
 		"en": "Thermostat mode",
-		"nl": "Thermostaat modus"
+		"nl": "Thermostaatmodus"
 	},
 	"desc": {
 		"en": "Mode of the thermostat",

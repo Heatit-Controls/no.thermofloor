@@ -139,13 +139,13 @@
       "3": {
         "hint": {
           "en": "Sends Thermostat Setpoint Set commands based on own setpoint to allow for use as master thermostat.",
-          "nl": "Sends Thermostat Setpoint Set commands based on own setpoint to allow for use as master thermostat."
+          "nl": "Stuurt Thermostat Setpoint Set commando's op basis van eigen ingestelde waarde om te kunnen worden gebruikt als master thermostaat."
         }
       },
       "4": {
         "hint": {
           "en": "Sends Thermostat Mode Set commands based on own setpoint to allow for use as master thermostat.",
-          "nl": "Sends Thermostat Mode Set commands based on own setpoint to allow for use as master thermostat."
+          "nl": "Stuurt Thermostat Mode Set commando's op basis van eigen ingestelde waarde om te kunnen worden gebruikt als master thermostaat."
         }
       }
     }

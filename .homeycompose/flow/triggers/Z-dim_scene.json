@@ -1,13 +1,16 @@
 {
 	"id": "Z-dim_scene",
 	"title": {
-		"en": "Button is pressed"
+		"en": "Button is pressed",
+        "nl": "Knop is ingedrukt"
 	},
 	"titleFormatted": {
-		"en": "Dimmer button is [[scene]]"
+		"en": "Dimmer button is [[scene]]",
+        "nl": "Dimmer knop is [[scene]]"
 	},
 	"hint": {
-		"en": "This card will only get triggered if the scene matches the state of the dropdown fields."
+		"en": "This card will only get triggered if the scene matches the state of the dropdown fields.",
+        "nl": "Deze kaart wordt alleen geactiveerd als de scène overeenkomt met de staat van de dropdownvelden."
 	},
 	"args": [
 		{
@@ -17,7 +20,7 @@
 		},
 		{
 			"name": "scene",
-			"title": { "en": "Scene" },
+			"title": { "en": "Scene", "nl": "Scène" },
 			"type": "autocomplete"
 			}
 		]

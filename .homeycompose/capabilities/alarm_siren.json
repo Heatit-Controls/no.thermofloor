@@ -2,20 +2,20 @@
   "type": "boolean",
   "title": {
     "en": "Siren turned on",
-    "nl": "Sirene aangezet"
+    "nl": "Sirene ging aan"
   },
   "desc": {
-    "en": "Power supply alarm",
-    "nl": "Voeding alarm"
+    "en": "Siren turned on",
+    "nl": "Sirene ging aan"
   },
   "insights": true,
   "insightsTitleTrue": {
     "en": "Siren turned on",
-    "nl": "Sirene aangezet"
+    "nl": "Sirene ging aan"
   },
   "insightsTitleFalse": {
     "en": "Siren turned off",
-    "nl": "Sirene uitgezet"
+    "nl": "Sirene ging uit"
   },
   "getable": true,
   "setable": true,

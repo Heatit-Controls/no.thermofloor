@@ -109,24 +109,30 @@
         {
           "name": "thermostat_mode",
           "type": "dropdown",
-          "title": "Thermostat mode is",
+          "title": {
+            "en": "Thermostat mode is",
+            "nl": "Thermostaatmodus is"
+          },
           "values": [
             {
               "id": "heat",
               "title": {
-                "en": "Heat"
+                "en": "Heat",
+                "nl": "Verwarmen"
               }
             },
             {
               "id": "cool",
               "title": {
-                "en": "Cool"
+                "en": "Cool",
+                "nl": "Koelen"
               }
             },
             {
               "id": "off",
               "title": {
-                "en": "Off"
+                "en": "Off",
+                "nl": "Uit"
               }
             }
           ]
@@ -138,33 +144,41 @@
     {
       "id": "thermostat_mode_set",
       "title": {
-        "en": "Set the mode"
+        "en": "Set the mode",
+        "nl": "Stel de modus in"
       },
       "titleFormatted": {
-        "en": "Thermostat mode set [[thermostat_mode]]"
+        "en": "Thermostat mode set [[thermostat_mode]]",
+        "nl": "Stel de thermostaatmodus in op [[thermostat_mode]]"
       },
       "args": [
         {
           "name": "thermostat_mode",
           "type": "dropdown",
-          "title": "Thermostat mode set",
+          "title": {
+            "en": "Thermostat mode set",
+            "nl": "Thermostaatmodus"
+          },
           "values": [
             {
               "id": "heat",
               "title": {
-                "en": "Heat"
+                "en": "Heat",
+                "nl": "Verwarmen"
               }
             },
             {
               "id": "cool",
               "title": {
-                "en": "Cool"
+                "en": "Cool",
+                "nl": "Koelen"
               }
             },
             {
               "id": "off",
               "title": {
-                "en": "Off"
+                "en": "Off",
+                "nl": "Uit"
               }
             }
           ]

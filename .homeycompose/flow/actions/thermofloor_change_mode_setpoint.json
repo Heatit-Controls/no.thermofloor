@@ -2,15 +2,15 @@
 	"id": "thermofloor_change_mode_setpoint",
 	"title": {
 		"en": "Set a setpoint of a thermostat mode",
-		"nl": "Stel de temperatuur in van een thermostaat modus"
+		"nl": "Stel de temperatuur in van een thermostaatmodus"
 	},
 	"titleFormatted": {
 		"en": "Set a setpoint [[setpointValue]]of a thermostat mode [[setpointMode]]",
-		"nl": "Stel de temperatuur [[setpointValue]] in van een thermostaat modus [[setpointMode]]"
+		"nl": "Stel de temperatuur [[setpointValue]] in van een thermostaatmodus [[setpointMode]]"
 	},
 	"hint": {
 		"en": "Change the setpoint of a specific thermostat mode (Comfort / Energy Saving / Heating). Note: does NOT activate this mode",
-		"nl": "Stel de temperatuur in van een thermostaat modus (Comfort / Energy Saving / Heating). Let op: activeert deze modus niet"
+		"nl": "Stel de temperatuur in van een thermostaatmodus (Comfort / Energy Saving / Heating). Let op: activeert deze modus niet"
 	},
 	"args": [
 		{
