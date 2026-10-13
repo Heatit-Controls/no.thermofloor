@@ -8,7 +8,7 @@
 	"value": 205,
 	"label": {
 		"en": "Comfort mode temperature",
-		"nl": "Comfort modus temperatuur"
+		"nl": "Comfortmodus temperatuur"
 	},
 	"hint": {
 		"en": "Temperature setpoint used when in Comfort (CO) mode. \nZ-wave parameter {{zwaveParameterIndex}} \nRange: 50 - 400 (5.0 - 40.0°C) \nDefault: 205 (20.5) °C",

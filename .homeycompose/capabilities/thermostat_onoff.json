@@ -5,24 +5,30 @@
 	"greyout": true,
 	"label": {
 		"true": {
-			"en": "Heating Active"
+			"en": "Heating Active",
+            "nl": "Verwarming actief"
 		},
 		"false": {
-			"en": "Heating Idle"
+			"en": "Heating Idle",
+            "nl": "Verwarming inactief"
 		}
 	},
 	"title": {
-		"en": "Heating"
+		"en": "Heating",
+        "nl": "Verwarming"
 	},
 	"desc": {
-		"en": "State of the thermostat"
+		"en": "State of the thermostat",
+        "nl": "Status van de thermostaat"
 	},
 	"getable": true,
 	"insights": true,
 	"insightsTitleTrue": {
-		"en": "Heating active"
+		"en": "Heating active",
+        "nl": "Verwarming actief"
 	},
 	"insightsTitleFalse": {
-		"en": "Heating Idle"
+		"en": "Heating Idle",
+        "nl": "Verwarming inactief"
 	}
 }

@@ -1,35 +1,41 @@
 {
 	"type": "enum",
 	"title": {
-		"en": "Thermostat mode"
+		"en": "Thermostat mode",
+        "nl": "Thermostaatmodus"
 	},
 	"desc": {
-		"en": "Mode of the thermostat"
+		"en": "Mode of the thermostat",
+        "nl": "Modus van de thermostaat"
 	},
 	"uiComponent": "picker",
 	"values": [
 		{
 			"id": "off",
 			"title": {
-				"en": "Off"
+				"en": "Off",
+                "nl": "Uit"
 			}
 				},
 		{
 			"id": "heat",
 			"title": {
-				"en": "Heating"
+				"en": "Heating",
+                "nl": "Verwarmen"
 			}
 				},
 		{
 			"id": "cool",
 			"title": {
-				"en": "Cooling"
+				"en": "Cooling",
+                "nl": "Koelen"
 			}
 				},
 		{
 			"id": "energy save heat",
 			"title": {
-				"en": "Heating"
+				"en": "Energy Save Heating",
+                "nl": "Energiebesparend verwarmen"
 			}
 				}
 			],

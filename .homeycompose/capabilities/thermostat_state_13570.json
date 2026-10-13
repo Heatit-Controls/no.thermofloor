@@ -8,28 +8,33 @@
 	"setable": false,
 	"insights": true,
 	"title": {
-		"en": "State"
+		"en": "State",
+        "nl": "Status"
 	},
 	"desc": {
-		"en": "State of the thermostat"
+		"en": "State of the thermostat",
+        "nl": "Status van de thermostaat"
 	},
 	"values": [
 		{
 			"id": "Idle",
 			"title": {
-				"en": "Idle"
+				"en": "Idle",
+                "nl": "Inactief"
 			}
 		},
 		{
 			"id": "Heating",
 			"title": {
-				"en": "Heating"
+				"en": "Heating",
+                "nl": "Verwarmen"
 			}
 		},
 		{
 			"id": "Cooling",
 			"title": {
-				"en": "Cooling"
+				"en": "Cooling",
+                "nl": "Koelen"
 			}
 		}
 	]

@@ -64,7 +64,8 @@
     ]
   },
   "description": {
-    "en": "Smart solutions for smart homes"
+    "en": "Smart solutions for smart homes",
+    "nl": "Slimme oplossingen voor slimme huizen"
   },
   "images": {
     "xlarge": "/assets/images/xlarge.png",

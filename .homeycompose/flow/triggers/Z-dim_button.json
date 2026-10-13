@@ -1,13 +1,16 @@
 {
 	"id": "Z-dim_button",
 	"title": {
-		"en": "Button is pressed"
+		"en": "Button is pressed",
+        "nl": "Knop is ingedrukt"
 	},
 	"titleFormatted": {
-		"en": "Dimmer button is [[scene]]"
+		"en": "Dimmer button is [[scene]]",
+        "nl": "Dimmer knop is [[scene]]"
 	},
 	"hint": {
-		"en": "This card will trigger on any button pressed and provides the scene tokens."
+		"en": "This card will trigger on any button pressed and provides the scene tokens.",
+        "nl": "Deze kaart wordt geactiveerd bij elke knopdruk en geeft de scène tokens."
 	},
 	"args": [{
 			"name": "device",
@@ -21,7 +24,7 @@
 			"type": "string",
 			"title": {
 				"en": "scene",
-				"nl": "scene"
+				"nl": "scène"
 			},
 			"example": {
 				"en": "Button pressed (test)"

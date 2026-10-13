@@ -72,7 +72,7 @@
       "maintenanceAction": true,
       "title": {
         "en": "Reset power meter"
-      }, 
+      },
       "desc": {
         "en": "Reset the accumulated power usage (kWh), note that this can not be reversed."
       }
@@ -141,13 +141,13 @@
       "3": {
         "hint": {
           "en": "Sends Thermostat Setpoint Set commands based on own setpoint to allow for use as master thermostat.",
-          "nl": "Sends Thermostat Setpoint Set commands based on own setpoint to allow for use as master thermostat."
+          "nl": "Stuurt thermostaat setpoint set commando's gebaseerd op de eigen setpoint om te gebruiken als master thermostaat."
         }
       },
       "4": {
         "hint": {
           "en": "Sends Thermostat Mode Set commands based on own setpoint to allow for use as master thermostat.",
-          "nl": "Sends Thermostat Mode Set commands based on own setpoint to allow for use as master thermostat."
+          "nl": "Stuurt thermostaat modus set commando's gebaseerd op de eigen setpoint om te gebruiken als master thermostaat."
         }
       }
     }

@@ -1,22 +1,26 @@
 {
 	"type": "enum",
 	"title": {
-	  "en": "Thermostat mode"
+	  "en": "Thermostat mode",
+      "nl": "Thermostaatmodus"
 	},
 	"desc": {
-	  "en": "Mode of the thermostat"
+	  "en": "Mode of the thermostat",
+      "nl": "Modus van de thermostaat"
 	},
 	"values": [
 	  {
 		"id": "heat",
 		"title": {
-		  "en": "Heat"
+		  "en": "Heat",
+          "nl": "Verwarmen"
 		}
 	  },
 	  {
 		"id": "cool",
 		"title": {
-		  "en": "Cool"
+		  "en": "Cool",
+          "nl": "Koelen"
 		}
 	  },
 	  {
@@ -28,7 +32,8 @@
 	  {
 		"id": "off",
 		"title": {
-		  "en": "Off"
+		  "en": "Off",
+          "nl": "Uit"
 		}
 	  }
 	],
@@ -40,7 +45,8 @@
 		{
 		  "id": "thermostat_mode_changed",
 		  "title": {
-			"en": "Thermostat mode changed"
+			"en": "Thermostat mode changed",
+            "nl": "Thermostaatmodus gewijzigd"
 		  },
 		  "args": [
 			{
@@ -50,13 +56,15 @@
 				{
 				  "id": "heat",
 				  "title": {
-					"en": "Heat"
+					"en": "Heat",
+                    "nl": "Verwarmen"
 				  }
 				},
 				{
 				  "id": "cool",
 				  "title": {
-					"en": "Cool"
+					"en": "Cool",
+                    "nl": "Koelen"
 				  }
 				},
 				{
@@ -68,7 +76,8 @@
 				{
 				  "id": "off",
 				  "title": {
-					"en": "Off"
+					"en": "Off",
+                    "nl": "Uit"
 				  }
 				}
 			  ],
@@ -83,7 +92,8 @@
 		{
 		  "id": "thermostat_mode_is",
 		  "title": {
-			"en": "Thermostat mode !{{is|is not}}"
+			"en": "Thermostat mode !{{is|is not}}",
+            "nl": "Thermostaatmodus !{{is|is niet}}"
 		  },
 		  "args": [
 			{
@@ -93,13 +103,15 @@
 				{
 				  "id": "heat",
 				  "title": {
-					"en": "Heat"
+					"en": "Heat",
+                    "nl": "Verwarmen"
 				  }
 				},
 				{
 				  "id": "cool",
 				  "title": {
-					"en": "Cool"
+					"en": "Cool",
+                    "nl": "Koelen"
 				  }
 				},
 				{
@@ -111,7 +123,8 @@
 				{
 				  "id": "off",
 				  "title": {
-					"en": "Off"
+					"en": "Off",
+                    "nl": "Uit"
 				  }
 				}
 			  ],
@@ -126,7 +139,8 @@
 		{
 		  "id": "thermostat_mode_set",
 		  "title": {
-			"en": "Set the mode"
+			"en": "Set the mode",
+            "nl": "Stel de modus in"
 		  },
 		  "args": [
 			{
@@ -136,13 +150,15 @@
 				{
 				  "id": "heat",
 				  "title": {
-					"en": "Heat"
+					"en": "Heat",
+                    "nl": "Verwarmen"
 				  }
 				},
 				{
 				  "id": "cool",
 				  "title": {
-					"en": "Cool"
+					"en": "Cool",
+                    "nl": "Koelen"
 				  }
 				},
 				{
@@ -155,7 +171,8 @@
 				{
 				  "id": "off",
 				  "title": {
-					"en": "Off"
+					"en": "Off",
+                    "nl": "Uit"
 				  }
 				}
 			  ],

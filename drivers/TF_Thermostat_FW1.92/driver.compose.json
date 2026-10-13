@@ -72,25 +72,25 @@
 			"2": {
 				"hint": {
 					"en": "On/off  control: This controls external heaters replicating the state of the internal relay. \nUses BASIC_SET command, values 0x00 (on) and 0xFF (on).\nDefault: 1 (Homey's ID), required to track the thermostat state (Active / Idle)",
-					"nl": "On/off  control: Deze groep schakelt externe verwarmings of koelings elementen. \nMaakt gebruik van het BASIC_SET command, values 0x00 (on) and 0xFF (on).\nStandaard: 1 (Homey's ID), nodig om de toestand van de thermostat (Actief / Inactief) bij te houden"
+					"nl": "On/off  control: Deze groep schakelt externe verwarmings of koelings elementen. \nMaakt gebruik van het BASIC_SET command, values 0x00 (on) and 0xFF (on).\nStandaard: 1 (Homey's ID), nodig om de toestand van de thermostaat (Actief / Inactief) bij te houden"
 				}
 			},
 			"3": {
 				"hint": {
 					"en": "Send Multilevel Sensor Reports for the internal temperature sensor. \nDefault: 1 (Homey's ID), required to track the thermostat state (Active / Idle)",
-					"nl": "Stuurt Multilevel Sensor Reports voor de internal temperatuursensor.\nStandaard: 1 (Homey's ID), nodig om de toestand van de thermostat (Actief / Inactief) bij te houden"
+					"nl": "Stuurt Multilevel Sensor Reports voor de internal temperatuursensor.\nStandaard: 1 (Homey's ID), nodig om de toestand van de thermostaat (Actief / Inactief) bij te houden"
 				}
 			},
 			"4": {
 				"hint": {
 					"en": "Send Multilevel Sensor Reports for the external temperature sensor. \nDefault: 1 (Homey's ID), required to track the thermostat state (Active / Idle)",
-					"nl": "Stuurt Multilevel Sensor Reports voor de externe ruimte temperatuursensor.\nStandaard: 1 (Homey's ID), nodig om de toestand van de thermostat (Actief / Inactief) bij te houden"
+					"nl": "Stuurt Multilevel Sensor Reports voor de externe ruimte temperatuursensor.\nStandaard: 1 (Homey's ID), nodig om de toestand van de thermostaat (Actief / Inactief) bij te houden"
 				}
 			},
 			"5": {
 				"hint": {
 					"en": "Send Multilevel Sensor Reports for the floor temperature sensor. \nDefault: 1 (Homey's ID), required to track the thermostat state (Active / Idle)",
-					"nl": "Stuurt Multilevel Sensor Reports voor de vloer temperatuursensor.\nStandaard: 1 (Homey's ID), nodig om de toestand van de thermostat (Actief / Inactief) bij te houden"
+					"nl": "Stuurt Multilevel Sensor Reports voor de vloer temperatuursensor.\nStandaard: 1 (Homey's ID), nodig om de toestand van de thermostaat (Actief / Inactief) bij te houden"
 				}
 			}
 		}

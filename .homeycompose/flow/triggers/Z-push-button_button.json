@@ -1,13 +1,16 @@
 {
 	"id": "Z-push-button_button",
 	"title": {
-		"en": "Button is pressed"
+		"en": "Button is pressed",
+        "nl": "Knop is ingedrukt"
 	},
 	"titleFormatted": {
-		"en": "When any button is pressed"
+		"en": "When any button is pressed",
+        "nl": "Wanneer een knop wordt ingedrukt"
 	},
 	"hint": {
-		"en": "This card will trigger on any button pressed and provides the scene tokens."
+		"en": "This card will trigger on any button pressed and provides the scene tokens.",
+        "nl": "Deze kaart wordt geactiveerd bij elke knopdruk en geeft de scène tokens."
 	},
 	"args": [
 		{
@@ -33,7 +36,7 @@
 			"type": "string",
 			"title": {
 				"en": "scene",
-				"nl": "scene"
+				"nl": "scène"
 			},
 			"example": {
 				"en": ""

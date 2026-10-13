@@ -2,11 +2,11 @@
 	"id": "alarm_power_true",
 	"title": {
 		"en": "The power supply alarm turned on",
-		"nl": "Het voeding alarm gaat aan"
+		"nl": "Het voeding alarm ging aan"
 	},
 	"titleFormatted": {
 		"en": "The power supply alarm turned on",
-		"nl": "Het voeding alarm gaat aan"
+		"nl": "Het voeding alarm ging aan"
 	},
 	"args": [{
 		"name": "device",

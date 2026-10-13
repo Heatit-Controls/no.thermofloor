@@ -1,15 +1,14 @@
 {
 	"type": "boolean",
-	"uiComponent": "sensor",
-	"icon": "/assets/thermofloor_onoff.svg",
 	"noblink": false,
-	"greyout": true,
 	"label": {
 		"true": {
-			"en": "Active"
+			"en": "Active",
+            "nl": "Actief"
 		},
 		"false": {
-			"en": "Idle"
+			"en": "Idle",
+            "nl": "Inactief"
 		}
 	},
 	"title": {
