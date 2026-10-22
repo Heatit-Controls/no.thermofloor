@@ -281,11 +281,15 @@ class ZTRM7Device extends ZwaveDevice {
 					}
 					return null;
 				} else if (this.getCapabilityValue('thermostat_mode') === 'Powerregulator') {
-					this.handleExitPowerRegulatorMode(value);
+					this.handleExitPowerRegulatorMode(value).catch(error => {
+						this.error('Failed to exit power regulator mode', error);
+					});
 				} else {
 					const settings = this.getSettings();
 					if (value !== 'off' && settings?.sensor_mode === '5') {
-						this.handleExitPowerRegulatorMode(value);
+						this.handleExitPowerRegulatorMode(value).catch(error => {
+							this.error('Failed to exit power regulator mode', error);
+						});
 					} else if (value !== 'off') {
 						this.setCapabilityOptions('target_temperature', this._originalTempOptions)
 							.catch(error => {

@@ -278,11 +278,15 @@ class ZTRM6Device extends ZwaveDevice {
 					}
 					return null;
 				} else if (this.getCapabilityValue('thermostat_mode') === 'Powerregulator') {
-					this.handleExitPowerRegulatorMode(value);
+					this.handleExitPowerRegulatorMode(value).catch(error => {
+						this.error('Failed to exit power regulator mode', error);
+					});
 				} else {
 					const settings = this.getSettings();
 					if (value !== 'off' && settings?.sensor_mode === '5') {
-						this.handleExitPowerRegulatorMode(value);
+						this.handleExitPowerRegulatorMode(value).catch(error => {
+							this.error('Failed to exit power regulator mode', error);
+						});
 					} else if (value !== 'off') {
 						this.setCapabilityOptions('target_temperature', this._originalTempOptions)
 							.catch(error => {
@@ -295,10 +299,13 @@ class ZTRM6Device extends ZwaveDevice {
 					const currentSettings = this.getSettings();
 					if (value === 'heat') {
 						this.setCapabilityValue('target_temperature', currentSettings.heating_setpoint / 10)
+							.catch(error => this.error('Failed to apply mode setpoint', error));
 					} else if (value === 'cool') {
 						this.setCapabilityValue('target_temperature', currentSettings.cooling_setpoint / 10)
+							.catch(error => this.error('Failed to apply mode setpoint', error));
 					} else if (value === 'energy save heat') {
 						this.setCapabilityValue('target_temperature', currentSettings.eco_setpoint / 10)
+							.catch(error => this.error('Failed to apply mode setpoint', error));
 					}
 				} catch (e) {
 					this.error(`Failed to apply mode setpoint: ${e.message}`);
