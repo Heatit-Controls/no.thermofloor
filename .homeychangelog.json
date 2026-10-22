@@ -186,6 +186,6 @@
     "en": "Update Dutch translations"
   },
   "4.6.0": {
-    "en": "Z-Han2 - Minor fixes "
+    "en": "Fixed Z-Han2 not reporting kWh to insight; Fixed: Z-TRM6 unhandled rejections in thermostat mode changes"
   }
 }
