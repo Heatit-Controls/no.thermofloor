@@ -93,16 +93,14 @@ module.exports = class MyDevice extends Homey.Device {
                 try {
                     const parsedData = JSON.parse(rawData);
                     this.ReconnactionTry = 1;
-                    this.setCapabilityValue('measure_temperature', parsedData.roomTemperature).catch(this.error);
-                    this.setOpenWindowDetectionFromThermostat(parsedData);
-                    this.setCapabilityValue('target_temperature', parsedData.parameters.heatingSetpoint).catch(this.error);
+                    this.setCapabilityValue('onoff', parsedData.parameters.turnOnOff).catch(this.error);
                     let kWh = this.getCapabilityValue('meter_power');
                     kWh = kWh + (parsedData.currentPower * (this.getSettings().interval / 3600)) / 1000;
                     this.setCapabilityValue('meter_power', kWh).catch(this.error);
                     this.setCapabilityValue('measure_power', parsedData.currentPower).catch(this.error);
                     this.setCapabilityValue('measure_temperature.external', parsedData.externalTemperature).catch(this.error);
                     if (!this.MACaddressIsValid && this.MACaddress == "GET") {
-                        this.setSettings({ MACaddress: parsedData.Network.mac }).catch(this.error);
+                        this.setSettings({ MACaddress: parsedData.network.mac }).catch(this.error);
                     }
                     if (!this.deviceIsDeleted) this.setAvailable().catch(this.error);
                 } catch (e) {
