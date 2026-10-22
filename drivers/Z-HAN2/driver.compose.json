@@ -4,7 +4,7 @@
 	"class": "sensor",
 	"capabilities": [
 		"meter_power",
-		"accumulated_production",
+		"meter_power.exported",
 		"measure_power",
 		"measure_voltage",
 		"measure_current",
@@ -12,8 +12,15 @@
 		"button.reset_meter"
 	],
 	"capabilitiesOptions": {
-		"measure_power": {
-			"approximated": true
+		"meter_power": {
+			"title": {
+				"en": "Imported energy"
+			}
+		},
+		"meter_power.exported": {
+			"title": {
+				"en": "Exported energy"
+			}
 		},
 		"button.reset_meter": {
 			"maintenanceAction": true,
@@ -25,30 +32,10 @@
 			}
 		}
 	},
-	"type": "number",
-	"title": {
-		"en": "Power"
-	},
 	"energy": {
 		"cumulative": true,
-		"cumulativeImportedCapability": "meter_power.imported",
+		"cumulativeImportedCapability": "meter_power",
 		"cumulativeExportedCapability": "meter_power.exported"
-	},
-	"units": {
-		"en": "W"
-	},
-	"insights": true,
-	"desc": {
-		"en": "Power in watt (W)"
-	},
-	"options": {
-		"isApproximated": {
-			"type": "boolean",
-			"default": false,
-			"desc": {
-				"en": "This flag is used to determine that the device itself has no power measurement functionality, but that the driver calculates the energy use."
-			}
-		}
 	},
 	"platforms": [
 		"local",
