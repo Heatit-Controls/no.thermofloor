@@ -3,35 +3,41 @@
     {
       "id": "ztrm6dc_thermostat_state_IdleHeatCool",
       "title": {
-        "en": "Thermostat state changed"
+        "en": "Thermostat state changed",
+        "nl": "Thermostaatstatus veranderd"
       },
       "titleFormatted": {
-        "en": "Thermostat state changed to [[thermostat_state]]"
+        "en": "Thermostat state changed to [[thermostat_state]]",
+        "nl": "Thermostaatstatus veranderd naar [[thermostat_state]]"
       },
       "args": [
         {
           "name": "thermostat_state",
           "type": "dropdown",
           "title": {
-            "en": "Thermostat State"
+            "en": "Thermostat State",
+            "nl": "Thermostaatstatus"
           },
           "values": [
             {
               "id": "Idle",
               "label": {
-                "en": "Idle"
+                "en": "Idle",
+                "nl": "Inactief"
               }
             },
             {
               "id": "Heating",
               "label": {
-                "en": "Heating"
+                "en": "Heating",
+                "nl": "Verwarmen"
               }
             },
             {
               "id": "Cooling",
               "label": {
-                "en": "Cooling"
+                "en": "Cooling",
+                "nl": "Koelen"
               }
             }
           ]

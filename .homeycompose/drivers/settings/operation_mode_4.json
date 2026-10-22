@@ -6,12 +6,12 @@
 	"type": "dropdown",
 	"label": {
 		"en": "Thermostat mode",
-		"nl": "Thermostaat modus"
+		"nl": "Thermostaatmodus"
 	},
 	"value": "1",
 	"hint": {
 		"en": "Thermostat mode. \nZ-wave parameter {{zwaveParameterIndex}} \ndefault: Energy saving",
-		"nl": "Thermostaat modus. \nZ-wave parameter {{zwaveParameterIndex}} \nstandaard: Energiebesparing"
+		"nl": "Thermostaatmodus. \nZ-wave parameter {{zwaveParameterIndex}} \nstandaard: Energiebesparing"
 	},
 	"values": [
 		{

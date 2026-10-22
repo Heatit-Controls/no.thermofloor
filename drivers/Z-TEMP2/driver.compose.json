@@ -24,11 +24,11 @@
 			},
 			"insightsTitleTrue": {
 				"en": "Thermostat mode `Heating` activated",
-				"nl": "Thermostat modus `Verwarmen` ingeschakeld"
+				"nl": "Thermostaatmodus `Verwarmen` ingeschakeld"
 			},
 			"insightsTitleFalse": {
 				"en": "Thermostat mode `Off` activated",
-				"nl": "Thermostat modus `Uit` ingeschakeld"
+				"nl": "Thermostaatmodus `Uit` ingeschakeld"
 			}
 		},
 		"thermostat_state": {
@@ -86,7 +86,7 @@
 			"3": {
 				"hint": {
 					"en": "On/off  control: This controls external heaters replicating the state of the internal relay. \nUses BINARY_SWITCH_SET command, values 0x00 (on) and 0xFF (on).\nDefault: 1 (Homey's ID), required to track the thermostat state (Active / Idle)",
-					"nl": "On/off  control: Deze groep schakelt externe verwarmings of koelings elementen. \nMaakt gebruik van het BINARY_SWITCH_SET command, values 0x00 (on) and 0xFF (on).\nStandaard: 1 (Homey's ID), nodig om de toestand van de thermostat (Actief / Inactief) bij te houden"
+					"nl": "On/off  control: Deze groep schakelt externe verwarmings of koelings elementen. \nMaakt gebruik van het BINARY_SWITCH_SET command, values 0x00 (on) and 0xFF (on).\nStandaard: 1 (Homey's ID), nodig om de toestand van de thermostaat (Actief / Inactief) bij te houden"
 				}
 			}
 		},

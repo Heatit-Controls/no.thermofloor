@@ -1,11 +1,13 @@
 {
 	"id": "thermostat_state_changed_to",
 	"title": {
-		"en": "Thermostat state changed to"
+		"en": "Thermostat state changed to",
+        "nl": "Thermostaatstatus gewijzigd naar"
 	},
 	"deprecated": true,
 	"titleFormatted": {
-		"en": "Thermostat state changed to [[state]]"
+		"en": "Thermostat state changed to [[state]]",
+        "nl": "Thermostaatstatus gewijzigd naar [[state]]"
 	},
 	"args": [
 		{
@@ -16,24 +18,27 @@
 		{
 			"name": "state",
 			"type": "dropdown",
-			"title": { "en": "State" },
+			"title": { "en": "State", "nl": "Status" },
 			"values": [
 				{
 					"id": "Idle",
 					"label": {
-						"en": "Idle"
+						"en": "Idle",
+						"nl": "Inactief"
 					}
 				},
 				{
 					"id": "Heating",
 					"label": {
-						"en": "Heating"
+						"en": "Heating",
+                        "nl": "Verwarmen"
 					}
 				},
 				{
 					"id": "Cooling",
 					"label": {
-						"en": "Cooling"
+						"en": "Cooling",
+                        "nl": "Koelen"
 					}
 				}
 			]

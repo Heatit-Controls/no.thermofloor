@@ -24,11 +24,11 @@
 			},
 			"insightsTitleTrue": {
 				"en": "Thermostat mode `Heating` activated",
-				"nl": "Thermostat modus `Verwarmen` ingeschakeld"
+				"nl": "Thermostaatmodus `Verwarmen` ingeschakeld"
 			},
 			"insightsTitleFalse": {
 				"en": "Thermostat mode `Off` activated",
-				"nl": "Thermostat modus `Uit` ingeschakeld"
+				"nl": "Thermostaatmodus `Uit` ingeschakeld"
 			}
 		},
 		"thermostat_state": {

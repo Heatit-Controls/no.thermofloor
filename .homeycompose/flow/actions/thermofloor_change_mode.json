@@ -2,15 +2,15 @@
 	"id": "thermofloor_change_mode",
 	"title": {
 		"en": "Set the thermostat mode",
-		"nl": "Stel de thermostaat modus in"
+		"nl": "Stel de thermostaatmodus in"
 	},
 	"titleFormatted": {
 		"en": "Set the thermostat mode to [[mode]]",
-		"nl": "Stel de thermostaat modus in [[mode]]"
+		"nl": "Stel de thermostaatmodus in [[mode]]"
 	},
 	"hint": {
 		"en": "Set the thermostat mode (Comfort / Energy Saving / Off / Cooling) and activate instantly",
-		"nl": "Stel de thermostaat modus (Comfort / Energiebesparing / Uit / Koelen) in en activeer direct"
+		"nl": "Stel de thermostaatmodus (Comfort / Energiebesparing / Uit / Koelen) in en activeer direct"
 	},
 	"args": [
 		{

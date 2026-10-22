@@ -144,14 +144,14 @@
 						"id": "0",
 						"label": {
 							"en": "F-mode, floor sensor mode (default)",
-							"nl": "F-modus, vloer sensor modus (standaard)"
+							"nl": "F-modus, vloer sensormodus (standaard)"
 						}
 			    },
 					{
 						"id": "3",
 						"label": {
 							"en": "A2-mode, external room sensor mode",
-							"nl": "A2-modus, externe ruimte sensor modus"
+							"nl": "A2-modus, externe ruimte sensormodus"
 						}
 			    },
 					{

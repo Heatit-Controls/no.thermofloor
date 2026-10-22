@@ -51,28 +51,28 @@
 						"id": "0",
 						"label": {
 							"en": "F-mode, floor sensor mode (default)",
-							"nl": "F-modus, vloer sensor modus (standaard)"
+							"nl": "F-modus, vloer sensormodus (standaard)"
 						}
 					},
 					{
 						"id": "1",
 						"label": {
 							"en": "A-mode, internal sensor mode",
-							"nl": "A-modus, interne sensor modus"
+							"nl": "A-modus, interne sensormodus"
 						}
 					},
 					{
 						"id": "2",
 						"label": {
 							"en": "A2-mode, external sensor mode",
-							"nl": "A2-modus, externe sensor modus"
+							"nl": "A2-modus, externe sensormodus"
 						}
 					},
 					{
 						"id": "3",
 						"label": {
 							"en": "A2-mode, external room sensor mode",
-							"nl": "A2-modus, externe ruimte sensor modus"
+							"nl": "A2-modus, externe ruimte sensormodus"
 						}
 					},
 					{
@@ -93,7 +93,7 @@
 						"id": "6",
 						"label": {
 							"en": "FP-mode, floor mode with minimum power limitation",
-							"nl": "FP-modus, vloer modus with minimaal vermogen limitation"
+							"nl": "FP-modus, vloermodus with minimaal vermogen limitation"
 						}
 					}
 				]

@@ -1,22 +1,26 @@
 {
     "type": "enum",
     "title": {
-      "en": "Fan Mode"
+      "en": "Fan Mode",
+      "nl": "Ventilatiemodus"
     },
     "desc": {
-      "en": "Fan mode on the thermostat"
+      "en": "Fan mode on the thermostat",
+      "nl": "Ventilatiemodus op the thermostaat"
     },
     "values": [
         {
         "id": "Low",
         "title": {
-            "en": "Low"
+            "en": "Low",
+            "nl": "Laag"
         }
         },
         {
         "id": "Medium",
         "title": {
-            "en": "Medium"
+            "en": "Medium",
+            "nl": "Middel"
         }
         },
                         {
@@ -28,7 +32,8 @@
         {
         "id": "High",
         "title": {
-            "en": "High"
+            "en": "High",
+            "nl": "Hoog"
         }
         }
     ],
@@ -40,7 +45,8 @@
         {
           "id": "fan_mode_changed",
           "title": {
-            "en": "Fan mode changed"
+            "en": "Fan mode changed",
+            "nl": "Ventilatiemodus veranderd"
           },
           "args": [
             {
@@ -50,25 +56,29 @@
                 {
                   "id": "Idle",
                   "title": {
-                    "en": "Idle"
+                    "en": "Idle",
+                    "nl": "Inactief"
                   }
                 },
                 {
                   "id": "Low",
                   "title": {
-                    "en": "Low"
+                    "en": "Low",
+                    "nl": "Laag"
                   }
                 },
                 {
                   "id": "Medium",
                   "title": {
-                    "en": "Medium"
+                    "en": "Medium",
+                    "nl": "Middel"
                   }
                 },
                 {
                   "id": "High",
                   "title": {
-                    "en": "High"
+                    "en": "High",
+                    "nl": "Hoog"
                   }
                 }
               ],
@@ -83,7 +93,8 @@
         {
           "id": "fan_mode_is",
           "title": {
-            "en": "Fan mode !{{is|is not}}"
+            "en": "Fan mode !{{is|is not}}",
+            "nl": "Ventilatiemodus !{{is|is niet}}"
           },
           "args": [
             {
@@ -93,25 +104,29 @@
                 {
                   "id": "Idle",
                   "title": {
-                    "en": "Idle"
+                    "en": "Idle",
+                    "nl": "Inactief"
                   }
                 },
                 {
                   "id": "Low",
                   "title": {
-                    "en": "Low"
+                    "en": "Low",
+                    "nl": "Laag"
                   }
                 },
                 {
                   "id": "Medium",
                   "title": {
-                    "en": "Medium"
+                    "en": "Medium",
+                    "nl": "Middel"
                   }
                 },
                 {
                   "id": "High",
                   "title": {
-                    "en": "High"
+                    "en": "High",
+                    "nl": "Hoog"
                   }
                 }
               ],
@@ -126,7 +141,8 @@
         {
           "id": "fan_mode_set",
           "title": {
-            "en": "Set fan mode"
+            "en": "Set fan mode",
+            "nl": "Zet ventilatiemodus in"
           },
           "args": [
             {
@@ -136,19 +152,22 @@
                 {
                   "id": "Idle",
                   "title": {
-                    "en": "Idle"
+                    "en": "Idle",
+                    "nl": "Inactief"
                   }
                 },
                 {
                   "id": "Low",
                   "title": {
-                    "en": "Low"
+                    "en": "Low",
+                    "nl": "Laag"
                   }
                 },
                 {
                   "id": "Medium",
                   "title": {
-                    "en": "Medium"
+                    "en": "Medium",
+                    "nl": "Middel"
                   }
                 },
                                 {
@@ -160,7 +179,8 @@
                 {
                   "id": "High",
                   "title": {
-                    "en": "High"
+                    "en": "High",
+                    "nl": "Hoog"
                   }
                 }
               ],
@@ -173,4 +193,3 @@
       ]
     }
   }
-  

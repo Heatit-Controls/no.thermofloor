@@ -13,7 +13,7 @@
   "insights": true,
   "insightsTitleTrue": {
     "en": "Power supply alarm turned on",
-    "nl": "Voeding alarm ging af",
+    "nl": "Voeding alarm ging aan",
     "no": "Strømbruddsalarm aktivert"
   },
   "insightsTitleFalse": {

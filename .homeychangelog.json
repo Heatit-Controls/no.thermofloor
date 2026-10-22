@@ -181,5 +181,8 @@
   },
   "4.5.4": {
     "en": "Added firmware version 1.0.7 to Z-TEMP3"
+  },
+  "4.5.5": {
+    "en": "Update Dutch translations"
   }
 }
