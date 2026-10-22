@@ -185,7 +185,7 @@
   "4.5.5": {
     "en": "Update Dutch translations"
   },
-  "4.6.0": {
+  "4.5.6": {
     "en": "Fixed Z-Han2 not reporting kWh to insight; Fixed: Z-TRM6 unhandled rejections in thermostat mode changes"
   }
 }
