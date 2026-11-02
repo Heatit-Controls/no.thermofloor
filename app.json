@@ -3555,8 +3555,23 @@
         "meter_power",
         "measure_power",
         "measure_temperature.external",
+        "measure_temperature.ground",
+        "thermostat_state_IdleHeatAfterrunForceHeat",
+        "thermostat_state_humidity",
         "onoff"
       ],
+      "capabilitiesOptions": {
+        "measure_temperature.external": {
+          "title": {
+            "en": "External temperature"
+          }
+        },
+        "measure_temperature.ground": {
+          "title": {
+            "en": "Ground temperature"
+          }
+        }
+      },
       "platforms": [
         "local"
       ],
@@ -15740,6 +15755,27 @@
         }
       ]
     },
+    "thermostat_state_humidity": {
+      "type": "boolean",
+      "icon": "/assets/moisture.svg",
+      "title": {
+        "en": "Moisture detection"
+      },
+      "desc": {
+        "en": "True when moisture is detected."
+      },
+      "insights": true,
+      "insightsTitleTrue": {
+        "en": "Moisture detected"
+      },
+      "insightsTitleFalse": {
+        "en": "Moisture not detected"
+      },
+      "color": "#0091FF",
+      "getable": true,
+      "setable": false,
+      "uiComponent": "sensor"
+    },
     "thermostat_state_IdleHeat": {
       "type": "enum",
       "uiComponent": "sensor",
@@ -15775,6 +15811,48 @@
       "insightsTitleHeating": {
         "en": "Heating active"
       }
+    },
+    "thermostat_state_IdleHeatAfterrunForceHeat": {
+      "type": "enum",
+      "uiComponent": "sensor",
+      "icon": "/assets/thermostat_state.svg",
+      "noblink": false,
+      "greyout": true,
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "title": {
+        "en": "State"
+      },
+      "desc": {
+        "en": "State of the thermostat"
+      },
+      "values": [
+        {
+          "id": "Idle",
+          "title": {
+            "en": "Idle"
+          }
+        },
+        {
+          "id": "Heating",
+          "title": {
+            "en": "Heating"
+          }
+        },
+        {
+          "id": "Afterrun",
+          "title": {
+            "en": "Afterrun"
+          }
+        },
+        {
+          "id": "Force heat",
+          "title": {
+            "en": "Force heat"
+          }
+        }
+      ]
     },
     "thermostat_state_IdleHeatCool": {
       "type": "enum",

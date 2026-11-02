@@ -93,12 +93,27 @@ module.exports = class MyDevice extends Homey.Device {
                 try {
                     const parsedData = JSON.parse(rawData);
                     this.ReconnactionTry = 1;
-                    this.setCapabilityValue('onoff', parsedData.parameters.turnOnOff).catch(this.error);
+                    this.setCapabilityValue('measure_temperature', parsedData.roomTemperature).catch(this.error);
+                    //this.setOpenWindowDetectionFromThermostat(parsedData);
+                    this.setCapabilityValue('target_temperature', parsedData.parameters.heatingSetpoint).catch(this.error);
+                    //this.setCapabilityValue('onoff', parsedData.parameters.turnOnOff).catch(this.error);
                     let kWh = this.getCapabilityValue('meter_power');
                     kWh = kWh + (parsedData.currentPower * (this.getSettings().interval / 3600)) / 1000;
+
+                    // Leser api/status og viser til Homey UI
                     this.setCapabilityValue('meter_power', kWh).catch(this.error);
                     this.setCapabilityValue('measure_power', parsedData.currentPower).catch(this.error);
+
+                    // Leser eksterne temperaturer fra api/status
                     this.setCapabilityValue('measure_temperature.external', parsedData.externalTemperature).catch(this.error);
+                    this.setCapabilityValue('measure_temperature.ground', parsedData.groundTemperature).catch(this.error);
+
+                    // Leser state fra api/status
+                    this.setCapabilityValue('thermostat_state_IdleHeatAfterrunForceHeat', parsedData.state).catch(this.error);
+
+                    // Leser moisture fra api/status
+                    this.setCapabilityValue('thermostat_state_humidity', parsedData.moisture).catch(this.error);
+
                     if (!this.MACaddressIsValid && this.MACaddress == "GET") {
                         this.setSettings({ MACaddress: parsedData.network.mac }).catch(this.error);
                     }
