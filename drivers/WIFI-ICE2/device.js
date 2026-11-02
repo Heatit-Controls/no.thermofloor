@@ -94,9 +94,7 @@ module.exports = class MyDevice extends Homey.Device {
                     const parsedData = JSON.parse(rawData);
                     this.ReconnactionTry = 1;
                     this.setCapabilityValue('measure_temperature', parsedData.roomTemperature).catch(this.error);
-                    //this.setOpenWindowDetectionFromThermostat(parsedData);
                     this.setCapabilityValue('target_temperature', parsedData.parameters.heatingSetpoint).catch(this.error);
-                    //this.setCapabilityValue('onoff', parsedData.parameters.turnOnOff).catch(this.error);
                     let kWh = this.getCapabilityValue('meter_power');
                     kWh = kWh + (parsedData.currentPower * (this.getSettings().interval / 3600)) / 1000;
 
