@@ -119,6 +119,9 @@ class HeatitApp extends Homey.App {
     this._setPowerRegulatorMode = this.homey.flow.getActionCard('thermofloor_set_PowerRegulatorMode')
       .registerRunListener(this._setPowerRegulatorMode.bind(this));
 
+    this._setDisplayDimming = this.homey.flow.getActionCard('heatit_set_display_dimming')
+      .registerRunListener(this._setDisplayDimming.bind(this));
+
 
     // Register actions for flows thermofloor_change_mode
     this._actionTurnOnSiren = this.homey.flow.getActionCard('turnOnSiren')
@@ -183,6 +186,41 @@ class HeatitApp extends Homey.App {
       }
 
       return await args.device.executeCapabilitySetCommand('target_temperature', 'THERMOSTAT_SETPOINT', newSetpointValue, { mode: 'Heat' }).catch(this.error);
+    } catch (error) {
+      args.device.log(error.message);
+      return Promise.reject(new Error(error.message));
+    }
+  }
+
+  // heatit_set_display_dimming
+  //
+  // Z-TRM3 and Z-TRM2fx keep the idle brightness of the display and the
+  // buttons in two configuration parameters, both 0-100 %. Setting them to 0
+  // makes the thermostat go completely dark while it is not being used, which
+  // is what you want in a bedroom at night. Until now that could only be done
+  // by hand on the device settings page, so it could not follow a Flow.
+  //
+  // The parameter numbers differ between the two devices (14/16 on Z-TRM3,
+  // 15/17 on Z-TRM2fx), so the values are written by setting id and resolved
+  // from the driver manifest. setSettings keeps the device settings page in
+  // sync; it does not call onSettings, so the node is not written to twice.
+  async _setDisplayDimming(args, state) {
+    if (typeof args.display_dimmed !== 'number') return Promise.reject(new Error('display_dimmed_is_not_a_number'));
+    if (typeof args.button_dimmed !== 'number') return Promise.reject(new Error('button_dimmed_is_not_a_number'));
+    if (args.display_dimmed < 0 || args.display_dimmed > 100) return Promise.reject(new Error('display_dimmed_out_of_range'));
+    if (args.button_dimmed < 0 || args.button_dimmed > 100) return Promise.reject(new Error('button_dimmed_out_of_range'));
+
+    try {
+      await args.device.configurationSet({
+        id: 'Display_brightness_dimmed',
+      }, args.display_dimmed);
+      await args.device.configurationSet({
+        id: 'Button_brightness_dimmed',
+      }, args.button_dimmed);
+      return args.device.setSettings({
+        Display_brightness_dimmed: args.display_dimmed,
+        Button_brightness_dimmed: args.button_dimmed,
+      }).catch(this.error);
     } catch (error) {
       args.device.log(error.message);
       return Promise.reject(new Error(error.message));

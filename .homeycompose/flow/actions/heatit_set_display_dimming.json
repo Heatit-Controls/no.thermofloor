@@ -1,0 +1,48 @@
+{
+	"id": "heatit_set_display_dimming",
+	"title": {
+		"en": "Set dimmed display and button brightness",
+		"nl": "Stel gedimde display- en knophelderheid in"
+	},
+	"titleFormatted": {
+		"en": "Set dimmed brightness to [[display_dimmed]] % display and [[button_dimmed]] % buttons",
+		"nl": "Stel gedimde helderheid in op [[display_dimmed]] % display en [[button_dimmed]] % knoppen"
+	},
+	"hint": {
+		"en": "Sets the brightness the display and the buttons use while the thermostat is idle. 0 turns them completely dark, which is useful in a bedroom at night. \nRange: 0-100 \nDefault: 50",
+		"nl": "Stelt de helderheid in die het display en de knoppen gebruiken wanneer de thermostaat inactief is. 0 maakt ze volledig donker, handig in een slaapkamer 's nachts. \nBereik: 0-100 \nStandaard: 50"
+	},
+	"args": [
+		{
+			"name": "device",
+			"type": "device",
+			"filter": "driver_id=Z-TRM3|Z-TRM2fx"
+		},
+		{
+			"name": "display_dimmed",
+			"type": "range",
+			"title": {
+				"en": "Display",
+				"nl": "Display"
+			},
+			"min": 0,
+			"max": 100,
+			"step": 10,
+			"label": "%",
+			"labelDecimals": 0
+		},
+		{
+			"name": "button_dimmed",
+			"type": "range",
+			"title": {
+				"en": "Buttons",
+				"nl": "Knoppen"
+			},
+			"min": 0,
+			"max": 100,
+			"step": 10,
+			"label": "%",
+			"labelDecimals": 0
+		}
+	]
+}
