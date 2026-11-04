@@ -3667,6 +3667,243 @@
               }
             }
           ]
+        },
+        {
+          "id": "sensorValue",
+          "type": "dropdown",
+          "label": {
+            "en": "Sensor Value"
+          },
+          "hint": {
+            "en": "Set the resistance value of the external sensor."
+          },
+          "value": "1",
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "6.8kOhm"
+              }
+            },
+            {
+              "id": "1",
+              "label": {
+                "en": "10kOhm (Default)"
+              }
+            },
+            {
+              "id": "2",
+              "label": {
+                "en": "12kOhm"
+              }
+            },
+            {
+              "id": "3",
+              "label": {
+                "en": "15kOhm"
+              }
+            },
+            {
+              "id": "4",
+              "label": {
+                "en": "22kOhm"
+              }
+            },
+            {
+              "id": "5",
+              "label": {
+                "en": "33kOhm"
+              }
+            },
+            {
+              "id": "6",
+              "label": {
+                "en": "47kOhm"
+              }
+            },
+            {
+              "id": "7",
+              "label": {
+                "en": "100kOhm"
+              }
+            }
+          ]
+        },
+        {
+          "id": "groundSensorCalibration",
+          "type": "number",
+          "label": {
+            "en": "Ground Sensor Calibration"
+          },
+          "hint": {
+            "en": "Manually calibrate sensor GND ±6°C."
+          },
+          "value": 0,
+          "min": -6,
+          "max": 6,
+          "units": {
+            "en": "°C"
+          }
+        },
+        {
+          "id": "externalSensorCalibration",
+          "type": "number",
+          "label": {
+            "en": "External Sensor Calibration"
+          },
+          "hint": {
+            "en": "Manually calibrate sensor ES ±6°C."
+          },
+          "value": 0,
+          "min": -6,
+          "max": 6,
+          "units": {
+            "en": "°C"
+          }
+        },
+        {
+          "id": "activeDisplayBrightness",
+          "type": "number",
+          "label": {
+            "en": "Active Display Brightness"
+          },
+          "hint": {
+            "en": "Configure the brightness of the display during active state."
+          },
+          "value": 100,
+          "min": 10,
+          "max": 100,
+          "units": {
+            "en": "%"
+          }
+        },
+        {
+          "id": "standbyDisplayBrightness",
+          "type": "number",
+          "label": {
+            "en": "Standby Display Brightness"
+          },
+          "hint": {
+            "en": "Configure the brightness of the display during standby state."
+          },
+          "value": 50,
+          "min": 0,
+          "max": 100,
+          "units": {
+            "en": "%"
+          }
+        },
+        {
+          "id": "heSetpoint",
+          "type": "number",
+          "label": {
+            "en": "Heating Element Setpoint"
+          },
+          "hint": {
+            "en": "Setpoint for heating element while in standby mode."
+          },
+          "value": 5,
+          "min": 1,
+          "max": 10,
+          "units": {
+            "en": "°C"
+          }
+        },
+        {
+          "id": "warmLimitThreshold",
+          "type": "number",
+          "label": {
+            "en": "Warm Limit Threshold"
+          },
+          "hint": {
+            "en": "Set max temp limit for the external sensor."
+          },
+          "value": 5,
+          "min": 0,
+          "max": 10,
+          "units": {
+            "en": "°C"
+          }
+        },
+        {
+          "id": "coldLimitThreshold",
+          "type": "number",
+          "label": {
+            "en": "Cold Limit Threshold"
+          },
+          "hint": {
+            "en": "Set min temp limit for the external sensor."
+          },
+          "value": -10,
+          "min": -30,
+          "max": 6,
+          "units": {
+            "en": "°C"
+          }
+        },
+        {
+          "id": "actionAfterError",
+          "type": "number",
+          "label": {
+            "en": "Action After Error"
+          },
+          "hint": {
+            "en": "Decide how device should react when overload/overheat turns off relay. 10 - 65535 = Device will attempt to turn on again after the specified delay in seconds. Will display error if off."
+          },
+          "value": 0,
+          "min": 0,
+          "max": 65535,
+          "units": {
+            "en": "Seconds"
+          }
+        },
+        {
+          "id": "sizeOfLoad",
+          "type": "number",
+          "label": {
+            "en": "Size of Load"
+          },
+          "hint": {
+            "en": "Allows the user to decide the power consumption of the connected load in 100W increments."
+          },
+          "value": 0,
+          "min": 0,
+          "max": 9900,
+          "units": {
+            "en": "W"
+          }
+        },
+        {
+          "id": "afterrun",
+          "type": "number",
+          "label": {
+            "en": "Afterrun"
+          },
+          "hint": {
+            "en": "Set the afterrun period"
+          },
+          "value": 4,
+          "min": 0,
+          "max": 24,
+          "units": {
+            "en": "Hours"
+          }
+        },
+        {
+          "id": "forceHeat",
+          "type": "number",
+          "label": {
+            "en": "Force Heat"
+          },
+          "hint": {
+            "en": "Turn on the heating element manually for a specified amount of time."
+          },
+          "value": 0,
+          "min": 0,
+          "max": 24,
+          "units": {
+            "en": "Hours"
+          }
         }
       ]
     },

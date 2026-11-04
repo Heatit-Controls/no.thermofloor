@@ -9,13 +9,13 @@ module.exports = class MyDevice extends Homey.Device {
         this.log('WiFi ICE2 has been initialized');
         this.isDebug = true;
         this.deviceIsDeleted = false;
-      
+
         this.registerCapabilityListener('onoff', async (value) => {
             this.debug("Changed On/Off", value);
             if (value) {
-                this.setIce2On();
+                await this.setIce2On();
             } else {
-                this.setIce2Off();
+                await this.setIce2Off();
             }
         });
 
@@ -24,7 +24,8 @@ module.exports = class MyDevice extends Homey.Device {
 
         //Load settings
         await this.loadSettings();
-        
+        await this.syncSnowCapabilities();
+
         this.refreshStateLoop();
     }
 
@@ -47,6 +48,31 @@ module.exports = class MyDevice extends Homey.Device {
         this.MACaddressIsValid = util.isValidMACAddress(this.MACaddress);
         this.ReportInterval = this.getSettings().interval;
         this.OperatingMode = this.getSettings().operatingMode;
+        this.SensorValue = this.getSettings().sensorValue;
+        this.GroundSensorCalibration = this.getSettings().groundSensorCalibration;
+        this.ExternalSensorCalibration = this.getSettings().externalSensorCalibration;
+        this.ActiveDisplayBrightness = this.getSettings().activeDisplayBrightness;
+        this.StandbyDisplayBrightness = this.getSettings().standbyDisplayBrightness;
+        this.GroundSetpoint = this.getSettings().groundSetpoint;
+        this.HeSetpoint = this.getSettings().heSetpoint;
+        this.WarmLimitThreshold = this.getSettings().warmLimitThreshold;
+        this.ColdLimitThreshold = this.getSettings().coldLimitThreshold;
+        this.ActionAfterError = this.getSettings().actionAfterError;
+        this.SizeOfLoad = this.getSettings().sizeOfLoad;
+        this.AfterRun = this.getSettings().afterrun;
+        this.ForceHeat = this.getSettings().forceHeat;
+    }
+
+    //Hjemmer capabilities basert på operating mode
+    async syncSnowCapabilities() {
+        const snowMode = String(this.OperatingMode) === '0';
+        for (const capability of ['measure_temperature.ground', 'thermostat_state_humidity']) {
+            if (snowMode && !this.hasCapability(capability)) {
+                await this.addCapability(capability);
+            } else if (!snowMode && this.hasCapability(capability)) {
+                await this.removeCapability(capability);
+            }
+        }
     }
 
     ipIsValid() {
@@ -104,13 +130,19 @@ module.exports = class MyDevice extends Homey.Device {
 
                     // Leser eksterne temperaturer fra api/status
                     this.setCapabilityValue('measure_temperature.external', parsedData.externalTemperature).catch(this.error);
-                    this.setCapabilityValue('measure_temperature.ground', parsedData.groundTemperature).catch(this.error);
 
                     // Leser state fra api/status
                     this.setCapabilityValue('thermostat_state_IdleHeatAfterrunForceHeat', parsedData.state).catch(this.error);
 
-                    // Leser moisture fra api/status
-                    this.setCapabilityValue('thermostat_state_humidity', parsedData.moisture).catch(this.error);
+                    // Leser ground og humidity sensor hvis operating mode er snow
+                    if (String(this.OperatingMode) === '0') {
+                        if (this.hasCapability('measure_temperature.ground') && typeof parsedData.groundTemperature === 'number') {
+                            this.setCapabilityValue('measure_temperature.ground', parsedData.groundTemperature).catch(this.error);
+                        }
+                        if (this.hasCapability('thermostat_state_humidity') && typeof parsedData.moisture === 'boolean') {
+                            this.setCapabilityValue('thermostat_state_humidity', parsedData.moisture).catch(this.error);
+                        }
+                    }
 
                     if (!this.MACaddressIsValid && this.MACaddress == "GET") {
                         this.setSettings({ MACaddress: parsedData.network.mac }).catch(this.error);
@@ -198,9 +230,24 @@ module.exports = class MyDevice extends Homey.Device {
 
     async setOperatingMode(value) {
         const postData = JSON.stringify({
-            'operatingMode': value, //0: Default Snow, 1: Out 1, 2: Out 2, 3: Roof
+            'operatingMode': Number(value), //0: Default Snow, 1: Out 1, 2: Out 2, 3: Roof
         });
         await this.setParameters(postData);
+    }
+
+    async setSensorValue(value) {
+        const postData = JSON.stringify({
+            'sensorValue': Number(value), //0: 6.8kOhm, 1: 10kOhm, 2: 12kOhm, 3: 15kOhm, 4: 22kOhm, 5: 33kOhm, 6: 47kOhm, 7: 100kOhm
+        });
+        await this.setParameters(postData);
+    }
+
+    async setNumericParameter(key, value) {
+        const number = Number(value);
+        if (value == null || value === '' || !Number.isFinite(number)) {
+            throw new Error(`Invalid ${key} value`);
+        }
+        await this.setParameters(JSON.stringify({ [key]: number }));
     }
 
     async setParameters(postData) {
@@ -215,25 +262,37 @@ module.exports = class MyDevice extends Homey.Device {
                 'Content-Type': 'application/json',
                 'Content-Length': Buffer.byteLength(postData),
             },
+            timeout: 5000,
         };
 
-        const req = http.request(options, (res) => {
-            this.debug(`STATUS: ${res.statusCode}`);
-            this.debug(`HEADERS: ${JSON.stringify(res.headers)}`);
-            res.setEncoding('utf8');
-            res.on('data', (chunk) => {
-                this.debug(`BODY: ${chunk}`);
+        return new Promise((resolve, reject) => {
+            const req = http.request(options, (res) => {
+                this.debug(`STATUS: ${res.statusCode}`);
+                this.debug(`HEADERS: ${JSON.stringify(res.headers)}`);
+                res.setEncoding('utf8');
+                let body = '';
+                res.on('data', (chunk) => {
+                    body += chunk;
+                });
+                res.on('end', () => {
+                    this.debug(`BODY: ${body}`);
+                    if (res.statusCode >= 200 && res.statusCode < 300) {
+                        resolve(body);
+                    } else {
+                        reject(new Error(`Device answered with status ${res.statusCode}`));
+                    }
+                });
             });
-            res.on('end', () => {
+
+            req.on('timeout', () => req.destroy(new Error('Device did not respond')));
+            req.on('error', (e) => {
+                this.log(`problem with request: ${e.message}`);
+                reject(new Error(`Could not reach device: ${e.message}`));
             });
-        });
 
-        req.on('error', (e) => {
-            this.log(`problem with request: ${e.message}`);
+            req.write(postData);
+            req.end();
         });
-
-        req.write(postData);
-        req.end();
     }
 
     async onAdded() {
@@ -291,9 +350,45 @@ module.exports = class MyDevice extends Homey.Device {
 
         this.IPaddress = newSettings.IPaddress;
         this.ReportInterval = newSettings.interval;
-        this.OperatingMode = newSettings.operatingMode;
+        this.SensorValue = newSettings.sensorValue;
+        this.GroundSensorCalibration = newSettings.groundSensorCalibration;
+        this.ExternalSensorCalibration = newSettings.externalSensorCalibration;
+        this.ActiveDisplayBrightness = newSettings.activeDisplayBrightness;
+        this.StandbyDisplayBrightness = newSettings.standbyDisplayBrightness;
+        this.GroundSetpoint = newSettings.groundSetpoint;
+        this.HeSetpoint = newSettings.heSetpoint;
+        this.WarmLimitThreshold = newSettings.warmLimitThreshold;
+        this.ColdLimitThreshold = newSettings.coldLimitThreshold;
+        this.ActionAfterError = newSettings.actionAfterError;
+        this.SizeOfLoad = newSettings.sizeOfLoad;
+        this.AfterRun = newSettings.afterrun;
+        this.ForceHeat = newSettings.forceHeat;
         if (oldSettings.operatingMode != newSettings.operatingMode) {
-            await this.setOperatingMode(this.OperatingMode);
+            await this.setOperatingMode(newSettings.operatingMode);
+            this.OperatingMode = newSettings.operatingMode;
+            await this.syncSnowCapabilities();
+        }
+
+        if (oldSettings.sensorValue != newSettings.sensorValue) {
+            await this.setSensorValue(this.SensorValue);
+        }
+
+        for (const key of [
+            'groundSensorCalibration',
+            'externalSensorCalibration',
+            'activeDisplayBrightness',
+            'standbyDisplayBrightness',
+            'heSetpoint',
+            'warmLimitThreshold',
+            'coldLimitThreshold',
+            'actionAfterError',
+            'sizeOfLoad',
+            'afterrun',
+            'forceHeat',
+        ]) {
+            if (changedKeys.includes(key)) {
+                await this.setNumericParameter(key, newSettings[key]);
+            }
         }
     }
 
