@@ -1,0 +1,45 @@
+{
+  "type": "boolean",
+  "icon": "/assets/moisture.svg",
+  "title": {
+    "en": "Moisture detection"
+  },
+  "desc": {
+    "en": "True when moisture is detected."
+  },
+  "insights": true,
+  "insightsTitleTrue": {
+    "en": "Moisture detected"
+  },
+  "insightsTitleFalse": {
+    "en": "Moisture not detected"
+  },
+  "color": "#0091FF",
+  "getable": true,
+  "setable": false,
+  "uiComponent": "sensor",
+  "$flow": {
+    "triggers": [
+      {
+        "id": "moisture_true",
+        "title": {
+          "en": "The moisture is detected"
+        }
+      },
+      {
+        "id": "moisture_false",
+        "title": {
+          "en": "The moisture is not detected"
+        }
+      }
+    ],
+    "conditions": [
+      {
+        "id": "moisture",
+        "title": {
+          "en": "The moisture is !{{on|off}}"
+        }
+      }
+    ]
+  }
+}
